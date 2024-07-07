@@ -1,0 +1,22 @@
+Program: bob.c<P>
+<PRE>
+#include &lt;stdio.h&gt;
+
+int main()
+{
+    int *x = (int *) malloc(2*sizeof(int));
+    x[3] = 5;   // Violation here!!!
+    printf("Die\n");
+}
+
+Compile with gcc -g bob.c -lefence
+
+When executed, the program outputs
+
+% ./a.out
+
+  Electric Fence 2.0.5 Copyright (C) 1987-1998 Bruce Perens.
+Segmentation fault (core dumped)
+
+You can locate the offending source code line number using GDB
+</PRE>

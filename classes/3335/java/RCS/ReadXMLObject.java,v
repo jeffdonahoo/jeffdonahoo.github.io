@@ -1,0 +1,42 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2013.09.09.17.58.08;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@import java.beans.XMLDecoder;
+import java.io.FileInputStream;
+import java.io.IOException;
+
+public class ReadXMLObject {
+
+  public static void main(String[] args) throws IOException {
+    XMLDecoder in = new XMLDecoder(new FileInputStream("data"));
+    boolean done = false;
+    while (!done) {
+      try {
+        System.out.println(in.readObject());
+      } catch (ArrayIndexOutOfBoundsException e) {
+        done = true;
+      }
+    }
+    in.close();
+  }
+}
+@

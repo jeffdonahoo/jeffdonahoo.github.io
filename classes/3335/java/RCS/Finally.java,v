@@ -1,0 +1,34 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2013.09.09.17.58.08;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@public class Finally {
+
+  public static void main(String[] args) {
+    try {
+      int x = 5 / 0;
+    } catch (Exception e) {
+      System.out.println("Exception");
+    } finally {
+      System.out.println("Finally");
+    }
+  }
+}@

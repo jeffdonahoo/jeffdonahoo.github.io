@@ -1,0 +1,131 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2001.11.11.23.54.23;	author donahoo;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2001.11.11.23.46.12;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@<html>
+
+<head>
+<title>MFC Details</title>
+</head>
+
+<body>
+
+<p align="center"><b><font size="5">More Information about the MFC socket</font></b></p>
+<p style="line-height: 100%; margin-top: 0; margin-bottom: 0"><span style="mso-bidi-font-size: 12.0pt">&nbsp;&nbsp;&nbsp; CSocket is often
+used with a CArchive object and a CSocketFile object to enable serialization
+between two socket interfaces. However, we didn’t implement serialization in
+our applications. Instead, for TCP we used CSocket::Send(const void* lpBuf, int
+nBufLen, int nFlags = 0) and CSocket::Receive(void* lpBuf, int nBufLen, int
+nFlags = 0) (derived from CAsyncSocket) to achieve the echo effect. As for UDP,
+we used CSocket::SendTo() and CSocket::ReceiveFrom() (derived from CAsyncSocket),
+each of which is an overloaded function with two slightly different parameter
+lists: </span></p>
+
+<p class="MsoBodyText" style="word-spacing: 0px; line-height: 100%; margin-top: 0; margin-bottom: 0">&nbsp;&nbsp;&nbsp;</p>
+<p class="MsoBodyText" style="word-spacing: 0px; line-height: 100%; margin-top: 0; margin-bottom: 0">&nbsp;&nbsp;&nbsp;
+CAyncSocket::SendTo</p>
+<p class="MsoBodyText" style="word-spacing: 0px; line-height: 100%; margin-top: 0; margin-bottom: 0"><span style="mso-bidi-font-size: 12.0pt">&nbsp;&nbsp;&nbsp;
+1) int SendTo( const void* lpBuf, int nBufLen, UINT nHostPort, LPCTSTR
+lpszHostAddress = NULL, int nFlags = 0 );</span></p>
+<p class="MsoBodyText" style="word-spacing: 0px; line-height: 100%; margin-top: 0; margin-bottom: 0"><span style="mso-bidi-font-size: 12.0pt">&nbsp;&nbsp;&nbsp;
+2) int SendTo( const void* lpBuf, int nBufLen, const SOCKADDR* lpSockAddr, int
+nSockAddrLen, int nFlags = 0 );</span></p>
+<p class="MsoBodyText" style="word-spacing: 0px; line-height: 100%; margin-top: 0; margin-bottom: 0">&nbsp;</p>
+<p class="MsoBodyText" style="word-spacing: 0px; line-height: 100%; margin-top: 0; margin-bottom: 0">&nbsp;&nbsp;&nbsp;
+CAyncSocket::ReceiveFrom</p>
+<p class="MsoBodyText" style="word-spacing: 0px; line-height: 100%; margin-top: 0; margin-bottom: 0"><span style="mso-bidi-font-size: 12.0pt">&nbsp;&nbsp;&nbsp;
+1) int ReceiveFrom(void* lpBuf, int nBufLen, CString&amp; rSocketAddress, UINT&amp;
+rSocketPort, int nFlags = 0 );</span></p>
+<p class="MsoBodyText" style="word-spacing: 0px; line-height: 100%; margin-top: 0; margin-bottom: 0"><span style="mso-bidi-font-size: 12.0pt">&nbsp;&nbsp;&nbsp;
+2) int ReceiveFrom( void* lpBuf, int nBufLen, SOCKADDR* lpSockAddr, int*
+lpSockAddrLen, int nFlags = 0 );</span></p>
+<p style="word-spacing: 0px; line-height: 100%; margin-top: 0; margin-bottom: 0"><span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;</span></p>
+<p style="word-spacing: 0px; line-height: 100%; margin-top: 0; margin-bottom: 0"><span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;
+Interestingly, we observed that <span style="mso-bidi-font-size: 12.0pt; mso-spacerun: yes">it
+was easier to use SendTo(1) than SendTo(2) in writing the UDP echo client. To
+make SendTo(2) work, we had to construct the Socket Address of the echo server
+first. Doing that may cause too much trouble for the user given that CSocket is
+meant to encapsulate most of the painful details of the C lanugage socket. The
+two ReceiveFrom() functions, however, were comparable in terms of ease of use.</span></span></p>
+<p style="word-spacing: 0px; line-height: 100%; margin-top: 0; margin-bottom: 0">&nbsp;</p>
+<p style="word-spacing: 0px; line-height: 100%; margin-top: 0; margin-bottom: 0"><span style="mso-bidi-font-size: 12.0pt; mso-spacerun: yes">&nbsp;&nbsp;&nbsp;&nbsp;We
+also made a few notes on the TCP threaded server: </span><span style="mso-bidi-font-size: 12.0pt">the</span><span style="mso-bidi-font-size: 12.0pt; mso-spacerun: yes">
+listening socket, servSock, listens for new connections for ever. Upon
+acceptance of a new connection, it creates a separate socket, clntSock, for the
+connection, and then spawns a new thread to handle it by calling CreatThread()
+(view <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dllproc/prothred_4084.asp">API</a>).</span>
+<span style="mso-bidi-font-size: 12.0pt; mso-spacerun: yes">However, passing a
+CSocket object across threads does not work, as it easily causes the well-known
+&quot;connection reset by peer&quot; error. Instead, we should pass a handle to
+this socket to the new thread. This can be done in two lines of code, one of
+which appears in the context of the main thread, the other in the context of the
+new thread.&nbsp;</span></p>
+<p style="word-spacing: 0px; line-height: 100%; margin-top: 0; margin-bottom: 0">&nbsp;</p>
+<p class="MsoBodyText" style="MARGIN-TOP: 0px; MARGIN-BOTTOM: 0px; WORD-SPACING: 0px; LINE-HEIGHT: 100%"><span style="mso-bidi-font-size: 12.0pt; mso-spacerun: yes">&nbsp;&nbsp;
+// Detach the newly accepted socket and save<br>
+&nbsp;&nbsp; // the SOCKET handle.<br>
+&nbsp;&nbsp; SOCKET handle = clntSockInMainThread.Detach();</span></p>
+<p class="MsoBodyText" style="MARGIN-TOP: 0px; MARGIN-BOTTOM: 0px; WORD-SPACING: 0px; LINE-HEIGHT: 100%">&nbsp;&nbsp;
+...................</p>
+<p class="MsoBodyText" style="MARGIN-TOP: 0px; MARGIN-BOTTOM: 0px; WORD-SPACING: 0px; LINE-HEIGHT: 100%">&nbsp;&nbsp;
+// Attach the socket object to the socket handle<br>
+&nbsp;&nbsp; // in the context of this thread.<br>
+&nbsp;&nbsp; clntSockInNewThread.Attach((SOCKET)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="mso-bidi-font-size: 12.0pt; mso-spacerun: yes">&nbsp;&nbsp;&nbsp;</span></p>
+<p class="MsoBodyText" style="MARGIN-TOP: 0px; MARGIN-BOTTOM: 0px; WORD-SPACING: 0px; LINE-HEIGHT: 100%"><span style="mso-bidi-font-size: 12.0pt; mso-spacerun: yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(Here is another <a href="CSocket_Detach.htm">Example</a> showing how to do
+this.)&nbsp;</span></p>
+<p class="MsoBodyText" style="MARGIN-TOP: 0px; MARGIN-BOTTOM: 0px; WORD-SPACING: 0px; LINE-HEIGHT: 100%"><span style="mso-bidi-font-size: 12.0pt; mso-spacerun: yes">&nbsp;</span></p>
+<p class="MsoBodyText" style="word-spacing: 0px; line-height: 100%; margin-top: 0px; margin-bottom: 0px"><span style="mso-bidi-font-size: 12.0pt; mso-spacerun: yes">&nbsp;&nbsp;&nbsp;&nbsp;
+Now</span> the handle to the client socket has been passed in, the new thread
+can handle the client connection by calling&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<p class="MsoBodyText" style="word-spacing: 0px; line-height: 100%; margin-top: 0px; margin-bottom: 0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<p class="MsoBodyText" style="word-spacing: 0px; line-height: 100%; margin-top: 0px; margin-bottom: 0px">&nbsp;&nbsp;&nbsp;&nbsp;
+HandleTCPClient(clntSock);</p>
+<p style="word-spacing: 0px; line-height: 100%; margin-top: 0; margin-bottom: 0">&nbsp;</p>
+<p style="line-height: 100%; margin-top: 0; margin-bottom: 0"><span style="mso-bidi-font-size: 12.0pt">&nbsp;&nbsp;&nbsp;&nbsp;
+Finally, a detailed view of the CSocket and CAyncSocket libraries can be found in </span><span style="FONT-SIZE: 11pt; COLOR: blue; mso-bidi-font-size: 12.0pt"><a href="http://msdn.microsoft.com/library/en-us/wcemfc/htm/csocket.asp">the
+MSDN website</a></span><span style="FONT-SIZE: 11pt; mso-bidi-font-size: 12.0pt">.
+Also check out the <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vccore98/HTML/_core_windows_sockets.3a_.sequence_of_operations.asp">scenario</a>
+of setting up communication between a CSocket server and client.</span></p>
+
+</body>
+
+</html>
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d4 1
+a4 4
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>New Page 1</title>
+@

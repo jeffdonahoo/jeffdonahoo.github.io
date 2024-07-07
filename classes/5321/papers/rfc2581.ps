@@ -1,0 +1,1521 @@
+%!PS-Adobe-3.0
+%%BoundingBox: 24 24 571 818
+%%Title: enscript output
+%%For: Jeff Donahoo
+%%Creator: GNU enscript 1.4.0
+%%CreationDate: Wed Aug 16 11:32:58 2000
+%%Orientation: Landscape
+%%Pages: (atend)
+%%DocumentMedia: A4 595 842 0 () ()
+%%DocumentNeededResources: (atend)
+%%EndComments
+%%BeginProlog
+%%BeginResource: procset Enscript-Prolog 1.4 0
+%
+% Procedures.
+%
+
+/_S {	% save current state
+  /_s save def
+} def
+/_R {	% restore from saved state
+  _s restore
+} def
+
+/S {	% showpage protecting gstate
+  gsave
+  showpage
+  grestore
+} bind def
+
+/MF {	% fontname newfontname -> -	make a new encoded font
+  /newfontname exch def
+  /fontname exch def
+
+  /fontdict fontname findfont def
+  /newfont fontdict maxlength dict def
+
+  fontdict {
+    exch 
+    dup /FID eq {
+      % skip FID pair
+      pop pop
+    } {
+      % copy to the new font dictionary
+      exch newfont 3 1 roll put
+    } ifelse
+  } forall
+  
+  newfont /FontName newfontname put
+
+  % insert only valid encoding vectors
+  encoding_vector length 256 eq {
+    newfont /Encoding encoding_vector put
+  } if
+  
+  newfontname newfont definefont pop
+} def
+
+/M {moveto} bind def
+/s {show} bind def
+
+/Box {	% x y w h -> -			define box path
+  /d_h exch def /d_w exch def /d_y exch def /d_x exch def
+  d_x d_y  moveto 
+  d_w 0 rlineto 
+  0 d_h rlineto 
+  d_w neg 0 rlineto 
+  closepath
+} def
+
+% Highlight bars.
+/highlight_bars {	% nlines lineheight output_y_margin gray -> -
+  gsave
+    setgray
+    /ymarg exch def
+    /lineheight exch def
+    /nlines exch def
+
+    % This 2 is just a magic number to sync highlight lines to text.
+    0 d_header_y ymarg sub 2 sub translate
+    
+    /cw d_output_w cols div def
+    /nrows d_output_h ymarg 2 mul sub lineheight div floor def
+
+    % for each column
+    0 1 cols 1 sub {
+      cw mul /xp exch def
+
+      % for each rows
+      0 1 nrows 1 sub {
+        /rn exch def 
+        rn lineheight mul neg /yp exch def
+        rn nlines idiv 2 mod 0 eq {
+	  % Draw highlight bar.  4 is just a magic indentation.
+	  xp 4 add yp cw 8 sub lineheight neg Box fill	  
+	} if
+      } for
+    } for
+    
+  grestore
+} def
+
+% Line highlight bar.
+/line_highlight {	% x y width height gray -> -
+  gsave
+    /gray exch def
+    Box gray setgray fill
+  grestore
+} def
+
+% Column separator lines.
+/column_lines {
+  gsave
+    .1 setlinewidth
+    0 d_footer_h translate
+    /cw d_output_w cols div def
+    1 1 cols 1 sub {
+      cw mul 0 moveto
+      0 d_output_h rlineto stroke
+    } for
+  grestore
+} def
+
+% Column borders.
+/column_borders {
+  gsave
+    .1 setlinewidth
+    0 d_footer_h moveto 
+    0 d_output_h rlineto
+    d_output_w 0 rlineto
+    0 d_output_h neg rlineto
+    closepath stroke
+  grestore
+} def
+
+% Do the actual underlay drawing
+/draw_underlay {
+  ul_style 0 eq {
+    ul_str true charpath stroke
+  } { 
+    ul_str show
+  } ifelse
+} def
+
+% Underlay
+/underlay {	% - -> -
+  gsave
+    0 d_page_h translate
+    d_page_h neg d_page_w atan rotate
+
+    ul_gray setgray
+    ul_font setfont
+    /dw d_page_h dup mul d_page_w dup mul add sqrt def
+    ul_str stringwidth pop dw exch sub 2 div ul_ptsize -2 div moveto 
+    draw_underlay
+  grestore
+} def
+
+/user_underlay {	% - -> -
+  gsave
+    ul_x ul_y translate
+    ul_angle rotate
+    ul_gray setgray
+    ul_font setfont 
+    0 0 ul_ptsize 2 div sub moveto 
+    draw_underlay
+  grestore
+} def
+
+% Page prefeed
+/page_prefeed {		% bool -> -
+  statusdict /prefeed known {
+    statusdict exch /prefeed exch put
+  } {
+    pop
+  } ifelse
+} def
+
+% EPSF import.
+
+/BeginEPSF {
+  /b4_Inc_state save def    		% Save state for cleanup
+  /dict_count countdictstack def	% Count objects on dict stack
+  /op_count count 1 sub def		% Count objects on operand stack 
+  userdict begin
+  /showpage { } def
+  0 setgray 0 setlinecap
+  1 setlinewidth 0 setlinejoin
+  10 setmiterlimit [ ] 0 setdash newpath
+  /languagelevel where {
+    pop languagelevel
+    1 ne {
+      false setstrokeadjust false setoverprint 
+    } if
+  } if
+} bind def
+
+/EndEPSF {
+  count op_count sub { pos } repeat	% Clean up stacks
+  countdictstack dict_count sub { end } repeat
+  b4_Inc_state restore
+} bind def
+
+% Check PostScript language level.
+/languagelevel where {
+  pop /gs_languagelevel languagelevel def
+} {
+  /gs_languagelevel 1 def
+} ifelse
+%%EndResource
+%%BeginResource: procset Enscript-Encoding-latin1 1.4 0
+/encoding_vector [
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/space        	/exclam       	/quotedbl     	/numbersign   	
+/dollar       	/percent      	/ampersand    	/quoteright   	
+/parenleft    	/parenright   	/asterisk     	/plus         	
+/comma        	/minus        	/period       	/slash        	
+/zero         	/one          	/two          	/three        	
+/four         	/five         	/six          	/seven        	
+/eight        	/nine         	/colon        	/semicolon    	
+/less         	/equal        	/greater      	/question     	
+/at           	/A            	/B            	/C            	
+/D            	/E            	/F            	/G            	
+/H            	/I            	/J            	/K            	
+/L            	/M            	/N            	/O            	
+/P            	/Q            	/R            	/S            	
+/T            	/U            	/V            	/W            	
+/X            	/Y            	/Z            	/bracketleft  	
+/backslash    	/bracketright 	/asciicircum  	/underscore   	
+/quoteleft    	/a            	/b            	/c            	
+/d            	/e            	/f            	/g            	
+/h            	/i            	/j            	/k            	
+/l            	/m            	/n            	/o            	
+/p            	/q            	/r            	/s            	
+/t            	/u            	/v            	/w            	
+/x            	/y            	/z            	/braceleft    	
+/bar          	/braceright   	/tilde        	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/space        	/exclamdown   	/cent         	/sterling     	
+/currency     	/yen          	/brokenbar    	/section      	
+/dieresis     	/copyright    	/ordfeminine  	/guillemotleft	
+/logicalnot   	/hyphen       	/registered   	/macron       	
+/degree       	/plusminus    	/twosuperior  	/threesuperior	
+/acute        	/mu           	/paragraph    	/bullet       	
+/cedilla      	/dotlessi     	/ordmasculine 	/guillemotright	
+/onequarter   	/onehalf      	/threequarters	/questiondown 	
+/Agrave       	/Aacute       	/Acircumflex  	/Atilde       	
+/Adieresis    	/Aring        	/AE           	/Ccedilla     	
+/Egrave       	/Eacute       	/Ecircumflex  	/Edieresis    	
+/Igrave       	/Iacute       	/Icircumflex  	/Idieresis    	
+/Eth          	/Ntilde       	/Ograve       	/Oacute       	
+/Ocircumflex  	/Otilde       	/Odieresis    	/multiply     	
+/Oslash       	/Ugrave       	/Uacute       	/Ucircumflex  	
+/Udieresis    	/Yacute       	/Thorn        	/germandbls   	
+/agrave       	/aacute       	/acircumflex  	/atilde       	
+/adieresis    	/aring        	/ae           	/ccedilla     	
+/egrave       	/eacute       	/ecircumflex  	/edieresis    	
+/igrave       	/iacute       	/icircumflex  	/idieresis    	
+/eth          	/ntilde       	/ograve       	/oacute       	
+/ocircumflex  	/otilde       	/odieresis    	/divide       	
+/oslash       	/ugrave       	/uacute       	/ucircumflex  	
+/udieresis    	/yacute       	/thorn        	/ydieresis    	
+] def
+%%EndResource
+%%EndProlog
+%%BeginSetup
+%%IncludeResource: font Courier-Bold
+%%IncludeResource: font Courier
+/user_header_p false def
+/HFpt 10 def
+/Courier-Bold /HF-gs-font MF
+/HF /HF-gs-font findfont HFpt scalefont def
+/Courier /F-gs-font MF
+/F-gs-font findfont 7 scalefont setfont
+/#copies 1 def
+%%BeginResource: procset Enscript-Header-enscript 1.4 0
+%%IncludeResource: font Times-Bold
+%%IncludeResource: font Times-Roman
+
+% Fonts.
+/Times-Bold /HeaderFont-Bold MF
+/HeaderDateF /HeaderFont-Bold findfont 12 scalefont def
+
+/Times-Roman /HeaderFont-Times MF
+/HeaderHDRF /HeaderFont-Times findfont 14 scalefont def
+
+/HeaderPageNumF /Helvetica-Bold findfont 28.8 scalefont def
+
+/do_header {	% print enscript header
+  gsave
+    d_header_x d_header_y translate
+
+    % light bar
+    0 0 d_header_w d_header_h 2 div Box
+    .95 setgray fill
+
+    % filename
+    0 setgray 
+    HeaderHDRF setfont
+    d_header_w fname stringwidth pop sub 2 div d_header_h 8 div moveto
+    fname show
+
+    % user supplied header string.
+    user_header_p {
+      d_header_w user_header_str stringwidth pop sub 2 div 
+      d_header_h 8 div 5 mul moveto user_header_str show
+    } if
+
+    % dark gray boxes
+    /dbw d_header_h 2 mul def	% dark box width
+    /dbc .7 def			% dark box color
+
+    % left dark box.
+    0 0 dbw d_header_h Box
+    dbc setgray fill
+
+    0 setgray 
+    HeaderDateF setfont
+    moddatestr dup stringwidth pop dbw exch sub 2 div 
+    d_header_h 2 div 2 add moveto show
+    modtimestr dup stringwidth pop dbw exch sub 2 div 
+    d_header_h 5 div moveto show
+
+    % right dark box
+    d_header_w dbw sub 0 dbw d_header_h Box
+    dbc setgray fill
+
+    HeaderPageNumF setfont
+    1 setgray
+    pagenum 10 string cvs dup 
+    stringwidth pop dbw exch sub 2 div d_header_w dbw sub add
+    d_header_h .2 mul moveto show
+
+  grestore
+} def
+%%EndResource
+/d_page_w 794 def
+/d_page_h 547 def
+/d_header_x 0 def
+/d_header_y 511 def
+/d_header_w 794 def
+/d_header_h 36 def
+/d_footer_x 0 def
+/d_footer_y 0 def
+/d_footer_w 794 def
+/d_footer_h 0 def
+/d_output_w 794 def
+/d_output_h 511 def
+/cols 2 def
+%%EndSetup
+%%Page: (1) 1
+%%BeginPageSetup
+_S
+90 rotate
+24 -571 translate
+/pagenum 1 def
+/fname (rfc2581.txt) def
+/fdir () def
+/ftail (rfc2581.txt) def
+% User defined strings:
+/moddatestr (08/16/100) def
+/modtimestr (11:32:26) def
+%%EndPageSetup
+column_lines
+do_header
+5 461 M
+(Network Working Group                                          M. Allman) s
+5 453 M
+(Request for Comments: 2581                  NASA Glenn/Sterling Software) s
+5 445 M
+(Obsoletes: 2001                                                V. Paxson) s
+5 437 M
+(Category: Standards Track                                   ACIRI / ICSI) s
+5 429 M
+(                                                              W. Stevens) s
+5 421 M
+(                                                              Consultant) s
+5 413 M
+(                                                              April 1999) s
+5 389 M
+(                         TCP Congestion Control) s
+5 373 M
+(Status of this Memo) s
+5 357 M
+(   This document specifies an Internet standards track protocol for the) s
+5 349 M
+(   Internet community, and requests discussion and suggestions for) s
+5 341 M
+(   improvements.  Please refer to the current edition of the "Internet) s
+5 333 M
+(   Official Protocol Standards" \(STD 1\) for the standardization state) s
+5 325 M
+(   and status of this protocol.  Distribution of this memo is unlimited.) s
+5 309 M
+(Copyright Notice) s
+5 293 M
+(   Copyright \(C\) The Internet Society \(1999\).  All Rights Reserved.) s
+5 277 M
+(Abstract) s
+5 261 M
+(   This document defines TCP's four intertwined congestion control) s
+5 253 M
+(   algorithms: slow start, congestion avoidance, fast retransmit, and) s
+5 245 M
+(   fast recovery.  In addition, the document specifies how TCP should) s
+5 237 M
+(   begin transmission after a relatively long idle period, as well as) s
+5 229 M
+(   discussing various acknowledgment generation methods.) s
+5 213 M
+(1. Introduction) s
+5 197 M
+(   This document specifies four TCP [Pos81] congestion control) s
+5 189 M
+(   algorithms: slow start, congestion avoidance, fast retransmit and) s
+5 181 M
+(   fast recovery.  These algorithms were devised in [Jac88] and [Jac90].) s
+5 173 M
+(   Their use with TCP is standardized in [Bra89].) s
+5 157 M
+(   This document is an update of [Ste97].  In addition to specifying the) s
+5 149 M
+(   congestion control algorithms, this document specifies what TCP) s
+5 141 M
+(   connections should do after a relatively long idle period, as well as) s
+5 133 M
+(   specifying and clarifying some of the issues pertaining to TCP ACK) s
+5 125 M
+(   generation.) s
+5 109 M
+(   Note that [Ste94] provides examples of these algorithms in action and) s
+5 101 M
+(   [WS95] provides an explanation of the source code for the BSD) s
+5 93 M
+(   implementation of these algorithms.) s
+5 53 M
+(Allman, et. al.             Standards Track                     [Page 1]) s
+402 493 M
+(RFC 2581                 TCP Congestion Control               April 1999) s
+402 469 M
+(   This document is organized as follows.  Section 2 provides various) s
+402 461 M
+(   definitions which will be used throughout the document.  Section 3) s
+402 453 M
+(   provides a specification of the congestion control algorithms.) s
+402 445 M
+(   Section 4 outlines concerns related to the congestion control) s
+402 437 M
+(   algorithms and finally, section 5 outlines security considerations.) s
+402 421 M
+(   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",) s
+402 413 M
+(   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this) s
+402 405 M
+(   document are to be interpreted as described in [Bra97].) s
+402 389 M
+(2. Definitions) s
+402 373 M
+(   This section provides the definition of several terms that will be) s
+402 365 M
+(   used throughout the remainder of this document.) s
+402 349 M
+(   SEGMENT:) s
+402 341 M
+(      A segment is ANY TCP/IP data or acknowledgment packet \(or both\).) s
+402 325 M
+(   SENDER MAXIMUM SEGMENT SIZE \(SMSS\):  The SMSS is the size of the) s
+402 317 M
+(      largest segment that the sender can transmit.  This value can be) s
+402 309 M
+(      based on the maximum transmission unit of the network, the path) s
+402 301 M
+(      MTU discovery [MD90] algorithm, RMSS \(see next item\), or other) s
+402 293 M
+(      factors.  The size does not include the TCP/IP headers and) s
+402 285 M
+(      options.) s
+402 269 M
+(   RECEIVER MAXIMUM SEGMENT SIZE \(RMSS\):  The RMSS is the size of the) s
+402 261 M
+(      largest segment the receiver is willing to accept.  This is the) s
+402 253 M
+(      value specified in the MSS option sent by the receiver during) s
+402 245 M
+(      connection startup.  Or, if the MSS option is not used, 536 bytes) s
+402 237 M
+(      [Bra89].  The size does not include the TCP/IP headers and) s
+402 229 M
+(      options.) s
+402 213 M
+(   FULL-SIZED SEGMENT: A segment that contains the maximum number of) s
+402 205 M
+(      data bytes permitted \(i.e., a segment containing SMSS bytes of) s
+402 197 M
+(      data\).) s
+402 181 M
+(   RECEIVER WINDOW \(rwnd\) The most recently advertised receiver window.) s
+402 165 M
+(   CONGESTION WINDOW \(cwnd\):  A TCP state variable that limits the) s
+402 157 M
+(      amount of data a TCP can send.  At any given time, a TCP MUST NOT) s
+402 149 M
+(      send data with a sequence number higher than the sum of the) s
+402 141 M
+(      highest acknowledged sequence number and the minimum of cwnd and) s
+402 133 M
+(      rwnd.) s
+402 117 M
+(   INITIAL WINDOW \(IW\):  The initial window is the size of the sender's) s
+402 109 M
+(      congestion window after the three-way handshake is completed.) s
+402 61 M
+(Allman, et. al.             Standards Track                     [Page 2]) s
+_R
+S
+%%Page: (2) 2
+%%BeginPageSetup
+_S
+90 rotate
+24 -571 translate
+/pagenum 2 def
+/fname (rfc2581.txt) def
+/fdir () def
+/ftail (rfc2581.txt) def
+% User defined strings:
+/moddatestr (08/16/100) def
+/modtimestr (11:32:26) def
+%%EndPageSetup
+column_lines
+do_header
+5 493 M
+(RFC 2581                 TCP Congestion Control               April 1999) s
+5 469 M
+(   LOSS WINDOW \(LW\):  The loss window is the size of the congestion) s
+5 461 M
+(      window after a TCP sender detects loss using its retransmission) s
+5 453 M
+(      timer.) s
+5 437 M
+(   RESTART WINDOW \(RW\):  The restart window is the size of the) s
+5 429 M
+(      congestion window after a TCP restarts transmission after an idle) s
+5 421 M
+(      period \(if the slow start algorithm is used; see section 4.1 for) s
+5 413 M
+(      more discussion\).) s
+5 397 M
+(   FLIGHT SIZE:  The amount of data that has been sent but not yet) s
+5 389 M
+(      acknowledged.) s
+5 373 M
+(3. Congestion Control Algorithms) s
+5 357 M
+(   This section defines the four congestion control algorithms: slow) s
+5 349 M
+(   start, congestion avoidance, fast retransmit and fast recovery,) s
+5 341 M
+(   developed in [Jac88] and [Jac90].  In some situations it may be) s
+5 333 M
+(   beneficial for a TCP sender to be more conservative than the) s
+5 325 M
+(   algorithms allow, however a TCP MUST NOT be more aggressive than the) s
+5 317 M
+(   following algorithms allow \(that is, MUST NOT send data when the) s
+5 309 M
+(   value of cwnd computed by the following algorithms would not allow) s
+5 301 M
+(   the data to be sent\).) s
+5 285 M
+(3.1 Slow Start and Congestion Avoidance) s
+5 269 M
+(   The slow start and congestion avoidance algorithms MUST be used by a) s
+5 261 M
+(   TCP sender to control the amount of outstanding data being injected) s
+5 253 M
+(   into the network.  To implement these algorithms, two variables are) s
+5 245 M
+(   added to the TCP per-connection state.  The congestion window \(cwnd\)) s
+5 237 M
+(   is a sender-side limit on the amount of data the sender can transmit) s
+5 229 M
+(   into the network before receiving an acknowledgment \(ACK\), while the) s
+5 221 M
+(   receiver's advertised window \(rwnd\) is a receiver-side limit on the) s
+5 213 M
+(   amount of outstanding data.  The minimum of cwnd and rwnd governs) s
+5 205 M
+(   data transmission.) s
+5 189 M
+(   Another state variable, the slow start threshold \(ssthresh\), is used) s
+5 181 M
+(   to determine whether the slow start or congestion avoidance algorithm) s
+5 173 M
+(   is used to control data transmission, as discussed below.) s
+5 157 M
+(   Beginning transmission into a network with unknown conditions) s
+5 149 M
+(   requires TCP to slowly probe the network to determine the available) s
+5 141 M
+(   capacity, in order to avoid congesting the network with an) s
+5 133 M
+(   inappropriately large burst of data.  The slow start algorithm is) s
+5 125 M
+(   used for this purpose at the beginning of a transfer, or after) s
+5 117 M
+(   repairing loss detected by the retransmission timer.) s
+5 61 M
+(Allman, et. al.             Standards Track                     [Page 3]) s
+402 493 M
+(RFC 2581                 TCP Congestion Control               April 1999) s
+402 469 M
+(   IW, the initial value of cwnd, MUST be less than or equal to 2*SMSS) s
+402 461 M
+(   bytes and MUST NOT be more than 2 segments.) s
+402 445 M
+(   We note that a non-standard, experimental TCP extension allows that a) s
+402 437 M
+(   TCP MAY use a larger initial window \(IW\), as defined in equation 1) s
+402 429 M
+(   [AFP98]:) s
+402 413 M
+(      IW = min \(4*SMSS, max \(2*SMSS, 4380 bytes\)\)           \(1\)) s
+402 397 M
+(   With this extension, a TCP sender MAY use a 3 or 4 segment initial) s
+402 389 M
+(   window, provided the combined size of the segments does not exceed) s
+402 381 M
+(   4380 bytes.  We do NOT allow this change as part of the standard) s
+402 373 M
+(   defined by this document.  However, we include discussion of \(1\) in) s
+402 365 M
+(   the remainder of this document as a guideline for those experimenting) s
+402 357 M
+(   with the change, rather than conforming to the present standards for) s
+402 349 M
+(   TCP congestion control.) s
+402 333 M
+(   The initial value of ssthresh MAY be arbitrarily high \(for example,) s
+402 325 M
+(   some implementations use the size of the advertised window\), but it) s
+402 317 M
+(   may be reduced in response to congestion.  The slow start algorithm) s
+402 309 M
+(   is used when cwnd < ssthresh, while the congestion avoidance) s
+402 301 M
+(   algorithm is used when cwnd > ssthresh.  When cwnd and ssthresh are) s
+402 293 M
+(   equal the sender may use either slow start or congestion avoidance.) s
+402 277 M
+(   During slow start, a TCP increments cwnd by at most SMSS bytes for) s
+402 269 M
+(   each ACK received that acknowledges new data.  Slow start ends when) s
+402 261 M
+(   cwnd exceeds ssthresh \(or, optionally, when it reaches it, as noted) s
+402 253 M
+(   above\) or when congestion is observed.) s
+402 237 M
+(   During congestion avoidance, cwnd is incremented by 1 full-sized) s
+402 229 M
+(   segment per round-trip time \(RTT\).  Congestion avoidance continues) s
+402 221 M
+(   until congestion is detected.  One formula commonly used to update) s
+402 213 M
+(   cwnd during congestion avoidance is given in equation 2:) s
+402 197 M
+(      cwnd += SMSS*SMSS/cwnd                     \(2\)) s
+402 181 M
+(   This adjustment is executed on every incoming non-duplicate ACK.) s
+402 173 M
+(   Equation \(2\) provides an acceptable approximation to the underlying) s
+402 165 M
+(   principle of increasing cwnd by 1 full-sized segment per RTT.  \(Note) s
+402 157 M
+(   that for a connection in which the receiver acknowledges every data) s
+402 149 M
+(   segment, \(2\) proves slightly more aggressive than 1 segment per RTT,) s
+402 141 M
+(   and for a receiver acknowledging every-other packet, \(2\) is less) s
+402 133 M
+(   aggressive.\)) s
+402 61 M
+(Allman, et. al.             Standards Track                     [Page 4]) s
+_R
+S
+%%Page: (3) 3
+%%BeginPageSetup
+_S
+90 rotate
+24 -571 translate
+/pagenum 3 def
+/fname (rfc2581.txt) def
+/fdir () def
+/ftail (rfc2581.txt) def
+% User defined strings:
+/moddatestr (08/16/100) def
+/modtimestr (11:32:26) def
+%%EndPageSetup
+column_lines
+do_header
+5 493 M
+(RFC 2581                 TCP Congestion Control               April 1999) s
+5 469 M
+(   Implementation Note: Since integer arithmetic is usually used in TCP) s
+5 461 M
+(   implementations, the formula given in equation 2 can fail to increase) s
+5 453 M
+(   cwnd when the congestion window is very large \(larger than) s
+5 445 M
+(   SMSS*SMSS\).  If the above formula yields 0, the result SHOULD be) s
+5 437 M
+(   rounded up to 1 byte.) s
+5 421 M
+(   Implementation Note: older implementations have an additional) s
+5 413 M
+(   additive constant on the right-hand side of equation \(2\).  This is) s
+5 405 M
+(   incorrect and can actually lead to diminished performance [PAD+98].) s
+5 389 M
+(   Another acceptable way to increase cwnd during congestion avoidance) s
+5 381 M
+(   is to count the number of bytes that have been acknowledged by ACKs) s
+5 373 M
+(   for new data.  \(A drawback of this implementation is that it requires) s
+5 365 M
+(   maintaining an additional state variable.\)  When the number of bytes) s
+5 357 M
+(   acknowledged reaches cwnd, then cwnd can be incremented by up to SMSS) s
+5 349 M
+(   bytes.  Note that during congestion avoidance, cwnd MUST NOT be) s
+5 341 M
+(   increased by more than the larger of either 1 full-sized segment per) s
+5 333 M
+(   RTT, or the value computed using equation 2.) s
+5 317 M
+(   Implementation Note: some implementations maintain cwnd in units of) s
+5 309 M
+(   bytes, while others in units of full-sized segments.  The latter will) s
+5 301 M
+(   find equation \(2\) difficult to use, and may prefer to use the) s
+5 293 M
+(   counting approach discussed in the previous paragraph.) s
+5 277 M
+(   When a TCP sender detects segment loss using the retransmission) s
+5 269 M
+(   timer, the value of ssthresh MUST be set to no more than the value) s
+5 261 M
+(   given in equation 3:) s
+5 245 M
+(      ssthresh = max \(FlightSize / 2, 2*SMSS\)            \(3\)) s
+5 229 M
+(   As discussed above, FlightSize is the amount of outstanding data in) s
+5 221 M
+(   the network.) s
+5 205 M
+(   Implementation Note: an easy mistake to make is to simply use cwnd,) s
+5 197 M
+(   rather than FlightSize, which in some implementations may) s
+5 189 M
+(   incidentally increase well beyond rwnd.) s
+5 173 M
+(   Furthermore, upon a timeout cwnd MUST be set to no more than the loss) s
+5 165 M
+(   window, LW, which equals 1 full-sized segment \(regardless of the) s
+5 157 M
+(   value of IW\).  Therefore, after retransmitting the dropped segment) s
+5 149 M
+(   the TCP sender uses the slow start algorithm to increase the window) s
+5 141 M
+(   from 1 full-sized segment to the new value of ssthresh, at which) s
+5 133 M
+(   point congestion avoidance again takes over.) s
+5 61 M
+(Allman, et. al.             Standards Track                     [Page 5]) s
+402 493 M
+(RFC 2581                 TCP Congestion Control               April 1999) s
+402 469 M
+(3.2 Fast Retransmit/Fast Recovery) s
+402 453 M
+(   A TCP receiver SHOULD send an immediate duplicate ACK when an out-) s
+402 445 M
+(   of-order segment arrives.  The purpose of this ACK is to inform the) s
+402 437 M
+(   sender that a segment was received out-of-order and which sequence) s
+402 429 M
+(   number is expected.  From the sender's perspective, duplicate ACKs) s
+402 421 M
+(   can be caused by a number of network problems.  First, they can be) s
+402 413 M
+(   caused by dropped segments.  In this case, all segments after the) s
+402 405 M
+(   dropped segment will trigger duplicate ACKs.  Second, duplicate ACKs) s
+402 397 M
+(   can be caused by the re-ordering of data segments by the network \(not) s
+402 389 M
+(   a rare event along some network paths [Pax97]\).  Finally, duplicate) s
+402 381 M
+(   ACKs can be caused by replication of ACK or data segments by the) s
+402 373 M
+(   network.  In addition, a TCP receiver SHOULD send an immediate ACK) s
+402 365 M
+(   when the incoming segment fills in all or part of a gap in the) s
+402 357 M
+(   sequence space.  This will generate more timely information for a) s
+402 349 M
+(   sender recovering from a loss through a retransmission timeout, a) s
+402 341 M
+(   fast retransmit, or an experimental loss recovery algorithm, such as) s
+402 333 M
+(   NewReno [FH98].) s
+402 317 M
+(   The TCP sender SHOULD use the "fast retransmit" algorithm to detect) s
+402 309 M
+(   and repair loss, based on incoming duplicate ACKs.  The fast) s
+402 301 M
+(   retransmit algorithm uses the arrival of 3 duplicate ACKs \(4) s
+402 293 M
+(   identical ACKs without the arrival of any other intervening packets\)) s
+402 285 M
+(   as an indication that a segment has been lost.  After receiving 3) s
+402 277 M
+(   duplicate ACKs, TCP performs a retransmission of what appears to be) s
+402 269 M
+(   the missing segment, without waiting for the retransmission timer to) s
+402 261 M
+(   expire.) s
+402 245 M
+(   After the fast retransmit algorithm sends what appears to be the) s
+402 237 M
+(   missing segment, the "fast recovery" algorithm governs the) s
+402 229 M
+(   transmission of new data until a non-duplicate ACK arrives.  The) s
+402 221 M
+(   reason for not performing slow start is that the receipt of the) s
+402 213 M
+(   duplicate ACKs not only indicates that a segment has been lost, but) s
+402 205 M
+(   also that segments are most likely leaving the network \(although a) s
+402 197 M
+(   massive segment duplication by the network can invalidate this) s
+402 189 M
+(   conclusion\).  In other words, since the receiver can only generate a) s
+402 181 M
+(   duplicate ACK when a segment has arrived, that segment has left the) s
+402 173 M
+(   network and is in the receiver's buffer, so we know it is no longer) s
+402 165 M
+(   consuming network resources.  Furthermore, since the ACK "clock") s
+402 157 M
+(   [Jac88] is preserved, the TCP sender can continue to transmit new) s
+402 149 M
+(   segments \(although transmission must continue using a reduced cwnd\).) s
+402 133 M
+(   The fast retransmit and fast recovery algorithms are usually) s
+402 125 M
+(   implemented together as follows.) s
+402 109 M
+(   1.  When the third duplicate ACK is received, set ssthresh to no more) s
+402 101 M
+(       than the value given in equation 3.) s
+402 61 M
+(Allman, et. al.             Standards Track                     [Page 6]) s
+_R
+S
+%%Page: (4) 4
+%%BeginPageSetup
+_S
+90 rotate
+24 -571 translate
+/pagenum 4 def
+/fname (rfc2581.txt) def
+/fdir () def
+/ftail (rfc2581.txt) def
+% User defined strings:
+/moddatestr (08/16/100) def
+/modtimestr (11:32:26) def
+%%EndPageSetup
+column_lines
+do_header
+5 493 M
+(RFC 2581                 TCP Congestion Control               April 1999) s
+5 469 M
+(   2.  Retransmit the lost segment and set cwnd to ssthresh plus 3*SMSS.) s
+5 461 M
+(       This artificially "inflates" the congestion window by the number) s
+5 453 M
+(       of segments \(three\) that have left the network and which the) s
+5 445 M
+(       receiver has buffered.) s
+5 429 M
+(   3.  For each additional duplicate ACK received, increment cwnd by) s
+5 421 M
+(       SMSS.  This artificially inflates the congestion window in order) s
+5 413 M
+(       to reflect the additional segment that has left the network.) s
+5 397 M
+(   4.  Transmit a segment, if allowed by the new value of cwnd and the) s
+5 389 M
+(       receiver's advertised window.) s
+5 373 M
+(   5.  When the next ACK arrives that acknowledges new data, set cwnd to) s
+5 365 M
+(       ssthresh \(the value set in step 1\).  This is termed "deflating") s
+5 357 M
+(       the window.) s
+5 341 M
+(       This ACK should be the acknowledgment elicited by the) s
+5 333 M
+(       retransmission from step 1, one RTT after the retransmission) s
+5 325 M
+(       \(though it may arrive sooner in the presence of significant out-) s
+5 317 M
+(       of-order delivery of data segments at the receiver\).) s
+5 309 M
+(       Additionally, this ACK should acknowledge all the intermediate) s
+5 301 M
+(       segments sent between the lost segment and the receipt of the) s
+5 293 M
+(       third duplicate ACK, if none of these were lost.) s
+5 277 M
+(   Note: This algorithm is known to generally not recover very) s
+5 269 M
+(   efficiently from multiple losses in a single flight of packets) s
+5 261 M
+(   [FF96].  One proposed set of modifications to address this problem) s
+5 253 M
+(   can be found in [FH98].) s
+5 237 M
+(4. Additional Considerations) s
+5 221 M
+(4.1 Re-starting Idle Connections) s
+5 205 M
+(   A known problem with the TCP congestion control algorithms described) s
+5 197 M
+(   above is that they allow a potentially inappropriate burst of traffic) s
+5 189 M
+(   to be transmitted after TCP has been idle for a relatively long) s
+5 181 M
+(   period of time.  After an idle period, TCP cannot use the ACK clock) s
+5 173 M
+(   to strobe new segments into the network, as all the ACKs have drained) s
+5 165 M
+(   from the network.  Therefore, as specified above, TCP can potentially) s
+5 157 M
+(   send a cwnd-size line-rate burst into the network after an idle) s
+5 149 M
+(   period.) s
+5 133 M
+(   [Jac88] recommends that a TCP use slow start to restart transmission) s
+5 125 M
+(   after a relatively long idle period.  Slow start serves to restart) s
+5 117 M
+(   the ACK clock, just as it does at the beginning of a transfer.  This) s
+5 109 M
+(   mechanism has been widely deployed in the following manner.  When TCP) s
+5 101 M
+(   has not received a segment for more than one retransmission timeout,) s
+5 93 M
+(   cwnd is reduced to the value of the restart window \(RW\) before) s
+5 61 M
+(Allman, et. al.             Standards Track                     [Page 7]) s
+402 493 M
+(RFC 2581                 TCP Congestion Control               April 1999) s
+402 469 M
+(   transmission begins.) s
+402 453 M
+(   For the purposes of this standard, we define RW = IW.) s
+402 437 M
+(   We note that the non-standard experimental extension to TCP defined) s
+402 429 M
+(   in [AFP98] defines RW = min\(IW, cwnd\), with the definition of IW) s
+402 421 M
+(   adjusted per equation \(1\) above.) s
+402 405 M
+(   Using the last time a segment was received to determine whether or) s
+402 397 M
+(   not to decrease cwnd fails to deflate cwnd in the common case of) s
+402 389 M
+(   persistent HTTP connections [HTH98].  In this case, a WWW server) s
+402 381 M
+(   receives a request before transmitting data to the WWW browser.  The) s
+402 373 M
+(   reception of the request makes the test for an idle connection fail,) s
+402 365 M
+(   and allows the TCP to begin transmission with a possibly) s
+402 357 M
+(   inappropriately large cwnd.) s
+402 341 M
+(   Therefore, a TCP SHOULD set cwnd to no more than RW before beginning) s
+402 333 M
+(   transmission if the TCP has not sent data in an interval exceeding) s
+402 325 M
+(   the retransmission timeout.) s
+402 309 M
+(4.2 Generating Acknowledgments) s
+402 293 M
+(   The delayed ACK algorithm specified in [Bra89] SHOULD be used by a) s
+402 285 M
+(   TCP receiver.  When used, a TCP receiver MUST NOT excessively delay) s
+402 277 M
+(   acknowledgments.  Specifically, an ACK SHOULD be generated for at) s
+402 269 M
+(   least every second full-sized segment, and MUST be generated within) s
+402 261 M
+(   500 ms of the arrival of the first unacknowledged packet.) s
+402 245 M
+(   The requirement that an ACK "SHOULD" be generated for at least every) s
+402 237 M
+(   second full-sized segment is listed in [Bra89] in one place as a) s
+402 229 M
+(   SHOULD and another as a MUST.  Here we unambiguously state it is a) s
+402 221 M
+(   SHOULD.  We also emphasize that this is a SHOULD, meaning that an) s
+402 213 M
+(   implementor should indeed only deviate from this requirement after) s
+402 205 M
+(   careful consideration of the implications.  See the discussion of) s
+402 197 M
+(   "Stretch ACK violation" in [PAD+98] and the references therein for a) s
+402 189 M
+(   discussion of the possible performance problems with generating ACKs) s
+402 181 M
+(   less frequently than every second full-sized segment.) s
+402 165 M
+(   In some cases, the sender and receiver may not agree on what) s
+402 157 M
+(   constitutes a full-sized segment.  An implementation is deemed to) s
+402 149 M
+(   comply with this requirement if it sends at least one acknowledgment) s
+402 141 M
+(   every time it receives 2*RMSS bytes of new data from the sender,) s
+402 133 M
+(   where RMSS is the Maximum Segment Size specified by the receiver to) s
+402 125 M
+(   the sender \(or the default value of 536 bytes, per [Bra89], if the) s
+402 117 M
+(   receiver does not specify an MSS option during connection) s
+402 109 M
+(   establishment\).  The sender may be forced to use a segment size less) s
+402 101 M
+(   than RMSS due to the maximum transmission unit \(MTU\), the path MTU) s
+402 93 M
+(   discovery algorithm or other factors.  For instance, consider the) s
+402 61 M
+(Allman, et. al.             Standards Track                     [Page 8]) s
+_R
+S
+%%Page: (5) 5
+%%BeginPageSetup
+_S
+90 rotate
+24 -571 translate
+/pagenum 5 def
+/fname (rfc2581.txt) def
+/fdir () def
+/ftail (rfc2581.txt) def
+% User defined strings:
+/moddatestr (08/16/100) def
+/modtimestr (11:32:26) def
+%%EndPageSetup
+column_lines
+do_header
+5 493 M
+(RFC 2581                 TCP Congestion Control               April 1999) s
+5 469 M
+(   case when the receiver announces an RMSS of X bytes but the sender) s
+5 461 M
+(   ends up using a segment size of Y bytes \(Y < X\) due to path MTU) s
+5 453 M
+(   discovery \(or the sender's MTU size\).  The receiver will generate) s
+5 445 M
+(   stretch ACKs if it waits for 2*X bytes to arrive before an ACK is) s
+5 437 M
+(   sent.  Clearly this will take more than 2 segments of size Y bytes.) s
+5 429 M
+(   Therefore, while a specific algorithm is not defined, it is desirable) s
+5 421 M
+(   for receivers to attempt to prevent this situation, for example by) s
+5 413 M
+(   acknowledging at least every second segment, regardless of size.) s
+5 405 M
+(   Finally, we repeat that an ACK MUST NOT be delayed for more than 500) s
+5 397 M
+(   ms waiting on a second full-sized segment to arrive.) s
+5 381 M
+(   Out-of-order data segments SHOULD be acknowledged immediately, in) s
+5 373 M
+(   order to accelerate loss recovery.  To trigger the fast retransmit) s
+5 365 M
+(   algorithm, the receiver SHOULD send an immediate duplicate ACK when) s
+5 357 M
+(   it receives a data segment above a gap in the sequence space.  To) s
+5 349 M
+(   provide feedback to senders recovering from losses, the receiver) s
+5 341 M
+(   SHOULD send an immediate ACK when it receives a data segment that) s
+5 333 M
+(   fills in all or part of a gap in the sequence space.) s
+5 317 M
+(   A TCP receiver MUST NOT generate more than one ACK for every incoming) s
+5 309 M
+(   segment, other than to update the offered window as the receiving) s
+5 301 M
+(   application consumes new data [page 42, Pos81][Cla82].) s
+5 285 M
+(4.3 Loss Recovery Mechanisms) s
+5 269 M
+(   A number of loss recovery algorithms that augment fast retransmit and) s
+5 261 M
+(   fast recovery have been suggested by TCP researchers.  While some of) s
+5 253 M
+(   these algorithms are based on the TCP selective acknowledgment \(SACK\)) s
+5 245 M
+(   option [MMFR96], such as [FF96,MM96a,MM96b], others do not require) s
+5 237 M
+(   SACKs [Hoe96,FF96,FH98].  The non-SACK algorithms use "partial) s
+5 229 M
+(   acknowledgments" \(ACKs which cover new data, but not all the data) s
+5 221 M
+(   outstanding when loss was detected\) to trigger retransmissions.) s
+5 213 M
+(   While this document does not standardize any of the specific) s
+5 205 M
+(   algorithms that may improve fast retransmit/fast recovery, these) s
+5 197 M
+(   enhanced algorithms are implicitly allowed, as long as they follow) s
+5 189 M
+(   the general principles of the basic four algorithms outlined above.) s
+5 173 M
+(   Therefore, when the first loss in a window of data is detected,) s
+5 165 M
+(   ssthresh MUST be set to no more than the value given by equation \(3\).) s
+5 157 M
+(   Second, until all lost segments in the window of data in question are) s
+5 149 M
+(   repaired, the number of segments transmitted in each RTT MUST be no) s
+5 141 M
+(   more than half the number of outstanding segments when the loss was) s
+5 133 M
+(   detected.  Finally, after all loss in the given window of segments) s
+5 125 M
+(   has been successfully retransmitted, cwnd MUST be set to no more than) s
+5 117 M
+(   ssthresh and congestion avoidance MUST be used to further increase) s
+5 109 M
+(   cwnd.  Loss in two successive windows of data, or the loss of a) s
+5 101 M
+(   retransmission, should be taken as two indications of congestion and,) s
+5 93 M
+(   therefore, cwnd \(and ssthresh\) MUST be lowered twice in this case.) s
+5 61 M
+(Allman, et. al.             Standards Track                     [Page 9]) s
+402 493 M
+(RFC 2581                 TCP Congestion Control               April 1999) s
+402 469 M
+(   The algorithms outlined in [Hoe96,FF96,MM96a,MM6b] follow the) s
+402 461 M
+(   principles of the basic four congestion control algorithms outlined) s
+402 453 M
+(   in this document.) s
+402 437 M
+(5.  Security Considerations) s
+402 421 M
+(   This document requires a TCP to diminish its sending rate in the) s
+402 413 M
+(   presence of retransmission timeouts and the arrival of duplicate) s
+402 405 M
+(   acknowledgments.  An attacker can therefore impair the performance of) s
+402 397 M
+(   a TCP connection by either causing data packets or their) s
+402 389 M
+(   acknowledgments to be lost, or by forging excessive duplicate) s
+402 381 M
+(   acknowledgments.  Causing two congestion control events back-to-back) s
+402 373 M
+(   will often cut ssthresh to its minimum value of 2*SMSS, causing the) s
+402 365 M
+(   connection to immediately enter the slower-performing congestion) s
+402 357 M
+(   avoidance phase.) s
+402 341 M
+(   The Internet to a considerable degree relies on the correct) s
+402 333 M
+(   implementation of these algorithms in order to preserve network) s
+402 325 M
+(   stability and avoid congestion collapse.  An attacker could cause TCP) s
+402 317 M
+(   endpoints to respond more aggressively in the face of congestion by) s
+402 309 M
+(   forging excessive duplicate acknowledgments or excessive) s
+402 301 M
+(   acknowledgments for new data.  Conceivably, such an attack could) s
+402 293 M
+(   drive a portion of the network into congestion collapse.) s
+402 277 M
+(6.  Changes Relative to RFC 2001) s
+402 261 M
+(   This document has been extensively rewritten editorially and it is) s
+402 253 M
+(   not feasible to itemize the list of changes between the two) s
+402 245 M
+(   documents. The intention of this document is not to change any of the) s
+402 237 M
+(   recommendations given in RFC 2001, but to further clarify cases that) s
+402 229 M
+(   were not discussed in detail in 2001. Specifically, this document) s
+402 221 M
+(   suggests what TCP connections should do after a relatively long idle) s
+402 213 M
+(   period, as well as specifying and clarifying some of the issues) s
+402 205 M
+(   pertaining to TCP ACK generation.  Finally, the allowable upper bound) s
+402 197 M
+(   for the initial congestion window has also been raised from one to) s
+402 189 M
+(   two segments.) s
+402 173 M
+(Acknowledgments) s
+402 157 M
+(   The four algorithms that are described were developed by Van) s
+402 149 M
+(   Jacobson.) s
+402 133 M
+(   Some of the text from this document is taken from "TCP/IP) s
+402 125 M
+(   Illustrated, Volume 1: The Protocols" by W. Richard Stevens) s
+402 117 M
+(   \(Addison-Wesley, 1994\) and "TCP/IP Illustrated, Volume 2: The) s
+402 109 M
+(   Implementation" by Gary R. Wright and W.  Richard Stevens \(Addison-) s
+402 101 M
+(   Wesley, 1995\).  This material is used with the permission of) s
+402 93 M
+(   Addison-Wesley.) s
+402 61 M
+(Allman, et. al.             Standards Track                    [Page 10]) s
+_R
+S
+%%Page: (6) 6
+%%BeginPageSetup
+_S
+90 rotate
+24 -571 translate
+/pagenum 6 def
+/fname (rfc2581.txt) def
+/fdir () def
+/ftail (rfc2581.txt) def
+% User defined strings:
+/moddatestr (08/16/100) def
+/modtimestr (11:32:26) def
+%%EndPageSetup
+column_lines
+do_header
+5 493 M
+(RFC 2581                 TCP Congestion Control               April 1999) s
+5 469 M
+(   Neal Cardwell, Sally Floyd, Craig Partridge and Joe Touch contributed) s
+5 461 M
+(   a number of helpful suggestions.) s
+5 445 M
+(References) s
+5 429 M
+(   [AFP98]  Allman, M., Floyd, S. and C. Partridge, "Increasing TCP's) s
+5 421 M
+(            Initial Window Size, RFC 2414, September 1998.) s
+5 405 M
+(   [Bra89]  Braden, R., "Requirements for Internet Hosts --) s
+5 397 M
+(            Communication Layers", STD 3, RFC 1122, October 1989.) s
+5 381 M
+(   [Bra97]  Bradner, S., "Key words for use in RFCs to Indicate) s
+5 373 M
+(            Requirement Levels", BCP 14, RFC 2119, March 1997.) s
+5 357 M
+(   [Cla82]  Clark, D., "Window and Acknowledgment Strategy in TCP", RFC) s
+5 349 M
+(            813, July 1982.) s
+5 333 M
+(   [FF96]   Fall, K. and S. Floyd, "Simulation-based Comparisons of) s
+5 325 M
+(            Tahoe, Reno and SACK TCP", Computer Communication Review,) s
+5 317 M
+(            July 1996. ftp://ftp.ee.lbl.gov/papers/sacks.ps.Z.) s
+5 301 M
+(   [FH98]   Floyd, S. and T. Henderson, "The NewReno Modification to) s
+5 293 M
+(            TCP's Fast Recovery Algorithm", RFC 2582, April 1999.) s
+5 277 M
+(   [Flo94]  Floyd, S., "TCP and Successive Fast Retransmits. Technical) s
+5 269 M
+(            report", October 1994.) s
+5 261 M
+(            ftp://ftp.ee.lbl.gov/papers/fastretrans.ps.) s
+5 245 M
+(   [Hoe96]  Hoe, J., "Improving the Start-up Behavior of a Congestion) s
+5 237 M
+(            Control Scheme for TCP", In ACM SIGCOMM, August 1996.) s
+5 221 M
+(   [HTH98]  Hughes, A., Touch, J. and J. Heidemann, "Issues in TCP) s
+5 213 M
+(            Slow-Start Restart After Idle", Work in Progress.) s
+5 197 M
+(   [Jac88]  Jacobson, V., "Congestion Avoidance and Control", Computer) s
+5 189 M
+(            Communication Review, vol. 18, no. 4, pp. 314-329, Aug.) s
+5 181 M
+(            1988.  ftp://ftp.ee.lbl.gov/papers/congavoid.ps.Z.) s
+5 165 M
+(   [Jac90]  Jacobson, V., "Modified TCP Congestion Avoidance Algorithm",) s
+5 157 M
+(            end2end-interest mailing list, April 30, 1990.) s
+5 149 M
+(            ftp://ftp.isi.edu/end2end/end2end-interest-1990.mail.) s
+5 133 M
+(   [MD90]   Mogul, J. and S. Deering, "Path MTU Discovery", RFC 1191,) s
+5 125 M
+(            November 1990.) s
+5 61 M
+(Allman, et. al.             Standards Track                    [Page 11]) s
+402 493 M
+(RFC 2581                 TCP Congestion Control               April 1999) s
+402 469 M
+(   [MM96a]  Mathis, M. and J. Mahdavi, "Forward Acknowledgment: Refining) s
+402 461 M
+(            TCP Congestion Control", Proceedings of SIGCOMM'96, August,) s
+402 453 M
+(            1996, Stanford, CA.  Available) s
+402 445 M
+(            fromhttp://www.psc.edu/networking/papers/papers.html) s
+402 429 M
+(   [MM96b]  Mathis, M. and J. Mahdavi, "TCP Rate-Halving with Bounding) s
+402 421 M
+(            Parameters", Technical report.  Available from) s
+402 413 M
+(            http://www.psc.edu/networking/papers/FACKnotes/current.) s
+402 397 M
+(   [MMFR96] Mathis, M., Mahdavi, J., Floyd, S. and A. Romanow, "TCP) s
+402 389 M
+(            Selective Acknowledgement Options", RFC 2018, October 1996.) s
+402 373 M
+(   [PAD+98] Paxson, V., Allman, M., Dawson, S., Fenner, W., Griner, J.,) s
+402 365 M
+(            Heavens, I., Lahey, K., Semke, J. and B. Volz, "Known TCP) s
+402 357 M
+(            Implementation Problems", RFC 2525, March 1999.) s
+402 341 M
+(   [Pax97]  Paxson, V., "End-to-End Internet Packet Dynamics",) s
+402 333 M
+(            Proceedings of SIGCOMM '97, Cannes, France, Sep. 1997.) s
+402 317 M
+(   [Pos81]  Postel, J., "Transmission Control Protocol", STD 7, RFC 793,) s
+402 309 M
+(            September 1981.) s
+402 293 M
+(   [Ste94]  Stevens, W., "TCP/IP Illustrated, Volume 1: The Protocols",) s
+402 285 M
+(            Addison-Wesley, 1994.) s
+402 269 M
+(   [Ste97]  Stevens, W., "TCP Slow Start, Congestion Avoidance, Fast) s
+402 261 M
+(            Retransmit, and Fast Recovery Algorithms", RFC 2001, January) s
+402 253 M
+(            1997.) s
+402 237 M
+(   [WS95]   Wright, G. and W. Stevens, "TCP/IP Illustrated, Volume 2:) s
+402 229 M
+(            The Implementation", Addison-Wesley, 1995.) s
+402 61 M
+(Allman, et. al.             Standards Track                    [Page 12]) s
+_R
+S
+%%Page: (7) 7
+%%BeginPageSetup
+_S
+90 rotate
+24 -571 translate
+/pagenum 7 def
+/fname (rfc2581.txt) def
+/fdir () def
+/ftail (rfc2581.txt) def
+% User defined strings:
+/moddatestr (08/16/100) def
+/modtimestr (11:32:26) def
+%%EndPageSetup
+column_lines
+do_header
+5 493 M
+(RFC 2581                 TCP Congestion Control               April 1999) s
+5 469 M
+(Authors' Addresses) s
+5 453 M
+(   Mark Allman) s
+5 445 M
+(   NASA Glenn Research Center/Sterling Software) s
+5 437 M
+(   Lewis Field) s
+5 429 M
+(   21000 Brookpark Rd.  MS 54-2) s
+5 421 M
+(   Cleveland, OH  44135) s
+5 413 M
+(   216-433-6586) s
+5 397 M
+(   EMail: mallman@grc.nasa.gov) s
+5 389 M
+(   http://roland.grc.nasa.gov/~mallman) s
+5 365 M
+(   Vern Paxson) s
+5 357 M
+(   ACIRI / ICSI) s
+5 349 M
+(   1947 Center Street) s
+5 341 M
+(   Suite 600) s
+5 333 M
+(   Berkeley, CA 94704-1198) s
+5 317 M
+(   Phone: +1 510/642-4274 x302) s
+5 309 M
+(   EMail: vern@aciri.org) s
+5 285 M
+(   W. Richard Stevens) s
+5 277 M
+(   1202 E. Paseo del Zorro) s
+5 269 M
+(   Tucson, AZ  85718) s
+5 261 M
+(   520-297-9416) s
+5 245 M
+(   EMail: rstevens@kohala.com) s
+5 237 M
+(   http://www.kohala.com/~rstevens) s
+5 61 M
+(Allman, et. al.             Standards Track                    [Page 13]) s
+402 493 M
+(RFC 2581                 TCP Congestion Control               April 1999) s
+402 469 M
+(Full Copyright Statement) s
+402 453 M
+(   Copyright \(C\) The Internet Society \(1999\).  All Rights Reserved.) s
+402 437 M
+(   This document and translations of it may be copied and furnished to) s
+402 429 M
+(   others, and derivative works that comment on or otherwise explain it) s
+402 421 M
+(   or assist in its implementation may be prepared, copied, published) s
+402 413 M
+(   and distributed, in whole or in part, without restriction of any) s
+402 405 M
+(   kind, provided that the above copyright notice and this paragraph are) s
+402 397 M
+(   included on all such copies and derivative works.  However, this) s
+402 389 M
+(   document itself may not be modified in any way, such as by removing) s
+402 381 M
+(   the copyright notice or references to the Internet Society or other) s
+402 373 M
+(   Internet organizations, except as needed for the purpose of) s
+402 365 M
+(   developing Internet standards in which case the procedures for) s
+402 357 M
+(   copyrights defined in the Internet Standards process must be) s
+402 349 M
+(   followed, or as required to translate it into languages other than) s
+402 341 M
+(   English.) s
+402 325 M
+(   The limited permissions granted above are perpetual and will not be) s
+402 317 M
+(   revoked by the Internet Society or its successors or assigns.) s
+402 301 M
+(   This document and the information contained herein is provided on an) s
+402 293 M
+(   "AS IS" basis and THE INTERNET SOCIETY AND THE INTERNET ENGINEERING) s
+402 285 M
+(   TASK FORCE DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING) s
+402 277 M
+(   BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION) s
+402 269 M
+(   HEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED WARRANTIES OF) s
+402 261 M
+(   MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.) s
+402 61 M
+(Allman, et. al.             Standards Track                    [Page 14]) s
+_R
+S
+%%Page: (8) 8
+%%BeginPageSetup
+_S
+90 rotate
+24 -571 translate
+/pagenum 8 def
+/fname (rfc2581.txt) def
+/fdir () def
+/ftail (rfc2581.txt) def
+% User defined strings:
+/moddatestr (08/16/100) def
+/modtimestr (11:32:26) def
+%%EndPageSetup
+column_lines
+do_header
+_R
+S
+%%Trailer
+%%Pages: 8
+%%DocumentNeededResources: font Times-Roman Courier-Bold Courier 
+%%+ font Times-Bold 
+%%EOF

@@ -1,0 +1,287 @@
+<html>
+<head>
+	<title>RFID</title>
+</head>
+<body>
+
+<table width=75% align=center>
+	<tr><td><br></td></tr>
+	<tr>
+		<td align="right">
+			<font face="Tahoma">
+				<a href="mailto:Ashish_Vashishta@baylor.edu?Subject=RFID">Ashish Vashishta</a><br>
+				<a href="mailto:wilsonj(at)cs(dot)baylor[dot]edu?Subject=RFID">Jeff Wilson</a><br>
+				CSI 5321<br>
+				November 5, 2003<br>
+			</font>
+		</td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td>
+			<h3><font face="Tahoma">RFID: Radio Frequency IDentification</font></h3>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<font face="Tahoma">
+			<h4>Background</h4>
+			<a href="http://www.ti.com" title="TI Website">Texas Instruments</a> (TI) is a leader in 
+			<a href="http://www.ti-rfid.com" title="TI's RFID Website">Radio Frequency Identification (RFID)</a>
+			technology.	RFID consists of a transceiver (transmitter/receiver) and transponders.  The transponders
+			come in many shapes and sizes, and can be embedded in a credit card or hidden within the seam of a garment.
+			Some are active (embedded power source) but most are passive, activated and powered only by the 13.56MHz 
+			carrier signal from the transceiver.  TI manufactures both Tag-it (proprietary) and ISO-15963 transponders.
+			Most, if not all, of TI's transceivers can address either type of transponder.
+			</font>
+		</td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td>
+			<font face="Tahoma">
+			<h4>S6350</h4>
+			We have acquired an evaluation kit from TI containing the <a href="RI-STU-TRDC-02.pdf" 
+			title="S6350 spec sheet">TI S6350 transceiver</a>, several Tag-it transponders, and 
+			several ISO transponders.  The S6350 is designed to communicate as a slave over RS-232 
+			to a master host.  As shipped, its effective range is about 3 inches.  Part of our research involves
+			developing a loop antenna (using <a href="HFcookbook.pdf" title="TI's HF Antenna Cookbook">
+			this reference</a>), but it was not completed in time to be included in this report.  
+			To make effective use of the S6350, programmatically, requires continuous polling via
+			RS-232 from the host computer.  Communication is achieved by sending packets of bytes
+			to the S6350, then immediately reading the response.  <a href="RI-STU-TRDCrefGuide.pdf" 
+			title="Protocol Definition for TI S6350 RFID Reader">Detailed information</a> about the S6350's
+			command language is available from the <a href="http://www.ti.com/tiris/docs/docntr.htm" 
+			title="TI RFID Documentation Center">TI RFID documentation</a>.
+			</font>
+		</td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td>
+			<font face="Tahoma">
+			<h4>RFID API</h4>
+			We have developed a user library in C# for TI's S6350 evaluation kit.  Our library provides 
+			object oriented command encapsulation as well as a transport mechanism for RS-232 communication.
+			As of this writing, only a subset of the Tag-it commands are represented.  We have not included
+			any of the ISO commands.  However, extending the library to cover the remaining Tag-it commands
+			as well as the ISO commands should require minimal effort.
+			</font>
+		</td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td>
+			<font face="Tahoma">
+			<h4>Serial Protocol and Packet Definition</h4>
+			As mentioned in the <a href="RI-STU-TRDCrefGuide.pdf" title="Protocol Defintion for TI S6350 RFID Reader">
+			S6350 documentation</a>, the S6350 uses RS-232 configured as follows: 1 start bit, 8 data bits,
+			1 stop bit, no parity, and baud rate configurable to 9600, 19200, 38400, or 57600.<br>
+			<br>
+			The host computer initiates all communication with the S6350.  Communication sequences consist
+			of request/response pairs where the hosts waits for the reponse before continuing.  The following
+			chart demonstrates the format of a request packet. (The node address is ignored by the S6350.)<br>
+			<br>
+			<img src="request_packet.gif" border="1" width="538" height="544" alt="Request Packet format"><br>
+			<strong><em><font size="-1">Request Packet format (Host to Reader)</font></em></strong><br>
+			<br>
+			The request packet consists of a seven byte header, a variable length data section, and a two byte trailer.  The command flag has
+			two legal values (0x00 and 0x10), since all but one bit are reserved for future definition.  When
+			bit 4 is set, the request is addressed to the transponder specified by the data section of 
+			the request packet.  Otherwise, the request applies to any transponder within range of the reader.
+			For response packets (details below), the command flag is used to indicate error condition (0x10 
+			indicates error, with specific error codes encoded in the data section of the response packet).
+			The <strong>BCC</strong> (block check character) consists of a one byte <strong>LRC</strong> (longitudinal Redundancy Check) and 
+			one byte of the ones-complement of the <strong>LRC</strong>.  The <strong>LRC</strong> is a cumulative XOR calculated over the 
+			entire packet.  Request packets and response packets each require a <strong>BCC</strong> trailer.<br>
+			<br>
+			<img src="response_packet.gif" border="1" width="553" height="553" alt="Response Packet format"><br>
+			<strong><em><font size="-1">Response Packet format (Reader to Host)</font></em></strong><br>
+			<br>
+			Of the twelve Tag-it commands set forth, we have implemented five: <em>Read Single Block</em>, 
+			<em>Write Single Block</em>, <em>Special Read Block</em>, <em>Reader Version</em>, and 
+			<em>Read Transponder Details</em>.<br>
+			<br>
+			<img src="tagit_commands.gif" border="1" width="580" height="264" alt="Tag-it HF Command Definitions"><br>
+			<strong><em><font size="-1">Tag-it HF Command Definitions (byte codes)</font></em></strong><br>
+			</font>
+		</td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td>
+			<font face="Tahoma">
+			<h4>Code Design, Acknowledgments</h4>
+			C# allows for excellent object oriented design.  Using an Abstract Factory design pattern,
+			(modeled after code graciously supplied to the authors by our mentor, 
+			<a href="http://cs.baylor.edu/~donahoo" title="Rockin'est Networking Site on the Web">Dr. Jeff Donahoo</a>)
+			we have implemented the following class hierarchy.  Byte arrays are exposed by serialize() methods, and
+			class instances are returned by static deserialize() methods.<br>
+			<br>
+			<img src="hierarchy.gif" border="1" width="454" height="563" alt="Class Hierarchy"><br>
+			<strong><em><font size="-1">C# Class Hierarchy</font></em></strong><br>
+			<br>
+			The <a href="http://msdn.microsoft.com/msdnmag/issues/02/10/netserialcomm/" 
+			title="NetSerialComm Library from MSDN Mag">serial communication API</a> we used is borrowed from 
+			John Hind, who published his NetSerialComm library in the 
+			October 2002 MSDN Magazine.  The NetSerialComm API provides for sending and receiving byte-at-a-time 
+			communication via RS232.  John's article walks the reader through extending his API towards more specific 
+			application.  Our packet transaction model (RFIDComm) is not very different from example code posted 
+			on MSDN.  Thanks, John!<br>
+			<br>
+			The packet transaction model (type signature shown below)
+			<blockquote>
+				<font face="Courier" color="#0000ff">public static Packet TransactPacket(Packet request)</font>
+			</blockquote>
+			merges knowledge of RFID command packet formatting with an extension of the NetSerialComm API.  
+			The NetSerialComm API uses overlapped I/O (which uses callback funtions) for asynchronous communication.
+			Given that the packet size is encoded within the first three bytes of each packet, the callback member 
+			function in RFIDComm signals the Transact() thread upon completion of the packet, which terminates its 
+			wait state upon receiving the signal, and returns the Packet it receives to the calling application.
+			</font>
+		</td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td>
+			<font face="Tahoma">
+			<h4>Implementation</h4>
+			To facilitate ease of use, we have combined several basic operations into static helper functions
+			accessible via the <font face="Courier" color="#0000ff">RFIDUtil</font> class.  A brief discussion
+			of these helper methods follows.<br>
+			<br>
+			First of all, however, it is worth noting the default assumptions made by the RFIDUtil helper class.
+			The default com port starts at "COM1:".  This can be changed by accessing 
+			<font face="Courier" color="#0000ff">public static string RFIDUtil.comPort</font> and setting it to 
+			the desired com port prior to invoking any of the helper methods.  The default timeout, accessible via 
+			<font face="Courier" color="#0000ff">public static uint RFIDUtil.timeOut</font>, starts at 500 ms.<br>
+			<br>
+			<br>
+				<blockquote>
+					<font face="Courier" color="#0000ff">public static bool WriteBlock( DataBlock db )</font><br>
+					<blockquote>
+						The DataBlock class encapsulates a four byte data block, the one byte block number, and
+						in the context of a response packet, the lock status corresponding to this block.  The
+						user instantiates a DataBlock object, sets the Buffer member with four bytes of data, sets 
+						the BlockNum member with the desired block to be written to, then passes this object
+						to the WriteBlock() method.  On success, the return value is true; otherwise, false.
+					</blockquote>
+				</blockquote>
+				<blockquote>
+					<font face="Courier" color="#0000ff">public static bool WriteBlock( uint TransponderID, DataBlock db )</font><br>
+					<blockquote>
+						Using the DataBlock object mentioned above, the user can specify <strong><em>which</em></strong> 
+						RFID to write to, by setting TransponderID to the RFID's unique identifier.
+					</blockquote>
+				</blockquote>
+				<blockquote>
+					<font face="Courier" color="#0000ff">public static bool ZeroRFID( string zero )</font><br>
+					<blockquote>
+						We have empirically observed that most RFIDs are initialized to a "zero" pattern of 5s 
+						(ie, "55 55 55 55").  For the user's convenience, we have provided a helper method to 
+						reinitialize an RFID back to whatever zero pattern of choice.  All eight blocks are 
+						written with the zero pattern.
+					</blockquote>
+				</blockquote>
+				<blockquote>
+					<font face="Courier" color="#0000ff">public static bool ZeroRFID( uint TransponderID, string zero )</font><br>
+					<blockquote>
+						This helper method is identical to the method above, except that the RFID serial number may
+						be specified so that only that RFID is zeroed.
+					</blockquote>
+				</blockquote>
+				<blockquote>
+					<font face="Courier" color="#0000ff">public static Special_Read_Block ReadAllBlocks()</font><br>
+					<blockquote>
+						Any RFID in range is queried for all eight data blocks (four bytes each) for a total
+						payload of six by eight, or forty-eight bytes.  The Special_Read_Block object is set
+						with the RFID's Transponder ID, and each of the Special_Read_Block's eight DataBlock
+						objects contains the corresponding data block, block number, and lock status of the
+						RFID's data blocks.  These accessors are explained in depth in the commented source code
+						of Special_Read_Block and PackettagIt.
+					</blockquote>
+				</blockquote>
+			</font>
+		</td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td>
+			<font face="Tahoma">
+			<h4>Scenario</h4>
+			To help flesh out an implementation of our RFID API, we have come up with the following scenario:
+			A store owner wishes to take inventory of RFID-equipped crates using the S6350 reader.  If a crate
+			has already been marked into the store's inventory, the RFID will contain the store's four-byte 
+			identifier (conversely, the store's database will already contain the RFID's unique serial number,
+			but we have not tied in any database code to our small demonstration project).  If the crate has
+			no remaining empty blocks to write into, the inventory function fails.  Otherwise, the store ID is
+			written to the first available data block on the crate's RFID.<br>
+			<br>
+			If you want to play around with an S6350, download the source code (linked below) and run the 
+			RFIDComm.exe in the bin\Debug folder.  (You must have the .NET Runtime installed to execute this 
+			binary.  You may have to update your Runtime to match the dependencies of this executable.)  Invoke
+			"RFIDComm.exe -?" to see a detailed help screen (shown below).<br>
+			<br>
+			<img src="helpscreen.gif" border="1" width="638" height="396" alt="Store Inventory application help screen"><br>		
+		</td>
+	</tr>
+	<tr><td><br></td></tr>
+	<tr>
+		<td>
+			<font face="Tahoma">
+			<h4>Source Code</h4>
+			The entire Visual Studio.NET 2003 project (implemented in C#) is 
+			<a href="rfidcomm.tar.gz" title="Visual Studio.NET 2003 project (implemented in C#) ... tarball">
+			available for download</a>.
+		</td>
+	</tr>	
+	<tr><td><br></td></tr>
+	<tr>
+		<td>
+			<font face="Tahoma">
+			<h4>How do I make it work?</h4>
+			These instructions assume you have the TI S6350 evaluation kit.<br>
+			<br>
+			To use the S6350 and the various sample RFID transponders (tiny IC chips in a floppy plastic
+			sheath with a spiraled antenna), you will need power to the transceiver, and communication from 
+			the transceiver to the PC host controller.  For power, assemble the AC adapter with the US prongs.  
+			The S6350 transceiver is about the size of a cigar box -- plug in the DC pigtail of the AC adapter 
+			into the transceiver.  Now find the serial cable: you need a cable about 6 feet long, with one end 
+			as 9 pin male, and the other end as 9 pin female. Connect the male end to the transceiver, and the 
+			female end to your PC.  (Pay attention to whether you use COM1 or COM2, that's important.)<br>
+			<br>
+			To compile the source, you will either need Visual Studio.NET 2003, or you will need to have
+			the .NET runtime installed.  If you use Visual Studio.NET to run and debug our source code, don't
+			forget to set the command line parameters in the Debug settings.  To compile our source code with
+			only the .NET runtime installed, you must first find the C# compiler, csc.exe:
+			<blockquote>
+				<font face="Courier" color="#0000ff">
+					cd %WINDIR%<br>
+					cd Microsoft.NET<br>
+					cd Framework<br>
+					dir /ad&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>(look for the latest version number)</em><br>
+					cd &lt;latest version number&gt;<br>
+					dir csc.exe<br>
+				</font>
+			</blockquote>
+			Once you've found csc.exe, call it from your source code directory to compile the program:
+			<blockquote>
+				<font face="Courier" color="#0000ff">
+					%WINDIR%\Microsoft.NET\Framework\&lt;latest version number&gt;\csc.exe *.cs
+				</font>
+			</blockquote>
+			Remember which COM port you plugged into?  If it's COM1, you don't have to worry about it, that's
+			the default.  Otherwise, if your store ID is 0xAABBCCDD, run the program like so:
+			<blockquote>
+				<font face="Courier" color="#0000ff">
+					RFIDComm.exe "aa bb cc dd" &lt;your COM port&gt;
+				</font>
+			</blockquote>
+			Now, any TI TagIt transponder you wave over the S6350 transceiver will have its first available
+			four-byte block written with AA BB CC DD, and its unique Transponder ID will be echoed to your
+			console.
+		</td>
+	</tr>	
+</table>
+</body>
+</html>

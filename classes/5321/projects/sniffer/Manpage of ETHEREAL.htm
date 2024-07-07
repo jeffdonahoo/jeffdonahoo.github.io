@@ -1,0 +1,7240 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0039)http://www.ethereal.com/ethereal.1.html -->
+<HTML><HEAD><TITLE>Manpage of ETHEREAL</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<META content="MSHTML 5.50.4134.600" name=GENERATOR></HEAD>
+<BODY>
+<H1>ETHEREAL</H1>Section: The Ethereal Network Analyzer (1)<BR>Updated: 
+0.8.9<BR><A href="http://www.ethereal.com/ethereal.1.html#index">Index</A> <A 
+name=lbAB>&nbsp;</A> 
+<H2>NAME</H2>Ethereal - Interactively browse network traffic <A 
+name=lbAC>&nbsp;</A> 
+<H2>SYNOPSYS</H2><B>ethereal</B> 
+[&nbsp;<B>-B</B>&nbsp;byte&nbsp;view&nbsp;height&nbsp;] 
+[&nbsp;<B>-b</B>&nbsp;bold&nbsp;font&nbsp;] [&nbsp;<B>-c</B>&nbsp;count&nbsp;] 
+[&nbsp;<B>-D</B>&nbsp;] [&nbsp;<B>-f</B>&nbsp;filter&nbsp;expression&nbsp;] 
+[&nbsp;<B>-h</B>&nbsp;] [&nbsp;<B>-i</B>&nbsp;interface&nbsp;] 
+[&nbsp;<B>-k</B>&nbsp;] [&nbsp;<B>-m</B>&nbsp;font&nbsp;] 
+[&nbsp;<B>-n</B>&nbsp;] 
+[&nbsp;<B>-P</B>&nbsp;packet&nbsp;list&nbsp;height&nbsp;] 
+[&nbsp;<B>-Q</B>&nbsp;] [&nbsp;<B>-r</B>&nbsp;infile&nbsp;] 
+[&nbsp;<B>-R</B>&nbsp;filter&nbsp;expression&nbsp;] [&nbsp;<B>-S</B>&nbsp;] 
+[&nbsp;<B>-s</B>&nbsp;snaplen&nbsp;] 
+[&nbsp;<B>-T</B>&nbsp;tree&nbsp;view&nbsp;height&nbsp;] 
+[&nbsp;<B>-t</B>&nbsp;time&nbsp;stamp&nbsp;format&nbsp;] [&nbsp;<B>-v</B>&nbsp;] 
+[&nbsp;<B>-w</B>&nbsp;savefile] <A name=lbAD>&nbsp;</A> 
+<H2>DESCRIPTION</H2><B>Ethereal</B> is a GUI network protocol analyzer. It lets 
+you interactively browse packet data from a live network or from a previously 
+saved capture file. <B>Ethereal</B> knows how to read <B>libpcap</B> capture 
+files, including those of <B>tcpdump</B>. In addition, <B>Ethereal</B> can read 
+capture files from <B>snoop</B> (including <B>Shomiti</B>) and <B>atmsnoop</B>, 
+<B>LanAlyzer</B>, <B>Sniffer</B> (compressed or uncompressed), Microsoft 
+<B>Network Monitor</B>, AIX's <B>iptrace</B>, <B>NetXray</B>, <B>Sniffer 
+Pro</B>, <B>RADCOM</B>'s WAN/LAN analyzer, <B>Lucent/Ascend</B> router debug 
+output, HP-UX's <B>nettl</B>, the dump output from <B>Toshiba's</B> ISDN 
+routers, and <B>i4btrace</B> from the ISDN4BSD project. There is no need to tell 
+<B>Ethereal</B> what type of file you are reading; it will determine the file 
+type by itself. <B>Ethereal</B> is also capable of reading any of these file 
+formats if they are compressed using gzip. <B>Ethereal</B> recognizes this 
+directly from the file; the `.gz' extension is not required for this purpose. 
+<P>Like other protocol analyzers, <B>Ethereal</B>'s main window shows 3 views of 
+a packet. It shows a summary line, briefly describing what the packet is. A 
+protocol tree is shown, allowing you to drill down to exact protocol or field 
+that you interested in. Finally, a hex dump shows you exactly what the packet 
+looks like when it goes over the wire. 
+<P>In addition, <B>Ethereal</B> has some features that make it unique. It can 
+assemble all the packets in a TCP conversation and show you the ASCII (or 
+EBCDIC) data in that conversation. Display filters in <B>Ethereal</B> are very 
+powerful; more fields are filterable in <B>Ethereal</B> than in other protocol 
+analyzers, and the syntax you can use to create your filters is richer. As 
+<B>Ethereal</B> progresses, expect more and more protocol fields to be allowed 
+in display filters. 
+<P>Packet capturing is performed with the pcap library. The capture filter 
+syntax follows the rules of the pcap library. This syntax is different from the 
+display filter syntax. 
+<P>Compressed file support uses (and therefore requires) the zlib library. If 
+the zlib library is not present, <B>Ethereal</B> will compile, but will be 
+unable to read compressed files. <A name=lbAE>&nbsp;</A> 
+<H2>OPTIONS</H2><BR>
+<DL compact>
+  <DT>-B
+  <DD>Sets the initial height of the byte view (bottom) pane. <BR>
+  <DT>-b
+  <DD>Sets the name of the bold font used for the data in the byte view pane 
+  that corresponds to the field selected in the protocol tree pane. <BR>
+  <DT>-c
+  <DD>Sets the default number of packets to read when capturing live data. <BR>
+  <DT>-D
+  <DD>Turns off treating the original IPv4 <FONT size=-1>TOS</FONT> field as the 
+  Differentiated Services Field. The structure of the <FONT size=-1>DS</FONT> 
+  Field is defined in <FONT size=-1>RFC</FONT> 2474. <BR>
+  <DT>-f
+  <DD>Sets the capture filter expression. <BR>
+  <DT>-h
+  <DD>Prints the version and options and exits. <BR>
+  <DT>-i
+  <DD>Sets the name of the network interface to use for live packet capture. It 
+  should match one of the names listed in ``<B>netstat -i</B>'' or ``<B>ifconfig 
+  -a</B>''. <BR>
+  <DT>-k
+  <DD>Starts the capture session immediately. If the <B>-i</B> flag was 
+  specified, the capture uses the specified interface. Otherwise, 
+  <B>Ethereal</B> searches the list of interfaces, choosing the first 
+  non-loopback interface if there are any non-loopback interfaces, and choosing 
+  the first loopback interface if there are no non-loopback interfaces; if there 
+  are no interfaces, <B>Ethereal</B> reports an error and doesn't start the 
+  capture. <BR>
+  <DT>-m
+  <DD>Sets the name of the font used by <B>Ethereal</B> for most text. <BR>
+  <DT>-n
+  <DD>Disables network object name resolution (such as hostname, <FONT 
+  size=-1>TCP</FONT> and <FONT size=-1>UDP</FONT> port names). <BR>
+  <DT>-P
+  <DD>Sets the initial height of the packet list (top) pane. <BR>
+  <DT>-Q
+  <DD>Causes <B>Ethereal</B> to exit after the end of capture session (useful in 
+  batch mode with <B>-c</B> option for instance); this option requires the 
+  <B>-i</B> and <B>-w</B> parameters. <BR>
+  <DT>-r
+  <DD>Reads packet data from <I>file</I>. <BR>
+  <DT>-R
+  <DD>When reading a capture file specified with the <B>-r</B> flag, causes the 
+  specified filter (which uses the syntax of display filters, rather than that 
+  of capture filters) to be applied to all packets read from the capture file; 
+  packets not matching the filter are discarded. <BR>
+  <DT>-S
+  <DD>Specifies that the live packet capture will be performed in a separate 
+  process, and that the packet display will automatically be updated as packets 
+  are seen. <BR>
+  <DT>-s
+  <DD>Sets the default snapshot length to use when capturing live data. No more 
+  than <I>snaplen</I> bytes of each network packet will be read into memory, or 
+  saved to disk. <BR>
+  <DT>-T
+  <DD>Sets the initial height of the tree view (middle) pane. <BR>
+  <DT>-t
+  <DD>Sets the format of the packet timestamp displayed in the packet list 
+  window. The format can be one of `r' (relative), `a' (absolute), or `d' 
+  (delta). The relative time is the time elapsed between the first packet and 
+  the current packet. The absolute time is the actual date and time the packet 
+  was captured. The delta time is the time since the previous packet was 
+  captured. The default is relative. <BR>
+  <DT>-v
+  <DD>Prints the version and exits. <BR>
+  <DT>-w
+  <DD>Sets the default capture file name. </DD></DL><A name=lbAF>&nbsp;</A> 
+<H2>INTERFACE</H2><A name=lbAG>&nbsp;</A> 
+<H2><FONT size=-1>MENU</FONT> <FONT size=-1>ITEMS</FONT></H2><BR>
+<DL compact>
+  <DT>File:Open, File:Close, File:Reload
+  <DD>Open, close, or reload a capture file. The <I>File:Open</I> dialog box 
+  allows a filter to be specified; when the capture file is read, the filter is 
+  applied to all packets read from the file, and packets not matching the filter 
+  are discarded. <BR>
+  <DT>File:Save, File:Save As
+  <DD>Save the current capture, or the packets currently displayed from that 
+  capture, to a file. A check box lets you select whether to save all packets, 
+  or just those that have passed the current display filter, and an option menu 
+  lets you select (from a list of file formats in which at particular capture, 
+  or the packets currently displayed from that capture, can be saved), a file 
+  format in which to save it. <BR>
+  <DT>File:Print
+  <DD>Prints, for all the packets in the current capture, either the summary 
+  line for the packet or the protocol tree view of the packet; when printing the 
+  protocol tree view, the hex dump of the packet can be printed as well. 
+  Printing options can be set with the <I>Edit:Preferences</I> menu item, or in 
+  the dialog box popped up by this item. <BR>
+  <DT>File:Print Packet
+  <DD>Print a fully-expanded protocol tree view of the currently-selected 
+  packet. Printing options can be set with the <I>Edit:Preferences</I> menu 
+  item. <BR>
+  <DT>File:Quit
+  <DD>Exits the application. <BR>
+  <DT>Edit:Find Frame
+  <DD>Allows you to search forward or backward, starting with the currently 
+  selected packet (or the most recently selected packet, if no packet is 
+  selected), for a packet matching a given display filter. <BR>
+  <DT>Edit:Go To Frame 
+  <DD>Allows you to go to a particular numbered packet. <BR>
+  <DT>Edit:Preferences
+  <DD>Sets the packet printing, column display, <FONT size=-1>TCP</FONT> stream 
+  coloring, and <FONT size=-1>GUI</FONT> options (see the section on 
+  <I>Preferences</I> below). <BR>
+  <DT>Edit:Filters
+  <DD>Edits the saved list of filters, allowing filters to be added, changed, or 
+  deleted, and lets a selected filter be applied to the current capture, if any. 
+  <BR>
+  <DT>Capture:Start
+  <DD>Initiates a live packet capture (see the section on <I>Capture 
+  Preferences</I> below). A temporary file will be created to hold the capture. 
+  The location of the file can be chosen by setting your <FONT 
+  size=-1>TMPDIR</FONT> environment variable before starting <B>Ethereal</B>. 
+  Otherwise, the default <FONT size=-1>TMPDIR</FONT> location is 
+  system-dependent, but is likely either <I>/var/tmp</I> or <I>/tmp</I>. <BR>
+  <DT>Display:Options
+  <DD>Allows you to sets the format of the packet timestamp displayed in the 
+  packet list window to relative, absolute, or delta, to enable or disable the 
+  automatic scrolling of the packet list while a live capture is in progress, to 
+  enable or disable translation of addresses to names in the display, or to 
+  enable or disable interpretation of the IPv4 <FONT size=-1>TOS</FONT> field as 
+  the Differentiated Services field. <BR>
+  <DT>Display:Match Selected
+  <DD>Creates and applies a display filter based on the data that is currently 
+  highlighted in the protocol tree. If that data is a field that can be tested 
+  in a display filter expression, the display filter will test that field; 
+  otherwise, the display filter will be based on absolute offset within the 
+  packet, and so could be unreliable if the packet contains protocols with 
+  variable-length headers, such as a source-routed token-ring packet. <BR>
+  <DT>Display:Colorize Display
+  <DD>Allows you to change the foreground and background colors of the packet 
+  information in the list of packets, based upon display filters. The list of 
+  display filters is applied to each packet sequentially. After the first 
+  display filter matches a packet, any additional display filters in the list 
+  are ignored. Therefore, if you are filtering on the existence of protocols, 
+  you should list the higher-level protocols first, and the lower-level 
+  protocols last. <BR>
+  <DT>Display:Collapse All
+  <DD>Collapses the protocol tree branches. <BR>
+  <DT>Display:Expand All
+  <DD>Expands all branches of the protocol tree. <BR>
+  <DT>Display:Expand All
+  <DD>Expands all branches of the protocol tree. <BR>
+  <DT>Display:Show Packet In New Window 
+  <DD>Creates a new window containing a protocol tree view and a hex dump window 
+  of the currently selected packet; this window will continue to display that 
+  packet's protocol tree and data even if another packet is selected. <BR>
+  <DT>Tools:Plugins
+  <DD>Allows you to use and configure dynamically loadable modules (see the 
+  section on <I>Plugins</I> below). <BR>
+  <DT>Tools:Follow <FONT size=-1>TCP</FONT> Stream
+  <DD>If you have a <FONT size=-1>TCP</FONT> packet selected, it will display 
+  the contents of the data stream for the <FONT size=-1>TCP</FONT> connection to 
+  which that packet belongs, as text, in a separate window, and will leave the 
+  list of packets in a filtered state, with only those packets that are part of 
+  that <FONT size=-1>TCP</FONT> connection being displayed. You can revert to 
+  your old view by pressing <FONT size=-1>ENTER</FONT> in the display filter 
+  text box, thereby invoking your old display filter (or resetting it back to no 
+  display filter). 
+  <P>The window in which the data stream is displayed lets you select whether 
+  the data being displayed is to be treated as <FONT size=-1>ASCII</FONT> or 
+  <FONT size=-1>EBCDIC</FONT> text, and lets you print the text, using the same 
+  print options that are used for the <I>File:Print Packet</I> menu item. 
+  </P></DD></DL><A name=lbAH>&nbsp;</A> 
+<H2><FONT size=-1>WINDOWS</FONT></H2><BR>
+<DL compact>
+  <DT>Main Window
+  <DD>The main window is split into three panes. You can resize each pane using 
+  a ``thumb'' at the right end of each divider line. Below the panes is a strip 
+  that shows the file load progress, current filter, and informational text. 
+<BR>
+  <DT>Top Pane
+  <DD>The top pane contains the list of network packets that you can scroll 
+  through and select. By default, the packet number, packet timestamp, source 
+  and destination addresses, protocol, and description are displayed for each 
+  packet; the <I>Columns</I> page in the dialog box popped up by 
+  <I>Edit:Preferences</I> lets you change this (although, unfortunately, you 
+  currently have to save the preferences, and exit and restart Ethereal, for 
+  those changes to take effect). 
+  <P>If you click on the heading for a column, the display will be sorted by 
+  that column; clicking on the heading again will reverse the sort order for 
+  that column. 
+  <P>An effort is made to display information as high up the protocol stack as 
+  possible, e.g. <FONT size=-1>IP</FONT> addresses are displayed for <FONT 
+  size=-1>IP</FONT> packets, but the <FONT size=-1>MAC</FONT> layer address is 
+  displayed for unknown packet types. 
+  <P>The right mouse button can be used to pop up a menu of operations. <BR></P>
+  <DT>Middle Pane
+  <DD>The middle pane contains a <I>protocol tree</I> for the currently-selected 
+  packet. The tree displays each field and its value in each protocol header in 
+  the stack. The right mouse button can be used to pop up a menu of operations. 
+  <BR>
+  <DT>Bottom Pane
+  <DD>The lowest pane contains a hex dump of the actual packet data. Selecting a 
+  field in the <I>protocol tree</I> highlights the corresponding bytes in this 
+  section. <BR>
+  <DT>Current Filter
+  <DD>A display filter can be entered into the strip at the bottom. A filter for 
+  <FONT size=-1>HTTP</FONT>, <FONT size=-1>HTTPS</FONT>, and <FONT 
+  size=-1>DNS</FONT> traffic might look like this: 
+  <P><PRE>  tcp.port == 80 || tcp.port == 443 || tcp.port == 53
+
+
+</PRE>Selecting the <I>Filter:</I> button lets you choose from a list of named 
+  filters that you can optionally save. Pressing the Return or Enter keys will 
+  cause the filter to be applied to the current list of packets. Selecting the 
+  <I>Reset</I> button clears the display filter so that all packets are 
+  displayed. <BR>
+  <DT>Preferences
+  <DD>The <I>Preferences</I> dialog lets you control various personal 
+  preferences for the behavior of <B>Ethereal</B>. <BR>
+  <DT>Printing Preferences
+  <DD>The radio buttons at the top of the <I>Printing</I> page allow you choose 
+  between printing packets with the <I>File:Print Packet</I> menu item as text 
+  or PostScript, and sending the output directly to a command or saving it to a 
+  file. The <I>Command:</I> text entry box is the command to send files to 
+  (usually <B>lpr</B>), and the <I>File:</I> entry box lets you enter the name 
+  of the file you wish to save to. Additionally, you can select the <I>File:</I> 
+  button to browse the file system for a particular save file. <BR>
+  <DT>Column Preferences
+  <DD>The <I>Columns</I> page lets you specify the number, title, and format of 
+  each column in the packet list. 
+  <P>The <I>Column title</I> entry is used to specify the title of the column 
+  displayed at the top of the packet list. The type of data that the column 
+  displays can be specified using the <I>Column format</I> option menu. The row 
+  of buttons on the left perform the following actions: <BR></P>
+  <DT>New
+  <DD>Adds a new column to the list. <BR>
+  <DT>Change
+  <DD>Modifies the currently selected list item. <BR>
+  <DT>Delete
+  <DD>Deletes the currently selected list item. <BR>
+  <DT>Up / Down 
+  <DD>Moves the selected list item up or down one position. <BR>
+  <DT><FONT size=-1>OK</FONT>
+  <DD>Currently has no effect. <BR>
+  <DT>Save
+  <DD>Saves the current column format as the default. <BR>
+  <DT>Cancel
+  <DD>Closes the dialog without making any changes. <BR>
+  <DT><FONT size=-1>TCP</FONT> Stream Preferences
+  <DD>The <I></I><FONT size=-1><I>TCP</I></FONT><I> Streams</I> page can be used 
+  to change the color of the text displayed in the <FONT size=-1>TCP</FONT> 
+  stream window. To change a color, simply select an attribute from the ``Set:'' 
+  menu and use the color selector to get the desired color. The new text colors 
+  are displayed in a sample window. <BR>
+  <DT><FONT size=-1>GUI</FONT> Preferences
+  <DD>The <I></I><FONT size=-1><I>GUI</I></FONT><I></I> page is used to modify 
+  small aspects of the <FONT size=-1>GUI</FONT> to your own personal taste. The 
+  vertical scrollbars in the three panes can be set to be either on the left or 
+  the right. The selection bar in the packet list and protocol tree can have 
+  either a ``browse'' or ``select'' behavior. If the selection bar has a 
+  ``browse'' behavior, the arrow keys will move an outline of the selection bar, 
+  allowing you to browse the rest of the list or tree without changing the 
+  selection until you press the space bar. If the selection bar has a ``select'' 
+  behavior, the arrow keys will move the selection bar and change the selection 
+  to the new item in the packet list or protocol tree. <BR>
+  <DT>Filters
+  <DD>The <I>Filters</I> dialog lets you create and modify filters, and set the 
+  default filter to use when capturing data or opening a capture file. 
+  <P>The <I>Filter name</I> entry specifies a descriptive name for a filter, 
+  e.g. <B>Web and </B><FONT size=-1><B>DNS</B></FONT><B> traffic</B>. The 
+  <I>Filter string</I> entry is the text that actually describes the filtering 
+  action to take, as described above.The dialog buttons perform the following 
+  actions: <BR></P>
+  <DT>New
+  <DD>If there is text in the two entry boxes, it creates a new associated list 
+  item. <BR>
+  <DT>Change
+  <DD>Modifies the currently selected list item to match what's in the entry 
+  boxes. <BR>
+  <DT>Copy
+  <DD>Makes a copy of the currently selected list item. <BR>
+  <DT>Delete
+  <DD>Deletes the currently selected list item. <BR>
+  <DT>Apply
+  <DD>Sets the currently selected list item as the active filter, and applies it 
+  to the current capture, if any. (The currently selected list item must be a 
+  display filter, not a capture filter.) If nothing is selected, turns filtering 
+  off. <BR>
+  <DT><FONT size=-1>OK</FONT>
+  <DD>Sets the currently selected list item as the active filter. If nothing is 
+  selected, turns filtering off. <BR>
+  <DT>Save
+  <DD>Saves the current filter list in <I>$</I><FONT 
+  size=-1><I>HOME</I></FONT><I>/.ethereal/filters</I>. <BR>
+  <DT>Cancel
+  <DD>Closes the dialog without making any changes. <BR>
+  <DT>Capture Preferences
+  <DD>The <I>Capture Preferences</I> dialog lets you specify various parameters 
+  for capturing live packet data. 
+  <P>The <I>Interface:</I> combo box lets you specify the interface from which 
+  to capture packet data. The <I>Count:</I> entry specifies the number of 
+  packets to capture. Entering 0 will capture packets indefinitely. The 
+  <I>Filter:</I> entry lets you specify the capture filter using a tcpdump-style 
+  filter string as described above. The <I>File:</I> entry specifies the file to 
+  save to, as in the <I>Printer Options</I> dialog above. You can specify the 
+  maximum number of bytes to capture per packet with the <I>Capture length</I> 
+  entry, can specify that the display should be updated as packets are captured 
+  with the <I>Update list of packets in real time</I> check box, can specify 
+  whether in such a capture the packet list pane should scroll to show the most 
+  recently captured packets with the <I>Automatic scrolling in live capture</I> 
+  check box, and can specify whether addresses should be translated to names in 
+  the display with the <I>Enable name resolution</I> check box. <BR></P>
+  <DT>Display Options
+  <DD>The <I>Display Options</I> dialog lets you specify the format of the time 
+  stamp in the packet list. You can select ``Time of day'' for absolute time 
+  stamps, ``Seconds since beginning of capture'' for relative time stamps, or 
+  ``Seconds since previous frame'' for delta time stamps. You can also specify 
+  whether, when the display is updated as packets are captured, the list should 
+  automatically scroll to show the most recently captured packets or not, 
+  whether addresses should be translated to names in the display, and whether 
+  IPv4 <FONT size=-1>TOS</FONT> field should be treated as the Differentiated 
+  Services field. <BR>
+  <DT>Plugins
+  <DD>The <I>Plugins</I> dialog lets you view and configure the plugins 
+  available on your system. 
+  <P>The <I>Plugins List</I> shows the name, description, version and state 
+  (enabled or not) of each plugin found on your system. The plugins are searched 
+  in the following directories: <I>/usr/share/ethereal/plugins</I>, 
+  <I>/usr/local/share/ethereal/plugins</I> and <I>~/.ethereal/plugins</I> 
+  <P>A plugin must be activated using the <I>Enable</I> button in order to use 
+  it to dissect packets. It can also be deactivated with the <I>Disable</I> 
+  button. 
+  <P>The <I>Filter</I> button shows the filter used to select packets which 
+  should be dissected by a plugin (see the section on <I></I><FONT 
+  size=-1><I>DISPLAY</I></FONT><I> </I><FONT size=-1><I>FILTER</I></FONT><I> 
+  </I><FONT size=-1><I>SYNTAX</I></FONT><I></I> below). This filter can be 
+  modified. </P></DD></DL><A name=lbAI>&nbsp;</A> 
+<H2>CAPTURE FILTER SYNTAX</H2>See manual page of <I><A 
+href="http://www.ethereal.com/tcpdump.8.html">tcpdump</A></I>(8). <A 
+name=lbAJ>&nbsp;</A> 
+<H2>DISPLAY FILTER SYNTAX</H2>Display filters help you remove the noise from a 
+packet trace and let you see only the packets that interest you. If a packet 
+meets the requirements expressed in your display filter, then it is displayed in 
+the list of packets. Display filters let you compare the fields within a 
+protocol against a specific value, compare fields against fields, and to check 
+the existence of specified fields or protocols. 
+<P>The simplest display filter allows you to check for the existence of a 
+protocol or field. If you want to see all packets which contain the IPX 
+protocol, the filter would be ``ipx''. (Without the quotation marks) To see all 
+packets that contain a Token-Ring RIF field, use ``tr.rif''. 
+<P>Fields can also be compared against values. The comparison operators can be 
+expressed either through C-like symbols, or through English-like abbreviations: 
+<P><PRE>    eq, ==    Equal
+    ne, !=    Not equal
+    gt, &gt;     Greater than
+    lt, &lt;     Less Than
+    ge, &gt;=    Greater than or Equal to
+    le, &lt;=    Less than or Equal to
+
+
+</PRE>Furthermore, each protocol field is typed. The types are: 
+<P><PRE>    Unsigned integer (either 8-bit, 16-bit, 24-bit, or 32-bit)
+    Signed integer (either 8-bit, 16-bit, 24-bit, or 32-bit)
+    Boolean
+    Ethernet address (6 bytes)
+    Byte string (n-number of bytes)
+    IPv4 address
+    IPv6 address
+    IPX network number
+    String (text)
+    Double-precision floating point number
+
+
+</PRE>An integer may be expressed in decimal, octal, or hexadecimal notation. 
+The following three display filters are equivalent: 
+<P><PRE>    frame.pkt_len &gt; 10
+    frame.pkt_len &gt; 012
+    frame.pkt_len &gt; 0xa
+
+
+</PRE>Boolean values are either true or false. However, a boolean field is 
+present in a protocol decode only if its value is true. If the value is false, 
+the field is not presence. You can therefore check the truth value of a boolean 
+field by simply checking for its existence, that is, by naming the field. For 
+example, a token-ring packet's source route field is boolean. To find any 
+source-routed packets, the display filter is simply: 
+<P><PRE>    tr.sr
+
+
+</PRE>Non source-routed packets can be found with the negation of that filter: 
+<P><PRE>    ! tr.sr
+
+
+</PRE>Ethernet addresses, as well as a string of bytes, are represented in hex 
+digits. The hex digits may be separated by colons, periods, or hyphens: 
+<P><PRE>    fddi.dst eq ff:ff:ff:ff:ff:ff
+    ipx.srcnode == 0.0.0.0.0.1
+    eth.src == aa-aa-aa-aa-aa-aa
+
+
+</PRE>If a string of bytes contains only one byte, then it is represented as an 
+unsigned integer. That is, if you are testing for hex value `ff' in a one-byte 
+byte-string, you must compare it agains `0xff' and not `ff'. 
+<P>IPv4 addresses can be represented in either dotted decimal notation, or by 
+using the hostname: 
+<P><PRE>    ip.dst eq www.mit.edu
+    ip.src == 192.168.1.1
+
+
+</PRE>IPv4 address can be compared with the same logical relations as numbers: 
+eq, ne, gt, ge, lt, and le. The IPv4 address is stored in host order, so you do 
+not have to worry about how the endianness of an IPv4 address when using it in a 
+display filter. 
+<P>Classless InterDomain Routing (CIDR) notation can be used to test if an IPv4 
+address is in a certain subnet. For example, this display filter will find all 
+packets in the 129.111 Class-B network: 
+<P><PRE>    ip.addr == 129.111.0.0/16
+
+
+</PRE>Remember, the number after the slash represents the number of bits used to 
+represent the network. CIDR notation can also be used with hostnames, in this 
+example of finding IP addresses on the same Class C network as `sneezy': 
+<P><PRE>    ip.addr eq sneezy/24
+
+
+</PRE>The CIDR notation can only be used on IP addresses or hostnames, not in 
+variable names. So, a display filter like ``ip.src/24 == ip.dst/24'' is not 
+valid. (yet) 
+<P>IPX networks are represented by unsigned 32-bit integers. Most likely you 
+will be using hexadecimal when testing for IPX network values: 
+<P><PRE>    ipx.srcnet == 0xc0a82c00
+
+
+</PRE>A substring operator also exists. You can check the substring 
+(byte-string) of any protocol or field. For example, you can filter on the 
+vendor portion of an ethernet address (the first three bytes) like this: 
+<P><PRE>    eth.src[0:3] == 00:00:83
+
+
+</PRE>Or more simply, since the number of bytes is inherent in the byte-string 
+you provide, you can provide just the offset. The previous example can be stated 
+like this: 
+<P><PRE>    eth.src[0] == 00:00:83
+
+
+</PRE>In fact, the only time you need to explicitly provide a length is when you 
+don't provide a byte-string, and are comparing fields against fields: 
+<P><PRE>    fddi.src[0:3] == fddi.dst[0:3]
+
+
+</PRE>If the length of your byte-string is only one byte, then it must be 
+represented in the same way as an unsigned 8-bit integer: 
+<P><PRE>    llc[3] == 0xaa
+
+
+</PRE>You can use the substring operator on a protocol name, too. And remember, 
+the ``frame'' protocol encompasses the entire packet, allowing you to look at 
+the nth byte of a packet regardless of its frame type (Ethernet, token-ring, 
+etc.). 
+<P><PRE>    token[0:5] ne 0.0.0.1.1
+    ipx[0:2] == ff:ff
+    llc[3:1] eq 0xaa
+
+
+</PRE>Offsets for byte-strings can also be negative, in which case the negative 
+number indicates the number of bytes from the end of the field or protocol that 
+you are testing. Here's how to check the last 4 bytes of a frame: 
+<P><PRE>    frame[-4] == 0.1.2.3
+
+
+</PRE>or 
+<P><PRE>    frame[-4:4] == 0.1.2.3
+
+
+</PRE>All the above tests can be combined together with logical expressions. 
+These too are expressable in C-like syntax or with English-like abbreviations: 
+<P><PRE>    and, &amp;&amp;   Logical AND
+    or, ||    Logical OR
+    xor, ^^   Logical XOR
+    not, !    Logical NOT
+
+
+</PRE>Expressions can be grouped by parentheses as well. The following are all 
+valid display filter expression: 
+<P><PRE>    tcp.port == 80 and ip.src == 192.168.2.1
+    not llc
+    (ipx.srcnet == 0xbad &amp;&amp; ipx.srnode == 0.0.0.0.0.1) || ip
+    tr.dst[0:3] == 0.6.29 xor tr.src[0:3] == 0.6.29
+
+
+</PRE>A special caveat must be given regarding fields that occur more than once 
+per packet. ``ip.addr'' occurs twice per IP packet, once for the source address, 
+and once for the destination address. Likewise, tr.rif.ring fields can occur 
+more than once per packet. The following two expressions are not equivalent: 
+<P><PRE>        ip.addr ne 192.168.4.1
+    not ip.addr eq 192.168.4.1
+
+
+</PRE>The first filter says ``show me all packets where an ip.addr exists that 
+does not equal 192.168.4.1''. That is, as long as one ip.addr in the packet does 
+not equal 192.168.44.1, the packet passes the display filter. The second filter 
+``don't show me any packets that have at least one ip.addr field equal to 
+192.168.4.1''. If one ip.addr is 192.168.4.1, the packet does not pass. If 
+<B>neither</B> ip.addr fields is 192.168.4.1, then the packet passes. 
+<P>It is easy to think of the `ne' and `eq' operators as having an implict 
+``exists'' modifier when dealing with multiply-recurring fields. ``ip.addr ne 
+192.168.4.1'' can be thought of as ``there exists an ip.addr that does not equal 
+192.168.4.1''. 
+<P>Be careful with multiply-recurring fields; they can be confusing. 
+<P>The following is a table of protocol and protocol fields that are filterable 
+in <B>Ethereal</B>. The abbreviation of the protocol or field is given. This 
+abbreviation is what you use in the display filter. The type of the field is 
+also given. <A name=lbAK>&nbsp;</A> 
+<H2>802.1q Virtual <FONT size=-1>LAN</FONT> (vlan)</H2>
+<P><PRE>    vlan.cfi  CFI
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    vlan.etype  Type
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    vlan.id  ID
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    vlan.priority  Priority
+        Unsigned 16-bit integer
+
+
+</PRE><A name=lbAL>&nbsp;</A> 
+<H2><FONT size=-1>ATM</FONT> (atm)</H2>
+<P><PRE>    atm.vci  VCI
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    atm.vpi  VPI
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbAM>&nbsp;</A> 
+<H2><FONT size=-1>ATM</FONT> <FONT size=-1>LANE</FONT> (lane)</H2><A 
+name=lbAN>&nbsp;</A> 
+<H2>Address Resolution Protocol (arp)</H2>
+<P><PRE>    arp.dst.atm_num_e164  Target ATM number (E.164)
+        String
+
+
+</PRE><PRE>    arp.dst.atm_num_nsap  Target ATM number (NSAP)
+        Byte array
+
+
+</PRE><PRE>    arp.dst.atm_subaddr  Target ATM subaddress
+        Byte array
+
+
+</PRE><PRE>    arp.dst.htl  Target ATM number type and length
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    arp.dst.hw  Target hardware address
+        Byte array
+
+
+</PRE><PRE>    arp.dst.pln  Target protocol size
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    arp.dst.proto  Target protocol address
+        Byte array
+
+
+</PRE><PRE>    arp.dst.slen  Target ATM subaddress length
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    arp.hw.size  Hardware size
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    arp.hw.type  Hardware type
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    arp.opcode  Opcode
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    arp.proto.size  Protocol size
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    arp.proto.type  Protocol type
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    arp.src.atm_num_e164  Sender ATM number (E.164)
+        String
+
+
+</PRE><PRE>    arp.src.atm_num_nsap  Sender ATM number (NSAP)
+        Byte array
+
+
+</PRE><PRE>    arp.src.atm_subaddr  Sender ATM subaddress
+        Byte array
+
+
+</PRE><PRE>    arp.src.htl  Sender ATM number type and length
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    arp.src.hw  Sender hardware address
+        Byte array
+
+
+</PRE><PRE>    arp.src.pln  Sender protocol size
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    arp.src.proto  Sender protocol address
+        Byte array
+
+
+</PRE><PRE>    arp.src.slen  Sender ATM subaddress length
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbAO>&nbsp;</A> 
+<H2>Andrew File System (<FONT size=-1>AFS</FONT>) (afs)</H2>
+<P><PRE>    afs.backup  Backup
+        Boolean
+
+
+</PRE><PRE>    afs.backup.errcode  Error Code
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.backup.opcode  Operation
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.bos  BOS
+        Boolean
+
+
+</PRE><PRE>    afs.bos.content  Content
+        String
+
+
+</PRE><PRE>    afs.bos.date  Date
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.bos.errcode  Error Code
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.bos.flags  Flags
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.bos.instance  Instance
+        String
+
+
+</PRE><PRE>    afs.bos.number  Number
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.bos.opcode  Operation
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.bos.size  Size
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.bos.status  Status
+        Signed 32-bit integer
+
+
+</PRE><PRE>    afs.bos.type  Type
+        String
+
+
+</PRE><PRE>    afs.cb  Callback
+        Boolean
+
+
+</PRE><PRE>    afs.cb.callback.expires  Expires
+        Date/Time stamp
+
+
+</PRE><PRE>    afs.cb.callback.type  Type
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.cb.callback.version  Version
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.cb.errcode  Error Code
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.cb.fid.uniq  FileID (Uniqifier)
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.cb.fid.vnode  FileID (VNode)
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.cb.fid.volume  FileID (Volume)
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.cb.opcode  Operation
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.error  Error
+        Boolean
+
+
+</PRE><PRE>    afs.error.opcode  Operation
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.fs  File Server
+        Boolean
+
+
+</PRE><PRE>    afs.fs.acl.a  _A_dminister
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    afs.fs.acl.count.negative  ACL Count (Negative)
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.fs.acl.count.positive  ACL Count (Positive)
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.fs.acl.d  _D_elete
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    afs.fs.acl.datasize  ACL Size
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.fs.acl.entity  Entity (User/Group)
+        String
+
+
+</PRE><PRE>    afs.fs.acl.i  _I_nsert
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    afs.fs.acl.k  _L_ock
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    afs.fs.acl.l  _L_ookup
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    afs.fs.acl.r  _R_ead
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    afs.fs.acl.w  _W_rite
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    afs.fs.callback.expires  Expires
+        Date/Time stamp
+
+
+</PRE><PRE>    afs.fs.callback.type  Type
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.fs.callback.version  Version
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.fs.data  Data
+        Byte array
+
+
+</PRE><PRE>    afs.fs.errcode  Error Code
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.fs.fid.uniq  FileID (Uniqifier)
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.fs.fid.vnode  FileID (VNode)
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.fs.fid.volume  FileID (Volume)
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.fs.flength  FLength
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.fs.length  Length
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.fs.name  Name
+        String
+
+
+</PRE><PRE>    afs.fs.newname  New Name
+        String
+
+
+</PRE><PRE>    afs.fs.offset  Offset
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.fs.oldname  Old Name
+        String
+
+
+</PRE><PRE>    afs.fs.opcode  Operation
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.fs.symlink.content  Symlink Content
+        String
+
+
+</PRE><PRE>    afs.fs.symlink.name  Symlink Name
+        String
+
+
+</PRE><PRE>    afs.fs.timestamp  Timestamp
+        Date/Time stamp
+
+
+</PRE><PRE>    afs.fs.volid  Volume ID
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.fs.volname  Volume Name
+        String
+
+
+</PRE><PRE>    afs.kauth  Kauth
+        Boolean
+
+
+</PRE><PRE>    afs.kauth.data  Data
+        Byte array
+
+
+</PRE><PRE>    afs.kauth.domain  Domain
+        String
+
+
+</PRE><PRE>    afs.kauth.errcode  Error Code
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.kauth.kvno  Key Version Number
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.kauth.name  Name
+        String
+
+
+</PRE><PRE>    afs.kauth.opcode  Operation
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.kauth.princ  Principal
+        String
+
+
+</PRE><PRE>    afs.kauth.realm  Realm
+        String
+
+
+</PRE><PRE>    afs.prot  Protection
+        Boolean
+
+
+</PRE><PRE>    afs.prot.count  Count
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.prot.errcode  Error Code
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.prot.flag  Flag
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.prot.gid  Group ID
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.prot.id  ID
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.prot.maxgid  Maximum Group ID
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.prot.maxuid  Maximum User ID
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.prot.name  Name
+        String
+
+
+</PRE><PRE>    afs.prot.newid  New ID
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.prot.oldid  Old ID
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.prot.opcode  Operation
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.prot.pos  Position
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.prot.uid  User ID
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.rmtsys  Rmtsys
+        Boolean
+
+
+</PRE><PRE>    afs.rmtsys.opcode  Operation
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.ubik  Ubik
+        Boolean
+
+
+</PRE><PRE>    afs.ubik.errcode  Error Code
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.ubik.file  File
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.ubik.length  Length
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.ubik.locktype  Lock Type
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.ubik.opcode  Operation
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.ubik.position  Position
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.ubik.site  Site
+        IPv4 address
+
+
+</PRE><PRE>    afs.ubik.syncsite  Syncsite
+        Boolean
+
+
+</PRE><PRE>    afs.ubik.version.counter  Counter
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.ubik.version.epoch  Epoch
+        Date/Time stamp
+
+
+</PRE><PRE>    afs.ubik.voteend  Vote Ends
+        Date/Time stamp
+
+
+</PRE><PRE>    afs.ubik.votestart  Vote Started
+        Date/Time stamp
+
+
+</PRE><PRE>    afs.ubik.votetype  Vote Type
+        Boolean
+
+
+</PRE><PRE>    afs.update  Update
+        Boolean
+
+
+</PRE><PRE>    afs.update.opcode  Operation
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.vldb  VLDB
+        Boolean
+
+
+</PRE><PRE>    afs.vldb.bkvol  Backup Volume ID
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.vldb.bump  Bumped Volume ID
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.vldb.count  Volume Count
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.vldb.errcode  Error Code
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.vldb.id  Volume ID
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.vldb.index  Volume Index
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.vldb.name  Volume Name
+        String
+
+
+</PRE><PRE>    afs.vldb.nextindex  Next Volume Index
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.vldb.numservers  Number of Servers
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.vldb.opcode  Operation
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.vldb.partition  Partition
+        String
+
+
+</PRE><PRE>    afs.vldb.rovol  Read-Only Volume ID
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.vldb.rwvol  Read-Write Volume ID
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.vldb.server  Server
+        IPv4 address
+
+
+</PRE><PRE>    afs.vldb.serveruuid  Server UUID
+        Byte array
+
+
+</PRE><PRE>    afs.vldb.type  Volume Type
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.vol  Volume Server
+        Boolean
+
+
+</PRE><PRE>    afs.vol.count  Volume Count
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.vol.errcode  Error Code
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.vol.id  Volume ID
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    afs.vol.name  Volume Name
+        String
+
+
+</PRE><PRE>    afs.vol.opcode  Operation
+        Unsigned 32-bit integer
+
+
+</PRE><A name=lbAP>&nbsp;</A> 
+<H2>Appletalk Address Resolution Protocol (aarp)</H2>
+<P><PRE>    aarp.dst.ether  Target ether
+        Byte array
+
+
+</PRE><PRE>    aarp.dst.id  Target ID
+        Byte array
+
+
+</PRE><PRE>    aarp.hard.size  Hardware size
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    aarp.hard.type  Hardware type
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    aarp.opcode  Opcode
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    aarp.proto.size  Protocol size
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    aarp.proto.type  Protocol type
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    aarp.src.ether  Sender ether
+        Byte array
+
+
+</PRE><PRE>    aarp.src.id  Sender ID
+        Byte array
+
+
+</PRE><A name=lbAQ>&nbsp;</A> 
+<H2>Async data over <FONT size=-1>ISDN</FONT> (V.120) (v120)</H2>
+<P><PRE>    v120.address  Link Address
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    v120.control  Control Field
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    v120.header  Header Field
+        String
+
+
+</PRE><A name=lbAR>&nbsp;</A> 
+<H2>Authentication Header (ah)</H2>
+<P><PRE>    ah.sequence  Sequence
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    ah.spi  SPI
+        Unsigned 32-bit integer
+
+
+</PRE><A name=lbAS>&nbsp;</A> 
+<H2>Boot Parameters (bootparams)</H2>
+<P><PRE>    bootparams.domain  Client Domain
+        String
+
+
+</PRE><PRE>    bootparams.fileid  File ID
+        String
+
+
+</PRE><PRE>    bootparams.filepath  File Path
+        String
+
+
+</PRE><PRE>    bootparams.host  Client Host
+        String
+
+
+</PRE><PRE>    bootparams.hostaddr  Client Address
+        IPv4 address
+
+
+</PRE><PRE>    bootparams.routeraddr  Router Address
+        IPv4 address
+
+
+</PRE><A name=lbAT>&nbsp;</A> 
+<H2>Bootstrap Protocol (bootp)</H2>
+<P><PRE>    bootp.cookie  Magic cookie
+        IPv4 address
+
+
+</PRE><PRE>    bootp.dhcp  Frame is DHCP
+        Boolean
+
+
+</PRE><PRE>    bootp.file  Boot file name
+        String
+
+
+</PRE><PRE>    bootp.flag  Broadcast flag
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    bootp.hops  Hops
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    bootp.hw.addr  Client hardware address
+        Byte array
+
+
+</PRE><PRE>    bootp.hw.len  Hardware address length
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    bootp.hw.type  Hardware type
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    bootp.id  Transaction ID
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    bootp.ip.client  Client IP address
+        IPv4 address
+
+
+</PRE><PRE>    bootp.ip.relay  Relay agent IP address
+        IPv4 address
+
+
+</PRE><PRE>    bootp.ip.server  Next server IP address
+        IPv4 address
+
+
+</PRE><PRE>    bootp.ip.your  Your (client) IP address
+        IPv4 address
+
+
+</PRE><PRE>    bootp.secs  Seconds elapsed
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    bootp.server  Server host name
+        String
+
+
+</PRE><PRE>    bootp.type  Message type
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbAU>&nbsp;</A> 
+<H2>Border Gateway Protocol (bgp)</H2><A name=lbAV>&nbsp;</A> 
+<H2>Cisco Auto-<FONT size=-1>RP</FONT> (auto_rp)</H2>
+<P><PRE>    auto_rp.grp  Group mapping to this RP
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    auto_rp.map  Auto-RP address map
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    auto_rp.mask_sgn  Group prefix sign
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    auto_rp.pim_ver  RP's highest PIM version
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    auto_rp.type  Auto-RP packet type
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    auto_rp.typever  Auto-RP message version and type
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    auto_rp.version  Auto-RP protocol version
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbAW>&nbsp;</A> 
+<H2>Cisco Discovery Protocol (cdp)</H2>
+<P><PRE>    cdp.flags  Flags
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    cdp.tlv.len  Length
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    cdp.tlv.type  Type
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    cdp.ttl  TTL
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    cdp.version  Version
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbAX>&nbsp;</A> 
+<H2>Cisco Group Management Protocol (cgmp)</H2>
+<P><PRE>    cgmp.count  Count
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    cgmp.gda  Group Destination Address
+        6-byte Hardware (MAC) Address
+
+
+</PRE><PRE>    cgmp.type  Type
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    cgmp.usa  Unicast Source Address
+        6-byte Hardware (MAC) Address
+
+
+</PRE><PRE>    cgmp.version  Version
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbAY>&nbsp;</A> 
+<H2>Cisco Hot Standby Router Protocol (hsrp)</H2><A name=lbAZ>&nbsp;</A> 
+<H2>Cisco <FONT size=-1>ISL</FONT> (isl)</H2>
+<P><PRE>    isl.addr  Source or Destination Address
+        6-byte Hardware (MAC) Address
+
+
+</PRE><PRE>    isl.bpdu  BPDU
+        Boolean
+
+
+</PRE><PRE>    isl.crc  CRC
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    isl.dst  Destination
+        6-byte Hardware (MAC) Address
+
+
+</PRE><PRE>    isl.dst_route_desc  Destination route descriptor
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    isl.esize  Esize
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    isl.explorer  Explorer
+        Boolean
+
+
+</PRE><PRE>    isl.fcs_not_incl  FCS Not Included
+        Boolean
+
+
+</PRE><PRE>    isl.hsa  HSA
+        Unsigned 24-bit integer
+
+
+</PRE><PRE>    isl.index  Index
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    isl.len  Length
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    isl.src  Source
+        6-byte Hardware (MAC) Address
+
+
+</PRE><PRE>    isl.src_route_desc  Source-route descriptor
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    isl.src_vlan_id  Source VLAN ID
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    isl.type  Type
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    isl.user  User
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    isl.user_eth  User
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    isl.vlan_id  VLAN ID
+        Unsigned 16-bit integer
+
+
+</PRE><A name=lbBA>&nbsp;</A> 
+<H2>Common Open Policy Service (cops)</H2>
+<P><PRE>    cops.client_type  Client Type
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    cops.flags  Flags
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    cops.msg_len  Message Length
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    cops.obj.c_num  C-Num
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    cops.obj.c_type  C-Type
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    cops.obj.len  Object Length
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    cops.op_code  Op Code
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    cops.ver_flags  Version and Flags
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    cops.version  Version
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbBB>&nbsp;</A> 
+<H2>Data (data)</H2><A name=lbBC>&nbsp;</A> 
+<H2>Datagram Delivery Protocol (ddp)</H2>
+<P><PRE>    ddp.checksum  Checksum
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    ddp.dst.net  Destination Net
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    ddp.dst.node  Destination Node
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ddp.dst.socket  Destination Socket
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ddp.hopcount  Hop count
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ddp.len  Datagram length
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    ddp.src.net  Source Net
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    ddp.src.node  Source Node
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ddp.src.socket  Source Socket
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ddp.type  Protocol type
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbBD>&nbsp;</A> 
+<H2>Domain Name Service (dns)</H2>
+<P><PRE>    dns.count.add_rr  Additional RRs
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    dns.count.answers  Answer RRs
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    dns.count.auth_rr  Authority RRs
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    dns.count.queries  Questions
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    dns.flags  Flags
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    dns.id  Transaction ID
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    dns.query  Query
+        Boolean
+
+
+</PRE><PRE>    dns.response  Response
+        Boolean
+
+
+</PRE><A name=lbBE>&nbsp;</A> 
+<H2>Dynamic <FONT size=-1>DNS</FONT> Tools Protocol (ddtp)</H2>
+<P><PRE>    ddtp.encrypt  Encryption
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    ddtp.hostid  Hostid
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    ddtp.ipaddr  IP addres
+        IPv4 address
+
+
+</PRE><PRE>    ddtp.msgtype  Message type
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    ddtp.opcode  Opcode
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    ddtp.status  Status
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    ddtp.version  Version
+        Unsigned 32-bit integer
+
+
+</PRE><A name=lbBF>&nbsp;</A> 
+<H2>Encapsulated Security Payload (esp)</H2>
+<P><PRE>    esp.sequence  Sequence
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    esp.spi  SPI
+        Unsigned 32-bit integer
+
+
+</PRE><A name=lbBG>&nbsp;</A> 
+<H2>Enhanced Interior Gateway Routing Protocol (eigrp)</H2><A 
+name=lbBH>&nbsp;</A> 
+<H2>Ethernet (eth)</H2>
+<P><PRE>    eth.addr  Source or Destination Address
+        6-byte Hardware (MAC) Address
+
+
+</PRE><PRE>    eth.dst  Destination
+        6-byte Hardware (MAC) Address
+
+
+</PRE><PRE>    eth.len  Length
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    eth.src  Source
+        6-byte Hardware (MAC) Address
+
+
+</PRE><PRE>    eth.trailer  Trailer
+        Byte array
+
+
+</PRE><PRE>    eth.type  Type
+        Unsigned 16-bit integer
+
+
+</PRE><A name=lbBI>&nbsp;</A> 
+<H2>Extended X.25 (modulo 128) (ex25)</H2>
+<P><PRE>    ex25.d  D Bit
+        Boolean
+
+
+</PRE><PRE>    ex25.lcn  Logical Channel
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    ex25.m  M Bit
+        Boolean
+
+
+</PRE><PRE>    ex25.mod  Modulo
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    ex25.p_r  P(R)
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ex25.p_s  P(S)
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ex25.q  Q Bit
+        Boolean
+
+
+</PRE><PRE>    ex25.type  Packet Type
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbBJ>&nbsp;</A> 
+<H2>Fiber Distributed Data Interface (fddi)</H2>
+<P><PRE>    fddi.addr  Source or Destination Address
+        6-byte Hardware (MAC) Address
+
+
+</PRE><PRE>    fddi.dst  Destination
+        6-byte Hardware (MAC) Address
+
+
+</PRE><PRE>    fddi.fc  Frame Control
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    fddi.src  Source
+        6-byte Hardware (MAC) Address
+
+
+</PRE><A name=lbBK>&nbsp;</A> 
+<H2>File Transfer Protocol (ftp)</H2>
+<P><PRE>    ftp.reponse.data  Response data
+        String
+
+
+</PRE><PRE>    ftp.request  Request
+        Boolean
+
+
+</PRE><PRE>    ftp.request.command  Request command
+        String
+
+
+</PRE><PRE>    ftp.request.data  Request data
+        String
+
+
+</PRE><PRE>    ftp.response  Response
+        Boolean
+
+
+</PRE><PRE>    ftp.response.code  Response code
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbBL>&nbsp;</A> 
+<H2>Frame (frame)</H2>
+<P><PRE>    frame.cap_len  Capture Frame Length
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    frame.number  Frame Number
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    frame.pkt_len  Total Frame Length
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    frame.time  Arrival Time
+        Date/Time stamp
+
+
+</PRE><PRE>    frame.time_delta  Time delta from previous packet
+        Time duration
+
+
+</PRE><A name=lbBM>&nbsp;</A> 
+<H2>General Inter-<FONT size=-1>ORB</FONT> Protocol (giop)</H2>
+<P><PRE>    giop.len  Message size
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    giop.type  Message type
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbBN>&nbsp;</A> 
+<H2>Generic Routing Encapsulation (gre)</H2>
+<P><PRE>    gre.proto  Protocol Type
+        Unsigned 16-bit integer
+
+
+</PRE><A name=lbBO>&nbsp;</A> 
+<H2>Hypertext Transfer Protocol (http)</H2>
+<P><PRE>    http.request  Request
+        Boolean
+
+
+</PRE><PRE>    http.response  Response
+        Boolean
+
+
+</PRE><A name=lbBP>&nbsp;</A> 
+<H2><FONT size=-1>ICQ</FONT> Protocol (icq)</H2>
+<P><PRE>    icq.checkcode  Checkcode
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    icq.cmd  Command
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    icq.decode  Decode
+        String
+
+
+</PRE><PRE>    icq.sessionid  SessionID
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    icq.type  Type
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    icq.uin  UIN
+        Unsigned 32-bit integer
+
+
+</PRE><A name=lbBQ>&nbsp;</A> 
+<H2><FONT size=-1>ILMI</FONT> (ilmi)</H2><A name=lbBR>&nbsp;</A> 
+<H2><FONT size=-1>IP</FONT> Payload Compression (ipcomp)</H2>
+<P><PRE>    ipcomp.cpi  CPI
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    ipcomp.flags  Flags
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbBS>&nbsp;</A> 
+<H2><FONT size=-1>IPX</FONT> Message (ipxmsg)</H2>
+<P><PRE>    ipxmsg.conn  Connection Number
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ipxmsg.sigchar  Signature Char
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbBT>&nbsp;</A> 
+<H2><FONT size=-1>IPX</FONT> Routing Information Protocol (ipxrip)</H2>
+<P><PRE>    ipxrip.request  Request
+        Boolean
+
+
+</PRE><PRE>    ipxrip.response  Response
+        Boolean
+
+
+</PRE><A name=lbBU>&nbsp;</A> 
+<H2><FONT size=-1>ISIS</FONT> <FONT size=-1>HELLO</FONT> (isis_hello)</H2>
+<P><PRE>    isis_hello.circuite_type  Circuit type              
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    isis_hello.clv_ipv4_int_addr  IPv4 interface address    
+        IPv4 address
+
+
+</PRE><PRE>    isis_hello.holding_timer  Holding timer             
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    isis_hello.lan_id  SystemID{ Designated IS } 
+        String
+
+
+</PRE><PRE>    isis_hello.local_circuit_id  Local circuit ID          
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    isis_hello.pdu_length  PDU length                
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    isis_hello.priority  Priority                 
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    isis_hello.source_id  SystemID{ Sender of PDU } 
+        6-byte Hardware (MAC) Address
+
+
+</PRE><A name=lbBV>&nbsp;</A> 
+<H2><FONT size=-1>ISO</FONT> 10598 <FONT size=-1>ISIS</FONT> Complete Sequence 
+Numbers Protocol Data Unit (isis_csnp)</H2>
+<P><PRE>    isis_csnp.pdu_length  PDU length
+        Unsigned 16-bit integer
+
+
+</PRE><A name=lbBW>&nbsp;</A> 
+<H2><FONT size=-1>ISO</FONT> 10598 <FONT size=-1>ISIS</FONT> InTRA Domain 
+Routeing Information Exchange Protocol (isis)</H2>
+<P><PRE>    isis.irpd  Intra Domain Routing Protocol Discriminator
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    isis.len  PDU Header Length  
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    isis.max_area_adr  Max.AREAs: (0==3)  
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    isis.reserved  Reserved (==0)     
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    isis.sysid_len  System ID Length   
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    isis.type  PDU Type          :
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    isis.version  Version (==1)      
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    isis.version2  Version2 (==1)     
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbBX>&nbsp;</A> 
+<H2><FONT size=-1>ISO</FONT> 10598 <FONT size=-1>ISIS</FONT> Link State Protocol 
+Data Unit (isis_lsp)</H2>
+<P><PRE>    isis_lsp.checksum  Checksum
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    isis_lsp.clv_ipv4_int_addr  IPv4 interface address: 
+        IPv4 address
+
+
+</PRE><PRE>    isis_lsp.pdu_length  PDU length
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    isis_lsp.remaining_life  Remaining life
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    isis_lsp.sequence_number  Sequence number
+        Unsigned 32-bit integer
+
+
+</PRE><A name=lbBY>&nbsp;</A> 
+<H2><FONT size=-1>ISO</FONT> 10598 <FONT size=-1>ISIS</FONT> Partial Sequence 
+Numbers Protocol Data Unit (isis_psnp)</H2>
+<P><PRE>    isis_psnp.pdu_length  PDU length
+        Unsigned 16-bit integer
+
+
+</PRE><A name=lbBZ>&nbsp;</A> 
+<H2><FONT size=-1>ISO</FONT> 8073 <FONT size=-1>COTP</FONT> Connection-Oriented 
+Transport Protocol (cotp)</H2><A name=lbCA>&nbsp;</A> 
+<H2><FONT size=-1>ISO</FONT> 8473 <FONT size=-1>CLNP</FONT> ConnectionLess 
+Network Protocol (clnp)</H2>
+<P><PRE>    clnp.checksum  Checksum     
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    clnp.dsap   DA 
+        Byte array
+
+
+</PRE><PRE>    clnp.dsap.len  DAL 
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    clnp.len  HDR Length   
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    clnp.nlpi  Network Layer Protocol Identifier
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    clnp.pdu.len  PDU length   
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    clnp.ssap   SA 
+        Byte array
+
+
+</PRE><PRE>    clnp.ssap.len  SAL 
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    clnp.ttl  Holding Time 
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    clnp.type  PDU Type     
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    clnp.version  Version      
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbCB>&nbsp;</A> 
+<H2><FONT size=-1>ISO</FONT> 9542 <FONT size=-1>ESIS</FONT> Routeing Information 
+Exchange Protocol (esis)</H2>
+<P><PRE>    esis.chksum  Checksum      
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    esis.htime  Holding Time  
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    esis.length  PDU Length    
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    esis.nlpi  Network Layer Protocol Identifier
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    esis.res  Reserved(==0) 
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    esis.type  PDU Type      
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    esis.ver  Version (==1) 
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbCC>&nbsp;</A> 
+<H2>Internet Cache Protocol (icp)</H2>
+<P><PRE>    icp.length  Length
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    icp.nr  Request Number
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    icp.opcode  Opcode
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    icp.version  Version
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbCD>&nbsp;</A> 
+<H2>Internet Control Message Protocol (icmp)</H2>
+<P><PRE>    icmp.checksum  Checksum
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    icmp.code  Code
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    icmp.type  Type
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbCE>&nbsp;</A> 
+<H2>Internet Control Message Protocol v6 (icmpv6)</H2>
+<P><PRE>    icmpv6.checksum  Checksum
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    icmpv6.code  Code
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    icmpv6.type  Type
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbCF>&nbsp;</A> 
+<H2>Internet Group Management Protocol (igmp)</H2>
+<P><PRE>    igmp.checksum  Checksum
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    igmp.group  Group address
+        IPv4 address
+
+
+</PRE><PRE>    igmp.type  Type
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    igmp.unused  Unused
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    igmp.version  Version
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbCG>&nbsp;</A> 
+<H2>Internet Message Access Protocol (imap)</H2>
+<P><PRE>    imap.request  Request
+        Boolean
+
+
+</PRE><PRE>    imap.response  Response
+        Boolean
+
+
+</PRE><A name=lbCH>&nbsp;</A> 
+<H2>Internet Printing Protocol (ipp)</H2><A name=lbCI>&nbsp;</A> 
+<H2>Internet Protocol (ip)</H2>
+<P><PRE>    ip.addr  Source or Destination Address
+        IPv4 address
+
+
+</PRE><PRE>    ip.checksum  Header checksum
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    ip.dsfield  Differentiated Services field
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ip.dsfield.cu  Currently Unused
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ip.dsfield.dscp  Differentiated Services Codepoint
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ip.dst  Destination
+        IPv4 address
+
+
+</PRE><PRE>    ip.flags  Flags
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ip.flags.df  Don't fragment
+        Boolean
+
+
+</PRE><PRE>    ip.flags.mf  More fragments
+        Boolean
+
+
+</PRE><PRE>    ip.frag_offset  Fragment offset
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    ip.hdr_len  Header Length
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ip.id  Identification
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    ip.len  Total Length
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    ip.proto  Protocol
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ip.src  Source
+        IPv4 address
+
+
+</PRE><PRE>    ip.tos  Type of Service
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ip.tos.cost  Cost
+        Boolean
+
+
+</PRE><PRE>    ip.tos.delay  Delay
+        Boolean
+
+
+</PRE><PRE>    ip.tos.precedence  Precedence
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ip.tos.reliability  Reliability
+        Boolean
+
+
+</PRE><PRE>    ip.tos.throughput  Throughput
+        Boolean
+
+
+</PRE><PRE>    ip.ttl  Time to live
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ip.version  Version
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbCJ>&nbsp;</A> 
+<H2>Internet Protocol Version 6 (ipv6)</H2>
+<P><PRE>    ipv6.class  Traffic class
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ipv6.dst  Destination
+        IPv6 address
+
+
+</PRE><PRE>    ipv6.flow  Flowlabel
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    ipv6.hlim  Hop limit
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ipv6.nxt  Next header
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ipv6.plen  Payload length
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    ipv6.src  Source
+        IPv6 address
+
+
+</PRE><PRE>    ipv6.version  Version
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbCK>&nbsp;</A> 
+<H2>Internet Relay Chat (irc)</H2>
+<P><PRE>    irc.command  Command
+        String
+
+
+</PRE><PRE>    irc.request  Request
+        Boolean
+
+
+</PRE><PRE>    irc.response  Response
+        Boolean
+
+
+</PRE><A name=lbCL>&nbsp;</A> 
+<H2>Internet Security Association and Key Management Protocol (isakmp)</H2><A 
+name=lbCM>&nbsp;</A> 
+<H2>Internetwork Packet eXchange (ipx)</H2>
+<P><PRE>    ipx.checksum  Checksum
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    ipx.dst.net  Destination Network
+        IPX network or server name
+
+
+</PRE><PRE>    ipx.dst.node  Destination Node
+        6-byte Hardware (MAC) Address
+
+
+</PRE><PRE>    ipx.dst.socket  Destination Socket
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    ipx.hops  Transport Control (Hops)
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ipx.len  Length
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    ipx.packet_type  Packet Type
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ipx.src.net  Source Network
+        IPX network or server name
+
+
+</PRE><PRE>    ipx.src.node  Source Node
+        6-byte Hardware (MAC) Address
+
+
+</PRE><PRE>    ipx.src.socket  Source Socket
+        Unsigned 16-bit integer
+
+
+</PRE><A name=lbCN>&nbsp;</A> 
+<H2>Layer 2 Tunneling Protocol (l2tp)</H2>
+<P><PRE>    l2tp.Nr  Nr
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    l2tp.Ns  Ns
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    l2tp.length  Length
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    l2tp.offset  Offset
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    l2tp.session  Session ID
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    l2tp.tunnel  Tunnel ID
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    lt2p.code  code
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    lt2p.length_bit  Length Bit
+        Boolean
+
+
+</PRE><PRE>    lt2p.offset_bit  Offset bit
+        Boolean
+
+
+</PRE><PRE>    lt2p.priority  Priority
+        Boolean
+
+
+</PRE><PRE>    lt2p.seq_bit  Sequence Bit
+        Boolean
+
+
+</PRE><PRE>    lt2p.type  Type
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    lt2p.version  Version
+        Unsigned 16-bit integer
+
+
+</PRE><A name=lbCO>&nbsp;</A> 
+<H2>Lightweight Directory Access Protocol (ldap)</H2>
+<P><PRE>    ldap.abandon.msgid  Abandon Msg Id
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    ldap.attribute  Attribute
+        String
+
+
+</PRE><PRE>    ldap.bind.auth_type  Auth Type
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ldap.bind.dn  DN
+        String
+
+
+</PRE><PRE>    ldap.bind.password  Password
+        String
+
+
+</PRE><PRE>    ldap.bind.version  Version
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    ldap.compare.test  Test
+        String
+
+
+</PRE><PRE>    ldap.dn  Distinguished Name
+        String
+
+
+</PRE><PRE>    ldap.length  Length
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    ldap.message_id  Message Id
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    ldap.message_length  Message Length
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    ldap.message_type  Message Type
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ldap.modify.add  Add
+        String
+
+
+</PRE><PRE>    ldap.modify.delete  Delete
+        String
+
+
+</PRE><PRE>    ldap.modify.replace  Replace
+        String
+
+
+</PRE><PRE>    ldap.modrdn.delete  Delete Values
+        Boolean
+
+
+</PRE><PRE>    ldap.modrdn.name  New Name
+        String
+
+
+</PRE><PRE>    ldap.modrdn.superior  New Location
+        String
+
+
+</PRE><PRE>    ldap.result.code  Result Code
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ldap.result.errormsg  Error Message
+        String
+
+
+</PRE><PRE>    ldap.result.matcheddn  Matched DN
+        String
+
+
+</PRE><PRE>    ldap.result.referral  Referral
+        String
+
+
+</PRE><PRE>    ldap.search.basedn  Base DN
+        String
+
+
+</PRE><PRE>    ldap.search.dereference  Dereference
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ldap.search.filter  Filter
+        String
+
+
+</PRE><PRE>    ldap.search.scope  Scope
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ldap.search.sizelimit  Size Limit
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    ldap.search.timelimit  Time Limit
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    ldap.search.typesonly  Attributes Only
+        Boolean
+
+
+</PRE><PRE>    ldap.value  Value
+        String
+
+
+</PRE><A name=lbCP>&nbsp;</A> 
+<H2>Line Printer Daemon Protocol (lpd)</H2>
+<P><PRE>    lpd.request  Request
+        Boolean
+
+
+</PRE><PRE>    lpd.response  Response
+        Boolean
+
+
+</PRE><A name=lbCQ>&nbsp;</A> 
+<H2>Link Access Procedure Balanced (<FONT size=-1>LAPB</FONT>) (lapb)</H2>
+<P><PRE>    lapb.address  Address Field
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    lapb.control  Control Field
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbCR>&nbsp;</A> 
+<H2>Link Access Procedure, Channel D (<FONT size=-1>LAPD</FONT>) (lapd)</H2>
+<P><PRE>    lapd.address  Address Field
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    lapd.control  Control Field
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    lapd.cr  C/R
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    lapd.ea1  EA1
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    lapd.ea2  EA2
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    lapd.sapi  SAPI
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    lapd.tei  TEI
+        Unsigned 16-bit integer
+
+
+</PRE><A name=lbCS>&nbsp;</A> 
+<H2>Logical-Link Control (llc)</H2>
+<P><PRE>    llc.control  Control
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    llc.dsap  DSAP
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    llc.dsap.ig  IG Bit
+        Boolean
+
+
+</PRE><PRE>    llc.oui  Organization Code
+        Unsigned 24-bit integer
+
+
+</PRE><PRE>    llc.pid  Protocol ID
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    llc.ssap  SSAP
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    llc.ssap.cr  CR Bit
+        Boolean
+
+
+</PRE><PRE>    llc.type  Type
+        Unsigned 16-bit integer
+
+
+</PRE><A name=lbCT>&nbsp;</A> 
+<H2>Lucent/Ascend debug output (ascend)</H2>
+<P><PRE>    ascend.chunk  WDD Chunk
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    ascend.number  Called number
+        String
+
+
+</PRE><PRE>    ascend.sess  Session ID
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    ascend.task  Task
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    ascend.type  Link type
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    ascend.user  User name
+        String
+
+
+</PRE><A name=lbCU>&nbsp;</A> 
+<H2><FONT size=-1>MAPI</FONT> (mapi)</H2>
+<P><PRE>    mapi.request  Request
+        Boolean
+
+
+</PRE><PRE>    mapi.response  Response
+        Boolean
+
+
+</PRE><A name=lbCV>&nbsp;</A> 
+<H2>MSProxy Protocol (msproxy)</H2>
+<P><PRE>    msproxy.bindaddr  Destination
+        IPv4 address
+
+
+</PRE><PRE>    msproxy.bindid  Bound Port Id
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    msproxy.bindport  Bind Port
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    msproxy.boundport  Bound Port
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    msproxy.clntport  Client Port
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    msproxy.command  Command
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    msproxy.dstaddr  Destination Address
+        IPv4 address
+
+
+</PRE><PRE>    msproxy.dstport  Destination Port
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    msproxy.resolvaddr  Address
+        IPv4 address
+
+
+</PRE><PRE>    msproxy.server_ext_addr  Server External Address
+        IPv4 address
+
+
+</PRE><PRE>    msproxy.server_ext_port  Server External Port
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    msproxy.server_int_addr  Server Internal Address
+        IPv4 address
+
+
+</PRE><PRE>    msproxy.server_int_port  Server Internal Port
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    msproxy.serveraddr  Server Address
+        IPv4 address
+
+
+</PRE><PRE>    msproxy.serverport  Server Port
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    msproxy.srcport  Source Port
+        Unsigned 16-bit integer
+
+
+</PRE><A name=lbCW>&nbsp;</A> 
+<H2>Malformed Frame (malformed)</H2><A name=lbCX>&nbsp;</A> 
+<H2>Microsoft Windows Browser Protocol (browser)</H2><A name=lbCY>&nbsp;</A> 
+<H2>Microsoft Windows Lanman Protocol (lanman)</H2><A name=lbCZ>&nbsp;</A> 
+<H2>Microsoft Windows Logon Protocol (netlogon)</H2><A name=lbDA>&nbsp;</A> 
+<H2>Mobile <FONT size=-1>IP</FONT> (mip)</H2>
+<P><PRE>    mip.b  Broadcast Datagrams
+        Boolean
+
+
+</PRE><PRE>    mip.coa  Care of Address
+        IPv4 address
+
+
+</PRE><PRE>    mip.code  Reply Code
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    mip.d  Co-lcated Care-of Address
+        Boolean
+
+
+</PRE><PRE>    mip.g  GRE
+        Boolean
+
+
+</PRE><PRE>    mip.haaddr  Home Agent
+        IPv4 address
+
+
+</PRE><PRE>    mip.homeaddr  Home Address
+        IPv4 address
+
+
+</PRE><PRE>    mip.ident  Identification
+        Byte array
+
+
+</PRE><PRE>    mip.life  Lifetime
+        Signed 16-bit integer
+
+
+</PRE><PRE>    mip.m  Minimal Encapsulation
+        Boolean
+
+
+</PRE><PRE>    mip.s  Simultaneous Bindings
+        Boolean
+
+
+</PRE><PRE>    mip.type  Message Type
+        Signed 8-bit integer
+
+
+</PRE><PRE>    mip.v  Van Jacobson
+        Boolean
+
+
+</PRE><A name=lbDB>&nbsp;</A> 
+<H2>Mount Service (mount)</H2>
+<P><PRE>    mount.dump.directory  Directory
+        String
+
+
+</PRE><PRE>    mount.dump.entry  Mount List Entry
+        No value
+
+
+</PRE><PRE>    mount.dump.hostname  Hostname
+        String
+
+
+</PRE><PRE>    mount.export.directory  Directory
+        String
+
+
+</PRE><PRE>    mount.export.entry  Export List Entry
+        No value
+
+
+</PRE><PRE>    mount.export.group  Group
+        String
+
+
+</PRE><PRE>    mount.export.groups  Groups
+        No value
+
+
+</PRE><PRE>    mount.flavor  Flavor
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    mount.flavors  Flavors
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    mount.path  Path
+        String
+
+
+</PRE><PRE>    mount.pathconf.link_max  Maximum number of links to a file
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    mount.pathconf.mask  Reply error/status bits
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    mount.pathconf.mask.chown_restricted  CHOWN_RESTRICTED
+        Boolean
+
+
+</PRE><PRE>    mount.pathconf.mask.error_all  ERROR_ALL
+        Boolean
+
+
+</PRE><PRE>    mount.pathconf.mask.error_link_max  ERROR_LINK_MAX
+        Boolean
+
+
+</PRE><PRE>    mount.pathconf.mask.error_max_canon  ERROR_MAX_CANON
+        Boolean
+
+
+</PRE><PRE>    mount.pathconf.mask.error_max_input  ERROR_MAX_INPUT
+        Boolean
+
+
+</PRE><PRE>    mount.pathconf.mask.error_name_max  ERROR_NAME_MAX
+        Boolean
+
+
+</PRE><PRE>    mount.pathconf.mask.error_path_max  ERROR_PATH_MAX
+        Boolean
+
+
+</PRE><PRE>    mount.pathconf.mask.error_pipe_buf  ERROR_PIPE_BUF
+        Boolean
+
+
+</PRE><PRE>    mount.pathconf.mask.error_vdisable  ERROR_VDISABLE
+        Boolean
+
+
+</PRE><PRE>    mount.pathconf.mask.no_trunc  NO_TRUNC
+        Boolean
+
+
+</PRE><PRE>    mount.pathconf.max_canon  Maximum terminal input line length
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    mount.pathconf.max_input  Terminal input buffer size
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    mount.pathconf.name_max  Maximum file name length
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    mount.pathconf.path_max  Maximum path name length
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    mount.pathconf.pipe_buf  Pipe buffer size
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    mount.pathconf.vdisable_char  VDISABLE character
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    mount.status  Status
+        Unsigned 32-bit integer
+
+
+</PRE><A name=lbDC>&nbsp;</A> 
+<H2>MultiProtocol Label Switching Header (mpls)</H2>
+<P><PRE>    mpls.bottom  MPLS Bottom Of Label Stack
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    mpls.exp  MPLS Experimental Bits
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    mpls.label  MPLS Label
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    mpls.ttl  MPLS TTL
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbDD>&nbsp;</A> 
+<H2>Name Binding Protocol (nbp)</H2>
+<P><PRE>    nbp.count  Count
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    nbp.enum  Enumerator
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    nbp.info  Info
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    nbp.net  Network
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    nbp.node  Node
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    nbp.object  Object
+        String
+
+
+</PRE><PRE>    nbp.op  Operation
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    nbp.port  Port
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    nbp.tid  Transaction ID
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    nbp.type  Type
+        String
+
+
+</PRE><PRE>    nbp.zone  Zone
+        String
+
+
+</PRE><A name=lbDE>&nbsp;</A> 
+<H2>NetBIOS (netbios)</H2><A name=lbDF>&nbsp;</A> 
+<H2>NetBIOS Datagram Service (nbdgm)</H2>
+<P><PRE>    nbdgm.dgram_id  Datagram ID
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    nbdgm.first  First fragment
+        Boolean
+
+
+</PRE><PRE>    nbdgm.next  Fragmented
+        Boolean
+
+
+</PRE><PRE>    nbdgm.node_type  Node Type
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    nbdgm.src.ip  Source IP
+        IPv4 address
+
+
+</PRE><PRE>    nbdgm.src.port  Source Port
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    nbdgm.type  Message Type
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbDG>&nbsp;</A> 
+<H2>NetBIOS Name Service (nbns)</H2>
+<P><PRE>    nbns.count.add_rr  Additional RRs
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    nbns.count.answers  Answer RRs
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    nbns.count.auth_rr  Authority RRs
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    nbns.count.queries  Questions
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    nbns.id  Transaction ID
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    nbns.query  Query
+        Boolean
+
+
+</PRE><PRE>    nbns.response  Response
+        Boolean
+
+
+</PRE><A name=lbDH>&nbsp;</A> 
+<H2>NetBIOS Session Service (nbss)</H2>
+<P><PRE>    nbss.flags  Flags
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    nbss.type  Message Type
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbDI>&nbsp;</A> 
+<H2>NetBIOS over <FONT size=-1>IPX</FONT> (nbipx)</H2><A name=lbDJ>&nbsp;</A> 
+<H2>NetWare Core Protocol (ncp)</H2>
+<P><PRE>    ncp.connection  Connection Number
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    ncp.ip.signature  NCP over IP signature
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    ncp.ip.version  Version
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    ncp.seq  Sequence Number
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ncp.task  Task Number
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ncp.type  Type
+        Unsigned 16-bit integer
+
+
+</PRE><A name=lbDK>&nbsp;</A> 
+<H2>Network File System (nfs)</H2>
+<P><PRE>    nfs.createmode  Create Mode
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.data  Data
+        String
+
+
+</PRE><PRE>    nfs.fsinfo.dtpref  dtpref
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.fsinfo.propeties  Properties
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.fsinfo.rtmax  rtmax
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.fsinfo.rtmult  rtmult
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.fsinfo.rtpref  rtpref
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.fsinfo.wtmax  wtmax
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.fsinfo.wtmult  wtmult
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.fsinfo.wtpref  wtpref
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.fsstat.invarsec  invarsec
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.name  Name
+        String
+
+
+</PRE><PRE>    nfs.pathconf.case_insensitive  case_insensitive
+        Boolean
+
+
+</PRE><PRE>    nfs.pathconf.case_preserving  case_preserving
+        Boolean
+
+
+</PRE><PRE>    nfs.pathconf.chown_restricted  chown_restricted
+        Boolean
+
+
+</PRE><PRE>    nfs.pathconf.linkmax  linkmax
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.pathconf.name_max  name_max
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.pathconf.no_trunc  no_trunc
+        Boolean
+
+
+</PRE><PRE>    nfs.read.count  Count
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.read.eof  EOF
+        Boolean
+
+
+</PRE><PRE>    nfs.read.offset  Offset
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.read.totalcount  Total Count
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.readdir.cookie  Cookie
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.readdir.count  Count
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.readdir.entry  Entry
+        No value
+
+
+</PRE><PRE>    nfs.readdir.entry.cookie  Cookie
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.readdir.entry.fileid  File ID
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.readdir.entry.name  Name
+        String
+
+
+</PRE><PRE>    nfs.readdir.eof  EOF
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.readdirplus.entry.name  Name
+        String
+
+
+</PRE><PRE>    nfs.readlink.data  Data
+        String
+
+
+</PRE><PRE>    nfs.statfs.bavail  Available Blocks
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.statfs.bfree  Free Blocks
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.statfs.blocks  Total Blocks
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.statfs.bsize  Block Size
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.statfs.tsize  Transfer Size
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.status  Status
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.status2  Status
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.symlink.to  To
+        String
+
+
+</PRE><PRE>    nfs.type  Type
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.write.beginoffset  Begin Offset
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.write.committed  Committed
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.write.offset  Offset
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.write.stable  Stable
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    nfs.write.totalcount  Total Count
+        Unsigned 32-bit integer
+
+
+</PRE><A name=lbDL>&nbsp;</A> 
+<H2>Network Lock Manager Protocol (nlm)</H2><A name=lbDM>&nbsp;</A> 
+<H2>Network News Transfer Protocol (nntp)</H2>
+<P><PRE>    nntp.request  Request
+        Boolean
+
+
+</PRE><PRE>    nntp.response  Response
+        Boolean
+
+
+</PRE><A name=lbDN>&nbsp;</A> 
+<H2>Network Time Protocol (ntp)</H2>
+<P><PRE>    ntp.flags  Flags
+        Byte array
+
+
+</PRE><PRE>    ntp.flags.li  Leap Indicator
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ntp.flags.mode  Leap Indicator
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ntp.flags.vn  Version number
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ntp.keyid  Key ID
+        Byte array
+
+
+</PRE><PRE>    ntp.mac  Message Authentication Code
+        Byte array
+
+
+</PRE><PRE>    ntp.org  Originate Time Stamp
+        Byte array
+
+
+</PRE><PRE>    ntp.ppoll  Peer Polling Interval
+        Byte array
+
+
+</PRE><PRE>    ntp.precision  Peer Clock Precision
+        Byte array
+
+
+</PRE><PRE>    ntp.rec  Receive Time Stamp
+        Byte array
+
+
+</PRE><PRE>    ntp.refid  Reference Clock ID
+        Byte array
+
+
+</PRE><PRE>    ntp.reftime  Reference Clock Update Time
+        Byte array
+
+
+</PRE><PRE>    ntp.rootdelay  Root Delay
+        Byte array
+
+
+</PRE><PRE>    ntp.rootdispersion  Clock Dispersion
+        Byte array
+
+
+</PRE><PRE>    ntp.stratum  Peer Clock Stratum
+        Byte array
+
+
+</PRE><PRE>    ntp.xmt  Transmit Time Stamp
+        Byte array
+
+
+</PRE><A name=lbDO>&nbsp;</A> 
+<H2>Null/Loopback (null)</H2>
+<P><PRE>    null.family  Family
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    null.type  Type
+        Unsigned 16-bit integer
+
+
+</PRE><A name=lbDP>&nbsp;</A> 
+<H2>Open Shortest Path First (ospf)</H2><A name=lbDQ>&nbsp;</A> 
+<H2><FONT size=-1>PPP</FONT> Multilink Protocol (mp)</H2>
+<P><PRE>    mp.first  First fragment
+        Boolean
+
+
+</PRE><PRE>    mp.last  Last fragment
+        Boolean
+
+
+</PRE><PRE>    mp.seq  Sequence number
+        Unsigned 24-bit integer
+
+
+</PRE><A name=lbDR>&nbsp;</A> 
+<H2>Point-to-Point Protocol (ppp)</H2><A name=lbDS>&nbsp;</A> 
+<H2>Portmap (portmap)</H2>
+<P><PRE>    portmap.answer  Answer
+        Boolean
+
+
+</PRE><PRE>    portmap.port  Port
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    portmap.proc  Procedure
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    portmap.prog  Program
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    portmap.proto  Protocol
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    portmap.rpcb  RPCB
+        No value
+
+
+</PRE><PRE>    portmap.rpcb.addr  Universal Address
+        String
+
+
+</PRE><PRE>    portmap.rpcb.netid  Network Id
+        String
+
+
+</PRE><PRE>    portmap.rpcb.owner  Owner of this Service
+        String
+
+
+</PRE><PRE>    portmap.rpcb.prog  Program
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    portmap.rpcb.version  Version
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    portmap.uaddr  Universal Address
+        String
+
+
+</PRE><PRE>    portmap.version  Version
+        Unsigned 32-bit integer
+
+
+</PRE><A name=lbDT>&nbsp;</A> 
+<H2>Post Office Protocol (pop)</H2>
+<P><PRE>    pop.request  Request
+        Boolean
+
+
+</PRE><PRE>    pop.response  Response
+        Boolean
+
+
+</PRE><A name=lbDU>&nbsp;</A> 
+<H2>Protocol Independent Multicast (pim)</H2>
+<P><PRE>    pim.cksum  Checksum
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    pim.type  Type
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    pim.version  Version
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbDV>&nbsp;</A> 
+<H2>Q.2931 (q2931)</H2>
+<P><PRE>    q2931.call_ref  Call reference value
+        Byte array
+
+
+</PRE><PRE>    q2931.call_ref_len  Call reference value length
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    q2931.disc  Protocol discriminator
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    q2931.message_action_indicator  Action indicator
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    q2931.message_flag  Flag
+        Boolean
+
+
+</PRE><PRE>    q2931.message_len  Message length
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    q2931.message_type  Message type
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    q2931.message_type_ext  Message type extension
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbDW>&nbsp;</A> 
+<H2>Q.931 (q931)</H2>
+<P><PRE>    q931.call_ref  Call reference value
+        Byte array
+
+
+</PRE><PRE>    q931.call_ref_len  Call reference value length
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    q931.disc  Protocol discriminator
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    q931.message_type  Message type
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbDX>&nbsp;</A> 
+<H2>RIPng (ripng)</H2>
+<P><PRE>    ripng.cmd  Command
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    ripng.version  Version
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbDY>&nbsp;</A> 
+<H2><FONT size=-1>RTP</FONT> Control Protocol (rtcp)</H2><A name=lbDZ>&nbsp;</A> 
+
+<H2><FONT size=-1>RX</FONT> Protocol (rx)</H2>
+<P><PRE>    rx.callnumber  Call Number
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rx.cid  CID
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rx.epoch  Epoch
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rx.flags  Flags
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    rx.flags.client_init  Client Initiated
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    rx.flags.free_packet  Free Packet
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    rx.flags.last_packet  Last Packet
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    rx.flags.more_packets  More Packets
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    rx.flags.request_ack  Request Ack
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    rx.securityindex  Security Index
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rx.seq  Sequence Number
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rx.serial  Serial
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rx.serviceid  Service ID
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    rx.spare  Spare/Checksum
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    rx.type  Type
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    rx.userstatus  User Status
+        Unsigned 32-bit integer
+
+
+</PRE><A name=lbEA>&nbsp;</A> 
+<H2>Radius Protocol (radius)</H2>
+<P><PRE>    radius.code  Code
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    radius.id  Identifier
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    radius.length  Length
+        Unsigned 16-bit integer
+
+
+</PRE><A name=lbEB>&nbsp;</A> 
+<H2>Real Time Streaming Protocol (rtsp)</H2>
+<P><PRE>    rtsp.method  Method
+        String
+
+
+</PRE><PRE>    rtsp.status  Status
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rtsp.url  URL
+        String
+
+
+</PRE><A name=lbEC>&nbsp;</A> 
+<H2>Realtime Transport Protocol (rtp)</H2><A name=lbED>&nbsp;</A> 
+<H2>Remote Procedure Call (rpc)</H2>
+<P><PRE>    rpc.auth.flavor  Flavor
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rpc.auth.gid  GID
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rpc.auth.length  Length
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rpc.auth.machinename  Machine Name
+        String
+
+
+</PRE><PRE>    rpc.auth.stamp  Stamp
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rpc.auth.uid  UID
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rpc.call.dup  Duplicate Call
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rpc.dup  Duplicate Transaction
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rpc.fraglen  Fragment Length
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rpc.lastfrag  Last Fragment
+        Boolean
+
+
+</PRE><PRE>    rpc.msgtyp  Message Type
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rpc.procedure  Procedure
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rpc.program  Program
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rpc.programversion  Program Version
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rpc.programversion.max  Program Version (Maximum)
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rpc.programversion.min  Program Version (Minimum)
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rpc.reply.dup  Duplicate Reply
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rpc.replystat  Reply State
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rpc.state_accept  Accept State
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rpc.state_auth  Auth State
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rpc.state_reject  Reject State
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rpc.value_follows  Value Follows
+        Boolean
+
+
+</PRE><PRE>    rpc.version  RPC Version
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rpc.version.max  RPC Version (Maximum)
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rpc.version.min  RPC Version (Minimum)
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rpc.xid  XID
+        Unsigned 32-bit integer
+
+
+</PRE><A name=lbEE>&nbsp;</A> 
+<H2>Resource ReserVation Protocol (<FONT size=-1>RSVP</FONT>) (rsvp)</H2>
+<P><PRE>    rsvp.adspec  ADSPEC
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    rsvp.confirm  CONFIRM
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    rsvp.error  ERROR
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    rsvp.explicit_route  EXPLICIT ROUTE
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    rsvp.filter  FILTERSPEC
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    rsvp.flowspec  FLOWSPEC
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    rsvp.hop  HOP
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    rsvp.integrity  INTEGRITY
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    rsvp.label  LABEL
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    rsvp.label_request  LABEL REQUEST
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    rsvp.msg  Message Type
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    rsvp.obj_unknown  Unknown object
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    rsvp.path  Path Message
+        Boolean
+
+
+</PRE><PRE>    rsvp.perr  Path Error Message
+        Boolean
+
+
+</PRE><PRE>    rsvp.policy  POLICY
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    rsvp.ptear  Path Tear Message
+        Boolean
+
+
+</PRE><PRE>    rsvp.record_route  RECORD ROUTE
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    rsvp.rerr  Resv Error Message
+        Boolean
+
+
+</PRE><PRE>    rsvp.resv  Resv Message
+        Boolean
+
+
+</PRE><PRE>    rsvp.resvconf  Resv Confirm Message
+        Boolean
+
+
+</PRE><PRE>    rsvp.rtear  Resv Tear Message
+        Boolean
+
+
+</PRE><PRE>    rsvp.rtearconf  Resv Tear Confirm Message
+        Boolean
+
+
+</PRE><PRE>    rsvp.scope  SCOPE
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    rsvp.sender  SENDER TEMPLATE
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    rsvp.sender.ip  Sender IPv4 address
+        IPv4 address
+
+
+</PRE><PRE>    rsvp.sender.lsp_id  Sender LSP ID
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    rsvp.sender.port  Sender port number
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    rsvp.session  SESSION
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    rsvp.session.ext_tunnel_id  Extended tunnel ID
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    rsvp.session.ip  Destination address
+        IPv4 address
+
+
+</PRE><PRE>    rsvp.session.port  Port number
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    rsvp.session.proto  Protocol
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    rsvp.session.tunnel_id  Tunnel ID
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    rsvp.session_attribute  SESSION ATTRIBUTE
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    rsvp.style  STYLE
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    rsvp.time  TIME VALUES
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    rsvp.tspec  SENDER TSPEC
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbEF>&nbsp;</A> 
+<H2>Rlogin Protocol (rlogin)</H2>
+<P><PRE>    rlogin.user_info  User Info
+        No value
+
+
+</PRE><PRE>    rlogin.window_size  Window Info
+        No value
+
+
+</PRE><PRE>    rlogin.window_size.cols  Columns
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    rlogin.window_size.rows  Rows
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    rlogin.window_size.x_pixels  X Pixels
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    rlogin.window_size.y_pixels  Y Pixels
+        Unsigned 16-bit integer
+
+
+</PRE><A name=lbEG>&nbsp;</A> 
+<H2>Routing Information Protocol (rip)</H2><A name=lbEH>&nbsp;</A> 
+<H2>Routing Table (rtmp)</H2>
+<P><PRE>    nbp.nodeid  Node
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    nbp.nodeid.length  Node Length
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    rtmp.net  Net
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    rtmp.tuple.dist  Distance
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    rtmp.tuple.net  Net
+        Unsigned 16-bit integer
+
+
+</PRE><A name=lbEI>&nbsp;</A> 
+<H2><FONT size=-1>SMB</FONT> MailSlot Protocol (mailslot)</H2><A 
+name=lbEJ>&nbsp;</A> 
+<H2><FONT size=-1>SNMP</FONT> Multiplex Protocol (smux)</H2><A 
+name=lbEK>&nbsp;</A> 
+<H2><FONT size=-1>SSCOP</FONT> (sscop)</H2><A name=lbEL>&nbsp;</A> 
+<H2>Sequenced Packet eXchange (spx)</H2>
+<P><PRE>    spx.ack  Acknowledgment Number
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    spx.alloc  Allocation Number
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    spx.ctl  Connection Control
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    spx.dst  Destination Connection ID
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    spx.seq  Sequence Number
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    spx.src  Source Connection ID
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    spx.type  Datastream type
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbEM>&nbsp;</A> 
+<H2>Server Message Block Protocol (smb)</H2><A name=lbEN>&nbsp;</A> 
+<H2>Service Advertisement Protocol (ipxsap)</H2>
+<P><PRE>    ipxsap.request  Request
+        Boolean
+
+
+</PRE><PRE>    ipxsap.response  Response
+        Boolean
+
+
+</PRE><A name=lbEO>&nbsp;</A> 
+<H2>Service Location Protocol (srvloc)</H2>
+<P><PRE>    srvloc.err  Error Code
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    srvloc.flags  Flags
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    srvloc.function  Function
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    srvloc.version  Version
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbEP>&nbsp;</A> 
+<H2>Session Announcement Protocol (sap)</H2>
+<P><PRE>    sap.auth  Authentication data
+        No value
+
+
+</PRE><PRE>    sap.auth.flags  Authentication data flags
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    sap.auth.flags.p  Padding Bit
+        Boolean
+
+
+</PRE><PRE>    sap.auth.flags.t  Authentication Type
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    sap.auth.flags.v  Version Number
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    sap.flags  Flags
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    sap.flags.a  Address Type
+        Boolean
+
+
+</PRE><PRE>    sap.flags.c  Compression Bit
+        Boolean
+
+
+</PRE><PRE>    sap.flags.e  Encryption Bit
+        Boolean
+
+
+</PRE><PRE>    sap.flags.r  Reserved
+        Boolean
+
+
+</PRE><PRE>    sap.flags.t  Message Type
+        Boolean
+
+
+</PRE><PRE>    sap.flags.v  Version Number
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbEQ>&nbsp;</A> 
+<H2>Session Description Protocol (sdp)</H2><A name=lbER>&nbsp;</A> 
+<H2>Short Frame (short)</H2><A name=lbES>&nbsp;</A> 
+<H2>Simple Network Management Protocol (snmp)</H2>
+<P><PRE>    snmpv3.flags  SNMPv3 Flags
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    snmpv3.flags.auth  Authenticated
+        Boolean
+
+
+</PRE><PRE>    snmpv3.flags.crypt  Encrypted
+        Boolean
+
+
+</PRE><PRE>    snmpv3.flags.report  Reportable
+        Boolean
+
+
+</PRE><A name=lbET>&nbsp;</A> 
+<H2>Sinec H1 Protocol (h1)</H2>
+<P><PRE>    h1.dbnr  Memory block number
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    h1.dlen  Length in words
+        Signed 16-bit integer
+
+
+</PRE><PRE>    h1.dwnr  Address within memory block
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    h1.empty  Empty field
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    h1.empty_len  Empty field length
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    h1.header  H1-Header
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    h1.len  Length indicator
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    h1.opcode  Opcode
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    h1.opfield  Operation identifier
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    h1.oplen  Operation length
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    h1.org  Memory type
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    h1.reqlen  Request length
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    h1.request  Request identifier
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    h1.reslen  Response length
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    h1.response  Response identifier
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    h1.resvalue  Response value
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbEU>&nbsp;</A> 
+<H2>Socks Protocol (socks)</H2>
+<P><PRE>    socks.command  Command
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    socks.dst  Remote Address
+        IPv4 address
+
+
+</PRE><PRE>    socks.dstV6  Remote Address
+        IPv6 address
+
+
+</PRE><PRE>    socks.dstport  Remote Port
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    socks.username  User Name
+        String
+
+
+</PRE><PRE>    socks.ver  Version
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbEV>&nbsp;</A> 
+<H2>Spanning Tree Protocol (stp)</H2>
+<P><PRE>    stp.bridge.hw  Bridge Identifier
+        6-byte Hardware (MAC) Address
+
+
+</PRE><PRE>    stp.flags  BPDU flags
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    stp.forward  Forward Delay
+        Double-precision floating point
+
+
+</PRE><PRE>    stp.hello  Hello Time
+        Double-precision floating point
+
+
+</PRE><PRE>    stp.max_age  Max Age
+        Double-precision floating point
+
+
+</PRE><PRE>    stp.msg_age  Message Age
+        Double-precision floating point
+
+
+</PRE><PRE>    stp.port  Port identifier
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    stp.protocol  Protocol Identifier
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    stp.root.cost  Root Path Cost
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    stp.root.hw  Root Identifier
+        6-byte Hardware (MAC) Address
+
+
+</PRE><PRE>    stp.type  BPDU type
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    stp.version  Protocol Version Identifier
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbEW>&nbsp;</A> 
+<H2>Status Service (stat)</H2><A name=lbEX>&nbsp;</A> 
+<H2>Syslog message (syslog)</H2>
+<P><PRE>    syslog.facility  Facility
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    syslog.level  Level
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    syslog.msg_len  Message length
+        Unsigned 32-bit integer
+
+
+</PRE><A name=lbEY>&nbsp;</A> 
+<H2>Systems Network Architecture (sna)</H2>
+<P><PRE>    sna.rh  Request/Response Header
+        No value
+
+
+</PRE><PRE>    sna.rh.0  Request/Response Header Byte 0
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    sna.rh.1  Request/Response Header Byte 1
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    sna.rh.2  Request/Response Header Byte 2
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    sna.rh.bbi  Begin Bracket Indicator
+        Boolean
+
+
+</PRE><PRE>    sna.rh.bci  Begin Chain Indicator
+        Boolean
+
+
+</PRE><PRE>    sna.rh.cdi  Change Direction Indicator
+        Boolean
+
+
+</PRE><PRE>    sna.rh.cebi  Conditional End Bracket Indicator
+        Boolean
+
+
+</PRE><PRE>    sna.rh.csi  Code Selection Indicator
+        Boolean
+
+
+</PRE><PRE>    sna.rh.dr1  Definite Response 1 Indicator
+        Boolean
+
+
+</PRE><PRE>    sna.rh.dr2  Definite Response 2 Indicator
+        Boolean
+
+
+</PRE><PRE>    sna.rh.ebi  End Bracket Indicator
+        Boolean
+
+
+</PRE><PRE>    sna.rh.eci  End Chain Indicator
+        Boolean
+
+
+</PRE><PRE>    sna.rh.edi  Enciphered Data Indicator
+        Boolean
+
+
+</PRE><PRE>    sna.rh.eri  Exception Response Indicator
+        Boolean
+
+
+</PRE><PRE>    sna.rh.fi  Format Indicator
+        Boolean
+
+
+</PRE><PRE>    sna.rh.lcci  Length-Checked Compression Indicator
+        Boolean
+
+
+</PRE><PRE>    sna.rh.pdi  Padded Data Indicator
+        Boolean
+
+
+</PRE><PRE>    sna.rh.pi  Pacing Indicator
+        Boolean
+
+
+</PRE><PRE>    sna.rh.qri  Queued Response Indicator
+        Boolean
+
+
+</PRE><PRE>    sna.rh.rlwi  Request Larger Window Indicator
+        Boolean
+
+
+</PRE><PRE>    sna.rh.rri  Request/Response Indicator
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    sna.rh.rti  Response Type Indicator
+        Boolean
+
+
+</PRE><PRE>    sna.rh.ru_category  Request/Response Unit Category
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    sna.rh.sdi  Sense Data Included
+        Boolean
+
+
+</PRE><PRE>    sna.ru  Request/Response Unit
+        No value
+
+
+</PRE><PRE>    sna.th  Transmission Header
+        No value
+
+
+</PRE><PRE>    sna.th.0  Transmission Header Byte 0
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    sna.th.cmd_fmt  Command Format
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    sna.th.cmd_sn  Command Sequence Number
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    sna.th.cmd_type  Command Type
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    sna.th.daf  Destination Address Field
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    sna.th.dcf  Data Count Field
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    sna.th.def  Destination Element Field
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    sna.th.dsaf  Destination Subarea Address Field
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    sna.th.efi  Expedited Flow Indicator
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    sna.th.er_vr_supp_ind  ER and VR Support Indicator
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    sna.th.ern  Explicit Route Number
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    sna.th.fid  Format Identifer
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    sna.th.iern  Initial Explicit Route Number
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    sna.th.lsid  Local Session Identification
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    sna.th.mft  MPR FID4 Type
+        Boolean
+
+
+</PRE><PRE>    sna.th.mpf  Mapping Field
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    sna.th.nlp_cp  NLP Count or Padding
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    sna.th.nlpoi  NLP Offset Indicator
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    sna.th.ntwk_prty  Network Priority
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    sna.th.oaf  Origin Address Field
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    sna.th.odai  ODAI Assignment Indicator
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    sna.th.oef  Origin Element Field
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    sna.th.osaf  Origin Subarea Address Field
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    sna.th.piubf  PIU Blocking Field
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    sna.th.sa  Session Address
+        Byte array
+
+
+</PRE><PRE>    sna.th.snai  SNA Indicator
+        Boolean
+
+
+</PRE><PRE>    sna.th.snf  Sequence Number Field
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    sna.th.tg_nonfifo_ind  Transmission Group Non-FIFO Indicator
+        Boolean
+
+
+</PRE><PRE>    sna.th.tg_snf  Transmission Group Sequence Number Field
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    sna.th.tg_sweep  Transmission Group Sweep
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    sna.th.tgsf  Transmission Group Segmenting Field
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    sna.th.tpf  Transmission Priority Field
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    sna.th.vr_cwi  Virtual Route Change Window Indicator
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    sna.th.vr_cwri  Virtual Route Change Window Reply Indicator
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    sna.th.vr_pac_cnt_ind  Virtual Route Pacing Count Indicator
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    sna.th.vr_rwi  Virtual Route Reset Window Indicator
+        Boolean
+
+
+</PRE><PRE>    sna.th.vr_snf_send  Virtual Route Send Sequence Number Field
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    sna.th.vr_sqti  Virtual Route Sequence and Type Indicator
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    sna.th.vrn  Virtual Route Number
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    sna.th.vrprq  Virtual Route Pacing Request
+        Boolean
+
+
+</PRE><PRE>    sna.th.vrprs  Virtual Route Pacing Response
+        Boolean
+
+
+</PRE><A name=lbEZ>&nbsp;</A> 
+<H2><FONT size=-1>TACACS</FONT> (tacacs)</H2>
+<P><PRE>    tacacs.request  Request
+        Boolean
+
+
+</PRE><PRE>    tacacs.response  Response
+        Boolean
+
+
+</PRE><PRE>    tacacs.version  Tacacs Version
+        String
+
+
+</PRE><A name=lbFA>&nbsp;</A> 
+<H2>Telnet (telnet)</H2><A name=lbFB>&nbsp;</A> 
+<H2>Time Protocol (time)</H2>
+<P><PRE>    time.time  Time
+        Unsigned 32-bit integer
+
+
+</PRE><A name=lbFC>&nbsp;</A> 
+<H2>Token-Ring (tr)</H2>
+<P><PRE>    tr.ac  Access Control
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    tr.addr  Source or Destination Address
+        6-byte Hardware (MAC) Address
+
+
+</PRE><PRE>    tr.broadcast  Broadcast Type
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    tr.direction  Direction
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    tr.dst  Destination
+        6-byte Hardware (MAC) Address
+
+
+</PRE><PRE>    tr.fc  Frame Control
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    tr.frame  Frame
+        Boolean
+
+
+</PRE><PRE>    tr.frame_pcf  Frame PCF
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    tr.frame_type  Frame Type
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    tr.max_frame_size  Maximum Frame Size
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    tr.monitor_cnt  Monitor Count
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    tr.priority  Priority
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    tr.priority_reservation  Priority Reservation
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    tr.rif  Ring-Bridge Pairs
+        String
+
+
+</PRE><PRE>    tr.rif.bridge  RIF Bridge
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    tr.rif.ring  RIF Ring
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    tr.rif_bytes  RIF Bytes
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    tr.sr  Source Routed
+        Boolean
+
+
+</PRE><PRE>    tr.src  Source
+        6-byte Hardware (MAC) Address
+
+
+</PRE><A name=lbFD>&nbsp;</A> 
+<H2>Token-Ring Media Access Control (trmac)</H2>
+<P><PRE>    trmac.dstclass  Destination Class
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    trmac.errors.abort  Abort Delimiter Transmitted Errors
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    trmac.errors.ac  A/C Errors
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    trmac.errors.burst  Burst Errors
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    trmac.errors.congestion  Receiver Congestion Errors
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    trmac.errors.fc  Frame-Copied Errors
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    trmac.errors.freq  Frequency Errors
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    trmac.errors.internal  Internal Errors
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    trmac.errors.iso  Isolating Errors
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    trmac.errors.line  Line Errors
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    trmac.errors.lost  Lost Frame Errors
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    trmac.errors.noniso  Non-Isolating Errors
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    trmac.errors.token  Token Errors
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    trmac.length  Total Length
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    trmac.mvec  Major Vector
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    trmac.naun  NAUN
+        6-byte Hardware (MAC) Address
+
+
+</PRE><PRE>    trmac.srcclass  Source Class
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    trmac.svec  Sub-Vector
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbFE>&nbsp;</A> 
+<H2>Transmission Control Protocol (tcp)</H2>
+<P><PRE>    tcp.ack  Acknowledgement number
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    tcp.checksum  Checksum
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    tcp.dstport  Destination Port
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    tcp.flags  Flags
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    tcp.flags.ack  Acknowledgment
+        Boolean
+
+
+</PRE><PRE>    tcp.flags.fin  Fin
+        Boolean
+
+
+</PRE><PRE>    tcp.flags.push  Push
+        Boolean
+
+
+</PRE><PRE>    tcp.flags.reset  Reset
+        Boolean
+
+
+</PRE><PRE>    tcp.flags.syn  Syn
+        Boolean
+
+
+</PRE><PRE>    tcp.flags.urg  Urgent
+        Boolean
+
+
+</PRE><PRE>    tcp.hdr_len  Header Length
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    tcp.port  Source or Destination Port
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    tcp.seq  Sequence number
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    tcp.srcport  Source Port
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    tcp.urgent_pointer  Urgent pointer
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    tcp.window_size  Window size
+        Unsigned 16-bit integer
+
+
+</PRE><A name=lbFF>&nbsp;</A> 
+<H2>Transparent Network Substrate Protocol (tns)</H2>
+<P><PRE>    tns.compat_version  Version (Compatible)
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    tns.connect  Connect
+        Boolean
+
+
+</PRE><PRE>    tns.data_flag  Data Flag
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    tns.header_checksum  Header Checksum
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    tns.length  Packet Length
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    tns.packet_checksum  Packet Checksum
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    tns.request  Request
+        Boolean
+
+
+</PRE><PRE>    tns.reserved_byte  Reserved Byte
+        Byte array
+
+
+</PRE><PRE>    tns.response  Response
+        Boolean
+
+
+</PRE><PRE>    tns.service_options  Service Options
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    tns.sns  Secure Network Services
+        Boolean
+
+
+</PRE><PRE>    tns.type  Packet Type
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    tns.version  Version
+        Unsigned 16-bit integer
+
+
+</PRE><A name=lbFG>&nbsp;</A> 
+<H2>Trivial File Transfer Protocol (tftp)</H2>
+<P><PRE>    tftp.error.code  Error code
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    tftp.type  Type
+        Unsigned 16-bit integer
+
+
+</PRE><A name=lbFH>&nbsp;</A> 
+<H2>User Datagram Protocol (udp)</H2>
+<P><PRE>    udp.checksum  Checksum
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    udp.dstport  Destination Port
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    udp.length  Length
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    udp.port  Source or Destination Port
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    udp.srcport  Source Port
+        Unsigned 16-bit integer
+
+
+</PRE><A name=lbFI>&nbsp;</A> 
+<H2>Virtual Router Redundancy Protocol (vrrp)</H2>
+<P><PRE>    vrrp.type  VRRP packet type
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    vrrp.typever  VRRP message version and type
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    vrrp.version  VRRP protocol version
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbFJ>&nbsp;</A> 
+<H2>Virtual Trunking Protocol (vtp)</H2>
+<P><PRE>    vtp.code  Code
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    vtp.conf_rev_num  Configuration Revision Number
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    vtp.followers  Followers
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    vtp.md  Management Domain
+        String
+
+
+</PRE><PRE>    vtp.md5_digest  MD5 Digest
+        Byte array
+
+
+</PRE><PRE>    vtp.md_len  Management Domain Length
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    vtp.seq_num  Sequence Number
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    vtp.start_value  Start Value
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    vtp.upd_id  Updater Identity
+        IPv4 address
+
+
+</PRE><PRE>    vtp.upd_ts  Update Timestamp
+        String
+
+
+</PRE><PRE>    vtp.version  Version
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    vtp.vlan_info.802_10_index  802.10 Index
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    vtp.vlan_info.isl_vlan_id  ISL VLAN ID
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    vtp.vlan_info.len  VLAN Information Length
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    vtp.vlan_info.mtu_size  MTU Size
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    vtp.vlan_info.status.vlan_susp  VLAN suspended
+        Boolean
+
+
+</PRE><PRE>    vtp.vlan_info.tlv_len  Length
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    vtp.vlan_info.tlv_type  Type
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    vtp.vlan_info.vlan_name  VLAN Name
+        String
+
+
+</PRE><PRE>    vtp.vlan_info.vlan_name_len  VLAN Name Length
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    vtp.vlan_info.vlan_type  VLAN Type
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbFK>&nbsp;</A> 
+<H2>Web Cache Coordination Protocol (wccp)</H2>
+<P><PRE>    wccp.cache_ip  Web Cache IP address
+        IPv4 address
+
+
+</PRE><PRE>    wccp.change_num  Change Number
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    wccp.hash_revision  Hash Revision
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    wccp.message  WCCP Message Type
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    wccp.recvd_id  Received ID
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    wccp.version  WCCP Version
+        Unsigned 32-bit integer
+
+
+</PRE><A name=lbFL>&nbsp;</A> 
+<H2>Who (who)</H2>
+<P><PRE>    who.boottime  Boot Time
+        Date/Time stamp
+
+
+</PRE><PRE>    who.hostname  Hostname
+        String
+
+
+</PRE><PRE>    who.idle  Time Idle
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    who.loadav_10  Load Average Over Past 10 Minutes
+        Double-precision floating point
+
+
+</PRE><PRE>    who.loadav_15  Load Average Over Past 15 Minutes
+        Double-precision floating point
+
+
+</PRE><PRE>    who.loadav_5  Load Average Over Past  5 Minutes
+        Double-precision floating point
+
+
+</PRE><PRE>    who.recvtime  Receive Time
+        Date/Time stamp
+
+
+</PRE><PRE>    who.sendtime  Send Time
+        Date/Time stamp
+
+
+</PRE><PRE>    who.timeon  Time On
+        Date/Time stamp
+
+
+</PRE><PRE>    who.tty  TTY Name
+        String
+
+
+</PRE><PRE>    who.type  Type
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    who.uid  User ID
+        String
+
+
+</PRE><PRE>    who.vers  Version
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    who.whoent  Who utmp Entry
+        No value
+
+
+</PRE><A name=lbFM>&nbsp;</A> 
+<H2>X.25 (x25)</H2>
+<P><PRE>    x25.d  D Bit
+        Boolean
+
+
+</PRE><PRE>    x25.lcn  Logical Channel
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x25.m  M Bit
+        Boolean
+
+
+</PRE><PRE>    x25.mod  Modulo
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x25.p_r  P(R)
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x25.p_s  P(S)
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x25.q  Q Bit
+        Boolean
+
+
+</PRE><PRE>    x25.type  Packet Type
+        Unsigned 8-bit integer
+
+
+</PRE><A name=lbFN>&nbsp;</A> 
+<H2>X11 (x11)</H2>
+<P><PRE>    x11.acceleration-denominator  acceleration-denominator
+        Signed 16-bit integer
+
+
+</PRE><PRE>    x11.acceleration-numerator  acceleration-numerator
+        Signed 16-bit integer
+
+
+</PRE><PRE>    x11.access-mode  access-mode
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.address  address
+        Byte array
+
+
+</PRE><PRE>    x11.address-length  address-length
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.alloc  alloc
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.allow-events-mode  allow-events-mode
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.allow-exposures  allow-exposures
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.arc  arc
+        No value
+
+
+</PRE><PRE>    x11.arc.angle1  angle1
+        Signed 16-bit integer
+
+
+</PRE><PRE>    x11.arc.angle2  angle2
+        Signed 16-bit integer
+
+
+</PRE><PRE>    x11.arc.height  height
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.arc.mode  mode
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.arc.width  width
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.arc.x  x
+        Signed 16-bit integer
+
+
+</PRE><PRE>    x11.arc.y  y
+        Signed 16-bit integer
+
+
+</PRE><PRE>    x11.arcs  arcs
+        No value
+
+
+</PRE><PRE>    x11.atom  atom
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.auto-repeat-mode  auto-repeat-mode
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.back-blue  back-blue
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.back-green  back-green
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.back-red  back-red
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.background  background
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.background-pixel  background-pixel
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.background-pixmap  background-pixmap
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.backing-pixel  backing-pixel
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.backing-planes  backing-planes
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.backing-store  backing-store
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.bell-duration  bell-duration
+        Signed 16-bit integer
+
+
+</PRE><PRE>    x11.bell-percent  bell-percent
+        Signed 8-bit integer
+
+
+</PRE><PRE>    x11.bell-pitch  bell-pitch
+        Signed 16-bit integer
+
+
+</PRE><PRE>    x11.bit-gravity  bit-gravity
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.bit-plane  bit-plane
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.blue  blue
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.blues  blues
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.border-pixel  border-pixel
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.border-pixmap  border-pixmap
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.border-width  border-width
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.button  button
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.cap-style  cap-style
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.change-host-mode  change-host-mode
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.cid  cid
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.class  class
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.clip-mask  clip-mask
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.clip-x-origin  clip-x-origin
+        Signed 16-bit integer
+
+
+</PRE><PRE>    x11.clip-y-origin  clip-y-origin
+        Signed 16-bit integer
+
+
+</PRE><PRE>    x11.close-down-mode  close-down-mode
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.cmap  cmap
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.color-items  color-items
+        No value
+
+
+</PRE><PRE>    x11.coloritem  coloritem
+        No value
+
+
+</PRE><PRE>    x11.coloritem.blue  blue
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.coloritem.flags  flags
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.coloritem.flags.do-blue  do-blue
+        Boolean
+
+
+</PRE><PRE>    x11.coloritem.flags.do-green  do-green
+        Boolean
+
+
+</PRE><PRE>    x11.coloritem.flags.do-red  do-red
+        Boolean
+
+
+</PRE><PRE>    x11.coloritem.flags.unused  unused
+        Boolean
+
+
+</PRE><PRE>    x11.coloritem.green  green
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.coloritem.pixel  pixel
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.coloritem.red  red
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.coloritem.unused  unused
+        No value
+
+
+</PRE><PRE>    x11.colormap  colormap
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.colors  colors
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.configure-window-mask  configure-window-mask
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.configure-window-mask.border-width  border-width
+        Boolean
+
+
+</PRE><PRE>    x11.configure-window-mask.height  height
+        Boolean
+
+
+</PRE><PRE>    x11.configure-window-mask.sibling  sibling
+        Boolean
+
+
+</PRE><PRE>    x11.configure-window-mask.stack-mode  stack-mode
+        Boolean
+
+
+</PRE><PRE>    x11.configure-window-mask.width  width
+        Boolean
+
+
+</PRE><PRE>    x11.configure-window-mask.x  x
+        Boolean
+
+
+</PRE><PRE>    x11.configure-window-mask.y  y
+        Boolean
+
+
+</PRE><PRE>    x11.confine-to  confine-to
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.contiguous  contiguous
+        Boolean
+
+
+</PRE><PRE>    x11.coordinate-mode  coordinate-mode
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.count  count
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.cursor  cursor
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.dash-offset  dash-offset
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.dashes  dashes
+        Byte array
+
+
+</PRE><PRE>    x11.dashes-length  dashes-length
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.data  data
+        Byte array
+
+
+</PRE><PRE>    x11.data-length  data-length
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.delete  delete
+        Boolean
+
+
+</PRE><PRE>    x11.delta  delta
+        Signed 16-bit integer
+
+
+</PRE><PRE>    x11.depth  depth
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.direction  direction
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.do-acceleration  do-acceleration
+        Boolean
+
+
+</PRE><PRE>    x11.do-not-propagate-mask  do-not-propagate-mask
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.do-not-propagate-mask.Button1Motion  Button1Motion
+        Boolean
+
+
+</PRE><PRE>    x11.do-not-propagate-mask.Button2Motion  Button2Motion
+        Boolean
+
+
+</PRE><PRE>    x11.do-not-propagate-mask.Button3Motion  Button3Motion
+        Boolean
+
+
+</PRE><PRE>    x11.do-not-propagate-mask.Button4Motion  Button4Motion
+        Boolean
+
+
+</PRE><PRE>    x11.do-not-propagate-mask.Button5Motion  Button5Motion
+        Boolean
+
+
+</PRE><PRE>    x11.do-not-propagate-mask.ButtonMotion  ButtonMotion
+        Boolean
+
+
+</PRE><PRE>    x11.do-not-propagate-mask.ButtonPress  ButtonPress
+        Boolean
+
+
+</PRE><PRE>    x11.do-not-propagate-mask.ButtonRelease  ButtonRelease
+        Boolean
+
+
+</PRE><PRE>    x11.do-not-propagate-mask.KeyPress  KeyPress
+        Boolean
+
+
+</PRE><PRE>    x11.do-not-propagate-mask.KeyRelease  KeyRelease
+        Boolean
+
+
+</PRE><PRE>    x11.do-not-propagate-mask.PointerMotion  PointerMotion
+        Boolean
+
+
+</PRE><PRE>    x11.do-not-propagate-mask.erroneous-bits  erroneous-bits
+        Boolean
+
+
+</PRE><PRE>    x11.do-threshold  do-threshold
+        Boolean
+
+
+</PRE><PRE>    x11.drawable  drawable
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.dst-drawable  dst-drawable
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.dst-gc  dst-gc
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.dst-window  dst-window
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.dst-x  dst-x
+        Signed 16-bit integer
+
+
+</PRE><PRE>    x11.dst-y  dst-y
+        Signed 16-bit integer
+
+
+</PRE><PRE>    x11.event-mask  event-mask
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.event-mask.Button1Motion  Button1Motion
+        Boolean
+
+
+</PRE><PRE>    x11.event-mask.Button2Motion  Button2Motion
+        Boolean
+
+
+</PRE><PRE>    x11.event-mask.Button3Motion  Button3Motion
+        Boolean
+
+
+</PRE><PRE>    x11.event-mask.Button4Motion  Button4Motion
+        Boolean
+
+
+</PRE><PRE>    x11.event-mask.Button5Motion  Button5Motion
+        Boolean
+
+
+</PRE><PRE>    x11.event-mask.ButtonMotion  ButtonMotion
+        Boolean
+
+
+</PRE><PRE>    x11.event-mask.ButtonPress  ButtonPress
+        Boolean
+
+
+</PRE><PRE>    x11.event-mask.ButtonRelease  ButtonRelease
+        Boolean
+
+
+</PRE><PRE>    x11.event-mask.ColormapChange  ColormapChange
+        Boolean
+
+
+</PRE><PRE>    x11.event-mask.EnterWindow  EnterWindow
+        Boolean
+
+
+</PRE><PRE>    x11.event-mask.Exposure  Exposure
+        Boolean
+
+
+</PRE><PRE>    x11.event-mask.FocusChange  FocusChange
+        Boolean
+
+
+</PRE><PRE>    x11.event-mask.KeyPress  KeyPress
+        Boolean
+
+
+</PRE><PRE>    x11.event-mask.KeyRelease  KeyRelease
+        Boolean
+
+
+</PRE><PRE>    x11.event-mask.KeymapState  KeymapState
+        Boolean
+
+
+</PRE><PRE>    x11.event-mask.LeaveWindow  LeaveWindow
+        Boolean
+
+
+</PRE><PRE>    x11.event-mask.OwnerGrabButton  OwnerGrabButton
+        Boolean
+
+
+</PRE><PRE>    x11.event-mask.PointerMotion  PointerMotion
+        Boolean
+
+
+</PRE><PRE>    x11.event-mask.PointerMotionHint  PointerMotionHint
+        Boolean
+
+
+</PRE><PRE>    x11.event-mask.PropertyChange  PropertyChange
+        Boolean
+
+
+</PRE><PRE>    x11.event-mask.ResizeRedirect  ResizeRedirect
+        Boolean
+
+
+</PRE><PRE>    x11.event-mask.StructureNotify  StructureNotify
+        Boolean
+
+
+</PRE><PRE>    x11.event-mask.SubstructureNotify  SubstructureNotify
+        Boolean
+
+
+</PRE><PRE>    x11.event-mask.SubstructureRedirect  SubstructureRedirect
+        Boolean
+
+
+</PRE><PRE>    x11.event-mask.VisibilityChange  VisibilityChange
+        Boolean
+
+
+</PRE><PRE>    x11.event-mask.erroneous-bits  erroneous-bits
+        Boolean
+
+
+</PRE><PRE>    x11.exposures  exposures
+        Boolean
+
+
+</PRE><PRE>    x11.family  family
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.fid  fid
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.fill-rule  fill-rule
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.fill-style  fill-style
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.first-keycode  first-keycode
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.focus  focus
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.font  font
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.fore-blue  fore-blue
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.fore-green  fore-green
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.fore-red  fore-red
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.foreground  foreground
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.format  format
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.function  function
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.gc  gc
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.gc-dashes  gc-dashes
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.gc-value-mask  gc-value-mask
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.gc-value-mask.arc-mode  arc-mode
+        Boolean
+
+
+</PRE><PRE>    x11.gc-value-mask.background  background
+        Boolean
+
+
+</PRE><PRE>    x11.gc-value-mask.cap-style  cap-style
+        Boolean
+
+
+</PRE><PRE>    x11.gc-value-mask.clip-mask  clip-mask
+        Boolean
+
+
+</PRE><PRE>    x11.gc-value-mask.clip-x-origin  clip-x-origin
+        Boolean
+
+
+</PRE><PRE>    x11.gc-value-mask.clip-y-origin  clip-y-origin
+        Boolean
+
+
+</PRE><PRE>    x11.gc-value-mask.dash-offset  dash-offset
+        Boolean
+
+
+</PRE><PRE>    x11.gc-value-mask.fill-rule  fill-rule
+        Boolean
+
+
+</PRE><PRE>    x11.gc-value-mask.fill-style  fill-style
+        Boolean
+
+
+</PRE><PRE>    x11.gc-value-mask.font  font
+        Boolean
+
+
+</PRE><PRE>    x11.gc-value-mask.foreground  foreground
+        Boolean
+
+
+</PRE><PRE>    x11.gc-value-mask.function  function
+        Boolean
+
+
+</PRE><PRE>    x11.gc-value-mask.gc-dashes  gc-dashes
+        Boolean
+
+
+</PRE><PRE>    x11.gc-value-mask.graphics-exposures  graphics-exposures
+        Boolean
+
+
+</PRE><PRE>    x11.gc-value-mask.join-style  join-style
+        Boolean
+
+
+</PRE><PRE>    x11.gc-value-mask.line-style  line-style
+        Boolean
+
+
+</PRE><PRE>    x11.gc-value-mask.line-width  line-width
+        Boolean
+
+
+</PRE><PRE>    x11.gc-value-mask.plane-mask  plane-mask
+        Boolean
+
+
+</PRE><PRE>    x11.gc-value-mask.stipple  stipple
+        Boolean
+
+
+</PRE><PRE>    x11.gc-value-mask.subwindow-mode  subwindow-mode
+        Boolean
+
+
+</PRE><PRE>    x11.gc-value-mask.tile  tile
+        Boolean
+
+
+</PRE><PRE>    x11.gc-value-mask.tile-stipple-x-origin  tile-stipple-x-origin
+        Boolean
+
+
+</PRE><PRE>    x11.gc-value-mask.tile-stipple-y-origin  tile-stipple-y-origin
+        Boolean
+
+
+</PRE><PRE>    x11.get-property-type  get-property-type
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.grab_window  grab_window
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.graphics-exposures  graphics-exposures
+        Boolean
+
+
+</PRE><PRE>    x11.green  green
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.greens  greens
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.height  height
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.image-format  image-format
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.image-pixmap-format  image-pixmap-format
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.interval  interval
+        Signed 16-bit integer
+
+
+</PRE><PRE>    x11.items  items
+        No value
+
+
+</PRE><PRE>    x11.join-style  join-style
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.key  key
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.key-click-percent  key-click-percent
+        Signed 8-bit integer
+
+
+</PRE><PRE>    x11.keyboard-key  keyboard-key
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.keyboard-mode  keyboard-mode
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.keyboard-value-mask  keyboard-value-mask
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.keyboard-value-mask.auto-repeat-mode  auto-repeat-mode
+        Boolean
+
+
+</PRE><PRE>    x11.keyboard-value-mask.bell-duration  bell-duration
+        Boolean
+
+
+</PRE><PRE>    x11.keyboard-value-mask.bell-percent  bell-percent
+        Boolean
+
+
+</PRE><PRE>    x11.keyboard-value-mask.bell-pitch  bell-pitch
+        Boolean
+
+
+</PRE><PRE>    x11.keyboard-value-mask.key-click-percent  key-click-percent
+        Boolean
+
+
+</PRE><PRE>    x11.keyboard-value-mask.keyboard-key  keyboard-key
+        Boolean
+
+
+</PRE><PRE>    x11.keyboard-value-mask.led  led
+        Boolean
+
+
+</PRE><PRE>    x11.keyboard-value-mask.led-mode  led-mode
+        Boolean
+
+
+</PRE><PRE>    x11.keycode-count  keycode-count
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.keycodes  keycodes
+        No value
+
+
+</PRE><PRE>    x11.keycodes-per-modifier  keycodes-per-modifier
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.keycodes.item  item
+        Byte array
+
+
+</PRE><PRE>    x11.keysyms  keysyms
+        No value
+
+
+</PRE><PRE>    x11.keysyms-per-keycode  keysyms-per-keycode
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.keysyms.item  item
+        No value
+
+
+</PRE><PRE>    x11.keysyms.item.keysym  keysym
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.led  led
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.led-mode  led-mode
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.left-pad  left-pad
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.line-style  line-style
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.line-width  line-width
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.long-length  long-length
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.long-offset  long-offset
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.map  map
+        Byte array
+
+
+</PRE><PRE>    x11.map-length  map-length
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.mask  mask
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.mask-char  mask-char
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.mask-font  mask-font
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.max-names  max-names
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.mid  mid
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.mode  mode
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.modifiers-mask  modifiers-mask
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.modifiers-mask.AnyModifier  AnyModifier
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.modifiers-mask.Control  Control
+        Boolean
+
+
+</PRE><PRE>    x11.modifiers-mask.Lock  Lock
+        Boolean
+
+
+</PRE><PRE>    x11.modifiers-mask.Mod1  Mod1
+        Boolean
+
+
+</PRE><PRE>    x11.modifiers-mask.Mod2  Mod2
+        Boolean
+
+
+</PRE><PRE>    x11.modifiers-mask.Mod3  Mod3
+        Boolean
+
+
+</PRE><PRE>    x11.modifiers-mask.Mod4  Mod4
+        Boolean
+
+
+</PRE><PRE>    x11.modifiers-mask.Mod5  Mod5
+        Boolean
+
+
+</PRE><PRE>    x11.modifiers-mask.Shift  Shift
+        Boolean
+
+
+</PRE><PRE>    x11.modifiers-mask.erroneous-bits  erroneous-bits
+        Boolean
+
+
+</PRE><PRE>    x11.name  name
+        String
+
+
+</PRE><PRE>    x11.name-length  name-length
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.odd-length  odd-length
+        Boolean
+
+
+</PRE><PRE>    x11.only-if-exists  only-if-exists
+        Boolean
+
+
+</PRE><PRE>    x11.opcode  opcode
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.ordering  ordering
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.override-redirect  override-redirect
+        Boolean
+
+
+</PRE><PRE>    x11.owner  owner
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.owner-events  owner-events
+        Boolean
+
+
+</PRE><PRE>    x11.parent  parent
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.path  path
+        No value
+
+
+</PRE><PRE>    x11.path.string  string
+        String
+
+
+</PRE><PRE>    x11.pattern  pattern
+        String
+
+
+</PRE><PRE>    x11.pattern-length  pattern-length
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.percent  percent
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.pid  pid
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.pixel  pixel
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.pixels  pixels
+        No value
+
+
+</PRE><PRE>    x11.pixels_item  pixels_item
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.pixmap  pixmap
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.plane-mask  plane-mask
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.planes  planes
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.point  point
+        No value
+
+
+</PRE><PRE>    x11.point-x  point-x
+        Signed 16-bit integer
+
+
+</PRE><PRE>    x11.point-y  point-y
+        Signed 16-bit integer
+
+
+</PRE><PRE>    x11.pointer-event-mask  pointer-event-mask
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.pointer-event-mask.Button1Motion  Button1Motion
+        Boolean
+
+
+</PRE><PRE>    x11.pointer-event-mask.Button2Motion  Button2Motion
+        Boolean
+
+
+</PRE><PRE>    x11.pointer-event-mask.Button3Motion  Button3Motion
+        Boolean
+
+
+</PRE><PRE>    x11.pointer-event-mask.Button4Motion  Button4Motion
+        Boolean
+
+
+</PRE><PRE>    x11.pointer-event-mask.Button5Motion  Button5Motion
+        Boolean
+
+
+</PRE><PRE>    x11.pointer-event-mask.ButtonMotion  ButtonMotion
+        Boolean
+
+
+</PRE><PRE>    x11.pointer-event-mask.ButtonPress  ButtonPress
+        Boolean
+
+
+</PRE><PRE>    x11.pointer-event-mask.ButtonRelease  ButtonRelease
+        Boolean
+
+
+</PRE><PRE>    x11.pointer-event-mask.EnterWindow  EnterWindow
+        Boolean
+
+
+</PRE><PRE>    x11.pointer-event-mask.KeymapState  KeymapState
+        Boolean
+
+
+</PRE><PRE>    x11.pointer-event-mask.LeaveWindow  LeaveWindow
+        Boolean
+
+
+</PRE><PRE>    x11.pointer-event-mask.PointerMotion  PointerMotion
+        Boolean
+
+
+</PRE><PRE>    x11.pointer-event-mask.PointerMotionHint  PointerMotionHint
+        Boolean
+
+
+</PRE><PRE>    x11.pointer-event-mask.erroneous-bits  erroneous-bits
+        Boolean
+
+
+</PRE><PRE>    x11.pointer-mode  pointer-mode
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.points  points
+        No value
+
+
+</PRE><PRE>    x11.prefer-blanking  prefer-blanking
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.properties  properties
+        No value
+
+
+</PRE><PRE>    x11.properties.item  item
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.property  property
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.property-number  property-number
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.rectangle  rectangle
+        No value
+
+
+</PRE><PRE>    x11.rectangle-height  rectangle-height
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.rectangle-width  rectangle-width
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.rectangle-x  rectangle-x
+        Signed 16-bit integer
+
+
+</PRE><PRE>    x11.rectangle-y  rectangle-y
+        Signed 16-bit integer
+
+
+</PRE><PRE>    x11.rectangles  rectangles
+        No value
+
+
+</PRE><PRE>    x11.red  red
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.reds  reds
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.request  request
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.request-length  request-length
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.requestor  requestor
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.resource  resource
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.revert-to  revert-to
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.save-set-mode  save-set-mode
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.save-under  save-under
+        Boolean
+
+
+</PRE><PRE>    x11.screen-saver-mode  screen-saver-mode
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.segment  segment
+        No value
+
+
+</PRE><PRE>    x11.segment_x1  segment_x1
+        Signed 16-bit integer
+
+
+</PRE><PRE>    x11.segment_x2  segment_x2
+        Signed 16-bit integer
+
+
+</PRE><PRE>    x11.segment_y1  segment_y1
+        Signed 16-bit integer
+
+
+</PRE><PRE>    x11.segment_y2  segment_y2
+        Signed 16-bit integer
+
+
+</PRE><PRE>    x11.segments  segments
+        No value
+
+
+</PRE><PRE>    x11.selection  selection
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.shape  shape
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.sibling  sibling
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.source-char  source-char
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.source-font  source-font
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.source-pixmap  source-pixmap
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.src-cmap  src-cmap
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.src-drawable  src-drawable
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.src-gc  src-gc
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.src-height  src-height
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.src-width  src-width
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.src-window  src-window
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.src-x  src-x
+        Signed 16-bit integer
+
+
+</PRE><PRE>    x11.src-y  src-y
+        Signed 16-bit integer
+
+
+</PRE><PRE>    x11.stack-mode  stack-mode
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.start  start
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.stipple  stipple
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.stop  stop
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.str-number-in-path  str-number-in-path
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.string  string
+        String
+
+
+</PRE><PRE>    x11.string-length  string-length
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.string16  string16
+        String
+
+
+</PRE><PRE>    x11.string16.bytes  bytes
+        Byte array
+
+
+</PRE><PRE>    x11.subwindow-mode  subwindow-mode
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.target  target
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.textitem  textitem
+        No value
+
+
+</PRE><PRE>    x11.textitem.font  font
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.textitem.string  string
+        No value
+
+
+</PRE><PRE>    x11.textitem.string.delta  delta
+        Signed 8-bit integer
+
+
+</PRE><PRE>    x11.textitem.string.string16  string16
+        String
+
+
+</PRE><PRE>    x11.textitem.string.string16.bytes  bytes
+        Byte array
+
+
+</PRE><PRE>    x11.textitem.string.string8  string8
+        String
+
+
+</PRE><PRE>    x11.threshold  threshold
+        Signed 16-bit integer
+
+
+</PRE><PRE>    x11.tile  tile
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.tile-stipple-x-origin  tile-stipple-x-origin
+        Signed 16-bit integer
+
+
+</PRE><PRE>    x11.tile-stipple-y-origin  tile-stipple-y-origin
+        Signed 16-bit integer
+
+
+</PRE><PRE>    x11.time  time
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.timeout  timeout
+        Signed 16-bit integer
+
+
+</PRE><PRE>    x11.type  type
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.undecoded  undecoded
+        No value
+
+
+</PRE><PRE>    x11.unused  unused
+        No value
+
+
+</PRE><PRE>    x11.visual  visual
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.visualid  visualid
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.warp-pointer-dst-window  warp-pointer-dst-window
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.warp-pointer-src-window  warp-pointer-src-window
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.wid  wid
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.width  width
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.win-gravity  win-gravity
+        Unsigned 8-bit integer
+
+
+</PRE><PRE>    x11.window  window
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.window-class  window-class
+        Unsigned 16-bit integer
+
+
+</PRE><PRE>    x11.window-value-mask  window-value-mask
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    x11.window-value-mask.background-pixel  background-pixel
+        Boolean
+
+
+</PRE><PRE>    x11.window-value-mask.background-pixmap  background-pixmap
+        Boolean
+
+
+</PRE><PRE>    x11.window-value-mask.backing-pixel  backing-pixel
+        Boolean
+
+
+</PRE><PRE>    x11.window-value-mask.backing-planes  backing-planes
+        Boolean
+
+
+</PRE><PRE>    x11.window-value-mask.backing-store  backing-store
+        Boolean
+
+
+</PRE><PRE>    x11.window-value-mask.bit-gravity  bit-gravity
+        Boolean
+
+
+</PRE><PRE>    x11.window-value-mask.border-pixel  border-pixel
+        Boolean
+
+
+</PRE><PRE>    x11.window-value-mask.border-pixmap  border-pixmap
+        Boolean
+
+
+</PRE><PRE>    x11.window-value-mask.colormap  colormap
+        Boolean
+
+
+</PRE><PRE>    x11.window-value-mask.cursor  cursor
+        Boolean
+
+
+</PRE><PRE>    x11.window-value-mask.do-not-propagate-mask  do-not-propagate-mask
+        Boolean
+
+
+</PRE><PRE>    x11.window-value-mask.event-mask  event-mask
+        Boolean
+
+
+</PRE><PRE>    x11.window-value-mask.override-redirect  override-redirect
+        Boolean
+
+
+</PRE><PRE>    x11.window-value-mask.save-under  save-under
+        Boolean
+
+
+</PRE><PRE>    x11.window-value-mask.win-gravity  win-gravity
+        Boolean
+
+
+</PRE><PRE>    x11.x  x
+        Signed 16-bit integer
+
+
+</PRE><PRE>    x11.y  y
+        Signed 16-bit integer
+
+
+</PRE><A name=lbFO>&nbsp;</A> 
+<H2>Yahoo Messenger Protocol (yhoo)</H2>
+<P><PRE>    yhoo.connection_id  Connection ID
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    yhoo.content  Content
+        String
+
+
+</PRE><PRE>    yhoo.len  Packet Length
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    yhoo.magic_id  Magic ID
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    yhoo.msgtype  Message Type
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    yhoo.nick1  Real Nick (nick1)
+        String
+
+
+</PRE><PRE>    yhoo.nick2  Active Nick (nick2)
+        String
+
+
+</PRE><PRE>    yhoo.service  Service Type
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    yhoo.unknown1  Unknown 1
+        Unsigned 32-bit integer
+
+
+</PRE><PRE>    yhoo.version  Version
+        String
+
+
+</PRE><A name=lbFP>&nbsp;</A> 
+<H2>Yellow Pages Bind (ypbind)</H2><A name=lbFQ>&nbsp;</A> 
+<H2>Yellow Pages Service (ypserv)</H2>
+<P><PRE>    ypserv.domain  Domain
+        String
+
+
+</PRE><PRE>    ypserv.key  Key
+        String
+
+
+</PRE><PRE>    ypserv.map  Map Name
+        String
+
+
+</PRE><PRE>    ypserv.servesdomain  Serves Domain
+        Boolean
+
+
+</PRE><PRE>    ypserv.status  Status
+        Boolean
+
+
+</PRE><PRE>    ypserv.value  Value
+        String
+
+
+</PRE><A name=lbFR>&nbsp;</A> 
+<H2>Yellow Pages Transfer (ypxfr)</H2><A name=lbFS>&nbsp;</A> 
+<H2>FILES</H2><I>/etc/ethers</I> is consulted to correlate 6-byte hardware 
+addresses to names. If an address is not found in <I>/etc/ethers</I>, the 
+<I>$HOME/.ethereal/ethers</I> file is consulted next. Each line contains one 
+hardware address and name, separated by whitespace. The digits of the hardware 
+address are separated by either a colon (:), a dash (-), or a period (.). The 
+following three lines are valid lines of an ethers file: 
+<P><PRE>  ff:ff:ff:ff:ff:ff          Broadcast
+  c0-00-ff-ff-ff-ff          TR_broadcast
+  00.00.00.00.00.00          Zero_broadcast
+
+
+</PRE><I>/usr/local/etc/manuf</I> matches the 3-byte vendor portion of a 6-byte 
+hardware address with the manufacturer's name. The format of the file is the 
+same as the <I>/etc/ethers</I> file, except that each address is three bytes 
+instead of six. 
+<P><I>/etc/ipxnets</I> and <I>$HOME/.ethereal/ipxnets</I> correlate 4-byte IPX 
+network numbers to names. The format is the same as the <I>/etc/ethers</I> file, 
+except that each address if four bytes instead of six. Additionally, the address 
+can be represented a single hexadecimal number, as is more common in the IPX 
+world, rather than four hex octets. For example, these four lines are valid 
+lines of an ipxnets file. 
+<P><PRE>  C0.A8.2C.00              HR
+  c0-a8-1c-00              CEO
+  00:00:BE:EF              IT_Server1
+  110f                     FileServer3
+
+
+</PRE><A name=lbFT>&nbsp;</A> 
+<H2>SEE ALSO</H2>the <I><A 
+href="http://www.ethereal.com/tethereal.1.html">tethereal</A>(1)</I> manpage, 
+the <I><A href="http://www.ethereal.com/editcap.1.html">editcap</A>(1)</I> 
+manpage, the <I><A 
+href="http://www.ethereal.com/tcpdump.8.html">tcpdump</A>(8)</I> manpage, the 
+<I>pcap(3)</I> manpage <A name=lbFU>&nbsp;</A> 
+<H2>NOTES</H2>The latest version of <B>Ethereal</B> can be found at <B><A 
+href="http://www.ethereal.com/">http://www.ethereal.com/</A></B>. <A 
+name=lbFV>&nbsp;</A> 
+<H2>AUTHORS</H2>
+<P><PRE>  Original Author
+  -------- ------
+  Gerald Combs  &lt;<A href="mailto:gerald@zing.org">gerald@zing.org</A>&gt;
+
+
+</PRE><PRE>  Contributors
+  ------------
+  Gilbert Ramirez          &lt;<A href="mailto:gram@xiexie.org">gram@xiexie.org</A>&gt;
+  Hannes R. Boehm          &lt;<A href="mailto:hannes@boehm.org">hannes@boehm.org</A>&gt;
+  Mike Hall                &lt;<A href="mailto:mlh@io.com">mlh@io.com</A>&gt;
+  Bobo Rajec               &lt;<A href="mailto:bobo@bsp-consulting.sk">bobo@bsp-consulting.sk</A>&gt;
+  Laurent Deniel           &lt;<A href="mailto:deniel@worldnet.fr">deniel@worldnet.fr</A>&gt;
+  Don Lafontaine           &lt;<A href="mailto:lafont02@cn.ca">lafont02@cn.ca</A>&gt;
+  Guy Harris               &lt;<A href="mailto:guy@alum.mit.edu">guy@alum.mit.edu</A>&gt;
+  Simon Wilkinson          &lt;<A href="mailto:sxw@dcs.ed.ac.uk">sxw@dcs.ed.ac.uk</A>&gt;
+  Joerg Mayer              &lt;<A href="mailto:jmayer@telemation.de">jmayer@telemation.de</A>&gt;
+  Martin Maciaszek         &lt;<A href="mailto:fastjack@i-s-o.net">fastjack@i-s-o.net</A>&gt;
+  Didier Jorand            &lt;<A href="mailto:Didier.Jorand@alcatel.fr">Didier.Jorand@alcatel.fr</A>&gt;
+  Jun-ichiro itojun Hagino &lt;<A href="mailto:itojun@iijlab.net">itojun@iijlab.net</A>&gt;
+  Richard Sharpe           &lt;<A href="mailto:sharpe@ns.aus.com">sharpe@ns.aus.com</A>&gt;
+  John McDermott           &lt;<A href="mailto:jjm@jkintl.com">jjm@jkintl.com</A>&gt; 
+  Jeff Jahr                &lt;<A href="mailto:jjahr@shastanets.com">jjahr@shastanets.com</A>&gt;
+  Brad Robel-Forrest       &lt;<A href="mailto:bradr@watchguard.com">bradr@watchguard.com</A>&gt;
+  Ashok Narayanan          &lt;<A href="mailto:ashokn@cisco.com">ashokn@cisco.com</A>&gt;
+  Aaron Hillegass          &lt;<A href="mailto:aaron@classmax.com">aaron@classmax.com</A>&gt;
+  Jason Lango              &lt;<A href="mailto:jal@netapp.com">jal@netapp.com</A>&gt;
+  Johan Feyaerts           &lt;<A href="mailto:Johan.Feyaerts@siemens.atea.be">Johan.Feyaerts@siemens.atea.be</A>&gt;
+  Olivier Abad             &lt;<A href="mailto:oabad@cybercable.fr">oabad@cybercable.fr</A>&gt;
+  Thierry Andry            &lt;<A href="mailto:Thierry.Andry@advalvas.be">Thierry.Andry@advalvas.be</A>&gt;
+  Jeff Foster              &lt;<A href="mailto:jjfoste@woodward.com">jjfoste@woodward.com</A>&gt;
+  Peter Torvals            &lt;<A href="mailto:petertv@xoommail.com">petertv@xoommail.com</A>&gt;
+  Christophe Tronche       &lt;<A href="mailto:ch.tronche@computer.org">ch.tronche@computer.org</A>&gt;
+  Nathan Neulinger         &lt;<A href="mailto:nneul@umr.edu">nneul@umr.edu</A>&gt;
+  Tomislav Vujec           &lt;<A href="mailto:tvujec@carnet.hr">tvujec@carnet.hr</A>&gt;
+  Kojak                    &lt;<A href="mailto:kojak@bigwig.net">kojak@bigwig.net</A>&gt;
+  Uwe Girlich              &lt;<A href="mailto:Uwe.Girlich@philosys.de">Uwe.Girlich@philosys.de</A>&gt;
+  Warren Young             &lt;<A href="mailto:tangent@mail.com">tangent@mail.com</A>&gt;
+  Heikki Vatiainen         &lt;<A href="mailto:hessu@cs.tut.fi">hessu@cs.tut.fi</A>&gt;
+  Greg Hankins             &lt;<A href="mailto:gregh@twoguys.org">gregh@twoguys.org</A>&gt;
+  Jerry Talkington         &lt;<A href="mailto:jerryt@netapp.com">jerryt@netapp.com</A>&gt;
+  Dave Chapeskie           &lt;<A href="mailto:dchapes@ddm.on.ca">dchapes@ddm.on.ca</A>&gt;
+  James Coe                &lt;<A href="mailto:jammer@cin.net">jammer@cin.net</A>&gt;
+  Bert Driehuis            &lt;<A href="mailto:driehuis@playbeing.org">driehuis@playbeing.org</A>&gt;
+  Stuart Stanley           &lt;<A href="mailto:stuarts@mxmail.net">stuarts@mxmail.net</A>&gt;
+  John Thomes              &lt;<A href="mailto:john@ensemblecom.com">john@ensemblecom.com</A>&gt;
+  Laurent Cazalet          &lt;<A href="mailto:laurent.cazalet@mailclub.net">laurent.cazalet@mailclub.net</A>&gt;
+  Thomas Parvais           &lt;<A href="mailto:thomas.parvais@advalvas.be">thomas.parvais@advalvas.be</A>&gt;
+  Gerrit Gehnen            &lt;<A href="mailto:G.Gehnen@atrie.de">G.Gehnen@atrie.de</A>&gt;
+  Craig Newell             &lt;<A href="mailto:craign@cheque.uq.edu.au">craign@cheque.uq.edu.au</A>&gt;
+  Ed Meaney                &lt;<A href="mailto:emeaney@altiga.com">emeaney@altiga.com</A>&gt;
+  Dietmar Petras           &lt;<A href="mailto:DPetras@ELSA.de">DPetras@ELSA.de</A>&gt; 
+  Fred Reimer              &lt;<A href="mailto:fwr@ga.prestige.net">fwr@ga.prestige.net</A>&gt;
+  Florian Lohoff           &lt;<A href="mailto:flo@rfc822.org">flo@rfc822.org</A>&gt;
+  Jochen Friedrich         &lt;<A href="mailto:jochen+ethereal@scram.de">jochen+ethereal@scram.de</A>&gt;
+  Paul Welchinski          &lt;<A href="mailto:paul.welchinski@telusplanet.net">paul.welchinski@telusplanet.net</A>&gt;
+  Doug Nazar               &lt;<A href="mailto:nazard@dragoninc.on.ca">nazard@dragoninc.on.ca</A>&gt;
+  Andreas Sikkema          &lt;<A href="mailto:andreas.sikkema@philips.com">andreas.sikkema@philips.com</A>&gt;
+  Mark Muhlestein          &lt;<A href="mailto:mmm@netapp.com">mmm@netapp.com</A>&gt;
+  Graham Bloice            &lt;<A href="mailto:graham.bloice@trihedral.com">graham.bloice@trihedral.com</A>&gt;
+  Ralf Schneider           &lt;<A href="mailto:ralf.schneider@alcatel.se">ralf.schneider@alcatel.se</A>&gt;
+  Yaniv Kaul               &lt;<A href="mailto:ykaul@checkpoint.com">ykaul@checkpoint.com</A>&gt;
+  Paul Ionescu             &lt;<A href="mailto:ipaul@romsys.ro">ipaul@romsys.ro</A>&gt;
+  Mark Burton              &lt;<A href="mailto:markb@ordern.com">markb@ordern.com</A>&gt;
+  Michael Tuexen           &lt;<A href="mailto:Michael.Tuexen@icn.siemens.de">Michael.Tuexen@icn.siemens.de</A>&gt;
+  Stefan Raab              &lt;<A href="mailto:stefan.raab@nextel.com">stefan.raab@nextel.com</A>&gt;
+
+
+</PRE>Alain Magloire &lt;<A 
+href="mailto:alainm@rcsm.ece.mcgill.ca">alainm@rcsm.ece.mcgill.ca</A>&gt; was 
+kind enough to give his permission to use his version of snprintf.c. 
+<P>Dan Lasley &lt;<A href="mailto:dlasley@promus.com">dlasley@promus.com</A>&gt; 
+gave permission for his <I>dumpit()</I> hex-dump routine to be used. 
+<P><A name=ixAAB></A><A name=ixAAC></A>
+<P><A name=ixAAD></A>
+<P><A name=ixAAE></A>
+<P><A name=ixAAF></A>
+<P><A name=ixAAG></A>
+<P><A name=ixAAH></A>
+<P><A name=ixAAI></A>
+<P><A name=ixAAJ></A>
+<P><A name=ixAAK></A>
+<P><A name=ixAAL></A>
+<P><A name=ixAAM></A>
+<P><A name=ixAAN></A>
+<P><A name=ixAAO></A>
+<P><A name=ixAAP></A>
+<P><A name=ixAAQ></A>
+<P><A name=ixAAR></A>
+<P><A name=ixAAS></A>
+<P><A name=ixAAT></A>
+<P><A name=ixAAU></A>
+<P><A name=ixAAV></A>
+<P><A name=ixAAW></A>
+<P><A name=ixAAX></A>
+<P><A name=ixAAY></A>
+<P><A name=ixAAZ></A>
+<P><A name=ixABA></A>
+<P><A name=ixABB></A>
+<P><A name=ixABC></A>
+<P><A name=ixABD></A>
+<P><A name=ixABE></A>
+<P><A name=ixABF></A>
+<P><A name=ixABG></A>
+<P><A name=ixABH></A>
+<P><A name=ixABI></A>
+<P><A name=ixABJ></A>
+<P><A name=ixABK></A>
+<P><A name=ixABL></A>
+<P><A name=ixABM></A>
+<P><A name=ixABN></A>
+<P><A name=ixABO></A>
+<P><A name=ixABP></A>
+<P><A name=ixABQ></A>
+<P><A name=ixABR></A>
+<P><A name=ixABS></A>
+<P><A name=ixABT></A>
+<P><A name=ixABU></A>
+<P><A name=ixABV></A>
+<P><A name=ixABW></A>
+<P><A name=ixABX></A>
+<P><A name=ixABY></A>
+<P><A name=ixABZ></A>
+<P><A name=ixACA></A>
+<P><A name=ixACB></A>
+<P><A name=ixACC></A>
+<P><A name=ixACD></A>
+<P><A name=ixACE></A>
+<P><A name=ixACF></A>
+<P><A name=ixACG></A>
+<P><A name=ixACH></A>
+<P><A name=ixACI></A>
+<P><A name=ixACJ></A>
+<P><A name=ixACK></A>
+<P><A name=ixACL></A>
+<P><A name=ixACM></A>
+<P><A name=ixACN></A>
+<P><A name=ixACO></A>
+<P><A name=ixACP></A>
+<P><A name=ixACQ></A>
+<P><A name=ixACR></A>
+<P><A name=ixACS></A>
+<P><A name=ixACT></A>
+<P><A name=ixACU></A>
+<P><A name=ixACV></A>
+<P><A name=ixACW></A>
+<P><A name=ixACX></A>
+<P><A name=ixACY></A>
+<P><A name=ixACZ></A>
+<P><A name=ixADA></A>
+<P><A name=ixADB></A>
+<P><A name=ixADC></A>
+<P><A name=ixADD></A>
+<P><A name=ixADE></A>
+<P><A name=ixADF></A>
+<P><A name=ixADG></A>
+<P><A name=ixADH></A>
+<P><A name=ixADI></A>
+<P><A name=ixADJ></A>
+<P><A name=ixADK></A>
+<P><A name=ixADL></A>
+<P><A name=ixADM></A>
+<P><A name=ixADN></A>
+<P><A name=ixADO></A>
+<P><A name=ixADP></A>
+<P><A name=ixADQ></A>
+<P><A name=ixADR></A>
+<P><A name=ixADS></A>
+<P><A name=ixADT></A>
+<P><A name=ixADU></A>
+<P><A name=ixADV></A>
+<P><A name=ixADW></A>
+<P><A name=ixADX></A>
+<P><A name=ixADY></A>
+<P><A name=ixADZ></A>
+<P><A name=ixAEA></A>
+<P><A name=ixAEB></A>
+<P><A name=ixAEC></A>
+<P><A name=ixAED></A>
+<P><A name=ixAEE></A>
+<P><A name=ixAEF></A>
+<P><A name=ixAEG></A>
+<P><A name=ixAEH></A>
+<P><A name=ixAEI></A>
+<P><A name=ixAEJ></A>
+<P><A name=ixAEK></A>
+<P><A name=ixAEL></A>
+<P><A name=ixAEM></A>
+<P><A name=ixAEN></A>
+<P><A name=ixAEO></A>
+<P><A name=ixAEP></A>
+<P><A name=ixAEQ></A>
+<P><A name=ixAER></A>
+<P><A name=ixAES></A>
+<P><A name=ixAET></A>
+<P><A name=ixAEU></A>
+<P><A name=ixAEV></A>
+<P><A name=ixAEW></A>
+<P><A name=ixAEX></A>
+<P><A name=ixAEY></A>
+<P><A name=ixAEZ></A>
+<P><A name=ixAFA></A>
+<P><A name=ixAFB></A>
+<P><A name=ixAFC></A>
+<P><A name=ixAFD></A>
+<P><A name=ixAFE></A>
+<P><A name=ixAFF></A>
+<P><A name=ixAFG></A>
+<P><A name=ixAFH></A>
+<P><A name=ixAFI></A>
+<P><A name=ixAFJ></A>
+<P><A name=ixAFK></A>
+<P><A name=ixAFL></A>
+<P><A name=ixAFM></A>
+<P><A name=ixAFN></A>
+<P><A name=ixAFO></A>
+<P><A name=ixAFP></A>
+<P><A name=ixAFQ></A>
+<P><A name=ixAFR></A>
+<P><A name=ixAFS></A>
+<P><A name=ixAFT></A>
+<P><A name=ixAFU></A>
+<P><A name=ixAFV></A>
+<P><A name=ixAFW></A>
+<P><A name=ixAFX></A>
+<P><A name=ixAFY></A>
+<P><A name=ixAFZ></A>
+<P><A name=ixAGA></A>
+<P><A name=ixAGB></A>
+<P><A name=ixAGC></A>
+<P><A name=ixAGD></A>
+<P><A name=ixAGE></A>
+<P><A name=ixAGF></A>
+<P><A name=ixAGG></A>
+<P><A name=ixAGH></A>
+<P><A name=ixAGI></A>
+<P><A name=ixAGJ></A>
+<P><A name=ixAGK></A>
+<P><A name=ixAGL></A>
+<P><A name=ixAGM></A>
+<P><A name=ixAGN></A>
+<P><A name=ixAGO></A>
+<P><A name=ixAGP></A>
+<P><A name=ixAGQ></A>
+<P><A name=ixAGR></A>
+<P><A name=ixAGS></A>
+<P><A name=ixAGT></A>
+<P><A name=ixAGU></A>
+<P><A name=ixAGV></A>
+<P><A name=ixAGW></A>
+<P><A name=ixAGX></A>
+<P><A name=ixAGY></A>
+<P><A name=ixAGZ></A>
+<P><A name=ixAHA></A>
+<P><A name=ixAHB></A>
+<P><A name=ixAHC></A>
+<P><A name=ixAHD></A>
+<P><A name=ixAHE></A>
+<P><A name=ixAHF></A>
+<P><A name=ixAHG></A>
+<P><A name=ixAHH></A>
+<P><A name=ixAHI></A>
+<P><A name=ixAHJ></A>
+<P><A name=ixAHK></A>
+<P><A name=ixAHL></A>
+<P><A name=ixAHM></A>
+<P><A name=ixAHN></A>
+<P><A name=ixAHO></A>
+<P><A name=ixAHP></A>
+<P><A name=ixAHQ></A>
+<P><A name=ixAHR></A>
+<P><A name=ixAHS></A>
+<P><A name=ixAHT></A>
+<P><A name=ixAHU></A>
+<P><A name=ixAHV></A>
+<P><A name=ixAHW></A>
+<P><A name=ixAHX></A>
+<P><A name=ixAHY></A>
+<P><A name=ixAHZ></A>
+<P><A name=ixAIA></A>
+<P><A name=ixAIB></A>
+<P><A name=ixAIC></A>
+<P><A name=ixAID></A>
+<P><A name=ixAIE></A>
+<P><A name=ixAIF></A>
+<P><A name=ixAIG></A>
+<P><A name=ixAIH></A>
+<P><A name=ixAII></A>
+<P><A name=ixAIJ></A>
+<P><A name=ixAIK></A>
+<P><A name=ixAIL></A>
+<P><A name=ixAIM></A>
+<P><A name=ixAIN></A>
+<P>
+<P>
+<HR>
+<A name=index>&nbsp;</A>
+<H2>Index</H2>
+<DL>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbAB">NAME</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbAC">SYNOPSYS</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbAD">DESCRIPTION</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbAE">OPTIONS</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbAF">INTERFACE</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbAG"><FONT 
+  size=-1>MENU</FONT> <FONT size=-1>ITEMS</FONT></A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbAH"><FONT 
+  size=-1>WINDOWS</FONT></A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbAI">CAPTURE FILTER 
+  SYNTAX</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbAJ">DISPLAY FILTER 
+  SYNTAX</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbAK">802.1q Virtual 
+  <FONT size=-1>LAN</FONT> (vlan)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbAL"><FONT 
+  size=-1>ATM</FONT> (atm)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbAM"><FONT 
+  size=-1>ATM</FONT> <FONT size=-1>LANE</FONT> (lane)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbAN">Address Resolution 
+  Protocol (arp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbAO">Andrew File System 
+  (<FONT size=-1>AFS</FONT>) (afs)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbAP">Appletalk Address 
+  Resolution Protocol (aarp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbAQ">Async data over 
+  <FONT size=-1>ISDN</FONT> (V.120) (v120)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbAR">Authentication 
+  Header (ah)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbAS">Boot Parameters 
+  (bootparams)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbAT">Bootstrap Protocol 
+  (bootp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbAU">Border Gateway 
+  Protocol (bgp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbAV">Cisco Auto-<FONT 
+  size=-1>RP</FONT> (auto_rp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbAW">Cisco Discovery 
+  Protocol (cdp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbAX">Cisco Group 
+  Management Protocol (cgmp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbAY">Cisco Hot Standby 
+  Router Protocol (hsrp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbAZ">Cisco <FONT 
+  size=-1>ISL</FONT> (isl)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbBA">Common Open Policy 
+  Service (cops)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbBB">Data (data)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbBC">Datagram Delivery 
+  Protocol (ddp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbBD">Domain Name Service 
+  (dns)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbBE">Dynamic <FONT 
+  size=-1>DNS</FONT> Tools Protocol (ddtp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbBF">Encapsulated 
+  Security Payload (esp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbBG">Enhanced Interior 
+  Gateway Routing Protocol (eigrp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbBH">Ethernet (eth)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbBI">Extended X.25 
+  (modulo 128) (ex25)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbBJ">Fiber Distributed 
+  Data Interface (fddi)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbBK">File Transfer 
+  Protocol (ftp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbBL">Frame (frame)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbBM">General Inter-<FONT 
+  size=-1>ORB</FONT> Protocol (giop)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbBN">Generic Routing 
+  Encapsulation (gre)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbBO">Hypertext Transfer 
+  Protocol (http)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbBP"><FONT 
+  size=-1>ICQ</FONT> Protocol (icq)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbBQ"><FONT 
+  size=-1>ILMI</FONT> (ilmi)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbBR"><FONT 
+  size=-1>IP</FONT> Payload Compression (ipcomp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbBS"><FONT 
+  size=-1>IPX</FONT> Message (ipxmsg)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbBT"><FONT 
+  size=-1>IPX</FONT> Routing Information Protocol (ipxrip)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbBU"><FONT 
+  size=-1>ISIS</FONT> <FONT size=-1>HELLO</FONT> (isis_hello)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbBV"><FONT 
+  size=-1>ISO</FONT> 10598 <FONT size=-1>ISIS</FONT> Complete Sequence Numbers 
+  Protocol Data Unit (isis_csnp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbBW"><FONT 
+  size=-1>ISO</FONT> 10598 <FONT size=-1>ISIS</FONT> InTRA Domain Routeing 
+  Information Exchange Protocol (isis)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbBX"><FONT 
+  size=-1>ISO</FONT> 10598 <FONT size=-1>ISIS</FONT> Link State Protocol Data 
+  Unit (isis_lsp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbBY"><FONT 
+  size=-1>ISO</FONT> 10598 <FONT size=-1>ISIS</FONT> Partial Sequence Numbers 
+  Protocol Data Unit (isis_psnp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbBZ"><FONT 
+  size=-1>ISO</FONT> 8073 <FONT size=-1>COTP</FONT> Connection-Oriented 
+  Transport Protocol (cotp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbCA"><FONT 
+  size=-1>ISO</FONT> 8473 <FONT size=-1>CLNP</FONT> ConnectionLess Network 
+  Protocol (clnp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbCB"><FONT 
+  size=-1>ISO</FONT> 9542 <FONT size=-1>ESIS</FONT> Routeing Information 
+  Exchange Protocol (esis)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbCC">Internet Cache 
+  Protocol (icp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbCD">Internet Control 
+  Message Protocol (icmp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbCE">Internet Control 
+  Message Protocol v6 (icmpv6)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbCF">Internet Group 
+  Management Protocol (igmp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbCG">Internet Message 
+  Access Protocol (imap)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbCH">Internet Printing 
+  Protocol (ipp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbCI">Internet Protocol 
+  (ip)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbCJ">Internet Protocol 
+  Version 6 (ipv6)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbCK">Internet Relay Chat 
+  (irc)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbCL">Internet Security 
+  Association and Key Management Protocol (isakmp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbCM">Internetwork Packet 
+  eXchange (ipx)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbCN">Layer 2 Tunneling 
+  Protocol (l2tp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbCO">Lightweight 
+  Directory Access Protocol (ldap)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbCP">Line Printer Daemon 
+  Protocol (lpd)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbCQ">Link Access 
+  Procedure Balanced (<FONT size=-1>LAPB</FONT>) (lapb)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbCR">Link Access 
+  Procedure, Channel D (<FONT size=-1>LAPD</FONT>) (lapd)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbCS">Logical-Link 
+  Control (llc)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbCT">Lucent/Ascend debug 
+  output (ascend)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbCU"><FONT 
+  size=-1>MAPI</FONT> (mapi)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbCV">MSProxy Protocol 
+  (msproxy)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbCW">Malformed Frame 
+  (malformed)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbCX">Microsoft Windows 
+  Browser Protocol (browser)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbCY">Microsoft Windows 
+  Lanman Protocol (lanman)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbCZ">Microsoft Windows 
+  Logon Protocol (netlogon)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbDA">Mobile <FONT 
+  size=-1>IP</FONT> (mip)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbDB">Mount Service 
+  (mount)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbDC">MultiProtocol Label 
+  Switching Header (mpls)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbDD">Name Binding 
+  Protocol (nbp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbDE">NetBIOS 
+  (netbios)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbDF">NetBIOS Datagram 
+  Service (nbdgm)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbDG">NetBIOS Name 
+  Service (nbns)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbDH">NetBIOS Session 
+  Service (nbss)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbDI">NetBIOS over <FONT 
+  size=-1>IPX</FONT> (nbipx)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbDJ">NetWare Core 
+  Protocol (ncp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbDK">Network File System 
+  (nfs)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbDL">Network Lock 
+  Manager Protocol (nlm)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbDM">Network News 
+  Transfer Protocol (nntp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbDN">Network Time 
+  Protocol (ntp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbDO">Null/Loopback 
+  (null)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbDP">Open Shortest Path 
+  First (ospf)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbDQ"><FONT 
+  size=-1>PPP</FONT> Multilink Protocol (mp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbDR">Point-to-Point 
+  Protocol (ppp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbDS">Portmap 
+  (portmap)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbDT">Post Office 
+  Protocol (pop)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbDU">Protocol 
+  Independent Multicast (pim)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbDV">Q.2931 (q2931)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbDW">Q.931 (q931)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbDX">RIPng (ripng)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbDY"><FONT 
+  size=-1>RTP</FONT> Control Protocol (rtcp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbDZ"><FONT 
+  size=-1>RX</FONT> Protocol (rx)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbEA">Radius Protocol 
+  (radius)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbEB">Real Time Streaming 
+  Protocol (rtsp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbEC">Realtime Transport 
+  Protocol (rtp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbED">Remote Procedure 
+  Call (rpc)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbEE">Resource 
+  ReserVation Protocol (<FONT size=-1>RSVP</FONT>) (rsvp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbEF">Rlogin Protocol 
+  (rlogin)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbEG">Routing Information 
+  Protocol (rip)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbEH">Routing Table 
+  (rtmp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbEI"><FONT 
+  size=-1>SMB</FONT> MailSlot Protocol (mailslot)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbEJ"><FONT 
+  size=-1>SNMP</FONT> Multiplex Protocol (smux)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbEK"><FONT 
+  size=-1>SSCOP</FONT> (sscop)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbEL">Sequenced Packet 
+  eXchange (spx)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbEM">Server Message 
+  Block Protocol (smb)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbEN">Service 
+  Advertisement Protocol (ipxsap)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbEO">Service Location 
+  Protocol (srvloc)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbEP">Session 
+  Announcement Protocol (sap)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbEQ">Session Description 
+  Protocol (sdp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbER">Short Frame 
+  (short)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbES">Simple Network 
+  Management Protocol (snmp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbET">Sinec H1 Protocol 
+  (h1)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbEU">Socks Protocol 
+  (socks)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbEV">Spanning Tree 
+  Protocol (stp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbEW">Status Service 
+  (stat)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbEX">Syslog message 
+  (syslog)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbEY">Systems Network 
+  Architecture (sna)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbEZ"><FONT 
+  size=-1>TACACS</FONT> (tacacs)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbFA">Telnet (telnet)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbFB">Time Protocol 
+  (time)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbFC">Token-Ring (tr)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbFD">Token-Ring Media 
+  Access Control (trmac)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbFE">Transmission 
+  Control Protocol (tcp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbFF">Transparent Network 
+  Substrate Protocol (tns)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbFG">Trivial File 
+  Transfer Protocol (tftp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbFH">User Datagram 
+  Protocol (udp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbFI">Virtual Router 
+  Redundancy Protocol (vrrp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbFJ">Virtual Trunking 
+  Protocol (vtp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbFK">Web Cache 
+  Coordination Protocol (wccp)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbFL">Who (who)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbFM">X.25 (x25)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbFN">X11 (x11)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbFO">Yahoo Messenger 
+  Protocol (yhoo)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbFP">Yellow Pages Bind 
+  (ypbind)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbFQ">Yellow Pages 
+  Service (ypserv)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbFR">Yellow Pages 
+  Transfer (ypxfr)</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbFS">FILES</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbFT">SEE ALSO</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbFU">NOTES</A>
+  <DD>
+  <DT><A href="http://www.ethereal.com/ethereal.1.html#lbFV">AUTHORS</A>
+  <DD></DD></DL>
+<HR>
+This document was created by man2html, using the manual pages.<BR>Time: 20:47:58 
+GMT, June 13, 2000 </BODY></HTML>

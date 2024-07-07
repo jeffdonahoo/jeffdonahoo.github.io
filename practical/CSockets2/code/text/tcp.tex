@@ -1,0 +1,1219 @@
+% OUTLINE
+% 1.  IPv4 TCP Client (TCPEchoClient4.c)
+% 2.  IPv4 TCP Server (TCPEchoServer4.c)
+% 3.  Creating and Destroying Sockets
+% 	3.1.  socket()
+% 	3.2.  close()
+% 4.  Specifying Addresses
+% 	4.1.  Address Structures
+% 		- sockaddr
+% 		- sockaddr_in
+% 		- sockaddr_in6
+% 		- sockaddr_storage
+% 	4.2. Binary/String Address Conversion
+% 		- inet_pton()
+% 		- inet_ntop()
+% 	4.3. Binary/String Port Conversion
+%   4.4. Getting a Socket Local and Foreign Address
+% 5.  Preparing for Communication
+%   5.1  connect()
+%   5.2.  bind()
+% 6.  Accepting Incoming Connections
+% 	- listen()
+% 	- accept()
+% 7.  Communication
+% 	- send()
+% 	- recv()
+% 	- Comments on streams
+% 8.  Using IPv6 (TCPEchoServer6.c)
+\chapter{Basic TCP Sockets}
+\label{chap:tcp}
+
+It's time to learn about writing your own socket applications.
+We'll start with TCP.
+By now you're probably ready to get your hands dirty with some
+actual code so we begin by going through
+a working example of a TCP client and server.
+Then we present the details of the socket API used in basic TCP.
+To keep things simpler, we'll present code initially that works for
+one  particular version of IP: IPv4, which at the time this is written is
+still the dominant version of the Internet Protocol, by a wide margin.
+At the end of this chapter we present the (minor)
+modifications required to write IPv6 versions of our
+clients and servers.  In Chapter~\ref{chap:addrindep}
+we will demonstrate the creation of protocol-independent applications.
+\marginpar{Testing!}
+
+Our example client and server implement the \defn{echo} protocol.  It
+works like this: the client connects to the server and sends its data.  The
+server simply echoes whatever it receives back to the client and
+disconnects.
+%
+In our application, the data that the client sends is a string provided as a
+command-line argument.  Our client will print the data
+it receives from the server so we can see 
+what comes back.  Many systems include an echo service for debugging
+and testing purposes.
+
+\section{IPv4 TCP Client}
+
+The distinction between client and server is important
+because each uses the sockets interface differently at certain steps
+in the communication.  We first focus on the client.  Its job is to
+initiate communication with a server that is passively waiting to be
+contacted.  
+
+The typical TCP client's communication involves four basic steps:
+%
+\begin{enumerate}
+
+\item Create a TCP socket using \fcnrefsys{socket()}.
+
+\item Establish a connection to the server using
+\fcnrefsys{connect()}.
+
+\item Communicate using \fcnrefsys{send()} and
+\fcnrefsys{recv()}.
+
+\item Close the connection with \fcnrefsys{close()}.
+%
+\end{enumerate}
+
+\noindent \file{TCPEchoClient4.c} is an implementation of a TCP echo client for
+IPv4.
+
+\jcode{TCPEchoClient4.c}{code/TCPEchoClient4.c}{1}{1}
+
+
+Our \file{TCPEchoClient4.c} does the following:
+
+\begin{topcode}
+
+\tlcitems{Application setup and parameter parsing}{1--20}
+
+\begin{bottomcode}
+
+\blcitems{Include files}{0--7}
+
+These header files declare the standard functions and constants of the
+API.  Consult your documentation (e.g., man pages) for the appropriate
+include files for socket functions and data structures on your system.  We
+utilize our own include file, \file{Practical.h}, with prototypes for our own
+functions, which we describe below.
+
+\blcitems{Typical parameter parsing and sanity checking}{13--20}
+
+The IPv4 address and string to echo are passed in as the first two parameters. 
+Optionally, the client takes the server port as the third parameter.  If no
+port is provided, the client uses the well-known echo protocol port, 7.
+
+\end{bottomcode}
+
+\tlcitems{TCP socket creation}{22--25}
+
+We create a socket using the \fcnrefsys{socket} function.  The socket is for
+IPv4 (\constsys{af\_inet}) using the stream-based protocol
+(\constsys{sock\_stream}) called TCP (\constsys{ipproto\_tcp}). 
+\fcnrefsys{socket} returns an integer-valued descriptor or
+``handle'' for the socket if successful.
+If \fcnrefsys{socket} fails, it returns --1, and
+we call our error handling function, \fcnref{DieWithSystemMessage}
+(described later), to
+print an informative hint and exit.
+
+\tlcitems{Prepare address and establish connection}{27--40}
+
+\begin{bottomcode}
+
+\blcitems{Prepare \typesys{sockaddr\_in} structure to hold server address}{28--29}
+To connect a socket, we have to specify the address and port to
+connect to.  The \typesys{sockaddr\_in} structure is defined to be a
+``container'' for this information.  The call to \fcnrefsys{memset()}
+ensures that any parts of the structure that we do not explicitly set
+contain zero.
+% This statement is not useful.
+%(This step is needed on some systems, but not all.)
+
+\blcitems{Filling in the \typesys{sockaddr\_in}}{30--36}
+
+We must set the address family (\constsys{AF\_INET}), Internet
+address, and port number.  The function \fcnrefsys{inet\_pton()}
+converts the string representation of the server's Internet address
+(passed as a command-line argument in dotted-quad notation)
+into a 32-bit binary representation.  The server's port
+number was converted from a command-line string to binary earlier;
+the call to \fcnrefsys{htons()} (``host to network short'')
+ensures that the binary value is formatted as required by the API.
+(Reasons for this are described in Chapter~\ref{chap:encoding}).
+
+\blcitems{Connecting}{38--40}
+
+The \fcnrefsys{connect()} function establishes a
+connection between the given socket and the one identified by the address
+and port in the \typesys{sockaddr\_in} structure.  Because
+the sockets API is
+generic, the pointer to the \typesys{sockaddr\_in} address
+structure (which is specific to IPv4 addresses)
+needs to be \emph{cast\/} to the generic type (\typesys{sockaddr}),
+and the actual size of the address data structure must be supplied.
+
+\end{bottomcode}
+
+\tlcitems{Send echo string to server}{42--50}
+
+We find the length of the argument string and save it for later use.
+A pointer to the echo string is passed to the
+\fcnrefsys{send()} call; the string itself was stored somewhere (like all
+command-line arguments) when the application was started.  We do not
+really care where it is, we just need to know the address of the first
+byte and how many bytes to send.  (Note that we do
+not send the end-of-string marker character (\termchar) that is at the end of
+the argument string---and all strings in C).
+\fcnrefsys{send()} returns the
+number of bytes sent if successful and --1 otherwise.  If \fcnrefsys{send()}
+fails or sends the wrong number of bytes, we must deal with the error.  Note
+that sending the wrong number of bytes will not happen here.
+Nevertheless, it's a good idea to include
+the test, because errors can occur in some contexts.
+
+\tlcitems{Receive echo server reply}{52--69}
+
+TCP is a byte-stream protocol.  One implication of this type of
+protocol is that \fcnrefsys{send()} boundaries are not preserved.
+In other words:
+\callout{The bytes sent by a call to \fcnrefsys{send()} on one end of
+a connection may not all be returned by a single call to
+\fcnrefsys{recv()} on the other end.}
+(We discuss this issue in more detail in Chapter~\ref{chap:under}.)
+So we need to repeatedly receive bytes until we have received as many
+as we sent.  In all likelihood, this loop will only be executed once
+because the data from the server will in fact be returned all at once;
+however, that is not \emph{guaranteed} to happen, and so we have to
+allow for the possibility that multiple reads are required.  This is a
+basic principle of writing applications that use sockets:
+\callout{you must never assume anything about what the network and the
+program at the other end are going to do}.
+
+\begin{bottomcode}
+
+\blcitems{Receive a block of bytes}{56--63}
+
+\fcnrefsys{recv()} blocks until data is available, returning the
+number of bytes copied into the buffer or $-1$ in case of failure.  A
+return value of zero indicates that the application at the other end
+closed the TCP connection.  Note that the size parameter passed to
+\fcnrefsys{recv()} reserves space for adding a terminating null character.
+
+\blcitems{Print buffer}{65--66}
+
+We print the data sent by the server as it is received.  We add the
+terminating null character (\termchar) at the end of each chunk of
+received data so that it can be treated as a string by
+\fcnref{fputs()}.  We do not check whether the bytes received are the
+same as the bytes sent. The server may send something completely
+different (up to the length of the string we sent), and it will be
+written to the standard output.
+
+\blcitem{Print newline}{69}
+
+When we have received as many bytes as we sent, we exit the loop and
+print a newline.
+
+\end{bottomcode}
+
+\tlcitems{Terminate connection and exit}{71--72}
+
+The \fcnrefsys{close()} function informs the remote socket that
+communication is ended, and then deallocates local resources
+of the socket.
+
+\end{topcode}
+
+Our client application (and indeed all the programs in this book)
+makes use of two error handling functions:
+\begin{quote}
+\fcn{DieWithUserMessage(\type{const char *}\param{msg}, \type{const
+char *}\param{detail})} \\
+\fcn{DieWithSystemMessage(\type{const char *}\param{msg})} \\
+\end{quote}
+We call the first when an error is detected by our code, and the
+second when an API function call returns a failure indication.
+Both functions print a user-supplied message string (\param{msg}) to
+\var{stderr}, followed by a detail message string; they then
+call \fcnsys{exit()} with an error return code, causing the
+application to terminate.
+%
+The only difference is the source of the detail message.  For
+\fcn{DieWithUserMessage}, the detail message is user-supplied.  For
+\fcn{DieWithSystemMessage},
+the detail message is supplied by the system based on the
+value of the special variable \varsys{errno}  (which describes the reason for
+the most recent failure, if any, of a system call).  We call 
+\fcn{DieWithSystemMessage} only if the error situation results from a
+call to a system call that sets \varsys{errno}.
+%
+(To keep our programs simple, our examples do not contain much code
+devoted to recovering from errors---they simply punt and exit.
+Production code generally should not give up so easily.)
+
+Occasionally we need to supply informatin to the user without exiting;
+we use \fcnrefsys{printf()} if we need formatting capabilities, and
+\fcnrefsys{fputs()} otherwise.  In particular, we try to avoid using
+\fcn{printf()} to output fixed, preformatted strings.
+\callout{One thing that you
+should \emph{never\/} do is to pass text received from the
+network as the first argument to \fcn{printf()}.  It creates a serious
+security vulnerability.  Use \fcn{fputs()} instead.}
+
+\begin{quote}
+\textbf{Note:} the \fcn{DieWith\ldots()}
+functions are \emph{declared\/} in the header
+``\file{Practical.h}.'' However, the actual \emph{implementation\/}
+of these functions is contained in the file \file{DieWithMessage.c},
+which should be compiled and linked with \emph{all} example
+applications in this text. 
+\end{quote}
+
+\jcode{DieWithMessage.c}{code/DieWithMessage.c}{1}{1}
+
+If we compile \file{TCPEchoClient4.c} and \file{DieWithMessage.c} to
+create program \exec{TCPEchoClient4}, we can communicate with
+an echo server with Internet address \serverIPiv\ as follows:
+
+\begin{shell}
+\prompt \typed{TCPEchoClient4 \serverIPiv\ "Echo this!"} \\
+\response{Received: Echo this!}
+\end{shell}
+
+For our client to work, we need a server.  Many
+systems include an echo server for debugging and testing purposes; however, for
+security reasons, such servers are often initially disabled.  If you don't have
+access to an echo server, that's okay because we're about to write one.
+
+\subsection{TCP Server}
+
+\noindent We now turn our focus to constructing a TCP server.  The
+server's job is to set up a communication endpoint and passively wait
+for a connection from the client.
+%As with clients, the setup for a
+%TCP and UDP server is similar.
+%For now we focus on a TCP server and
+%discuss the differences with a UDP server in
+%Chapter~\ref{chap:datagramsockets}.
+There are four general steps for basic TCP server communication:
+
+\begin{enumerate}
+
+\item Create a TCP socket using \fcnrefsys{socket()}.
+
+\item Assign a port number to the socket with \fcnrefsys{bind()}.
+
+\item Tell the system to allow connections to be made to that
+port, using \fcnrefsys{listen()}.
+
+\item Repeatedly do the following:
+
+\begin{itemize}
+
+\item Call \fcnrefsys{accept()} to get a new socket for each client
+connection.
+
+\item Communicate with the client via that new socket
+using \fcnrefsys{send()} and \fcnrefsys{recv()}.
+
+\item Close the client connection using \fcnrefsys{close()}.
+
+\end{itemize}
+
+\end{enumerate}
+Creating the socket, sending, receiving, and closing are the same as
+in the client.  The differences  in the server's use of sockets
+have to do with binding
+an address to the socket and then using the socket as a channel to
+obtain other sockets that are connected to clients.  (We'll elaborate
+on this in the comments following the code.)
+%
+The server's communication with each client is as simple as can be: it simply
+receives data on the client connection and sends the same data
+back over to the client; it repeats this until the client closes its
+end of the connection, at which point no more data will be forthcoming.
+
+%% Creating the socket, sending, receiving and closing 
+%% Our next example program, \file{TCPEchoServer4.c}, implements the
+%% IPv4 TCP echo 
+%% service used by our client program.  The server is simple.  Like most
+%% servers, it runs forever, doing the following: (1)~it sets up a
+%% listening socket and waits for an incoming connection from a client;
+%% (2)~when one arrives, it repeatedly receives bytes and sends them
+%% again until the client terminates the connection, and (3)~it closes
+%% the client connection.
+
+\jcode{TCPEchoServer4.c}{code/TCPEchoServer4.c}{1}{1}
+
+\begin{topcode}
+
+\tlcitems{Program setup and parameter parsing}{1--15}
+
+We convert the port number from string to numeric value using
+\fcn{atoi()}; if the first argument is not a number, \fcn{atoi()} will
+return 0, which will cause an error later when we call \fcnsys{bind()}.
+
+\tlcitems{Socket creation and setup}{17--35}
+
+\begin{bottomcode}
+
+\blcitems{Create a TCP socket}{17--20}
+
+We create a stream socket just like we did in the client.
+
+\blcitems{Fill in desired endpoint address}{22--27}
+
+On the server, we need to associate our server socket with an address
+and port number so client connections get to the right place.
+Since we are writing for IPv4, we use a \typesys{sockaddr\_in}
+structure for this.  Because we don't much care which address we are
+on (any one assigned to the machine the
+server is running on will be OK), we let the system pick it by
+specifying the wildcard address \constsys{inaddr\_any} as our desired
+Internet address.  (This is
+usually the right thing to do for servers, and it saves the server from having
+to find out any actual Internet address.)  Before setting both address
+and port number in the \typesys{sockaddr\_in}, we
+convert each to to network byte order using \fcnrefsys{htonl()} and
+\fcnrefsys{htons()}.  (See Section~\ref{sect:byteordering} for details).
+
+\blcitems{Bind socket to specified address and port}{29--31}
+
+As noted above, the server's socket needs to be associated with a
+local address and port; the function that accomplishes this
+is \fcnrefsys{bind()}.  Notice that \callout{while the client has to
+supply the server's address to \fcnrefsys{connect()}, the
+server has to specify its \emph{own\/} address to
+\fcnrefsys{bind()}}. It is this 
+piece of information (i.e., the server's address and port) that they
+have to agree on to communicate; neither one really needs to know the
+client's address.
+%
+Note that \fcnrefsys{bind()} may fail for
+various reasons; one of the most important is that some other socket
+is already bound to the specified port (see Section~\ref{sect:demux}).
+Also, on some systems special privileges are required to bind to certain
+ports (typically those with numbers less than 1024).
+
+\blcitems{Set the socket to listen}{33--35}
+
+The \fcnrefsys{listen()} call tells the TCP implementation to allow incoming
+connections from clients.  Before the call to \fcnrefsys{listen()},
+any incoming connection requests to the socket's address would be silently
+rejected---i.e., the \fcnrefsys{connect()} would fail at the client.
+
+\end{bottomcode}
+
+\tlcitems{Iteratively handle incoming connections}{37--56}
+
+\begin{bottomcode}
+
+\blcitems{Accept an incoming connection}{38--45}
+
+As discussed above, a TCP socket on which \fcnrefsys{listen()} has
+been called is used differently than the one we saw in the client
+application.  Instead of sending and receiving on the socket, the
+server application calls \fcnrefsys{accept()}, which blocks until an
+incoming connection is made to the listening socket's port number.
+At that point \fcnrefsys{accept()} returns a descriptor for a new
+socket, which is already connected to the initiating remote socket.  The second
+argument points to a \typesys{sockaddr\_in} structure, and the third
+argument is a pointer to the length of that structure.  Upon success,
+the \typesys{sockaddr\_in} contains the Internet address and port of
+the client to which the returned socket is connected; the address's
+length has been written into the integer pointed to by the third
+argument.  Note that the socket referenced by the returned descriptor
+is already \emph{connected}; among other things this means it is ready
+for sending and receiving.  (For details about what happens in the
+underlying implementation, see Section~\ref{sect:connecting} in
+Chapter~\ref{chap:under}.)
+
+\blcitems{Report connected client}{49--53}
+
+At this point
+\var{clntAddr} contains the address and port number
+of the connecting client; we
+provide a ``Caller ID'' function and print out the client's  information.
+As you might expect, \fcnrefsys{inet\_ntop()} is the inverse of
+\fcnrefsys{inet\_pton()}, which we
+used in the client.  It takes the binary representation of the
+client's address and converts it to a dotted-quad string.  Because the
+implementation deals with ports and addresses in so-called network
+byte order (Section~\ref{sect:byteordering}), we have to convert the
+port number before passing it to \fcnsys{printf()} (\fcn{inet\_pton()}
+takes care of this transparently for addresses).
+
+\blcitem{Handle echo client}{55}
+
+\fcnref{HandleTCPClient()} takes care of the ``application
+protocol''.  We discuss it below.
+
+ Thus, we have factored out the
+``echo''-specific part of the server.
+
+\end{bottomcode}
+
+\end{topcode}
+
+We have factored out the function that implements the ``echo'' part of
+our echo server.
+% 
+Although this \emph{application protocol\/}
+only takes a few lines to implement, it's good design
+practice to isolate its details from the rest of the server code.
+This promotes code re-use.
+
+\fcnref{HandleTCPClient()} receives data on the
+given socket and sends 
+it back on the same socket, iterating as long as \fcnrefsys{recv()}
+returns a positive value (indicating that something was received).
+\fcnrefsys{recv()} blocks until something is
+received or the client closes the connection.  When the client closes
+the connection normally, \fcnrefsys{recv()} returns~\returncode{0}.  You can
+find \fcnref{HandleTCPClient()} in the file \file{TCPServerUtility.c}.
+
+\jcode[100]{HandleTCPClient()}{code/TCPServerUtility.c}{1}{73}
+
+Suppose we compile \file{TCPEchoServer4.c}, \file{DieWithMessage.c}, and
+\file{TCPServerUtility.c} into the executable program 
+\exec{TCPEchoServer4}, and run that program on a host with Internet
+(IPv4) address \serverIPiv, port 5000.  Suppose also that we
+run our client on a host with Internet address \clientIPiv, and
+connect it to the server.  The server's output should look 
+like this:
+
+\begin{shell}
+\prompt \typed{TCPEchoServer4 5000} \\
+\response{Handling client \clientIPiv}
+\end{shell}
+
+While the client's output looks like this:
+
+\begin{shell}
+\prompt \typed{TCPEchoClient4 \serverIPiv\ "Echo this!" 5000} \\
+\response{Received: Echo this!}
+\end{shell}
+
+The server binds its socket to port 5000 and waits for a connection
+request from the client.  The client connects, sends the message
+``Echo this!'' to the server, and receives the echoed response.  In
+this command we have to supply
+\exec{TCPEchoClient} with the port number on the command line
+because it is talking to our echo server, which is on port
+5000 rather than the well-known port~7.
+
+We have mentioned that a key principle for coding network applications
+using sockets is \callout{Defensive Programming: your code must not make
+assumptions about anything received over the network}.
+%
+What if you want to ``play'' with your TCP server to see how it responds to
+various incorrect client behaviors?
+You could write a TCP client that sends bogus messages and
+prints results; this, however, can be tedious and time-consuming.  A quicker
+alternative is to use the \typed{telnet} program available on most systems. 
+This is a command-line tool that connects to a server, sends whatever text you
+type, and prints the response.  Telnet takes two parameters:  the server and
+port.  For example, to telnet to our example echo server from above, try
+
+\begin{shell}
+\prompt \typed{telnet \serverIPiv\ 5000}
+\end{shell}
+
+\noindent  Now type your string to echo and telnet will print the server
+response.  The behaviour of telnet differs between implementations so
+you may need to research the specifics of its use on your system.
+
+Now that we've seen a complete client and server, let's look at
+the individual functions that make up the Sockets API in a bit more detail.
+
+\section{Creating and Destroying Sockets}
+
+\noindent To communicate using TCP or UDP, a program begins by asking
+the operating system to create an instance of the socket abstraction.
+The function that accomplishes this is \fcnrefsys{socket()};
+its parameters specify the flavor of socket needed by the program.
+
+\begin{inlinefcn}
+\type{int} \fcnsys{socket}(\type{int} \param{domain}, 
+\type{int} \param{type}, \type{int} \param{protocol})
+\end{inlinefcn}
+
+\noindent The first parameter determines the communication \defn{domain} of
+the socket.  Recall that the sockets API provides a generic interface
+for a large number of communication domains; however, we are only interested
+in IPv4 (\constsys{af\_inet}) and IPv6 (\constsys{af\_inet6}).  Note that you
+may see some programs use \constsys{pf\_xxx} here instead of
+\constsys{af\_xxx}.  Typically, these values are equal, in which case they are
+interchangable, but this is (alas) not guaranteed.\footnote{Truth be
+told, this is an ugly part of the Sockets interface, and the man pages
+are simply not helpful.  It is possible that some 
+of the code we will present later would fail if \constsys{pf\_*} and
+\constsys{af\_*} were not the same.}
+% We use \constsys{AF\_XXX} because
+% 1) in our experience the AF variant is more common in code, 2) it is more
+% consistent with man page and RFC documentation, and 3) the \typesys{addrinfo}
+% structure contains a single family field, which according to RFC 3493 is
+% AF_XXXX.
+
+The second parameter specifies the \emph{type} of the socket.  The
+type determines the semantics of data transmission with the
+socket---for example, whether transmission is reliable, whether
+message boundaries are preserved, and so on.  The constant
+\constsys{sock\_stream} specifies a socket with reliable byte-stream
+semantics, whereas \constsys{sock\_dgram} specifies a best-effort
+datagram socket.
+
+The third parameter specifies the particular \emph{end-to-end
+protocol} to be used. For both IPv4 and IPv6, we
+want TCP (identified by the constant \constsys{ipproto\_tcp}) for a
+stream socket, or UDP (identified by \constsys{ipproto\_udp}) for a
+datagram socket.  Supplying the constant 0 as the third parameter
+causes the system to select the \emph{default} end-to-end protocol for
+the specified protocol family and type.
+Because there is currently only one choice
+for stream sockets in the TCP/IP protocol family, we
+could specify 0 instead of giving the protocol number explicitly.
+Someday, however, there might be other end-to-end protocols in the
+Internet protocol family that implement the same semantics.  In that
+case, specifying 0 might result in the use of a different protocol,
+which might or might not be desirable. The main thing is to ensure
+that the communicating programs are using the same end-to-end
+protocol.
+
+We said earlier that \fcnrefsys{socket} returns a \emph{handle\/} for
+the communication instance.  On Unix-derived systems, it is an integer:
+a nonnegative value for success and $-1$ for failure.  A nonfailure
+value should be treated as an opaque handle, like a file
+descriptor. (In reality, it \emph{is} a file descriptor, taken from
+the same space as the numbers returned by \fcnrefsys{open()}.)  This
+handle, which we call a \defn{socket descriptor}, is passed to other
+API functions to identify the socket abstraction on which the
+operation is to be carried out.
+
+When an application is finished with a socket, it calls
+\fcnrefsys{close()}, giving the descriptor for the socket that is no
+longer needed.
+
+\begin{inlinefcn}
+\type{int} \fcnsys{close}(\type{int} \param{socket})
+\end{inlinefcn}
+
+\noindent \fcnrefsys{close()} tells the underlying protocol stack to
+initiate any actions required to shut down communications and
+deallocate any resources associated with the socket.
+\fcnrefsys{close()} returns \returncode{0} on success or
+\returncode{-1} on failure.  Once \fcnrefsys{close()} has been called,
+it is not possible to invoke any other operations (e.g.,
+\fcnrefsys{send()} and \fcnrefsys{recv()} on the socket.
+
+\section{Specifying Addresses}
+\label{sect:specifyingAddresses}
+
+\noindent Applications using sockets need to be able to identify the
+remote endpoint(s) with which they will communicate.
+We've already seen that a client must
+specify the address and port number
+of the server application with which it needs to
+communicate.  In addition, the sockets layer sometimes needs to pass
+addresses to the application.  For example, a feature analogous to
+``Caller ID'' in the telephone network lets a server know the
+address and port number of each client that communicates with~it.
+
+In this section we describe the data structures used as containers for
+this information by the sockets API.
+
+\subsection{Generic Addresses}
+
+The sockets API defines a generic data type---the \typesys{sockaddr}
+structure---for specifying addresses associated with sockets:
+
+\begin{inlinecode}
+struct sockaddr {
+    sa_family_t sa_family;     // Address family (e.g., AF_INET)
+    char sa_data[14];          // Family-specific address information
+};
+\end{inlinecode}
+
+\noindent The first part of this address structure defines the address
+family---the space to which the address belongs.  For our purposes, we
+will always use the system-defined
+constants \constsys{af\_inet} and \constsys{af\_inet6},
+which specify the Internet address families for IPv4 and IPv6,
+respectively.
+%
+The second part is a blob of bits whose exact form
+depends on the address family.  (This is a typical way of
+dealing with heterogeneity in operating systems and networking.)  As we
+discussed in Section~\ref{sect:introaddr}, socket addresses for the
+Internet protocol family have two
+parts: a 32-bit (IPv4) or 128-bit (IPv6) Internet address and a 16-bit port
+number.\footnote{The astute reader may have noticed that the generic
+\type{sockaddr} structure is not big enough to hold both a 16-byte IPv6
+address and a 2-byte port number.  We'll deal with this 
+difficulty shortly.}
+
+\subsection{IPv4 Addresses}
+
+The particular form of the \typesys{sockaddr} structure that is used
+for TCP/IP socket addresses depends on the IP version.  For IPv4, use the
+\typesys{sockaddr\_in} structure.
+
+\begin{inlinecode}
+struct in_addr {
+    uint32_t s_addr;       // Internet address (32 bits)
+};
+
+struct sockaddr_in {
+    sa_family_t sin_family;    // Internet protocol (AF_INET)
+    in_port_t sin_port;        // Address port (16 bits)
+    struct in_addr sin_addr;   // IPv4 address (32 bits)
+    char sin_zero[8];          // Not used
+};
+\end{inlinecode}
+
+As you can see, the \typesys{sockaddr\_in} structure has fields for
+the port number and Internet address in addition to the address
+family.  It is important to understand that \typesys{sockaddr\_in} is
+just a more detailed view of the data in a \typesys{sockaddr} structure,
+tailored to sockets using IPv4.  Thus, we can fill in the
+fields of a \typesys{sockaddr\_in} and then cast (a pointer to) it to
+a (pointer to a) \typesys{sockaddr} and
+pass it to the socket functions, which look at the
+\structmem{sa\_family} field to learn the actual type, then cast back
+to the appropriate type.
+
+\subsection{IPv6 Addresses}
+
+For IPv6, use the \typesys{sockaddr\_in6} structure.
+
+\begin{inlinecode}
+struct in_addr {
+    uint32_t s_addr[16];       // Internet address (128 bits)
+};
+
+struct sockaddr_in6 {
+    sa_family_t sin6_family;   // Internet protocol (AF_INET6)
+    in_port_t sin6_port;       // Address port (16 bits)
+    uint32_t sin6_flowinfo;    // Flow information
+    struct in6_addr sin6_addr; // IPv6 address (128 bits)
+    uint32_t sin6_scope_id;    // Scope identifier
+};
+\end{inlinecode}
+
+The \typesys{sockaddr\_in6} structure has
+additional fields beyond those of a \typesys{sockaddr\_in}.
+These are intended for capabilities of the IPv6 protocol that are not
+commonly used.  They will be (mostly) ignored in this book.
+
+As with \typesys{sockaddr\_in},
+we must cast (a pointer to) the \typesys{sockaddr\_in6 *} to (a
+pointer to) a \typesys{sockaddr *} in
+order to pass it to the various socket functions;  again,
+the address family field is used by the implementation to
+determine the actual type of the argument.
+
+\subsection{Generic Address Storage}
+
+If you know anything about how data structures are allocated in C,
+you may have already noticed that a \typesys{sockaddr} is really not big enough
+to hold a \typesys{sockaddr\_in6}.  (If you don't know anything about
+it, don't fear: much of what you need to know will be covered in
+Chapter \ref{chap:encoding}.)  In particular,
+what if we want to allocate an address structure, but we don't know
+the actual address type (e.g., IPv4 or IPv6)?  The 
+generic \typesys{sockaddr} won't work because it's too small for some
+address structures.\footnote{You may wonder why this is so (we do).  The
+  reasons apparently have to do with backward-compatibility: the
+  sockets API was first specified a long time ago, before IPv6, when
+  resources were scarcer and
+  there was no reason to have a bigger structure.  Changing it now to
+  make it bigger   would apparently break binary-compatibility with
+  some applications.} 
+To solve this problem, the socket designers created the
+\typesys{sockaddr\_storage} structure, which is 
+guaranteed to be as large as any supported address type.
+
+\begin{inlinecode}
+struct sockaddr_storage {
+    sa_family_t ss_family;     // Address family (e.g., AF_INET)
+    ...
+    // Padding and fields to get correct length and alignment
+    ...
+};
+\end{inlinecode}
+
+\noindent As with \typesys{sockaddr}, we still have the leading family field to
+determine the actual type of the address; however, with
+\typesys{sockaddr\_storage} we have sufficient space for any address
+type.
+(For a hint about how this could be accomplished, refer to the
+discussion of how the C compiler lays out structures in memory, in
+\Sect{sect:overlay}.)
+
+One final note on addresses.  On some platforms, the address structures
+contain an additional field that stores the length of the address structure in
+bytes.  For \typesys{sockaddr}, \typesys{sockaddr\_in}, \typesys{sockaddr\_in6},
+and \typesys{sockaddr\_storage}, the extra fields are called
+\structmem{sa\_len}, \structmem{sin\_len}, \structmem{sin6\_len}, and
+\structmem{ss\_len}, respectively.  Since a length field is not available on all
+systems, avoid using it.  Typically, that use this form of structure
+define a value (e.g., \const{sin6\_len}) that can be tested
+for at compile time to see if the length field is present.
+
+%\begin{figure}[htb]
+%\begin{center}
+%\jfig{figures/sockaddr.eps}{,width=5.5in}
+%\caption{Address structures\label{fig:addrstructs}}
+%\end{center}
+%\end{figure}
+
+%\float{figure}
+%\art{figure}{do02f01,28.42pc,8pc,100}
+%\caption{Address structures.}
+%\tag{fig:addrstructs}
+%\endfloat
+
+\subsection{Binary/String Address Conversion}
+
+For socket functions to understand addresses, they must be in
+``numeric'' (i.e., binary) form; however, addresses for human use are generally
+``printable'' strings (e.g., 192.168.1.1 or 1::1).  We can convert addresses
+from printable string to numeric using the \fcnrefsys{inet\_pton()}
+function (\textbf{pton} = \textbf{p}rintable \textbf{to} \textbf{n}umeric):
+
+\begin{inlinefcn}
+\type{int} \fcnrefsys{inet\_pton}(\type{int} \param{addressFamily}, 
+\typesys{const char *}\param{src}, \type{void *}\param{dst})
+\end{inlinefcn}
+
+\noindent The first parameter, \defn{addressFamily}, specifies the
+address family of the address being converted.
+Recall that the sockets API provides a generic
+interface for a large number of communication domains; however,
+we are only interested here
+in IPv4 (\constsys{af\_inet}) and IPv6 (\constsys{af\_inet6}). 
+The \param{src} parameter references a null-terminated character string
+containing the address to convert.  The \param{dst} parameter points
+to a block of memory in the caller's space to hold the result; its
+length must be sufficient to hold the result (at least 4 bytes for IPv4 and 16
+bytes for IPv6).
+%
+\fcnrefsys{inet\_pton()} returns \returncode{1} if the conversion
+succeeds with the address referenced by \param{dst} in network byte
+order; \returncode{0} if the string pointed to by \param{src} is not
+formatted as a valid address;
+and \returncode{-1} if the specified address family is unknown.
+
+We can go the other way, converting addresses from numeric to
+printable form, using \fcnrefsys{inet\_ntop()}
+(\textbf{ntop} = \textbf{n}umeric \textbf{to} \textbf{p}rintable):
+
+\begin{inlinefcn}
+\type{const char *}\fcnrefsys{inet\_ntop}(\type{int} \param{addressFamily}, 
+\typesys{const void *}\param{src}, \type{char *}\param{dst}, \type{socklen\_t}
+\param{dstBytes})
+\end{inlinefcn}
+
+\noindent The first parameter, \defn{addressFamily}, specifies the
+type of the address being converted. The second parameter
+\param{src} points to the first byte  of a block of memory containing
+the numeric address to convert.  The size of the block
+is determined by the address family.  The \param{dst} parameter points
+to a buffer (block of memory) allocated in the caller's space, into which the
+resulting string will be copied; its size is given by
+\param{dstBytes}.
+How do we know what size to make the block of memory?
+The system-defined constants
+\constsys{inet\_addrstrlen} (for IPv4) and
+\constsys{inet6\_addrstrlen} (for IPv6) indicate the longest possible
+resulting string (in bytes).  \fcnrefsys{inet\_ntop()}
+returns a pointer to the string containing the printable address
+(i.e., the third argument) if the conversion succeeds and NULL otherwise.
+
+\subsection{Getting a Socket's Associated Addresses}
+\label{sect:getpeername}
+The system associates a local and foreign address with each
+connected socket (TCP or UDP).
+Later we'll discuss the details of how these values are assigned.
+We can find out these addresses using \fcnrefsys{getsockname()}
+for the local address and \fcnrefsys{getpeername()} for the foreign
+address.  Both
+methods return a \type{sockaddr} structure containing the Internet address
+and port information.
+
+\begin{inlinefcn}
+\type{int} \fcnrefsys{getpeername}(\type{int} \param{socket},
+\typesys{struct sockaddr *}\param{remoteAddress}, 
+\typesys{socklen\_t *}\param{addressLength})\\
+\type{int} \fcnrefsys{getsockname}(\type{int} \param{socket},
+\typesys{struct sockaddr *}\param{localAddress}, 
+\typesys{socklen\_t *}\param{addressLength})
+\end{inlinefcn}
+
+The \param{socket} parameter is the descriptor of the socket whose
+address information we want. The  \param{remoteAddress} and
+\param{localAddress} parameters point to address structures
+into which the address information will be placed by the
+implementation; they are always cast to
+\type{sockaddr *} by the caller.
+\callout{If we don't know the IP protocol version a priori, we
+should pass in a (pointer to a)
+\typesys{sockaddr\_storage} to receive the result.}  As
+with other socket calls using \type{sockaddr}, the \param{addressLength} is an
+in-out parameter specifying the length of the buffer (input) and
+returned address structure (output) in bytes.
+
+\section{Connecting a Socket}
+\label{sect:connectingASocket}
+
+A TCP socket must be connected to another socket before any data can
+be sent through it.  In this sense using TCP sockets is something like
+using the telephone network. Before you can talk, you have to specify
+the number you want, and a connection must be established; if the
+connection cannot be established, you have to try again later.  The
+connection establishment process is the biggest difference between
+clients and servers: The client initiates the connection while the
+server waits passively for clients to connect to it.  (For additional
+details about the connection process and how it relates to the API
+functions, see Section~\ref{sect:lifecycle}.)  To establish a
+connection with a server, we call \fcnrefsys{connect()} on the
+socket.
+
+\begin{inlinefcn}
+\type{int} \fcnrefsys{connect}(\type{int} \param{socket}, 
+\typesys{struct sockaddr *}\param{foreignAddress}, 
+\type{unsigned int} \param{addressLength})
+\end{inlinefcn}
+
+The first argument, \param{socket}, is the descriptor created by
+\fcnrefsys{socket()}.  \param{foreignAddress} is declared to
+be a pointer to a \typesys{sockaddr} because the sockets
+API is generic; for our purposes, it will always be a pointer to either a
+\typesys{sockaddr\_in} or \typesys{sockaddr\_in6} containing the Internet
+address and port of the server.  \param{addressLength} specifies the
+length of the address structure, typically given as
+\fcnrefsys{sizeof(struct sockaddr\_in)} or \fcnrefsys{sizeof(struct
+sockaddr\_in6)}. When \fcnrefsys{connect()} returns, the socket is connected and
+communication can proceed with calls to \fcnrefsys{send()} and
+\fcnrefsys{recv()}.
+
+\section{Binding to an Address}
+\label{sect:bindingToAnAddress}
+
+As we have noted already, client and server ``rendezvous'' at the
+server's address and port.  For that to work, the server must first be
+associated with that address and port.
+This is accomplished using \fcnrefsys{bind()}.
+Again, note that the client supplies
+the server's address to \fcnrefsys{connect()}, but the
+server has to specify its \emph{own\/} address
+to \fcnrefsys{bind()}.
+Neither client nor server application needs to know the 
+client's address in order for them to communicate.  (Of course, the
+server may wish to know the client's address for logging or other
+purposes.) 
+
+\begin{inlinefcn}
+\type{int} \fcnrefsys{bind}(\type{int} \param{socket}, 
+\typesys{struct sockaddr *}\param{localAddress}, 
+\type{unsigned int} \param{addressSize})
+\end{inlinefcn}
+
+The first parameter is the descriptor returned by an earlier call to
+\fcnrefsys{socket()}.  As with \fcnrefsys{connect()}, the address
+parameter is declared as a pointer to a \typesys{sockaddr}, but for
+TCP/IP applications, it will always point to a
+\typesys{sockaddr\_in} (for IPv4) or \typesys{sockaddr\_in6} (for IPv6),
+containing the Internet address of the local interface and the port to
+listen on.
+The \param{addressSize} parameter is the size
+of the address structure.  \fcnrefsys{bind()} returns
+\returncode{0} on success and \returncode{-1} on failure.
+
+It is important to realize that it is not possible for a program to
+bind a socket to an \emph{arbitrary\/} Internet address---if a
+specific Internet address is given (of either type),
+the call will only succeed if that
+address is assigned to the host on which the program is running.
+A server on a host with
+multiple Internet addresses might bind to a specific one because it
+\emph{only wants to accept connections that arrive to that address}.
+Typically, however, the server wants to accept connections sent to
+\emph{any\/} of the host's addresses, and so sets
+the address part of the \type{sockaddr} to
+the ``wildcard'' address \constsys{inaddr\_any} for IPv4 or 
+\constsys{in6addr\_any} for IPv6.  The semantics of the wildcard
+address are that it matches any specific address.  For a server, this
+means that it will receive connections addressed to any of the host's
+addresses (of the specified type).
+
+While
+\typesys{bind()} is mostly used by servers, a client can also use
+\typesys{bind()} to specify its local address/port.  For those
+TCP clients that don't pick their own local address/port with
+\typesys{bind()}, the local 
+Internet address and port are determined
+during the call to \typesys{connect()}.   Thus, a
+client must call \typesys{bind()} \emph{before\/} calling
+\typesys{connect()} if it is going to use it.
+
+You can initialize a \typesys{in6\_addr} structure to the
+wildcard address with \constsys{in6addr\_any\_init}; however, this
+special constant may only
+be used as an ``initializer'' in a declaration.
+\callout{Note well that while \constsys{inaddr\_any} is
+defined to be
+in host byte order and, consequently, must be converted to network byte
+order with \fcnrefsys{htonl()} before being used as an argument to
+\fcnsys{bind()}, \constsys{in6addr\_any}
+and \constsys{in6addr\_any\_init} are already in network byte order.}
+
+Finally, if you supply the port number 0 to \typesys{bind()}, the
+system will select an unused local port for you.
+
+%% For connected sockets where the system is allowed to select, the local
+%% Internet address and/or port are assigned on \typesys{connect()} or to
+%% new sockets returned by \typesys{accept()}.  For example, in
+%% \file{TCPEchoClient4.c} the system selects both the local Internet
+%% address and port on \typesys{connect()}.  In \file{TCPEchoServer4.c}
+%% the system selects only the local Internet address.
+
+\section{Handling Incoming Connections}
+\label{sect:handlingIncomingConnections}
+
+After binding, the server socket has an address (or at least a
+port).  Another step is required to
+instruct the underlying protocol implementation to listen for 
+connections from clients; this is done by calling \fcnrefsys{listen()}
+on the socket.
+
+\begin{inlinefcn}
+\type{int} \fcnrefsys{listen}(\type{int} \param{socket}, 
+\type{int} \param{queueLimit})
+\end{inlinefcn}
+
+The \fcnrefsys{listen()} function causes internal state changes to the
+given socket, so that incoming TCP connection requests will be processed
+and then queued for acceptance by the program
+(Section~\ref{sect:lifecycle} in Chapter~\ref{chap:under} has more
+details about the life cycle of a TCP connection).  The \param{queueLimit}
+parameter specifies an upper bound on the number of incoming
+connections that can be waiting at any time. The precise
+effect of \param{queueLimit} is very system dependent, so consult your
+local system's technical specifications.\footnote{See information in
+  the preface about using ``man'' pages.}  \fcnrefsys{listen()} returns
+\returncode{0} on success and \returncode{-1} on failure.
+
+Once a socket is configured to listen, the program can begin accepting client
+connections on it.  At first it might seem that a server should now wait for a
+connection on the socket that it has set up, send and receive through that
+socket, close it, and then repeat the process.  However, that is not
+the way it works.  The socket that has been bound to a port and marked
+``listening'' is never actually used for sending and receiving.
+Instead, it is used as a way of getting \emph{new} sockets, one for
+each client connection; the server then sends and receives on the
+\emph{new} sockets.  The server gets a socket for an incoming client
+connection by calling \fcnrefsys{accept()}.
+
+\begin{inlinefcn}
+\type{int} \fcnrefsys{accept}(\type{int} \param{socket}, 
+\typesys{struct sockaddr *}\param{clientAddress}, 
+\type{unsigned int *}\param{addressLength})
+\end{inlinefcn}
+
+This function dequeues the next connection on the queue for
+\param{socket}.  If the queue is empty, \fcnrefsys{accept()} blocks
+until a connection request arrives.  When successful,
+\fcnrefsys{accept()} fills in the \typesys{sockaddr} structure
+pointed to by \param{clientAddress} with the address and port
+of the client at the other end of the connection.
+Upon invocation, the \param{addressLength} parameter specifies the 
+size of the structure pointed to by \param{clientAddress} (i.e., the
+space available); upon return it
+contains the size of the actual address returned.
+\callout{A common beginner mistake (\#27) is to fail to initialize
+  the integer that \param{addressLength} points to so it contains
+ the length of the structure that \param{clientAddress} points to.}
+Like this:
+
+\begin{inlinecode}
+  struct sockaddr_storage address;
+  unsigned int addrLength = sizeof(address);
+  int newConnection = accept(sock, &address, &addrLength);
+\end{inlinecode}
+
+If successful, \fcnrefsys{accept()} returns a descriptor for a
+\emph{new} socket that is connected to the client.  The socket passed as
+the first parameter to \fcnrefsys{accept()} is unchanged (not
+connected to the client) and continues to listen for new connection
+requests.  On failure, \fcnrefsys{accept()} returns \returncode{-1}.
+On most systems, \fcnsys{accept()} only fails when passed a bad socket
+descriptior.  However, on some platforms it may return an
+error if the new socket has experienced a network-level error after
+being created and before being accepted.
+
+\section{Communication}
+
+Once a socket is ``connected,'' you can begin sending and receiving data. 
+As we've seen, a client creates a connected socket by calling
+\fcnrefsys{connect()}, and a connected socket is returned by
+\fcnrefsys{accept()} on a server.  After connection, the distinction
+between client and server effectively disappears, at least as far as
+the Sockets API is concerned.  Through a connected
+TCP socket, you can communicate using \fcnrefsys{send()} and
+\fcnrefsys{recv()}.
+
+\begin{inlinefcn}
+\type{int} \fcnrefsys{send}(\type{int} \param{socket}, 
+\type{const void *}\param{msg}, \type{unsigned int} \param{msgLength}, 
+\type{int} \param{flags})\\
+\noindent\type{int} \fcnrefsys{recv}(\type{int} \param{socket}, 
+\type{void *}\param{rcvBuffer}, \type{unsigned int} \param{bufferLength}, 
+\type{int} \param{flags})
+\end{inlinefcn}
+
+These functions have very similar arguments.  The first parameter
+\param{socket} is the descriptor for the connected socket through
+which data is to be sent or received.  For \fcnrefsys{send()},
+\param{msg} points to the sequence of bytes to be sent,
+and \param{msgLength} is the number of bytes to send. The default behavior for
+\fcnrefsys{send()} is to block until all of the data is sent. (We
+revisit this behavior in \Sect{sect:nbio} and
+Chapter~\ref{chap:under})
+%
+For \fcnrefsys{recv()}, \param{rcvBuffer} points to the buffer---that
+is, an area in memory such as a character array---where received data
+will be placed, and \param{bufferLength} gives the length of the
+buffer, which is the maximum number of bytes that can be received at
+once.  The default behavior for \fcnrefsys{recv()} is to block until
+at least some bytes can be transferred.  (On most systems the minimum
+amount of data that will cause the caller of \fcnsys{recv()} to
+unblock is 1 byte.)
+
+The \param{flags} parameter in both \fcnrefsys{send()} and
+\fcnrefsys{recv()} provides a way to change some aspects of
+the default behavior of
+the socket call.  Setting \param{flags} to 0 specifies the default
+behavior.  \fcnrefsys{send()} and \fcnrefsys{recv()} return the number
+of bytes sent or received or \returncode{-1} for failure.  (See also
+\Sect{sect:nbio}.)
+
+
+Remember: TCP is a byte-stream protocol so \fcnrefsys{send()}
+boundaries are not preserved.
+\callout{The number of bytes read in a single call to
+\fcnrefsys{recv} on the receiver is not necessarily determined by the number
+of bytes written by a single call to \fcnrefsys{send()}.}  If you call
+\fcnrefsys{send()} with 3000 bytes, it may take several calls to
+\fcnrefsys{recv()} to get all 3000 bytes, even if you pass a 5000-byte
+buffer to each \fcnsys{recv()} call. If you call \fcnrefsys{send()} with 100
+byte four times, you might receive all 400 bytes with a single call to
+\fcnrefsys{recv()}.  A common mistake when writing TCP socket applications
+involves assuming that if you write all of the data with one \fcnrefsys{send()}
+you can read it all with one \fcnrefsys{recv()}.  All these possibilities
+are illustrated in Chapter~\ref{chap:under}.
+
+\section{Using IPv6}
+
+So far, we've seen a client and server that work only with IPv4.
+What if you want to use IPv6? 
+The changes are relatively minor and basically involve using the IPv6
+equivalents for the address structure and constants.  Let's look at the IPv6
+version of our TCP echo server.
+
+\jcode{TCPEchoServer6.c}{code/TCPEchoServer6.c}{1}{1}
+
+\begin{topcode}
+
+\tlcitems{Socket creation}{17--20}
+
+We construct an IPv6 socket by specifying the communication domain as
+\constsys{af\_inet6}.
+
+\tlcitems{Fill in local address}{22--27}
+
+For the local address, we use the IPv6 (\typesys{struct
+sockaddr\_in6}) address structure and constants (\constsys{af\_inet6} and
+\constsys{in6addr\_any}).  One subtle difference is that we do
+not have to convert \constsys{in6addr\_any} to network byte order as we did
+with \constsys{inaddr\_any}.
+
+\tlcitems{Report connected client}{38, 49--53}
+
+\var{clntAddr}, which contains the address of the connecting client,
+is declared as an IPv6 socket address structure.
+When we convert the numeric address representation
+to a string, the maximum string length is now \constsys{inet6\_addrstrlen}.
+Finally, our call to \fcnrefsys{inet\_ntop()} uses an IPv6 address.
+
+\end{topcode}
+
+You've now seen both IPv4- and IPv6-specific clients and servers.
+In Chapter~\ref{chap:addrindep} we will see how they can be made to work with
+either type of address.
+
+\begin{exercises}
+
+\item Experiment with the book's TCP echo server using telnet.  What OS are you
+using?  Does the server appear to echo as you type (character-by-character) or
+only after you complete a line?
+
+\item Use telnet to connect to your favorite web server on port 80 and fetching
+the default page.  You can usually do this by sending the string ``GET /'' to
+the web server.  Report the server address/name and the text from the default
+page.
+
+\item For \file{TCPEchoServer.c} we explicitly provide an address to
+the socket using \fcnrefsys{bind()}.  We said that a socket
+must have an address for communication, yet we do not perform a
+\fcnrefsys{bind()} in \file{TCPEchoClient.c}.  How is the echo
+client's socket given a local address?
+
+\item Modify the client and server so that the server ``talks'' first,
+  sending a greeting message,
+  and the client waits until it has received the greeting before
+  sending anything.  What needs to be agreed upon between client and
+  server?
+
+\item Servers are supposed to run for a long time without stopping.
+Therefore, they have to be designed to provide good service no matter
+what their clients do.  Examine the example \file{TCPEchoServer.c} and
+list anything you can think of that a client might do to cause the
+server to give poor service to other clients.  Suggest improvements to
+fix the problems you find.
+
+\item Using \fcnrefsys{getsockname()} and \fcnrefsys{getpeername()}, modify
+\file{TCPEchoClient4.c} to print the local and foreign address immediately
+after \fcnrefsys{connect()}.
+\item What happens when you call \fcnrefsys{getpeername()} on an unconnected
+TCP socket?
+
+\item Using \fcnrefsys{getsockname()} and \fcnrefsys{getpeername()}, modify
+\file{TCPEchoServer4.c} to print the local and foreign address for
+the server socket immediately before and after \fcnrefsys{bind()} and for the
+client socket immediately after it's returned by \fcnrefsys{accept()}.
+
+\item Modify \file{TCPEchoClient4.c} to use \typesys{bind()} so that the system
+selects both the address and port.
+
+\item Modify \file{TCPEchoClient4.c} so that the new version binds to a
+local Internet address with system-selected port.  What system changes would
+break this code? Could you use this client on a different system?
+
+\item What happens when you attempt to bind after calling \typesys{connect()}?
+
+\item
+Why does the socket interface use a special socket to accept
+connections?  In other words, what would be wrong with having a server
+create a socket, set it up using \fcn{bind()} and
+\fcn{listen()}, wait for a connection, send and receive through
+\emph{that\/} socket, and then when it is finished, close it and
+repeat the process?  (Hint: think about what happens to connection
+requests that arrive right after the server closes the previous connection.)
+\end{exercises}
+

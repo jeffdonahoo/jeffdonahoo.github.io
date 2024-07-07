@@ -1,0 +1,25 @@
+public class ExceptionEx1 {
+
+  public static int string2Integer(String s) throws Exception {
+    int value = 0;  // Integer value of string
+  
+    for (int i = 0; i < s.length(); i++)
+      if (Character.isDigit(s.charAt(i)))  // Is the character a digit?
+        value = (value * 10) + Character.digit(s.charAt(i), 10);
+      else
+        throw new Exception("Bad Number");
+  
+    return value;
+  }
+
+  public static void main(String[] args) {
+    try {
+      System.out.println("Number 1: " + string2Integer("123"));
+      System.out.println("Number 2: " + string2Integer("abc"));
+      System.out.println("Number 3: " + string2Integer("345"));
+    } catch (Exception e) {
+      System.out.println("Error: " + e.getMessage() + " occurred at ");
+      e.printStackTrace();
+    }
+  }
+}

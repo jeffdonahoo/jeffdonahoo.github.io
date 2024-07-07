@@ -1,0 +1,45 @@
+<html>
+<head>
+   <title>Baylor Thesis LaTeX Example</title>
+</head>
+<body>
+
+<center><b><font size=+3>Baylor Thesis LaTeX Example</font></b></center>
+
+Here's the example set of LaTeX files for a Baylor Thesis:
+
+<UL>
+<LI> <A HREF="thesis.tex"> thesis.tex </A> - Main file
+<LI> <A HREF="ch1.tex"> ch1.tex</A> - Chapters
+<LI> <A HREF="ch2.tex"> ch2.tex</A> 
+<LI> <A HREF="ch3.tex"> ch3.tex</A> 
+<LI> <A HREF="ch4.tex"> ch4.tex</A> 
+<LI> <A HREF="ch5.tex"> ch5.tex</A> 
+<LI> <A HREF="graduation.eps">graduation.eps</A>
+<LI> <A HREF="references.bib">references.bib</A>
+<LI> <A HREF="chicago.bst">chicago.bst</A>
+<LI> <A HREF="chicago.sty">chicago.sty</A>
+<LI> <A HREF="thesis.cls">thesis.cls</A> - Thesis style file
+</UL>
+
+<BR>
+To use this, do the following:
+
+<OL>
+<LI> Download the example files into a single directory
+<LI> latex thesis (ignore warnings since LaTeX is a one-pass compiler)
+<LI> bibtex thesis (this integrates bibliographic DB entries)
+<LI> latex thesis
+<LI> latex thesis (this run should get rid of warnings)
+<LI> dvips -f thesis.dvi > thesis.ps (generates postscript copy of paper)
+</body>
+
+You can view the dvi version of the thesis with "xdvi thesis.dvi" or the
+postscript version with "ghostview thesis.ps". <P>
+
+If you makes changes to any of the files, you only need to run LaTeX
+and dvips once to regenerate the postscript.
+
+The best book I have found so far on LaTeX is <U>A Guide to LaTeX</U> by
+Helmut Lopka and Patrick W. Daly
+</html>

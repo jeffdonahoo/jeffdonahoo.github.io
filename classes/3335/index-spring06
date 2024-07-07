@@ -1,0 +1,226 @@
+<HTML>
+<HEAD>
+<TITLE>3335 - Introduction to Database</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<CENTER>
+<B><FONT SIZE=4>Introduction to Database</FONT><BR></B>
+CS3335<BR>
+</CENTER>
+
+If you have any trouble viewing the PDF files in your web browser
+(using the PDF browser plug-in), download the PDF and view it with the
+stand-alone Acrobat Reader.
+
+<UL>
+<li> <a href="../success.html">Success Guide</a>
+
+<LI> Java </LI>
+<UL>
+<LI> <A HREF="../JavaCodePreparation.pdf">Java Code Preparation</A></LI>
+<LI> <A HREF="../JavaCodingConvention.pdf">Java Coding Convention</A>
+<LI> <A HREF="JBuilderXTutorial">JBuilder X<sup>TM</sup> Tutorial</A>
+<LI> <A HREF="JBuilderAndAlternateJDKs.htm">Using Alternate JDKs in JBuilder</A>
+<LI> <A HREF="JBuilderJARFiles.htm">Using JAR File in JBuilder</A>
+</UL>
+
+<LI> JUnit </LI>
+<UL>
+<LI> <A HREF="http://junit.org">JUnit.org</A>
+<LI> <A HREF="http://www.clarkware.com/articles/JUnitPrimer.html">JUnit Primer</A>
+<LI> <A HREF="JBuilderAndJUnit.htm">Using JUnit in JBuilder</A>
+</UL>
+
+
+<LI> Database </LI>
+<UL>
+<LI> <A HREF="3335System.exe">Database System</A> </LI>
+<!--
+<LI> <A HREF="PERSONNEL-Script.pdf">PERSONNEL DB SQL Script</A> </LI>
+<LI> Play DB <A HREF="play-database.pdf">(SQL creation script)</A></LI>
+<LI> <A HREF="ODBCSetup.pdf">ODBC Data Source Setup</A> </LI>
+<LI> PERSONNEL DB <A HREF="personnel.mdb">(Access)</A> </LI>
+<LI> Free SQL Query Processors:
+<UL>
+<LI> <A HREF="Query.jar">Homegrown:</A>  To run on personnel
+ODBC source, copy JAR file and try <PRE>java -cp Query.jar FSQL personnel</PRE> 
+for the graphical query processor and  
+<PRE>java -cp Query.jar CSQL personnel</PRE> for the command-line
+query processor.
+<LI> <A HREF="http://gpoulose.home.att.net/">Query Tool (using
+ODBC)</A> - Make sure you download the ODBC version.
+<LI> <A HREF="http://www.indus-soft.com/winsql/">WinSQL Lite</A> - Free, but requires registration.
+<LI> <A HREF="PERSONNEL-Script.pdf">PERSONNEL DB SQL Script</A> </LI>
+<LI> Play DB <A HREF="play-database.pdf">(SQL creation script)</A> <A HREF="play.mdb">(Access)</A></LI>
+<LI> <A HREF="http://cs.ecs.baylor.edu/~donahoo/tools/access/">Microsoft Access Tutorial </A></LI>
+</UL>
+-->
+</UL>
+<LI> Mass Storage</LI>
+<UL>
+<LI> <A HREF="CD-ROM.pdf">CD-ROM</A></LI>
+<LI> <A HREF="DVD.pdf">DVD</A></LI>
+<LI> <A HREF="MemoryHierarchy.pdf"> Storage Hierarchy</A></LI>
+</UL> 
+
+<LI><A HREF="codeexamples.html">Code Examples</A>
+
+<LI> Homework </LI>
+
+<LI> Programming Assignments </LI>
+
+<ul>
+<li>Program 1
+<ul>
+<li><a href="prog1/doc">API Specification</a>
+<li><a href="prog1/Program1-Test.pdf">Program 1 Test</a>
+<li><a href="prog1/TestStringListLinked.java">TestStringListLinked.java</a>
+<li><a href="prog1/TestStringQueue.java">TestQueue.java</a>
+<li><a href="prog1/TestStringPriorityQueue.java">TestStringPriorityQueue.java</a>
+<li><a href="prog1/TestSuiteString.java">TestSuiteString.java</a>
+</ul>
+
+<li>Program 2
+<ul>
+<li><a href="prog2/Program2.pdf">Program 2 Specification</a>
+<li><a href="prog2/doc">ItemListLinked, AlreadyExistsException, and NotFoundException API</a>
+<li><a href="prog2/InventoryTracker.jar">Reference Application</a><br>
+To execute:  java -jar InventoryTracker.jar
+<li><a href="prog2/InventoryDB.java">InventoryDB.java</a>
+<li><a href="prog2/InventoryTracker.java">InventoryTracker.java</a>
+<li><a href="prog2/Program2-Test.pdf">Program 2 Test</a>
+<li><a href="prog2/TestItemListLinked.java">TestItemListLinked.java</a>
+<li><a href="prog2/TestInventoryDB.java">TestInventoryDB.java</a>
+</ul>
+
+<li>Program 3
+<ul>
+<li><a href="prog3/List.java">List.java</a>
+<li><a href="prog3/ListIterator.java">ListIterator.java</a>
+<li><a href="prog3/doc">Program 3 API</a>
+</ul>
+
+<li>Program 4
+<ul>
+<li><a href="prog4/Program4.pdf">Program 4 Specification</a>
+<li><a href="prog4/InventoryDB.java">InventoryDB.java</a>
+<li><a href="prog4/script.txt">Sample Script</a>
+<li>Sample Data Files (created by script)</a>
+<ul>
+<li><a href="prog4/employees">Employee Data File</a>
+<li><a href="prog4/items">Item Data File</a>
+</ul>
+</ul>
+
+<li>Program 5
+<ul>
+<li><a href="prog5/Program5.pdf">Program 5 Specification</a>
+<li><a href="LotteryWebFlow.pdf">Example Web Flow</a>
+<li><a href="TomcatSecurity.pdf">Tomcat Security</a>
+</ul>
+
+<li>Program 6
+<ul>
+<li><a href="prog6/Zip4Zip.jar">Reference Application</a><br>
+To execute:  java -jar Zip4Zip.jar
+<li><a href="prog6/Archive.java">Archive.java</a>
+</ul>
+
+</ul>
+
+<li> Class Materials </li>
+<ul>
+<li> <A HREF="ascii.html">ASCII Chart</a>
+<li> <A HREF="java/od.exe">Windows Octal Dump</a>
+<li> Java&#8482;</li>
+<UL>
+<li> <A HREF="java/doc/J2SE/api">Standard Edition Class Documentation
+(J2SE 1.5)</A>
+<LI> <A HREF="java/doc/J2SE">Complete Documentation (JDK 1.5)</A>
+<LI> <A HREF="java/doc/J2EE">Enterprise Edition Class Documentation
+(J2EE 1.4)</A>
+<LI> <A HREF="http://java.sun.com">Official Sun Java Site</A>
+<LI> Java Development Environments </LI>
+<UL>
+<LI> <A HREF="http://java.sun.com/j2se">Java Standard Edition JDK</A>
+<LI> <A HREF="http://borland.com/jbuilder">JBuilder</A>
+</UL>
+<LI> JDBC
+<UL>
+<LI><A
+HREF="http://ils.unc.edu/~lindgren/190/mysql-jdbc">MySQL and JDBC Tutorial</A>
+<LI><A
+HREF="http://java.sun.com/docs/books/tutorial/jdbc/basics/index.html">Sun's
+JDBC Tutorial</A>
+</UL>
+<LI> JSP
+<UL>
+<LI><A HREF="http://jsptut.com">JSP Tutorial</A> - Read Sections 1-9
+<li><a
+href="http://www.apl.jhu.edu/~hall/java/Servlet-Tutorial/Servlet-Tutorial-JSP.html">Another
+JSP Tutorial</a> - Read Sections 1-7
+<li><A
+href="http://developer.java.sun.com/developer/onlineTraining/JSPIntro/contents.html">jGuru
+JSP Tutorial</A><br>Read the sections entitled:
+<UL>
+<li>JSP Syntax Basics
+<li>Object Scopes
+<li>JSP Implicit Objects
+<li>Exception Handling
+<li>Session Management
+</UL>
+</UL>
+<li> CSS
+<ul>
+<li><a href="http://www.w3schools.com/css/default.asp">CSS Tutorial</a>
+<li><a href="http://www.w3.org/Style/Examples/011/firstcss">WC3 CSS Tutorial</a>
+<li><a href="http://en.wikipedia.org/wiki/Cascading_Style_Sheets">Wikipedia CSS</a> (See resources)
+</ul>
+<LI> Online publications </LI>
+<UL>
+<LI> <A HREF="http://www.javadevelopersjournal.com/java/">Java Developer's Journal</A>
+<LI> <A HREF="http://www.javareport.com/">Java Report</A>
+<LI> <A HREF="http://www.javaworld.com/">JavaWorld</A>
+</UL>
+</UL>
+<LI> HTML/HTTP
+<UL>
+<LI> HTML Tutorials
+<UL>
+<LI> <A HREF="http://www.w3schools.com/html">HTML Tutorial</A>
+<LI> <A
+HREF="http://vzone.virgin.net/sizzling.jalfrezi/iniframe.htm">Another HTML
+Tutorial </A>
+<LI> <A HREF="http://www.bensplanet.com/HowTo/forms.asp">HTML Forms
+Tutorial</A>
+<LI> <A HREF="http://www.w3schools.com/html/html_forms.asp">Another HTML Forms
+Tutorial</A>
+</UL>
+<LI> <A HREF="HTML2.0RFC.txt">HTML 2.0 Specifications</A>
+<LI> <A HREF="HTTP1.1RFC.txt">HTTP 1.1 Specifications</A>
+</UL>
+<LI> SQL </LI>
+<UL>
+<!--
+<LI> <A HREF="3335Systems.exe">Database Systems Archive</A>
+<UL>
+<LI>The archive contains a DBMS, JDBC example, and JSP server.
+<LI>Download and execute the archive, specifying where you want the
+files placed.  You can put it on a Zip disk or USB drive for
+portability if you wish.
+<LI>The README.txt file provides instructions on using the DBMS.
+Notepad should start after the unarchive process completes.
+<LI>The book database is named garden (HINT:  "use garden" in mySQL)
+</UL>
+-->
+<LI> <A HREF="http://w3.one.net/~jhoffman/sqltut.htm">SQL Tutorial</A>
+<LI> <A HREF="http://www.sqlcourse.com/">SQL Tutorial-Part I </A> and
+<A HREF="http://www.sqlcourse2.com/">SQL Tutorial-Part II </A>
+
+</UL>
+</UL>
+</UL>
+
+</BODY>
+</HTML>

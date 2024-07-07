@@ -1,0 +1,168 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.6 [en] (Win95; I) [Netscape]">
+   <title> INTRODUCTION  </title>
+</head>
+<body background="blue_lines.jpg">
+
+<center>
+<h1>
+INTRODUCTION</h1></center>
+
+<center>
+<hr WIDTH="100%"></center>
+
+<h2>
+The DARPA Internet Architecture.</h2>
+<img SRC="greenbal.gif" height=14 width=14> Internet Protocols
+<p>The Internet system consists of a number of interconnected <a href="diction.htm#packet">packet</a>
+networks supporting communication among <a href="diction.htm#host">host</a>
+computers using the Internet protocols. These protocols include the Internet
+Protocol (IP), the Internet Control Message Protocol (<a href="diction.htm#ICMp">ICMP</a>),
+the Transmission Control Protocol (TCP), and application protocols depending
+upon them .
+<p>All Internet protocols use IP as the basic data transport mechanism.
+IP is a <a href="diction.htm#datagram">datagram</a>, or connectionless,
+internetwork service and includes provision for addressing, type-of-service
+specification, fragmentation and reassembly, and security information.
+<a href="diction.htm#ICMp">ICMP</a>
+is considered an integral part of IP, although it is architecturally layered
+upon IP. <a href="diction.htm#ICMp">ICMP</a> provides error reporting,
+flow control and first-hop <a href="diction.htm#gate">gateway</a> redirection.
+<p>Reliable data delivery is provided in the Internet protocol suite by
+transport-level protocols such as the Transmission Control Protocol (TCP),
+which provides end-end retransmission, resequencing and connection control.
+Transport-level connectionless service is provided by the User <a href="diction.htm#datagram">datagram</a>
+Protocol (<a href="diction.htm#udp">UDP</a>).
+<p><img SRC="greenbal.gif" height=14 width=14> Networks and <a href="diction.htm#gate">gateway</a>s
+<p>Constituent networks may generally be divided into two classes.
+<ol>
+<li>
+Local-Area Networks (<a href="diction.htm#lan">LAN</a>s)</li>
+
+<li>
+Wide-Area Networks (<a href="diction.htm#wan">WAN</a>s)</li>
+</ol>
+In the Internet model, constituent networks are connected together by IP
+<a href="diction.htm#datagram">datagram</a>
+forwarders which are called "<a href="diction.htm#gate">gateway</a>s" or
+"IP <a href="diction.htm#router">router</a>s".
+<p>A <a href="diction.htm#gate">gateway</a> is connected to two or more
+networks, appearing to each of these networks as a connected <a href="diction.htm#host">host</a>.
+Thus, it has a physical interface and an IP address on each of the connected
+networks. Forwarding an IP <a href="diction.htm#datagram">datagram</a>
+generally requires the <a href="diction.htm#gate">gateway</a> to choose
+the address of the next-hop <a href="diction.htm#gate">gateway</a> or (for
+the final hop) the destination <a href="diction.htm#host">host</a>. This
+choice, called "routing", depends upon a routing data-base within the <a href="diction.htm#gate">gateway</a>.
+This routing data-base should be maintained dynamically to reflect the
+current topology of the Internet system; a <a href="diction.htm#gate">gateway</a>
+normally accomplishes this by participating in distributed routing and
+reachability algorithms with other <a href="diction.htm#gate">gateway</a>s.
+<a href="diction.htm#gate">gateway</a>s
+provide <a href="diction.htm#datagram">datagram</a> transport only, and
+they seek to minimize the state information necessary to sustain this service
+in the interest of routing flexibility and robustness.
+<p><a NAME="as"></a><img SRC="greenbal.gif" height=14 width=14> Autonomous
+Systems
+<p>For technical, managerial, and sometimes political reasons, the <a href="diction.htm#gate">gateway</a>s
+of the Internet system are grouped into collections called "autonomous
+systems" . The <a href="diction.htm#gate">gateway</a>s included in a single
+autonomous system (AS) are expected to
+<ul>
+<li>
+Be under the control of a single operations and maintenance (O&amp;M) organization;</li>
+
+<li>
+Employ common routing protocols among themselves, to maintain their routing
+data-bases dynamically.</li>
+</ul>
+A number of different dynamic routing protocols have been developed; the
+particular choice of routing protocol within a single autonomous system
+is generically called an interior <a href="diction.htm#gate">gateway</a>
+protocol or <a href="diction.htm#igp">IGP</a>.
+<p>An IP <a href="diction.htm#datagram">datagram</a> may have to traverse
+the <a href="diction.htm#gate">gateway</a>s of two or more autonomous systems
+to reach its destination, and the autonomous systems must provide each
+other with topology information to allow such forwarding. The Border Gateway
+Protocol (<a href="diction.htm#bgp">BGP</a>) is used for this purpose,
+between <a href="diction.htm#gate">gateway</a>s of different autonomous
+systems.
+<p><img SRC="greenbal.gif" height=14 width=14> Routing Information Protocol
+(RIP)
+<p>RIP is one protocol in a series of routing protocols based on the Bellman-Ford
+(or distance vector) algorithm. This algorithm has been used for routing
+computations in computer networks since the early days of the ARPANET.
+The particular <a href="diction.htm#packet">packet</a> formats and protocol
+described here are based on the program "routed", which is included with
+the Berkeley distribution of Unix. It has become a de facto standard for
+exchange of routing information among <a href="diction.htm#gate">gateway</a>s
+and <a href="diction.htm#host">host</a>s. It is implemented for this purpose
+by most commercial vendors of IP <a href="diction.htm#gate">gateway</a>s.
+Note, however, that many of these vendors have their own protocols which
+are used among their own <a href="diction.htm#gate">gateway</a>s.
+<p>This protocol is most useful as an "interior <a href="diction.htm#gate">gateway</a>
+protocol". In a nationwide network such as the current Internet, it is
+very unlikely that a single routing protocol will used for the whole network.
+Rather, the network will be organized as a collection of "autonomous systems".
+An autonomous system will in general be administered by a single entity,
+or at least will have some reasonable degree of technical and administrative
+control. Each autonomous system will have its own routing technology. This
+may well be different for different autonomous systems. The routing protocol
+used within an autonomous system is referred to as an interior <a href="diction.htm#gate">gateway</a>
+protocol, or "<a href="diction.htm#igp">IGP</a>". A separate protocol is
+used to interface among the autonomous systems. The earliest such protocol,
+still used in the Internet, is "<a href="diction.htm#egp">EGP</a>" (exterior
+<a href="diction.htm#gate">gateway</a>
+protocol). Such protocols are now usually referred to as inter-AS routing
+protocols. RIP was designed to work with moderate-size networks using reasonably
+homogeneous technology. Thus it is suitable as an <a href="diction.htm#igp">IGP</a>
+for many campuses and for regional networks using serial lines whose speeds
+do not vary widely.
+<p>RIP is intended for use within the IP-based Internet. The Internet is
+organized into a number of networks connected by <a href="diction.htm#gate">gateway</a>s.
+The networks may be either point-to-point links or more complex networks
+such as Ethernet or the ARPANET. <a href="diction.htm#host">host</a>s and
+<a href="diction.htm#gate">gateway</a>s
+are presented with IP <a href="diction.htm#datagram">datagram</a>s addressed
+to some <a href="diction.htm#host">host</a>. Routing is the method by which
+the <a href="diction.htm#host">host</a> or <a href="diction.htm#gate">gateway</a>
+decides where to send the <a href="diction.htm#datagram">datagram</a>.
+It may be able to send the <a href="diction.htm#datagram">datagram</a>
+directly to the destination, if that destination is on one of the networks
+that are directly connected to the <a href="diction.htm#host">host</a>
+or <a href="diction.htm#gate">gateway</a>. However, the interesting case
+is when the destination is not directly reachable. In this case, the <a href="diction.htm#host">host</a>
+or <a href="diction.htm#gate">gateway </a>attempts to send the <a href="diction.htm#datagram">datagram</a>
+to a <a href="diction.htm#gate">gateway</a> that is nearer the destination.
+The goal of a routing protocol is very simple. It is to supply the information
+that is needed to do routing.
+<p>This protocol does not solve every possible routing problem. As mentioned
+above, it is primary intended for use as an <a href="diction.htm#igp">IGP</a>,
+in reasonably homogeneous networks of moderate size. In addition, the following
+specific limitations should be mentioned
+<ul>
+<li>
+The protocol is limited to networks whose longest path involves 15 hops.
+Note that this statement of the limit assumes that a cost of 1 is used
+for each network.</li>
+
+<li>
+The protocol depends upon "counting to infinity" to resolve certain unusual
+situations.</li>
+
+<li>
+This protocol uses fixed "metrics" to compare alternative routes.</li>
+</ul>
+
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+</body>
+</html>

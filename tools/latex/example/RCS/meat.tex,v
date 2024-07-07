@@ -1,0 +1,45 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@% @;
+
+
+1.1
+date	2001.12.10.22.27.51;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@\section{Meat of the paper}
+
+Here's the meat of the paper.
+
+Figure~\ref{fig:picture} has a picture.
+
+\begin{figure}[htbp]
+\centerline{\resizebox{5in}{!}{\includegraphics{maxround.ps}}}
+\caption{\label{fig:picture} Picture of something that relates to Table~\ref{tab:mytable}}
+\end{figure}
+
+\noindent Here's the same picture but in another spot.
+\begin{figure}[htbp]
+\centerline{\resizebox{5in}{!}{\includegraphics{maxround.ps}}}
+\caption{\label{fig:repeatpicture} Repeat of Figure~\ref{fig:picture}}
+\end{figure}
+
+Here we use the macros
+
+\[\summation{i=0}{N}{X^i}\]
+
+\[\cond{X}{5}{if sky is blue}{6}{otherwise}\]
+@

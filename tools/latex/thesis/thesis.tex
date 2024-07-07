@@ -1,0 +1,74 @@
+\documentclass{thesis}
+
+%%
+%% This part of your thesis is called the preamble.  It's a good idea
+%% to put global definitions here.
+%%
+
+%% Permit the use of postscript figures within the document.
+\usepackage{epsfig}
+
+%% Use chicago style bibliography
+\usepackage{chicago}
+
+% Define your own fancy macro's for notation here.
+\newcommand{\npclass}{$\cal{NP}$}
+
+%%
+%% One of the most important things you have to do in the preamble is
+%% to tell who you are and what your thesis is about.
+%%
+\title{Working really hard for a few years and getting a master's degree}
+
+\author{Your Name Here}
+\mentor{Your Advisor's Name, Ph.D.}
+\reader{One Committee Member, Ph.D.}
+\readerThree{Another Committee Member, Ph.D.}
+\readerFour{Still Another Member, Ph.D.}
+\readerFive{Last Committee Member, Ph.D.}
+\confDate{December 1999}
+\makeCopyrightPage
+
+%% You may have to change these but probably not.
+\graduateDean{J. Larry Lyon, Ph.D.}
+\schoolChair{Donald L. Gaitros, Ph.D.}
+
+% Tell latex that there is no list of tables
+\emptyLoT
+
+\abstract{
+This thesis is really cool and I should get a good job some day.  By the way,
+the graduate school requires that this be no more than 150 words.
+}
+
+\begin{document}
+
+%
+% Now for the body of the thesis.  Here, we've split the thesis up into
+% separate files for each individual chapter.
+%
+
+\pagenumbering{arabic}
+	
+% Introduction (What I'm trying to do)
+\include{ch1}
+
+% Related work (Stuff other people did)
+\include{ch2}
+	
+% Prototype Implementation (Stuff I did)
+\include{ch3}
+
+% Experimental results (How it did)
+\include{ch4}
+
+% Conclusion 
+\include{ch5}
+
+% This line says how to format the bibliography
+\bibliographystyle{chicago}
+
+% This line says where to get the bibliography entries.
+\bibliography{references}
+	
+\end{document}

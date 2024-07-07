@@ -1,0 +1,112 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="./tcpnfs1_files/filelist.xml">
+<link rel=Edit-Time-Data href="./tcpnfs1_files/editdata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>tcpnfs1</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Brooks Van Horn</o:Author>
+  <o:LastAuthor>Brooks Van Horn</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>1</o:TotalTime>
+  <o:Created>1999-12-08T20:10:00Z</o:Created>
+  <o:LastSaved>1999-12-08T20:11:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>232</o:Words>
+  <o:Characters>1325</o:Characters>
+  <o:Company>Baylor University</o:Company>
+  <o:Lines>11</o:Lines>
+  <o:Paragraphs>2</o:Paragraphs>
+  <o:CharactersWithSpaces>1627</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p
+	{font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US link=blue vlink=blue style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal>We performed the experiment in following steps: </p>
+
+<p>1. We installed NFS both on <i>larry </i>and <i>moe, </i>and mounted /tmp
+directory on <i>larry&nbsp;</i> to /home/lakov directory on <i>moe</i> as
+described before. </p>
+
+<p>2. We then created a text file called &quot;secret&quot; in /tmp directory
+on <i>larry </i>with contents: 012345 This is a secret message. 543210, which
+is accessable transparently on <i>moe</i> </p>
+
+<p>3. We run the command <b>tcpdump -x -s 192 -v | tee captured.nfs</b> on <i>Larry</i>.&nbsp;
+This command captures in hexadecimal mode the first 192 bytes of an IP packet,
+or the whole IP packet it if is smaller than 192 bytes, and prints the captured
+information both on the screen and into the file captured.nfs (the effect of
+the tee command.) <br>
+-x option prints each packet (minus its link level header) in hex. -v option
+prints verbose output. For example, the time to live and type of service
+information in an IP packet is printed. </p>
+
+<p>4. We run the command <b>cat secret</b> in /home/lakov directory on <i>moe</i>.
+</p>
+
+<p>What's going on then was that the client application ( cat ) issued the read
+command. Since the remote directory was mounted, the local operating system
+just had to &quot;re-route&quot; the file I/O primitives to the remote host.
+This makes all file I/Os look alike, regardless of whether the file is located
+locally or remotely. The user can operate his normal commands and programs on
+both kind of files; in other words, this NFS protocol is completely transparent
+to the user. See below figure. <br>
+Here is that specific part of <a href="nfs_annot.html">captured.nfs</a>. <br>
+&nbsp; <br>
+&nbsp; </p>
+
+<p align=center style='text-align:center'><img border=0 width=416 height=273
+id="_x0000_i1025" src="nfs_pic1.gif"></p>
+
+</div>
+
+</body>
+
+</html>

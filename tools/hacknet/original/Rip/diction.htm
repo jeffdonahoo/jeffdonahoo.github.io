@@ -1,0 +1,241 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.6 [en] (Win95; I) [Netscape]">
+   <title>Glossary</title>
+</head>
+<body background="blue_lines.jpg">
+
+<center>
+<h1>
+Glossary</h1></center>
+
+<center>
+<hr WIDTH="100%"></center>
+
+<h3>
+<a NAME="packet"></a></h3>
+
+<h2>
+<a NAME="Packet"></a>Packet</h2>
+A packet is the unit of transmission on a physical network.
+<p><a NAME="datagram"></a>
+<h2>
+<a NAME="Datagram"></a>Datagram</h2>
+A datagram is the unit of transmission in the IP protocol. To cross a particular
+network a datagram is encapsulated inside a packet.
+<p><a NAME="router"></a>
+<h2>
+<a NAME="Router"></a>Router</h2>
+A router is a switch that receives data transmission units from input interfaces
+and, depending on the addresses in those units, routes them to the appropriate
+output interfaces. There can be routers at different levels of protocol.
+For example, Interface Message Processors (IMPs) are packet-level routers.
+<p><a NAME="gateway"></a>
+<h2>
+<a NAME="gate"></a>Gateway</h2>
+In the Internet documentation generally, and in this document specifically,
+a gateway is an IP-level router. In the Internet community the term has
+a long history of this usage.
+<p><a NAME="gate"></a>
+<h2>
+Internet Gateways</h2>
+An Internet gateway is an IP-level router that performs the following functions:
+<ol>
+<li>
+Conforms to specific Internet protocols specified in this document, including
+the Internet Protocol (IP), Internet Control Message Protocol (ICMP), and
+others as necessary.</li>
+
+<li>
+Interfaces to two or more packet networks. For each connected network the
+gateway must implement the functions required by that network. These functions
+typically include:</li>
+
+<ul>
+<li>
+encapsulating and decapsulating the IP datagrams with the connected network
+framing (e.g., an Ethernet header and checksum);</li>
+
+<li>
+sending and receiving IP datagrams up to the maximum size supported by
+that network, this size is the network's "Maximum Transmission Unit" or
+"MTU";</li>
+
+<li>
+translating the IP destination address into an appropriate network-level
+address for the connected network (e.g., an Ethernet hardware address);</li>
+
+<li>
+responding to the network flow control and error indication, if any.</li>
+</ul>
+
+<li>
+Receives and forwards Internet datagrams. Important issues are buffer management,
+congestion control, and fairness.</li>
+
+<ul>
+<li>
+Recognizes various error conditions and generates ICMP error and information
+messages as required.</li>
+
+<li>
+Drops datagrams whose time-to-live fields have reached zero.</li>
+
+<li>
+Fragments datagrams when necessary to fit into the MTU of the next network.</li>
+</ul>
+
+<li>
+Chooses a next-hop destination for each IP datagram, based on the information
+in its routing data-base.</li>
+
+<li>
+Supports an interior gateway protocol (IGP) to carry out distributed routing
+and reachability algorithms with the other gateways in the same autonomous
+system. In addition, some gateways will need to support the Exterior Gateway
+Protocol (EGP) to exchange topological information with other autonomous
+systems.</li>
+
+<li>
+Provides system support facilities, including loading, debugging, status
+reporting, exception reporting and control.</li>
+</ol>
+<a NAME="domain"></a>
+<h2>
+<a NAME="Domain"></a>DOMAIN</h2>
+A domain is a collection of hosts and routers that use the same routing
+protocol and are administered by a single authority. In other words,a domain
+might be an internetwork administered by a university or other organization.&nbsp;<a NAME="igp"></a><a NAME="Igp"></a><a NAME="as"></a>
+<h2>
+<a NAME="IGP"></a>IGP</h2>
+The internet is divided into domains, or autonomous systems. Interior Gateway
+Protocols(IGPs) are the protocols used within a domain for the exchange
+of routing information.&nbsp;<a NAME="Egp"></a><a NAME="egp"></a>
+<h2>
+<a NAME="EGP"></a>EGP</h2>
+The Exterior Gateway Protocol(EGP) provides a way for two neighboring routers
+located at edges of their respective domains to exchange messages and information.
+The Extrior Gateway Protocol provides a way for routers to exchange routing
+information among themselves.Each domain has one or more routers that are
+picked to be EGPs.
+<br>EGP is rarely used these days. BGP is the exterior gateway protocol
+in use.&nbsp;<a NAME="bgp"></a>
+<h2>
+<a NAME="BGP"></a>BGP</h2>
+Border Gateway Protocol(BGP) was implemented as an interim solution to
+provide some limited policy features, but it does not solve the scalability
+requirements.
+<br>BGP is the exterior gateway protocol in use Route attributes such as
+the cost or security of a path are also added. BGP reduces the bandwidth
+required to exchange routing information because the information is exchanged
+incrementally, rather than by sending the entire database.
+<h2>
+<a NAME="host"></a>HOST</h2>
+A host, in the Internet is any networked device.&nbsp;<a NAME="ICMp"></a>
+<h2>
+<a NAME="ICMP"></a>ICMP</h2>
+Internet Control Message Protocol(ICMP) is the error and control message
+protocol used by the Internet protocol family. It is used by the kernel
+to handle and report errors in protocol processing.
+<br>ICMP is an unreliable datagram protocol layered above IP. It is used
+internally by the protcol code for various purposes including routing,
+fault isolation, and congestion control. Receipt of an ICMP "redirect"
+message will add a new entry in the routing table, or modify an existing
+one. ICMP messages are routinely sent by the protocol code. Received ICMP
+messages may be reflected back to users of higher-level protocols such
+as TCP or UDP as error returns from system calls. A copy of all ICMP message
+received by the system is provided using the ICMP raw socket.&nbsp;<a NAME="udp"></a>
+<h2>
+<a NAME="UDP"></a>UDP</h2>
+The User Datagram Protocol(UDP) is part of the TCP/IP protocol suite. It
+was created to provide a way for applications to access the connectionless
+features of IP. Both TCP and UDP use IP. UDP was designed to allow appplications
+to create daragrams and address them to the ports for accessing applications
+or processes. UDP's primary role is to add the port address of an application
+process to an IP packet.&nbsp;<a NAME="authentication"></a>
+<h2>
+<a NAME="AUTHENTICATION"></a>AUTHENTICATION</h2>
+Authentication assigns a unique identification to each user for each logon
+session. The identification, not the user's password, is used to authenticate
+each of the user's network requests. Authentication guarantees that a user's
+password never goes beyond the logon process. It is immediately conveted
+to a different code that identifies the user and the station they are logged
+into during the user's currrent session. Authentication also guarantees
+that messages are from the correct user at his or her workstation in the
+current session and not corrupted, counterfeited, or tampered with.&nbsp;<a NAME="Socket"></a><a NAME="socket"></a><a NAME="Sockets"></a><a NAME="sockets"></a>
+<h2>
+<a NAME="SOCKET"></a>SOCKETS</h2>
+Sockets were originally local interprocess communication mechanisms used
+in the UNIX environment. They evolved into network links on Transmission
+Control Protocol/Internet Protocol(TCP/IP) networks. A socket is basically
+an end point of a communication link between two applications. Sockets
+that extend over a network connect two or more applications running on
+separate computers attached to the network. A socket is composed of two
+addresses: Port address- This is the address for the specific application
+or process running within a computer. Internet Protocol(IP) address- This
+is the address of the workstation on the TCP/IP network. Sockets provide
+a full-duplex communication channel between one or more systems. A local
+port makes a connection to a remote socket. The significance of this is
+that the socket identifies a computer on the network and the software port
+withen that computer for a process being run by an application. Once a
+channel is opened, information is sent or received, and the circuit is
+then dismantled.
+<h2>
+<a NAME="ARP"></a>ARP</h2>
+Address Resolution Protocol(ARP) is the neighbor discovery protocol for
+Internet and TCP/IP networks. It is similar to the OSI End Systim-to- Intermediate
+System(ES-IS) protocol. Both routers and host (user computers, servers,
+and so on) use ARP to announce themselves. A router broadcasts packets
+that contain an IP address. The computer or device attached to a network
+with the address then returns its LAN address. The information is then
+placed in routing tables for future use. A similar protocol, called Reverse
+ARP(RARP), performs the opposite task;it obtains the IP address from a
+known network address.
+<p><a NAME="snmp"></a><b><font size=+2>SNMP</font></b>
+<p>Short for Simple Network Management Protocol, a set of protocols for
+managing complex networks. The first versions of SNMP were developed in
+the early 80s. SNMP works by sending messages, called protocol data units
+(PDUs), to different parts of a network. SNMP-compliant devices, called
+agents, store data about themselves in Management Information Bases (MIBs)
+and return this data to the SNMP requesters.
+<br>SNMP 1 reports only whether a device is functioning properly. The industry
+has attempted to define a new set of protocols called SNMP 2 that would
+provide additional information, but the standardization efforts have not
+been successful. Instead, network managers have turned to a related technology
+called RMON that provides more detailed information about network usage.
+<br>&nbsp;
+<p><a NAME="lan"></a><b><font size=+2>LAN</font></b>
+<p>A computer network that spans a relatively small area. Most LANs are
+confined to a single building or group of buildings. However, one LAN can
+be connected to other LANs over any distance via telephone lines and radio
+waves. A system of LANs connected in this way is called a wide-area network
+(WAN).
+<br>Most LANs connect workstations and personal computers. Each node (individual
+computer ) in a LAN has its own CPU with which it executes programs, but
+it is also able to access data and devices anywhere on the LAN. This means
+that many users can share expensive devices, such as laser printers, as
+well as data. Users can also use the LAN to communicate with each other,
+by sending e-mail or engaging in chat sessions.
+<p>There are many different types of LANs Ethernets being the most common
+for PCs. Most Apple Macintosh networks are based on Apple's AppleTalk network
+system, which is built into Macintosh computers.
+<p><a NAME="wan"></a><b><font size=+2>WAN</font></b>
+<p>A computer network that spans a relatively large geographical area.
+Typically, a WAN consists of two or more local-area networks (LANs).
+<br>Computers connected to a wide-area network are often connected through
+public networks, such as the telephone system. They can also be connected
+through leased lines or satellites. The largest WAN in existence is the
+Internet.
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+</body>
+</html>

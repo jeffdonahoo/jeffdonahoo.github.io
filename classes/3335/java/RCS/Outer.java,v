@@ -1,0 +1,29 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2013.09.09.17.58.08;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@public class Outer {
+  private class Inner {}
+
+  public static void main(String[] args) {
+    Inner n = new Inner();
+  }
+}@

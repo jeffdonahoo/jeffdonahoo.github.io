@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="foo.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<table width="100%"><tr>
+    <td align="center"><a href="index.htm"><img src="logo.png" width="432" height="144" border="0"></a></td>
+  </tr></table>
+
+<p class="Topic">Design</p>
+<p class="Text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A typical nuggets user will run
+  both a client and server program. Whether or not these are run in two threads
+  or two processes <span class="tooltiped" onMouseOver="return escape('Do small devices even distinguish between the two?')">shouldn't
+  matter</span>.</p>
+<p class="Topic">Server</p>
+<p class="Text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The server first registers the nuggets
+  service with the underlying bluetooth implementation. This step actually happens
+  in the same function call that accepts a connection, but it becomes important
+  in the client. Next the server attempts to read the first 16 bytes (this should
+  be the hash) of a file that would contain this client's nugget if we already
+  had it. </p>
+<p class="Text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Once a connection is accepted, the
+  server receives a length, a hash, and a nugget. The length is a 4 byte big-endian
+  representation of the nugget length. The hash is an MD5 hash of the nugget.
+  The nugget... well, nobody knows what they put in nuggets - that's why we have
+  to get the length.</p>
+<p class="Text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Upon receiving the fixed-length
+  quantities, the server compares the hash sent by the client with the hash read
+  from the file. If they are identical, the server closes the connection immediately.
+  If the nugget were something large (multimedia), this would save you the work
+  of receiving all packets after the first one if you didn't need to.</p>
+<p class="Text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If the server does choose to receive
+  the nugget, it does so. It then writes to a file (uniquely named for that client)
+  the recently received hash followed by the actual nugget. The server signals
+  receipt of the nugget by sending an empty packet to the client. If the client
+  doesn't wait for this empty packet, it frequently closes the connection before
+  the server can receive the entire nugget.</p>
+<p class="Topic">Client</p>
+<p class="Text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ideally, the client program registers
+  to be called back whenever a new bluetooth device is discovered and then sleeps
+  indefinitely. On device discovery, the client creates a new thread which searches
+  that device for nuggets and, upon finding the nuggets service, <span class="tooltiped" onMouseOver="return escape('When I say exchange, I mean \'sends its nugget to\'.  The other device should be running a client as well, which will take care of getting his nugget to us.')">exchanges</span>
+  nuggets with it.</p>
+<p class="Text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In reality, the Impronto SDK's implementation
+  of device discovery <span class="tooltiped" onMouseOver="return escape('The API even states that the period for device discovery is implementation specific')">eventually
+  decides</span> that it has found all the devices it's going to find. It also
+  caches previously-found devices so that it can return them immediately upon
+  later discovery requests. To account for this, the client keeps a
+  <span class="tooltiped" onMouseOver="return escape('Yes, 5.  We did some actual vector-based calculations and determined that 5 (in addition to being \'right out\' with respect to 3) is the average number of nuggets-enabled people you\'ll pass walking at the ground-speed velocity of an unladen pda-carrying geek (European).  These rather intense calculations also depend on the range of the bluetooth device, which, as advertised on the box, is either 100m or 30 feet')">5
+  element </span>list of recently discovered devices and doesn't service-search
+  them when the discovery reports their existance. To account for the immediate
+  termination of discoveries due to the caches, the client sleeps for <span class="tooltiped" onMouseOver="return escape('See the tooltip for \'5 element\'')">5
+  seconds</span> after any discovery finishes.</p>
+<p class="Text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The client first reads it's nugget
+  from a file and calculates the hash and the nugget length. <span class="tooltiped" onMouseOver="return escape('I know you\'re thinking \'It\'s bad to read the file every time we send the nugget, right?\'  Reading for each connection deals with the user changing his nugget.  Also note that it might be bad to buffer an entire multimedia nugget on a small device.')">This
+  is done per-connection</span>. The client first sends a 4 byte nugget-length,
+  then a 16 byte hash of it's nugget, then sends the actual nugget. After sending,
+  the client waits for a single packet from the server indicating it has received
+  the entire nugget.</p>
+<p class="Text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This design minimizes power consumption. Note that the client and server both
+  sleep for the majority of their runtime. Also, when handling large nuggets, only one packet is transmitted unless the
+  server actually needs the nugget. Overhead for control traffic is only one empty packet. These optimizations also conserve power
+  by minimizing the use of the bluetooth transmitter.</p>
+
+
+<script language="JavaScript" type="text/javascript" src="wz_tooltip.js"></script>
+</body>
+</html>

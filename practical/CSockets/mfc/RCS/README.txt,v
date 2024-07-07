@@ -1,0 +1,67 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2001.11.11.23.54.40;	author donahoo;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2001.11.11.23.46.12;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@******************************* CSocket TCP/UDP Echo Server/Client ****************************************
+To run the program in VC++, you must first complete three steps:
+
+1) Create a Win32 Console Application in a simple empty project and include in the project DieWithError.cpp
+along with the server or client .cpp file for the application you wish
+to run.  For the iterative and threaded TCP echo servers, you must
+also include HandleTCPClient.cpp.
+
+2) Change project settings:
+     - Open the Project Settings window ("Alt+F7")
+     - Select the General tab
+     - Choose use MFC in a shared DDL in the Microsoft Foundation Classes box
+
+3) Enter command line argument(s):
+    - Select the Debug tab in the Project Settings window, and enter the program argument(s):
+      *** for echo client *** 
+      enter echo server IP or name, echo string and, optionally, echo server port (the system will select 7 as 
+      the default echo port unless you specify your own port). 
+      
+     *** for echo server *** 
+     enter echo port
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d5 3
+a7 1
+along with the server or client .cpp file for the application you wish to run.
+d16 1
+a16 1
+      *** for echo server*** 
+d20 2
+a21 2
+     *** for echo client *** 
+     enter echo port<a href="TCPEchoClient.cpp">TCPEchoClient.cpp</a> - Implements a
+@

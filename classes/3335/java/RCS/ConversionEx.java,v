@@ -1,0 +1,76 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2015.01.15.16.54.15;	author donahoo;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2013.09.09.17.58.08;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@public class ConversionEx {
+
+  public static void main(String[] args) {
+
+    System.out.println(013);
+
+    float f2 = 3.14;
+    double d1 = 3.14;
+
+    byte b1 = 3;
+
+    long l2 = 3000000000;
+    l2 = 30000 * 100000;
+    double d3 = 3000000000;
+
+    int i1 = b1;
+    int i2 = l2;
+    System.out.println(i2);
+
+    byte b2 = b1 + b1;
+    b2 += b1;
+    double d2 = f2 + i1;
+
+    i1 = 2000000000;
+    System.out.println((float) i1 == i1 + 50);
+
+    i2 = (int) 3.53;
+    System.out.println(i2);
+    i2 = Math.round(3.53);
+    System.out.println (i2);
+
+    System.out.println("Answer: " + b1 + b1);
+    System.out.println(b1 + b1 + " is the answer");
+
+    d2 = 5.0/0;
+    System.out.println(d2);
+    i2 = 5/0;
+  }
+}
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d5 2
+@

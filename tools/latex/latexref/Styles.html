@@ -1,0 +1,114 @@
+<HTML>
+<!-- created Thu Apr 9 23:20:43 MET DST 1998
+ from ../latex2e.texi line 4974 via texi2www -->
+<HEAD>
+<TITLE>Styles</TITLE>
+<LINK REL="Precedes" HREF="Sizes.html">
+<LINK REV="Precedes" HREF="Typefaces.html">
+<LINK REV="Subdocument" HREF="Typefaces.html">
+</HEAD><BODY><P>
+<A HREF="Typefaces.html"><IMG ALIGN=MIDDLE SRC="prev-arrow.gif" ALT="PREV"></A>
+<A HREF="Typefaces.html"> <IMG ALIGN=MIDDLE SRC="up-arrow.gif" ALT="UP"></A>
+<A HREF="Sizes.html"><IMG ALIGN=MIDDLE SRC="next-arrow.gif" ALT="NEXT"></A>
+<CITE>LaTeX2e help 1.6</CITE></P>
+<H3>2.23.1: \Styles</H3>
+<P>
+The following type style commands are supported by LaTeX.
+</P>
+<P>
+These commands are used like <CODE>\textit{italics text}</CODE>. The
+corresponding command in parenthesis is the ``declaration form'', which
+takes no arguments. The scope of the declaration form lasts until the
+next type style command or the end of the current group.
+</P>
+<P>
+The declaration forms are cumulative; i.e., you can say
+<CODE>\sffamily\bfseries</CODE> to get sans serif boldface.
+</P>
+<P>
+You can also use the environment form of the declaration forms; e.g.
+<CODE>\begin{ttfamily}...\end{ttfamily}</CODE>.
+</P>
+<TABLE>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\textrm (\rmfamily)</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+Roman.
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\textit (\itshape)</CODE>
+</TD>
+    <TD VALIGN=TOP></TD></TR>
+<TR><TD VALIGN=TOP><CODE>\emph</CODE>
+</TD>
+    <TD VALIGN=TOP>Emphasis (toggles between \textit and \textrm).
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\textmd (\mdseries)</CODE>
+</TD>
+    <TD VALIGN=TOP>Medium weight (default). The opposite of boldface.
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\textbf (\bfseries)</CODE>
+</TD>
+    <TD VALIGN=TOP>Boldface.
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\textup (\upshape)</CODE>
+</TD>
+    <TD VALIGN=TOP>Upright (default). The opposite of slanted.
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\textsl (\slshape)</CODE>
+</TD>
+    <TD VALIGN=TOP>Slanted.
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\textsf (\sffamily)</CODE>
+</TD>
+    <TD VALIGN=TOP>Sans serif.
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\textsc (\scshape)</CODE>
+</TD>
+    <TD VALIGN=TOP>Small caps.
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\texttt (\ttfamily)</CODE>
+</TD>
+    <TD VALIGN=TOP>Typewriter.
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\textnormal (\normalfont)</CODE>
+</TD>
+    <TD VALIGN=TOP>Main document font.
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\mathrm</CODE>
+</TD>
+    <TD VALIGN=TOP>Roman, for use in math mode.
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\mathbf</CODE>
+</TD>
+    <TD VALIGN=TOP>Boldface, for use in math mode.
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\mathsf</CODE>
+</TD>
+    <TD VALIGN=TOP>Sans serif, for use in math mode.
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\mathtt</CODE>
+</TD>
+    <TD VALIGN=TOP>Typewriter, for use in math mode.
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\mathit</CODE>
+</TD>
+    <TD VALIGN=TOP>Italics, for use in math mode, e.g. variable names with several letters.
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\mathnormal</CODE>
+</TD>
+    <TD VALIGN=TOP>For use in math mode, e.g. inside another type style declaration.
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\mathcal</CODE>
+</TD>
+    <TD VALIGN=TOP>`Calligraphic' letters, for use in math mode.
+</TD></TR>
+</TABLE>
+</P>
+<P>
+In addition, the command 
+<CODE>\mathversion{bold}</CODE>
+can be used for switching to bold letters and symbols in
+formulas. <CODE>\mathversion{normal}</CODE> restores the default.
+</P>
+</BODY></HTML>

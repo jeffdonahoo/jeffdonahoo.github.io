@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+                      "http://www.w3.org/TR/REC-html40/strict.dtd">
+
+<head>
+
+<title>Aggressive TCP issues</title>
+
+<style type="text/css"><!--
+    h1      { text-decoration: underline; font-size: 170%; text-align: center }
+    h2      { font-size: 120% }
+    dt      { font-weight: bold }
+    img     { border: 0 }
+--></style>
+
+</head>
+
+<h1>Aggressive TCP issues</h1>
+
+<p style="text-align: right"><strong>Roman Elizarov</strong>, December 1999<br>
+<a href="mailto:Roman_Elizarov@baylor.edu">Roman_Elizarov@baylor.edu</a></p>
+
+<h2>Abstract</h2>
+
+<p>
+This reports gives the result of agressive TCP implementation attempt. 
+While it is not hard to make TCP behave absolutely wild and 
+flood the network with the packets that effectively knock out all other
+competing protocols running over the network (unless some sort of
+<a href="#fair">fair queueing</a>
+is done in the network), but that approach will drive the network to the
+congestion collase which is not the goal and must be avoided. It turned
+out that aggressive TCP, i.e. that will compete significantly better
+without provoking congestion collaps is not an easy thing to do. 
+Efforts by different network specialists are undertaken to improve 
+TCP performance in the presence of congestions. Overview of their
+work shows that there are few things that could be done 
+without changing TCP too much.
+
+<h2>Aggressive</h2>
+
+<p>
+The original purpose of the work was to modify Linux kernel of
+one of the <a href="../../index.html">HackNet</a>
+group machines in order to make TCP aggressive. By word
+<strong>aggressive</strong> we mean the implementaion that is
+able to get more bandwidth that non-aggressive TCP implementations
+are able to. But we still want to get data being send and do not 
+drive the network into congestion collapse.
+
+<h2>What to violate?</h2>
+
+<p>
+That is an easy question to answer. <a href="#rfc2581">[RFC2581]</a> gives
+explicit upper bounds on how aggressive TCP implementations shall be,
+though it allows experimantal implementations to relax or violate some
+of the requiremnts. There are not many requirements to break and
+almost all requirements have good reasons of being imposed.
+
+<p>
+Actually, limits on TCP aggresiveness are made in an effort to prevent
+congestion collapse and I will futher justify this later. Let us now
+look at aggresiveness limits themselves.
+
+<dl>
+<dt id="slow">Slow Start
+<dd>Slow start was invented in order to prevent congestion that
+could be created by injection of big bursts into the network.
+That is why we cannot eliminate it completely.
+While slow start can be made faster by incresing intial window size
+and/or increasing increment, it will not lead to significant performance
+increase. <a href="#sim">Simulations</a> show that slow start part
+of TCP is used only at the first stage of data transfer. During the
+bulk transfer <a href="#fast">Fast Retransmit/Fast Recovery</a> usually
+come into play. Still, we cannot even make first stage (when slow start is
+used) significantly faster, because injection of bursts will harm our
+preformance as well.
+
+<dt id="avoid">Congestion Avoidance
+<dd>Congestion avoidance is justified by the fact that is no reason
+in sending too much data if it is not able to get through, anyway
+(we are only creating congestion)
+Of couse, for aggressive TCP, there may be a reason: to drive
+away other TCP connections that share the same link. But we still
+want to be able to detect physical bottleck and not to congest ourselves.
+This constraint does not deserve much attention by the similair reason to
+<a href="#slow">Slow Start</a>, becuase of
+<a href="#fast">Fast Retransmit/Fast Recovery</a>.
+Congestion avoidance backoff is just not used often.
+<p>
+We can still try to make window increase faster,
+but by increasing it faster we run into congestion faster, and 
+again end up with smaller window. The only resonably looking
+solution is to eleminate as many backoffs as possible in an
+attempt to get highest possible window. The main source of
+backoffs during actual connections, as it turned out, is 
+<a href="#fast">Fast Retransmit/Fast Recovery</a>.
+
+<dt id="fast">Fast Retransmit/Fast Recovery
+<dd>Quick review of references (<a href="#rfc2582">[RFC2582]</a>
+is a good source for them) shows that this is hot area of research
+that should be done very carefully in order improve performance
+but not to degrade it.
+<p>
+Fast restransmit is a primary source of congestion detection
+and it <em>is</em> the main mechanism that limits the growth or
+the windows.
+Though, <a name="sim">simulations</a> showed that over a long
+delay links implementation window limit can serve as a
+perfomance bound.
+
+</dl>
+
+<h2 id="ack">ACK Clock</h2>
+<p>
+One of the main feature of TCP that limits its perfomance is an ACK
+clock. There is not much TCP sender can do (implying that data
+to send is always available) being not the part of the
+reaction on ACK from receiver. The only execptions are retransmit
+timers that actually fire rarely.
+
+<p>This behaviour is a great constaint on the TCP's abilty to 
+handle data transfer in the most efficient way, and it also 
+prevents simple hacks to make it aggresive. It seams that
+having internal clock which frequency is adjusted based on
+the feedback is superiour, and that is how most realtime
+transfer protocols do their job. This will allow one 
+effiently complete with TCP connections over the network bandwidth.
+
+<h2 id="fair">Fair Queueing</h2>
+
+<p>The presence of any kind of fairness-enforcing gateway
+(like one proposed in <a href="#lin97">[Lin97]</a>) anywhere on the path
+renders any efforts to create aggressive TCP useless. That one reason why
+it is very hard to evaluate actual aggresivenes of some implementaion
+over the real Internet, and, unfortunataly, that is the single
+interesting place to run simulations over.
+
+<h2 id="sim">Simulations</h2>
+
+<p>Small number of simulations were done using
+<a href="http://ada.baylor.edu/stu/vanhorn/top.html">HackNet</a> workstations
+as a testbed. Linux kernel was modified to write (using kprint function)
+different characters in different places of TCP implementation in order
+to study TCP behaviour during actual long-delay FTP data transfer (put)
+over the Internet to the remote host.
+
+<h2>References</h2>
+
+<dl>
+  <dt id="rfc2581">[RFC2581]
+  <dd>"TCP Congestion Control",
+          M.&nbsp;Allman, V.&nbsp;Paxson  and W.&nbsp;Stevens, April 1999<br>
+    <a HREF="ftp://ftp.isi.edu/in-notes/rfc2581.txt">ftp://ftp.isi.edu/in-notes/rfc2581.txt</a>
+
+  <dt id="rfc2582">[RFC2582]
+  <dd>"The NewReno Modification to TCP's Fast Recovery Algorithm",
+          S.&nbsp;Floyd and T.&nbsp;Henderson, April 1999<br>
+    <a HREF="ftp://ftp.isi.edu/in-notes/rfc2582.txt">ftp://ftp.isi.edu/in-notes/rfc2582.txt</a>
+
+  <dt id="lin97">[Lin97]
+  <dd>"Dynamics of Random Early Detection",
+       D.&nbsp;Lin and R.&nbsp;Morris, SIGCOMM, volume 27, number 4, October 1997<br>
+    <a HREF="http://www.acm.org/sigcomm/sigcomm97/papers/p078.ps">http://www.acm.org/sigcomm/sigcomm97/papers/p078.ps</a>
+</dl>
+
+<hr>
+
+<p>
+
+<a href="http://validator.w3.org/check/referer"><img
+   src="http://validator.w3.org/images/vh40"
+   alt="Valid HTML 4.0!" height="31" width="88"></a>
+
+<a href="http://jigsaw.w3.org/css-validator"><img
+   src="http://jigsaw.w3.org/css-validator/images/vcss.gif" 
+   alt="Valid CSS!" height="31" width="88"></a>
+

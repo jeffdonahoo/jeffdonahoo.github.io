@@ -1,0 +1,39 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2013.09.09.17.58.08;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@public class PlaneMain {
+
+  public static void main(String[] args) {
+
+    Airplane flyer = new Airplane("Spirit of St. Louis");
+
+    System.out.println("Flyer:\n" + flyer);
+
+    StringBuilder name = flyer.getName();
+    name.delete(0, name.length()).append("Spruce Goose");
+    long miles = flyer.getMiles();
+    miles = 1;
+
+    System.out.println("Flyer:\n" + flyer);
+  }
+}
+@

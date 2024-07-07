@@ -1,0 +1,336 @@
+head	1.16;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.16
+date	2004.09.14.16.41.44;	author donahoo;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2004.08.28.01.19.57;	author donahoo;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.04.09.15.44.21;	author donahoo;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.02.11.16.10.54;	author donahoo;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2002.09.11.12.20.00;	author donahoo;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2002.01.23.13.04.14;	author donahoo;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2002.01.02.22.26.24;	author donahoo;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2001.08.23.19.13.56;	author donahoo;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2001.08.16.20.52.45;	author donahoo;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2000.11.14.22.48.08;	author donahoo;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2000.09.27.13.39.43;	author donahoo;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2000.05.01.19.52.51;	author donahoo;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2000.04.25.13.15.12;	author donahoo;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2000.04.24.19.12.55;	author donahoo;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2000.04.24.14.42.16;	author donahoo;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2000.04.24.13.45.50;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.16
+log
+@*** empty log message ***
+@
+text
+@<HTML>
+<HEAD>
+<TITLE>TCP/IP Sockets in C:  Practical Guide for Programmers</TITLE>
+</HEAD>
+<BODY bgcolor="White" text="Black" vlink="Purple" alink="Red" link="Blue">
+<CENTER><FONT COLOR="#1D2B55" SIZE=+10>Practical TCP/IP Sockets in C
+</FONT> <P>
+<IMG SRC="../images/cpractical.gif" HEIGHT=250></CENTER>
+Welcome to the web resource for TCP/IP Sockets in C: Practical Guide
+for Programmers.
+<UL>
+<LI><A HREF="textcode.html">Example code from text</A>
+<LI><A HREF="winsock.html">Winsock adaptations of text code</A>
+<LI><A HREF="progexer.html">Sample programming exercises</A>
+<LI><A HREF="Endian.pdf">Exploring Big vs. Little Endian</A>
+<LI><A HREF="TCPRST.pdf">TCP RST:  Calling close() on a socket with data in the receive queue</A>
+<LI><A HREF="c++.html">C++ socket programming</A>
+<LI>Slides (only covers Chpts. 1-2) (<A HREF="PracticalSocketC.ppt">Powerpoint</A>)(<A HREF="PracticalSocketC.pdf">PDF</A>)
+<LI>Errata  <A HREF="errata-practical.pdf">(PDF)</A> <A HREF="errata-practical.ps">(PS)</A>  <A HREF="errata-practical.txt">(TXT)</A>
+<LI><A HREF="../JavaSockets">TCP/IP Sockets in Java<sup>TM</sup>:  Practical Guide for Programmers</A>
+<LI><A HREF="../">Practical Series</A>
+</UL>
+<p align="right">
+<a href="http://www.mkp.com/books_catalog/catalog.asp?ISBN=1-55860-686-6">
+<img src="images/MK_blue.gif" border=0></a>
+</BODY>
+</HTML>
+@
+
+
+1.15
+log
+@*** empty log message ***
+@
+text
+@d20 1
+a20 1
+<LI><A HREF="../JavaSockets">TCP/IP Sockets in Java:  Practical Guide for Programmers</A>
+@
+
+
+1.14
+log
+@*** empty log message ***
+@
+text
+@d10 1
+a10 2
+for Programmers.  If you have suggestions for this site, please send
+email to <A HREF="mailto:Jeff_Donahoo@@Baylor.edu">Jeff Donahoo</A>.
+@
+
+
+1.13
+log
+@*** empty log message ***
+@
+text
+@d20 1
+a20 1
+<LI>Errata <A HREF="errata-practical.ps">(PS)</A>  <A HREF="errata-practical.txt">(TXT)</A>
+@
+
+
+1.12
+log
+@*** empty log message ***
+@
+text
+@d17 1
+@
+
+
+1.11
+log
+@*** empty log message ***
+@
+text
+@d3 1
+a3 1
+<TITLE>Practical TCP/IP Sockets in C</TITLE>
+d8 1
+a8 1
+<IMG SRC="images/pocket-stack.gif"></CENTER>
+d16 1
+@
+
+
+1.10
+log
+@*** empty log message ***
+@
+text
+@d17 1
+a17 2
+<LI><A HREF="PracticalSocketC.ppt">Powerpoint Slides</A> (Currently only
+covers Chpts. 1-2)
+@
+
+
+1.9
+log
+@*** empty log message ***
+@
+text
+@d19 1
+@
+
+
+1.8
+log
+@*** empty log message ***
+@
+text
+@d16 1
+d20 1
+@
+
+
+1.7
+log
+@Added powerpoint bullet
+@
+text
+@d3 1
+a3 1
+<TITLE>Pocket Socket Web Site</TITLE>
+d6 1
+a6 1
+<CENTER><FONT COLOR="#1D2B55" SIZE=+10>Pocket Socket Guide
+d9 2
+a10 3
+Welcome to the Pocket Socket Web site.  We hope to use this site to
+enhance your experience with the "The Pocket Guide to TCP/IP Sockets:
+C Version".  If you have suggestions for this site, please send
+d16 1
+a16 2
+<LI>Errata <A HREF="errata.ps">(PS)</A>  <A HREF="errata.pdf">(PDF)</A>
+<LI><A HREF="PocketSocketC.ppt">Powerpoint Slides</A> (Currently only
+d18 1
+@
+
+
+1.6
+log
+@*** empty log message ***
+@
+text
+@d18 2
+@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@d17 1
+@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@d14 3
+a16 3
+<LI><A HREF="code/textcode.html">Example code from text</A>
+<LI><A HREF="code/winsock.html">Winsock adaptations of text code</A>
+<LI><A HREF="exercises/progexer.html">Sample programming exercises</A>
+d22 1
+a22 1
+</HTML>@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d8 1
+a8 1
+<IMG SRC="pocket-stack.gif"></CENTER>
+d14 3
+a16 3
+<LI><A HREF="textcode.html">Example code from text</A>
+<LI><A HREF="winsock.html">Winsock adaptations of text code</A>
+<LI><A HREF="progexer.html">Sample programming exercises</A>
+d20 1
+a20 1
+<img src="MK_blue.gif" border=0></a>
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d1 22
+a22 27
+<HTML>
+<HEAD>
+<TITLE>Pocket Socket Web Site</TITLE>
+</HEAD>
+<BODY>
+<TABLE>
+<TR WIDTH="100%">
+<TD WIDTH=120><IMG SRC="MKlogo.jpg" WIDTH=115></TD><TD WIDTH=30></TD><TD><B><FONT COLOR="#1D2B55"
+SIZE=+10>Pocket Socket Guide</FONT></B></TD>
+</TR>
+</TABLE>
+<P><P><P>
+<CENTER><IMG SRC="pocket-stack.gif"></CENTER>
+
+Welcome to the Pocket Socket Web site.  We hope to use this site to
+enhance your experience with the "The Pocket Guide to TCP/IP Sockets:
+C Version".  If you have suggestions for this site, please send
+email to <A HREF="mailto:Jeff_Donahoo@@Baylor.edu">Jeff Donahoo</A>.
+
+<UL>
+<LI><A HREF="textcode.html">Example code from text</A>
+<LI><A HREF="winsock.html">Winsock adaptations of text code</A>
+<LI><A HREF="progexer.html">Sample programming exercises</A>
+</UL>
+
+</BODY>
+</HTML>
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d6 7
+@

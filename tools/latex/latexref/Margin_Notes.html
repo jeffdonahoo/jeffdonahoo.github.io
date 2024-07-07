@@ -1,0 +1,46 @@
+<HTML>
+<!-- created Thu Apr 9 23:20:43 MET DST 1998
+ from ../latex2e.texi line 3422 via texi2www -->
+<HEAD>
+<TITLE>Margin Notes</TITLE>
+<LINK REL="Precedes" HREF="Math_Formulae.html">
+<LINK REV="Precedes" HREF="Making_Paragraphs.html">
+<LINK REV="Subdocument" HREF="Commands.html">
+</HEAD><BODY><P>
+<A HREF="Making_Paragraphs.html"><IMG ALIGN=MIDDLE SRC="prev-arrow.gif" ALT="PREV"></A>
+<A HREF="Commands.html"> <IMG ALIGN=MIDDLE SRC="up-arrow.gif" ALT="UP"></A>
+<A HREF="Math_Formulae.html"><IMG ALIGN=MIDDLE SRC="next-arrow.gif" ALT="NEXT"></A>
+<CITE>LaTeX2e help 1.6</CITE></P>
+<H2>2.12: Margin Notes</H2>
+<P>
+The command <CODE>\marginpar[left]{right}</CODE> creates a note in the margin.
+The first line will be at the same height as the line in the text where
+the <CODE>\marginpar</CODE> occurs.
+</P>
+<P>
+When you only specify the mandatory argument <CODE>right</CODE>, the text will
+be placed
+</P>
+<UL>
+<LI>
+in the right margin for one-sided layout
+<LI>
+in the outside margin for two-sided layout
+<LI>
+in the nearest margin for two-column layout.
+</UL>
+
+<P>
+By issuing the command <CODE>\reversemarginpar</CODE>, you can force the marginal
+notes to go into the opposite (inside) margin.
+</P>
+<P>
+When you specify both arguments, <CODE>left</CODE> is used for the left
+margin, and <CODE>right</CODE> is used for the right margin.
+</P>
+<P>
+The first word will normally not be hyphenated; you can enable
+hyphenation by prefixing the first word with a <CODE>\hspace{0pt}</CODE>
+command.
+</P>
+</BODY></HTML>

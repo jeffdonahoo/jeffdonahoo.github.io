@@ -1,0 +1,61 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>DummyNet</title>
+</head>
+
+<body>
+
+<p align="center">&nbsp;</p>
+
+<p align="center"><u><font size="5"><b>DummyNet</b></font></u></p>
+<p align="left"><font size="3">Dummynet is a FreeBSD system facility that
+simulates network delay and loss by manipulating the IP queue inside the kernel.
+Dummynet makes use<br>
+of &quot; ipfw&quot; which supports various types of IP filters for system
+network interfaces. The general idea is to create a &quot;pipe&quot; object and
+configure<br>
+it with the desired delay and loss parameters. The pipe gets added to a list of
+filtering &quot;rules&quot; which are used by dummynet to modify the<br>
+treatment of IP packets in desired ways.</font></p>
+<p align="left"><font size="3">Dummy net simulates the effect of&nbsp;</font></p>
+<ul>
+  <li>
+    <p align="left"><font size="3">finite queues</font></li>
+  <li>
+    <p align="left"><font size="3">bandwidth limitations</font></li>
+  <li>
+    <p align="left"><font size="3">communications delays</font></li>
+  <li>
+    <p align="left"><font size="3">bounded size queues</font></li>
+  <li>
+    <p align="left"><font size="3">packet losses</font></li>
+  <li>
+    <p align="left"><font size="3">multipath</font></li>
+</ul>
+<p align="left"><font size="3"><br>
+Pipes are fixed-bandwidth channels. Queues represent queues of packets, associated with a weight, which share the bandwidth of the pipe they are
+connected to proportionally to their weight. These rules are numbered from 1 to
+65535 and they are processed in the order that they are listed.</font></p>
+<hr>
+<p align="left"><a href="tutorial.htm"><font size="3">A Simple Tutorial on Dummy
+net</font></a></p>
+
+<hr>
+<p align="left"><font size="3">A FreeBsd implementation of dummynet is available
+from the author at&nbsp;</font><a href="http://www.iet.unipi.it/~luigi/ip_dummynet/">Dummynet home.</a></p>
+
+<hr>
+<p>References:</p>
+<p><a href="http://www.iet.unipi.it/~luigi/research.html">Dummynet: A simple
+approach to the evaluation of network protocols.</a></p>
+
+<hr>
+
+</body>
+
+</html>

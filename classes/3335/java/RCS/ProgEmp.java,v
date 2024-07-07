@@ -1,0 +1,39 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2013.09.09.17.58.08;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@class Emp {
+  private String salary;
+  Emp() {salary = lookupSalary();}
+  String lookupSalary() {return "$50,000";}
+  String getSalary() {return salary;}
+}
+
+class ProgEmp extends Emp {
+  private String progSalary;
+  ProgEmp() {progSalary = "$70,000";}
+  String lookupSalary() {return progSalary;}
+
+  public static void main(String args[]) {
+    ProgEmp bob = new ProgEmp();
+    System.out.println(bob.getSalary());
+  }
+}@

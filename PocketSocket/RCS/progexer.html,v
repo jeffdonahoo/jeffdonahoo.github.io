@@ -1,0 +1,60 @@
+head	1.2;
+access;
+symbols;
+locks
+	donahoo:1.2; strict;
+comment	@# @;
+
+
+1.2
+date	2000.08.23.23.12.13;	author donahoo;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2000.04.25.13.31.53;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@<HTML>
+<HEAD>
+<TITLE>Example Programming Exercises</TITLE>
+</HEAD>
+<BODY>
+
+These are programming exercises from various instructors:
+
+<UL>
+<LI> <A HREF="http://www.cs.uky.edu/~calvert">Ken Calvert</A>, <A
+HREF="http://www.cs.uky.edu">University of Kentucky</A>
+<UL>
+<LI>Lab 0 <A HREF="exercises/calvert-lab0.pdf">(pdf)</A> <A HREF="exercises/calvert-lab0.ps">(ps)</A>
+<LI>Lab 1 <A HREF="exercises/calvert-lab1.pdf">(pdf)</A> <A HREF="exercises/calvert-lab1.ps">(ps)</A>
+</UL>
+<LI> <A HREF="http://www.mkp.com/books_catalog/cn/sockets.htm">Programming Assignments for "Computer Networks: A Systems Approach"</A>
+</UL>
+<p align="right">
+<a href="http://www.mkp.com/books_catalog/catalog.asp?ISBN=1-55860-686-6">
+<img src="images/MK_blue.gif" border=0></a>
+</BODY>
+</HTML>
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d16 1
+@

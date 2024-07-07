@@ -1,0 +1,6793 @@
+%!PS-Adobe-3.0
+%%BoundingBox: 24 24 588 768
+%%Title: enscript output
+%%For: Jeff Donahoo
+%%Creator: GNU enscript 1.4.0
+%%CreationDate: Tue Aug 29 14:02:51 2000
+%%Orientation: Landscape
+%%Pages: (atend)
+%%DocumentMedia: Letter 612 792 0 () ()
+%%DocumentNeededResources: (atend)
+%%EndComments
+%%BeginProlog
+%%BeginResource: procset Enscript-Prolog 1.4 0
+%
+% Procedures.
+%
+
+/_S {	% save current state
+  /_s save def
+} def
+/_R {	% restore from saved state
+  _s restore
+} def
+
+/S {	% showpage protecting gstate
+  gsave
+  showpage
+  grestore
+} bind def
+
+/MF {	% fontname newfontname -> -	make a new encoded font
+  /newfontname exch def
+  /fontname exch def
+
+  /fontdict fontname findfont def
+  /newfont fontdict maxlength dict def
+
+  fontdict {
+    exch 
+    dup /FID eq {
+      % skip FID pair
+      pop pop
+    } {
+      % copy to the new font dictionary
+      exch newfont 3 1 roll put
+    } ifelse
+  } forall
+  
+  newfont /FontName newfontname put
+
+  % insert only valid encoding vectors
+  encoding_vector length 256 eq {
+    newfont /Encoding encoding_vector put
+  } if
+  
+  newfontname newfont definefont pop
+} def
+
+/M {moveto} bind def
+/s {show} bind def
+
+/Box {	% x y w h -> -			define box path
+  /d_h exch def /d_w exch def /d_y exch def /d_x exch def
+  d_x d_y  moveto 
+  d_w 0 rlineto 
+  0 d_h rlineto 
+  d_w neg 0 rlineto 
+  closepath
+} def
+
+% Highlight bars.
+/highlight_bars {	% nlines lineheight output_y_margin gray -> -
+  gsave
+    setgray
+    /ymarg exch def
+    /lineheight exch def
+    /nlines exch def
+
+    % This 2 is just a magic number to sync highlight lines to text.
+    0 d_header_y ymarg sub 2 sub translate
+    
+    /cw d_output_w cols div def
+    /nrows d_output_h ymarg 2 mul sub lineheight div floor def
+
+    % for each column
+    0 1 cols 1 sub {
+      cw mul /xp exch def
+
+      % for each rows
+      0 1 nrows 1 sub {
+        /rn exch def 
+        rn lineheight mul neg /yp exch def
+        rn nlines idiv 2 mod 0 eq {
+	  % Draw highlight bar.  4 is just a magic indentation.
+	  xp 4 add yp cw 8 sub lineheight neg Box fill	  
+	} if
+      } for
+    } for
+    
+  grestore
+} def
+
+% Line highlight bar.
+/line_highlight {	% x y width height gray -> -
+  gsave
+    /gray exch def
+    Box gray setgray fill
+  grestore
+} def
+
+% Column separator lines.
+/column_lines {
+  gsave
+    .1 setlinewidth
+    0 d_footer_h translate
+    /cw d_output_w cols div def
+    1 1 cols 1 sub {
+      cw mul 0 moveto
+      0 d_output_h rlineto stroke
+    } for
+  grestore
+} def
+
+% Column borders.
+/column_borders {
+  gsave
+    .1 setlinewidth
+    0 d_footer_h moveto 
+    0 d_output_h rlineto
+    d_output_w 0 rlineto
+    0 d_output_h neg rlineto
+    closepath stroke
+  grestore
+} def
+
+% Do the actual underlay drawing
+/draw_underlay {
+  ul_style 0 eq {
+    ul_str true charpath stroke
+  } { 
+    ul_str show
+  } ifelse
+} def
+
+% Underlay
+/underlay {	% - -> -
+  gsave
+    0 d_page_h translate
+    d_page_h neg d_page_w atan rotate
+
+    ul_gray setgray
+    ul_font setfont
+    /dw d_page_h dup mul d_page_w dup mul add sqrt def
+    ul_str stringwidth pop dw exch sub 2 div ul_ptsize -2 div moveto 
+    draw_underlay
+  grestore
+} def
+
+/user_underlay {	% - -> -
+  gsave
+    ul_x ul_y translate
+    ul_angle rotate
+    ul_gray setgray
+    ul_font setfont 
+    0 0 ul_ptsize 2 div sub moveto 
+    draw_underlay
+  grestore
+} def
+
+% Page prefeed
+/page_prefeed {		% bool -> -
+  statusdict /prefeed known {
+    statusdict exch /prefeed exch put
+  } {
+    pop
+  } ifelse
+} def
+
+% EPSF import.
+
+/BeginEPSF {
+  /b4_Inc_state save def    		% Save state for cleanup
+  /dict_count countdictstack def	% Count objects on dict stack
+  /op_count count 1 sub def		% Count objects on operand stack 
+  userdict begin
+  /showpage { } def
+  0 setgray 0 setlinecap
+  1 setlinewidth 0 setlinejoin
+  10 setmiterlimit [ ] 0 setdash newpath
+  /languagelevel where {
+    pop languagelevel
+    1 ne {
+      false setstrokeadjust false setoverprint 
+    } if
+  } if
+} bind def
+
+/EndEPSF {
+  count op_count sub { pos } repeat	% Clean up stacks
+  countdictstack dict_count sub { end } repeat
+  b4_Inc_state restore
+} bind def
+
+% Check PostScript language level.
+/languagelevel where {
+  pop /gs_languagelevel languagelevel def
+} {
+  /gs_languagelevel 1 def
+} ifelse
+%%EndResource
+%%BeginResource: procset Enscript-Encoding-latin1 1.4 0
+/encoding_vector [
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/space        	/exclam       	/quotedbl     	/numbersign   	
+/dollar       	/percent      	/ampersand    	/quoteright   	
+/parenleft    	/parenright   	/asterisk     	/plus         	
+/comma        	/minus        	/period       	/slash        	
+/zero         	/one          	/two          	/three        	
+/four         	/five         	/six          	/seven        	
+/eight        	/nine         	/colon        	/semicolon    	
+/less         	/equal        	/greater      	/question     	
+/at           	/A            	/B            	/C            	
+/D            	/E            	/F            	/G            	
+/H            	/I            	/J            	/K            	
+/L            	/M            	/N            	/O            	
+/P            	/Q            	/R            	/S            	
+/T            	/U            	/V            	/W            	
+/X            	/Y            	/Z            	/bracketleft  	
+/backslash    	/bracketright 	/asciicircum  	/underscore   	
+/quoteleft    	/a            	/b            	/c            	
+/d            	/e            	/f            	/g            	
+/h            	/i            	/j            	/k            	
+/l            	/m            	/n            	/o            	
+/p            	/q            	/r            	/s            	
+/t            	/u            	/v            	/w            	
+/x            	/y            	/z            	/braceleft    	
+/bar          	/braceright   	/tilde        	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/space        	/exclamdown   	/cent         	/sterling     	
+/currency     	/yen          	/brokenbar    	/section      	
+/dieresis     	/copyright    	/ordfeminine  	/guillemotleft	
+/logicalnot   	/hyphen       	/registered   	/macron       	
+/degree       	/plusminus    	/twosuperior  	/threesuperior	
+/acute        	/mu           	/paragraph    	/bullet       	
+/cedilla      	/dotlessi     	/ordmasculine 	/guillemotright	
+/onequarter   	/onehalf      	/threequarters	/questiondown 	
+/Agrave       	/Aacute       	/Acircumflex  	/Atilde       	
+/Adieresis    	/Aring        	/AE           	/Ccedilla     	
+/Egrave       	/Eacute       	/Ecircumflex  	/Edieresis    	
+/Igrave       	/Iacute       	/Icircumflex  	/Idieresis    	
+/Eth          	/Ntilde       	/Ograve       	/Oacute       	
+/Ocircumflex  	/Otilde       	/Odieresis    	/multiply     	
+/Oslash       	/Ugrave       	/Uacute       	/Ucircumflex  	
+/Udieresis    	/Yacute       	/Thorn        	/germandbls   	
+/agrave       	/aacute       	/acircumflex  	/atilde       	
+/adieresis    	/aring        	/ae           	/ccedilla     	
+/egrave       	/eacute       	/ecircumflex  	/edieresis    	
+/igrave       	/iacute       	/icircumflex  	/idieresis    	
+/eth          	/ntilde       	/ograve       	/oacute       	
+/ocircumflex  	/otilde       	/odieresis    	/divide       	
+/oslash       	/ugrave       	/uacute       	/ucircumflex  	
+/udieresis    	/yacute       	/thorn        	/ydieresis    	
+] def
+%%EndResource
+%%EndProlog
+%%BeginSetup
+%%IncludeResource: font Courier-Bold
+%%IncludeResource: font Courier
+/user_header_p false def
+/HFpt 10 def
+/Courier-Bold /HF-gs-font MF
+/HF /HF-gs-font findfont HFpt scalefont def
+/Courier /F-gs-font MF
+/F-gs-font findfont 7 scalefont setfont
+/#copies 1 def
+%%BeginResource: procset Enscript-Header-simple 1.4 0
+
+/do_header {	% print default simple header
+  gsave
+    d_header_x d_header_y HFpt 3 div add translate
+
+    HF setfont
+    user_header_p {
+      5 0 moveto user_header_str show
+    } {
+      5 0 moveto fname show
+      45 0 rmoveto fmodstr show
+      45 0 rmoveto pagenum 10 string cvs show
+    } ifelse
+
+  grestore
+} def
+%%EndResource
+/d_page_w 744 def
+/d_page_h 564 def
+/d_header_x 0 def
+/d_header_y 549 def
+/d_header_w 744 def
+/d_header_h 15 def
+/d_footer_x 0 def
+/d_footer_y 0 def
+/d_footer_w 744 def
+/d_footer_h 0 def
+/d_output_w 744 def
+/d_output_h 549 def
+/cols 2 def
+%%EndSetup
+%%Page: (1) 1
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 1 def
+/fname (rfc1035.txt) def
+/fdir () def
+/ftail (rfc1035.txt) def
+% User defined strings:
+/fmodstr (Thu Aug %2d 10:23:19 2000) def
+%%EndPageSetup
+do_header
+5 539 M
+(rfc1035rfc1035) s
+5 531 M
+(Press here to go to the top of the rfc 'tree'.) s
+5 523 M
+(Network Working Group                                     P. Mockapetris) s
+5 515 M
+(Request for Comments: 1035                                           ISI) s
+5 507 M
+(                                                           November 1987) s
+5 499 M
+(Obsoletes: RFCs 882, 883, 973) s
+5 491 M
+( ) s
+5 483 M
+(            DOMAIN NAMES - IMPLEMENTATION AND SPECIFICATION) s
+5 475 M
+( ) s
+5 467 M
+( ) s
+5 459 M
+(1. STATUS OF THIS MEMO) s
+5 451 M
+( ) s
+5 443 M
+(This RFC describes the details of the domain system and protocol, and) s
+5 435 M
+(assumes that the reader is familiar with the concepts discussed in a) s
+5 427 M
+(companion RFC, "Domain Names - Concepts and Facilities" [RFC-1034].) s
+5 419 M
+( ) s
+5 411 M
+(The domain system is a mixture of functions and data types which are an) s
+5 403 M
+(official protocol and functions and data types which are still) s
+5 395 M
+(experimental.  Since the domain system is intentionally extensible, new) s
+5 387 M
+(data types and experimental behavior should always be expected in parts) s
+5 379 M
+(of the system beyond the official protocol.  The official protocol parts) s
+5 371 M
+(include standard queries, responses and the Internet class RR data) s
+5 363 M
+(formats \(e.g., host addresses\).  Since the previous RFC set, several) s
+5 355 M
+(definitions have changed, so some previous definitions are obsolete.) s
+5 347 M
+( ) s
+5 339 M
+(Experimental or obsolete features are clearly marked in these RFCs, and) s
+5 331 M
+(such information should be used with caution.) s
+5 323 M
+( ) s
+5 315 M
+(The reader is especially cautioned not to depend on the values which) s
+5 307 M
+(appear in examples to be current or complete, since their purpose is) s
+5 299 M
+(primarily pedagogical.  Distribution of this memo is unlimited.) s
+5 291 M
+( ) s
+5 283 M
+(                           Table of Contents) s
+5 275 M
+( ) s
+5 267 M
+(  1. STATUS OF THIS MEMO                                              1) s
+5 259 M
+(  2. INTRODUCTION                                                     3) s
+5 251 M
+(      2.1. Overview                                                   3) s
+5 243 M
+(      2.2. Common configurations                                      4) s
+5 235 M
+(      2.3. Conventions                                                7) s
+5 227 M
+(          2.3.1. Preferred name syntax                                7) s
+5 219 M
+(          2.3.2. Data Transmission Order                              8) s
+5 211 M
+(          2.3.3. Character Case                                       9) s
+5 203 M
+(          2.3.4. Size limits                                         10) s
+5 195 M
+(  3. DOMAIN NAME SPACE AND RR DEFINITIONS                            10) s
+5 187 M
+(      3.1. Name space definitions                                    10) s
+5 179 M
+(      3.2. RR definitions                                            11) s
+5 171 M
+(          3.2.1. Format                                              11) s
+5 163 M
+(          3.2.2. TYPE values                                         12) s
+5 155 M
+(          3.2.3. QTYPE values                                        12) s
+5 147 M
+(          3.2.4. CLASS values                                        13) s
+5 139 M
+( ) s
+5 131 M
+( ) s
+5 123 M
+( ) s
+5 115 M
+(Mockapetris                                                     [Page 1]) s
+377 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+377 523 M
+( ) s
+377 515 M
+( ) s
+377 507 M
+(          3.2.5. QCLASS values                                       13) s
+377 499 M
+(      3.3. Standard RRs                                              13) s
+377 491 M
+(          3.3.1. CNAME RDATA format                                  14) s
+377 483 M
+(          3.3.2. HINFO RDATA format                                  14) s
+377 475 M
+(          3.3.3. MB RDATA format \(EXPERIMENTAL\)                      14) s
+377 467 M
+(          3.3.4. MD RDATA format \(Obsolete\)                          15) s
+377 459 M
+(          3.3.5. MF RDATA format \(Obsolete\)                          15) s
+377 451 M
+(          3.3.6. MG RDATA format \(EXPERIMENTAL\)                      16) s
+377 443 M
+(          3.3.7. MINFO RDATA format \(EXPERIMENTAL\)                   16) s
+377 435 M
+(          3.3.8. MR RDATA format \(EXPERIMENTAL\)                      17) s
+377 427 M
+(          3.3.9. MX RDATA format                                     17) s
+377 419 M
+(          3.3.10. NULL RDATA format \(EXPERIMENTAL\)                   17) s
+377 411 M
+(          3.3.11. NS RDATA format                                    18) s
+377 403 M
+(          3.3.12. PTR RDATA format                                   18) s
+377 395 M
+(          3.3.13. SOA RDATA format                                   19) s
+377 387 M
+(          3.3.14. TXT RDATA format                                   20) s
+377 379 M
+(      3.4. ARPA Internet specific RRs                                20) s
+377 371 M
+(          3.4.1. A RDATA format                                      20) s
+377 363 M
+(          3.4.2. WKS RDATA format                                    21) s
+377 355 M
+(      3.5. IN-ADDR.ARPA domain                                       22) s
+377 347 M
+(      3.6. Defining new types, classes, and special namespaces       24) s
+377 339 M
+(  4. MESSAGES                                                        25) s
+377 331 M
+(      4.1. Format                                                    25) s
+377 323 M
+(          4.1.1. Header section format                               26) s
+377 315 M
+(          4.1.2. Question section format                             28) s
+377 307 M
+(          4.1.3. Resource record format                              29) s
+377 299 M
+(          4.1.4. Message compression                                 30) s
+377 291 M
+(      4.2. Transport                                                 32) s
+377 283 M
+(          4.2.1. UDP usage                                           32) s
+377 275 M
+(          4.2.2. TCP usage                                           32) s
+377 267 M
+(  5. MASTER FILES                                                    33) s
+377 259 M
+(      5.1. Format                                                    33) s
+377 251 M
+(      5.2. Use of master files to define zones                       35) s
+377 243 M
+(      5.3. Master file example                                       36) s
+377 235 M
+(  6. NAME SERVER IMPLEMENTATION                                      37) s
+377 227 M
+(      6.1. Architecture                                              37) s
+377 219 M
+(          6.1.1. Control                                             37) s
+377 211 M
+(          6.1.2. Database                                            37) s
+377 203 M
+(          6.1.3. Time                                                39) s
+377 195 M
+(      6.2. Standard query processing                                 39) s
+377 187 M
+(      6.3. Zone refresh and reload processing                        39) s
+377 179 M
+(      6.4. Inverse queries \(Optional\)                                40) s
+377 171 M
+(          6.4.1. The contents of inverse queries and responses       40) s
+377 163 M
+(          6.4.2. Inverse query and response example                  41) s
+377 155 M
+(          6.4.3. Inverse query processing                            42) s
+377 147 M
+( ) s
+377 139 M
+( ) s
+377 131 M
+( ) s
+377 123 M
+( ) s
+377 115 M
+( ) s
+377 107 M
+( ) s
+377 99 M
+(Mockapetris                                                     [Page 2]) s
+_R
+S
+%%Page: (2) 2
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 2 def
+/fname (rfc1035.txt) def
+/fdir () def
+/ftail (rfc1035.txt) def
+% User defined strings:
+/fmodstr (Thu Aug %2d 10:23:19 2000) def
+%%EndPageSetup
+do_header
+5 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+5 523 M
+( ) s
+5 515 M
+( ) s
+5 507 M
+(      6.5. Completion queries and responses                          42) s
+5 499 M
+(  7. RESOLVER IMPLEMENTATION                                         43) s
+5 491 M
+(      7.1. Transforming a user request into a query                  43) s
+5 483 M
+(      7.2. Sending the queries                                       44) s
+5 475 M
+(      7.3. Processing responses                                      46) s
+5 467 M
+(      7.4. Using the cache                                           47) s
+5 459 M
+(  8. MAIL SUPPORT                                                    47) s
+5 451 M
+(      8.1. Mail exchange binding                                     48) s
+5 443 M
+(      8.2. Mailbox binding \(Experimental\)                            48) s
+5 435 M
+(  9. REFERENCES and BIBLIOGRAPHY                                     50) s
+5 427 M
+(  Index                                                              54) s
+5 419 M
+( ) s
+5 411 M
+(2. INTRODUCTION) s
+5 403 M
+( ) s
+5 395 M
+(2.1. Overview) s
+5 387 M
+( ) s
+5 379 M
+(The goal of domain names is to provide a mechanism for naming resources) s
+5 371 M
+(in such a way that the names are usable in different hosts, networks,) s
+5 363 M
+(protocol families, internets, and administrative organizations.) s
+5 355 M
+( ) s
+5 347 M
+(From the user's point of view, domain names are useful as arguments to a) s
+5 339 M
+(local agent, called a resolver, which retrieves information associated) s
+5 331 M
+(with the domain name.  Thus a user might ask for the host address or) s
+5 323 M
+(mail information associated with a particular domain name.  To enable) s
+5 315 M
+(the user to request a particular type of information, an appropriate) s
+5 307 M
+(query type is passed to the resolver with the domain name.  To the user,) s
+5 299 M
+(the domain tree is a single information space; the resolver is) s
+5 291 M
+(responsible for hiding the distribution of data among name servers from) s
+5 283 M
+(the user.) s
+5 275 M
+( ) s
+5 267 M
+(From the resolver's point of view, the database that makes up the domain) s
+5 259 M
+(space is distributed among various name servers.  Different parts of the) s
+5 251 M
+(domain space are stored in different name servers, although a particular) s
+5 243 M
+(data item will be stored redundantly in two or more name servers.  The) s
+5 235 M
+(resolver starts with knowledge of at least one name server.  When the) s
+5 227 M
+(resolver processes a user query it asks a known name server for the) s
+5 219 M
+(information; in return, the resolver either receives the desired) s
+5 211 M
+(information or a referral to another name server.  Using these) s
+5 203 M
+(referrals, resolvers learn the identities and contents of other name) s
+5 195 M
+(servers.  Resolvers are responsible for dealing with the distribution of) s
+5 187 M
+(the domain space and dealing with the effects of name server failure by) s
+5 179 M
+(consulting redundant databases in other servers.) s
+5 171 M
+( ) s
+5 163 M
+(Name servers manage two kinds of data.  The first kind of data held in) s
+5 155 M
+(sets called zones; each zone is the complete database for a particular) s
+5 147 M
+("pruned" subtree of the domain space.  This data is called) s
+5 139 M
+(authoritative.  A name server periodically checks to make sure that its) s
+5 131 M
+(zones are up to date, and if not, obtains a new copy of updated zones) s
+5 123 M
+( ) s
+5 115 M
+( ) s
+5 107 M
+( ) s
+5 99 M
+(Mockapetris                                                     [Page 3]) s
+377 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+377 523 M
+( ) s
+377 515 M
+( ) s
+377 507 M
+(from master files stored locally or in another name server.  The second) s
+377 499 M
+(kind of data is cached data which was acquired by a local resolver.) s
+377 491 M
+(This data may be incomplete, but improves the performance of the) s
+377 483 M
+(retrieval process when non-local data is repeatedly accessed.  Cached) s
+377 475 M
+(data is eventually discarded by a timeout mechanism.) s
+377 467 M
+( ) s
+377 459 M
+(This functional structure isolates the problems of user interface,) s
+377 451 M
+(failure recovery, and distribution in the resolvers and isolates the) s
+377 443 M
+(database update and refresh problems in the name servers.) s
+377 435 M
+( ) s
+377 427 M
+(2.2. Common configurations) s
+377 419 M
+( ) s
+377 411 M
+(A host can participate in the domain name system in a number of ways,) s
+377 403 M
+(depending on whether the host runs programs that retrieve information) s
+377 395 M
+(from the domain system, name servers that answer queries from other) s
+377 387 M
+(hosts, or various combinations of both functions.  The simplest, and) s
+377 379 M
+(perhaps most typical, configuration is shown below:) s
+377 371 M
+( ) s
+377 363 M
+(                 Local Host                        |  Foreign) s
+377 355 M
+(                                                   |) s
+377 347 M
+(    +---------+               +----------+         |  +--------+) s
+377 339 M
+(    |         | user queries  |          |queries  |  |        |) s
+377 331 M
+(    |  User   |-------------->|          |---------|->|Foreign |) s
+377 323 M
+(    | Program |               | Resolver |         |  |  Name  |) s
+377 315 M
+(    |         |<--------------|          |<--------|--| Server |) s
+377 307 M
+(    |         | user responses|          |responses|  |        |) s
+377 299 M
+(    +---------+               +----------+         |  +--------+) s
+377 291 M
+(                                |     A            |) s
+377 283 M
+(                cache additions |     | references |) s
+377 275 M
+(                                V     |            |) s
+377 267 M
+(                              +----------+         |) s
+377 259 M
+(                              |  cache   |         |) s
+377 251 M
+(                              +----------+         |) s
+377 243 M
+( ) s
+377 235 M
+(User programs interact with the domain name space through resolvers; the) s
+377 227 M
+(format of user queries and user responses is specific to the host and) s
+377 219 M
+(its operating system.  User queries will typically be operating system) s
+377 211 M
+(calls, and the resolver and its cache will be part of the host operating) s
+377 203 M
+(system.  Less capable hosts may choose to implement the resolver as a) s
+377 195 M
+(subroutine to be linked in with every program that needs its services.) s
+377 187 M
+(Resolvers answer user queries with information they acquire via queries) s
+377 179 M
+(to foreign name servers and the local cache.) s
+377 171 M
+( ) s
+377 163 M
+(Note that the resolver may have to make several queries to several) s
+377 155 M
+(different foreign name servers to answer a particular user query, and) s
+377 147 M
+(hence the resolution of a user query may involve several network) s
+377 139 M
+(accesses and an arbitrary amount of time.  The queries to foreign name) s
+377 131 M
+(servers and the corresponding responses have a standard format described) s
+377 123 M
+( ) s
+377 115 M
+( ) s
+377 107 M
+( ) s
+377 99 M
+(Mockapetris                                                     [Page 4]) s
+_R
+S
+%%Page: (3) 3
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 3 def
+/fname (rfc1035.txt) def
+/fdir () def
+/ftail (rfc1035.txt) def
+% User defined strings:
+/fmodstr (Thu Aug %2d 10:23:19 2000) def
+%%EndPageSetup
+do_header
+5 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+5 523 M
+( ) s
+5 515 M
+( ) s
+5 507 M
+(in this memo, and may be datagrams.) s
+5 499 M
+( ) s
+5 491 M
+(Depending on its capabilities, a name server could be a stand alone) s
+5 483 M
+(program on a dedicated machine or a process or processes on a large) s
+5 475 M
+(timeshared host.  A simple configuration might be:) s
+5 467 M
+( ) s
+5 459 M
+(                 Local Host                        |  Foreign) s
+5 451 M
+(                                                   |) s
+5 443 M
+(      +---------+                                  |) s
+5 435 M
+(     /         /|                                  |) s
+5 427 M
+(    +---------+ |             +----------+         |  +--------+) s
+5 419 M
+(    |         | |             |          |responses|  |        |) s
+5 411 M
+(    |         | |             |   Name   |---------|->|Foreign |) s
+5 403 M
+(    |  Master |-------------->|  Server  |         |  |Resolver|) s
+5 395 M
+(    |  files  | |             |          |<--------|--|        |) s
+5 387 M
+(    |         |/              |          | queries |  +--------+) s
+5 379 M
+(    +---------+               +----------+         |) s
+5 371 M
+( ) s
+5 363 M
+(Here a primary name server acquires information about one or more zones) s
+5 355 M
+(by reading master files from its local file system, and answers queries) s
+5 347 M
+(about those zones that arrive from foreign resolvers.) s
+5 339 M
+( ) s
+5 331 M
+(The DNS requires that all zones be redundantly supported by more than) s
+5 323 M
+(one name server.  Designated secondary servers can acquire zones and) s
+5 315 M
+(check for updates from the primary server using the zone transfer) s
+5 307 M
+(protocol of the DNS.  This configuration is shown below:) s
+5 299 M
+( ) s
+5 291 M
+(                 Local Host                        |  Foreign) s
+5 283 M
+(                                                   |) s
+5 275 M
+(      +---------+                                  |) s
+5 267 M
+(     /         /|                                  |) s
+5 259 M
+(    +---------+ |             +----------+         |  +--------+) s
+5 251 M
+(    |         | |             |          |responses|  |        |) s
+5 243 M
+(    |         | |             |   Name   |---------|->|Foreign |) s
+5 235 M
+(    |  Master |-------------->|  Server  |         |  |Resolver|) s
+5 227 M
+(    |  files  | |             |          |<--------|--|        |) s
+5 219 M
+(    |         |/              |          | queries |  +--------+) s
+5 211 M
+(    +---------+               +----------+         |) s
+5 203 M
+(                                A     |maintenance |  +--------+) s
+5 195 M
+(                                |     +------------|->|        |) s
+5 187 M
+(                                |      queries     |  |Foreign |) s
+5 179 M
+(                                |                  |  |  Name  |) s
+5 171 M
+(                                +------------------|--| Server |) s
+5 163 M
+(                             maintenance responses |  +--------+) s
+5 155 M
+( ) s
+5 147 M
+(In this configuration, the name server periodically establishes a) s
+5 139 M
+(virtual circuit to a foreign name server to acquire a copy of a zone or) s
+5 131 M
+(to check that an existing copy has not changed.  The messages sent for) s
+5 123 M
+( ) s
+5 115 M
+( ) s
+5 107 M
+( ) s
+5 99 M
+(Mockapetris                                                     [Page 5]) s
+377 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+377 523 M
+( ) s
+377 515 M
+( ) s
+377 507 M
+(these maintenance activities follow the same form as queries and) s
+377 499 M
+(responses, but the message sequences are somewhat different.) s
+377 491 M
+( ) s
+377 483 M
+(The information flow in a host that supports all aspects of the domain) s
+377 475 M
+(name system is shown below:) s
+377 467 M
+( ) s
+377 459 M
+(                 Local Host                        |  Foreign) s
+377 451 M
+(                                                   |) s
+377 443 M
+(    +---------+               +----------+         |  +--------+) s
+377 435 M
+(    |         | user queries  |          |queries  |  |        |) s
+377 427 M
+(    |  User   |-------------->|          |---------|->|Foreign |) s
+377 419 M
+(    | Program |               | Resolver |         |  |  Name  |) s
+377 411 M
+(    |         |<--------------|          |<--------|--| Server |) s
+377 403 M
+(    |         | user responses|          |responses|  |        |) s
+377 395 M
+(    +---------+               +----------+         |  +--------+) s
+377 387 M
+(                                |     A            |) s
+377 379 M
+(                cache additions |     | references |) s
+377 371 M
+(                                V     |            |) s
+377 363 M
+(                              +----------+         |) s
+377 355 M
+(                              |  Shared  |         |) s
+377 347 M
+(                              | database |         |) s
+377 339 M
+(                              +----------+         |) s
+377 331 M
+(                                A     |            |) s
+377 323 M
+(      +---------+     refreshes |     | references |) s
+377 315 M
+(     /         /|               |     V            |) s
+377 307 M
+(    +---------+ |             +----------+         |  +--------+) s
+377 299 M
+(    |         | |             |          |responses|  |        |) s
+377 291 M
+(    |         | |             |   Name   |---------|->|Foreign |) s
+377 283 M
+(    |  Master |-------------->|  Server  |         |  |Resolver|) s
+377 275 M
+(    |  files  | |             |          |<--------|--|        |) s
+377 267 M
+(    |         |/              |          | queries |  +--------+) s
+377 259 M
+(    +---------+               +----------+         |) s
+377 251 M
+(                                A     |maintenance |  +--------+) s
+377 243 M
+(                                |     +------------|->|        |) s
+377 235 M
+(                                |      queries     |  |Foreign |) s
+377 227 M
+(                                |                  |  |  Name  |) s
+377 219 M
+(                                +------------------|--| Server |) s
+377 211 M
+(                             maintenance responses |  +--------+) s
+377 203 M
+( ) s
+377 195 M
+(The shared database holds domain space data for the local name server) s
+377 187 M
+(and resolver.  The contents of the shared database will typically be a) s
+377 179 M
+(mixture of authoritative data maintained by the periodic refresh) s
+377 171 M
+(operations of the name server and cached data from previous resolver) s
+377 163 M
+(requests.  The structure of the domain data and the necessity for) s
+377 155 M
+(synchronization between name servers and resolvers imply the general) s
+377 147 M
+(characteristics of this database, but the actual format is up to the) s
+377 139 M
+(local implementor.) s
+377 131 M
+( ) s
+377 123 M
+( ) s
+377 115 M
+( ) s
+377 107 M
+( ) s
+377 99 M
+(Mockapetris                                                     [Page 6]) s
+_R
+S
+%%Page: (4) 4
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 4 def
+/fname (rfc1035.txt) def
+/fdir () def
+/ftail (rfc1035.txt) def
+% User defined strings:
+/fmodstr (Thu Aug %2d 10:23:19 2000) def
+%%EndPageSetup
+do_header
+5 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+5 523 M
+( ) s
+5 515 M
+( ) s
+5 507 M
+(Information flow can also be tailored so that a group of hosts act) s
+5 499 M
+(together to optimize activities.  Sometimes this is done to offload less) s
+5 491 M
+(capable hosts so that they do not have to implement a full resolver.) s
+5 483 M
+(This can be appropriate for PCs or hosts which want to minimize the) s
+5 475 M
+(amount of new network code which is required.  This scheme can also) s
+5 467 M
+(allow a group of hosts can share a small number of caches rather than) s
+5 459 M
+(maintaining a large number of separate caches, on the premise that the) s
+5 451 M
+(centralized caches will have a higher hit ratio.  In either case,) s
+5 443 M
+(resolvers are replaced with stub resolvers which act as front ends to) s
+5 435 M
+(resolvers located in a recursive server in one or more name servers) s
+5 427 M
+(known to perform that service:) s
+5 419 M
+( ) s
+5 411 M
+(                   Local Hosts                     |  Foreign) s
+5 403 M
+(                                                   |) s
+5 395 M
+(    +---------+                                    |) s
+5 387 M
+(    |         | responses                          |) s
+5 379 M
+(    | Stub    |<--------------------+              |) s
+5 371 M
+(    | Resolver|                     |              |) s
+5 363 M
+(    |         |----------------+    |              |) s
+5 355 M
+(    +---------+ recursive      |    |              |) s
+5 347 M
+(                queries        |    |              |) s
+5 339 M
+(                               V    |              |) s
+5 331 M
+(    +---------+ recursive     +----------+         |  +--------+) s
+5 323 M
+(    |         | queries       |          |queries  |  |        |) s
+5 315 M
+(    | Stub    |-------------->| Recursive|---------|->|Foreign |) s
+5 307 M
+(    | Resolver|               | Server   |         |  |  Name  |) s
+5 299 M
+(    |         |<--------------|          |<--------|--| Server |) s
+5 291 M
+(    +---------+ responses     |          |responses|  |        |) s
+5 283 M
+(                              +----------+         |  +--------+) s
+5 275 M
+(                              |  Central |         |) s
+5 267 M
+(                              |   cache  |         |) s
+5 259 M
+(                              +----------+         |) s
+5 251 M
+( ) s
+5 243 M
+(In any case, note that domain components are always replicated for) s
+5 235 M
+(reliability whenever possible.) s
+5 227 M
+( ) s
+5 219 M
+(2.3. Conventions) s
+5 211 M
+( ) s
+5 203 M
+(The domain system has several conventions dealing with low-level, but) s
+5 195 M
+(fundamental, issues.  While the implementor is free to violate these) s
+5 187 M
+(conventions WITHIN HIS OWN SYSTEM, he must observe these conventions in) s
+5 179 M
+(ALL behavior observed from other hosts.) s
+5 171 M
+( ) s
+5 163 M
+(2.3.1. Preferred name syntax) s
+5 155 M
+( ) s
+5 147 M
+(The DNS specifications attempt to be as general as possible in the rules) s
+5 139 M
+(for constructing domain names.  The idea is that the name of any) s
+5 131 M
+(existing object can be expressed as a domain name with minimal changes.) s
+5 123 M
+( ) s
+5 115 M
+( ) s
+5 107 M
+( ) s
+5 99 M
+(Mockapetris                                                     [Page 7]) s
+377 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+377 523 M
+( ) s
+377 515 M
+( ) s
+377 507 M
+(However, when assigning a domain name for an object, the prudent user) s
+377 499 M
+(will select a name which satisfies both the rules of the domain system) s
+377 491 M
+(and any existing rules for the object, whether these rules are published) s
+377 483 M
+(or implied by existing programs.) s
+377 475 M
+( ) s
+377 467 M
+(For example, when naming a mail domain, the user should satisfy both the) s
+377 459 M
+(rules of this memo and those in RFC-822.  When creating a new host name,) s
+377 451 M
+(the old rules for HOSTS.TXT should be followed.  This avoids problems) s
+377 443 M
+(when old software is converted to use domain names.) s
+377 435 M
+( ) s
+377 427 M
+(The following syntax will result in fewer problems with many) s
+377 419 M
+( ) s
+377 411 M
+(applications that use domain names \(e.g., mail, TELNET\).) s
+377 403 M
+( ) s
+377 395 M
+(<domain> ::= <subdomain> | " ") s
+377 387 M
+( ) s
+377 379 M
+(<subdomain> ::= <label> | <subdomain> "." <label>) s
+377 371 M
+( ) s
+377 363 M
+(<label> ::= <letter> [ [ <ldh-str> ] <let-dig> ]) s
+377 355 M
+( ) s
+377 347 M
+(<ldh-str> ::= <let-dig-hyp> | <let-dig-hyp> <ldh-str>) s
+377 339 M
+( ) s
+377 331 M
+(<let-dig-hyp> ::= <let-dig> | "-") s
+377 323 M
+( ) s
+377 315 M
+(<let-dig> ::= <letter> | <digit>) s
+377 307 M
+( ) s
+377 299 M
+(<letter> ::= any one of the 52 alphabetic characters A through Z in) s
+377 291 M
+(upper case and a through z in lower case) s
+377 283 M
+( ) s
+377 275 M
+(<digit> ::= any one of the ten digits 0 through 9) s
+377 267 M
+( ) s
+377 259 M
+(Note that while upper and lower case letters are allowed in domain) s
+377 251 M
+(names, no significance is attached to the case.  That is, two names with) s
+377 243 M
+(the same spelling but different case are to be treated as if identical.) s
+377 235 M
+( ) s
+377 227 M
+(The labels must follow the rules for ARPANET host names.  They must) s
+377 219 M
+(start with a letter, end with a letter or digit, and have as interior) s
+377 211 M
+(characters only letters, digits, and hyphen.  There are also some) s
+377 203 M
+(restrictions on the length.  Labels must be 63 characters or less.) s
+377 195 M
+( ) s
+377 187 M
+(For example, the following strings identify hosts in the Internet:) s
+377 179 M
+( ) s
+377 171 M
+(A.ISI.EDU XX.LCS.MIT.EDU SRI-NIC.ARPA) s
+377 163 M
+( ) s
+377 155 M
+(2.3.2. Data Transmission Order) s
+377 147 M
+( ) s
+377 139 M
+(The order of transmission of the header and data described in this) s
+377 131 M
+(document is resolved to the octet level.  Whenever a diagram shows a) s
+377 123 M
+( ) s
+377 115 M
+( ) s
+377 107 M
+( ) s
+377 99 M
+(Mockapetris                                                     [Page 8]) s
+_R
+S
+%%Page: (5) 5
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 5 def
+/fname (rfc1035.txt) def
+/fdir () def
+/ftail (rfc1035.txt) def
+% User defined strings:
+/fmodstr (Thu Aug %2d 10:23:19 2000) def
+%%EndPageSetup
+do_header
+5 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+5 523 M
+( ) s
+5 515 M
+( ) s
+5 507 M
+(group of octets, the order of transmission of those octets is the normal) s
+5 499 M
+(order in which they are read in English.  For example, in the following) s
+5 491 M
+(diagram, the octets are transmitted in the order they are numbered.) s
+5 483 M
+( ) s
+5 475 M
+(     0                   1) s
+5 467 M
+(     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5) s
+5 459 M
+(    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 451 M
+(    |       1       |       2       |) s
+5 443 M
+(    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 435 M
+(    |       3       |       4       |) s
+5 427 M
+(    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 419 M
+(    |       5       |       6       |) s
+5 411 M
+(    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 403 M
+( ) s
+5 395 M
+(Whenever an octet represents a numeric quantity, the left most bit in) s
+5 387 M
+(the diagram is the high order or most significant bit.  That is, the bit) s
+5 379 M
+(labeled 0 is the most significant bit.  For example, the following) s
+5 371 M
+(diagram represents the value 170 \(decimal\).) s
+5 363 M
+( ) s
+5 355 M
+(     0 1 2 3 4 5 6 7) s
+5 347 M
+(    +-+-+-+-+-+-+-+-+) s
+5 339 M
+(    |1 0 1 0 1 0 1 0|) s
+5 331 M
+(    +-+-+-+-+-+-+-+-+) s
+5 323 M
+( ) s
+5 315 M
+(Similarly, whenever a multi-octet field represents a numeric quantity) s
+5 307 M
+(the left most bit of the whole field is the most significant bit.  When) s
+5 299 M
+(a multi-octet quantity is transmitted the most significant octet is) s
+5 291 M
+(transmitted first.) s
+5 283 M
+( ) s
+5 275 M
+(2.3.3. Character Case) s
+5 267 M
+( ) s
+5 259 M
+(For all parts of the DNS that are part of the official protocol, all) s
+5 251 M
+(comparisons between character strings \(e.g., labels, domain names, etc.\)) s
+5 243 M
+(are done in a case-insensitive manner.  At present, this rule is in) s
+5 235 M
+(force throughout the domain system without exception.  However, future) s
+5 227 M
+(additions beyond current usage may need to use the full binary octet) s
+5 219 M
+(capabilities in names, so attempts to store domain names in 7-bit ASCII) s
+5 211 M
+(or use of special bytes to terminate labels, etc., should be avoided.) s
+5 203 M
+( ) s
+5 195 M
+(When data enters the domain system, its original case should be) s
+5 187 M
+(preserved whenever possible.  In certain circumstances this cannot be) s
+5 179 M
+(done.  For example, if two RRs are stored in a database, one at x.y and) s
+5 171 M
+(one at X.Y, they are actually stored at the same place in the database,) s
+5 163 M
+(and hence only one casing would be preserved.  The basic rule is that) s
+5 155 M
+(case can be discarded only when data is used to define structure in a) s
+5 147 M
+(database, and two names are identical when compared in a case) s
+5 139 M
+(insensitive manner.) s
+5 131 M
+( ) s
+5 123 M
+( ) s
+5 115 M
+( ) s
+5 107 M
+( ) s
+5 99 M
+(Mockapetris                                                     [Page 9]) s
+377 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+377 523 M
+( ) s
+377 515 M
+( ) s
+377 507 M
+(Loss of case sensitive data must be minimized.  Thus while data for x.y) s
+377 499 M
+(and X.Y may both be stored under a single location x.y or X.Y, data for) s
+377 491 M
+(a.x and B.X would never be stored under A.x, A.X, b.x, or b.X.  In) s
+377 483 M
+(general, this preserves the case of the first label of a domain name,) s
+377 475 M
+(but forces standardization of interior node labels.) s
+377 467 M
+( ) s
+377 459 M
+(Systems administrators who enter data into the domain database should) s
+377 451 M
+(take care to represent the data they supply to the domain system in a) s
+377 443 M
+(case-consistent manner if their system is case-sensitive.  The data) s
+377 435 M
+(distribution system in the domain system will ensure that consistent) s
+377 427 M
+(representations are preserved.) s
+377 419 M
+( ) s
+377 411 M
+(2.3.4. Size limits) s
+377 403 M
+( ) s
+377 395 M
+(Various objects and parameters in the DNS have size limits.  They are) s
+377 387 M
+(listed below.  Some could be easily changed, others are more) s
+377 379 M
+(fundamental.) s
+377 371 M
+( ) s
+377 363 M
+(labels          63 octets or less) s
+377 355 M
+( ) s
+377 347 M
+(names           255 octets or less) s
+377 339 M
+( ) s
+377 331 M
+(TTL             positive values of a signed 32 bit number.) s
+377 323 M
+( ) s
+377 315 M
+(UDP messages    512 octets or less) s
+377 307 M
+( ) s
+377 299 M
+(3. DOMAIN NAME SPACE AND RR DEFINITIONS) s
+377 291 M
+( ) s
+377 283 M
+(3.1. Name space definitions) s
+377 275 M
+( ) s
+377 267 M
+(Domain names in messages are expressed in terms of a sequence of labels.) s
+377 259 M
+(Each label is represented as a one octet length field followed by that) s
+377 251 M
+(number of octets.  Since every domain name ends with the null label of) s
+377 243 M
+(the root, a domain name is terminated by a length byte of zero.  The) s
+377 235 M
+(high order two bits of every length octet must be zero, and the) s
+377 227 M
+(remaining six bits of the length field limit the label to 63 octets or) s
+377 219 M
+(less.) s
+377 211 M
+( ) s
+377 203 M
+(To simplify implementations, the total length of a domain name \(i.e.,) s
+377 195 M
+(label octets and label length octets\) is restricted to 255 octets or) s
+377 187 M
+(less.) s
+377 179 M
+( ) s
+377 171 M
+(Although labels can contain any 8 bit values in octets that make up a) s
+377 163 M
+(label, it is strongly recommended that labels follow the preferred) s
+377 155 M
+(syntax described elsewhere in this memo, which is compatible with) s
+377 147 M
+(existing host naming conventions.  Name servers and resolvers must) s
+377 139 M
+(compare labels in a case-insensitive manner \(i.e., A=a\), assuming ASCII) s
+377 131 M
+(with zero parity.  Non-alphabetic codes must match exactly.) s
+377 123 M
+( ) s
+377 115 M
+( ) s
+377 107 M
+( ) s
+377 99 M
+(Mockapetris                                                    [Page 10]) s
+_R
+S
+%%Page: (6) 6
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 6 def
+/fname (rfc1035.txt) def
+/fdir () def
+/ftail (rfc1035.txt) def
+% User defined strings:
+/fmodstr (Thu Aug %2d 10:23:19 2000) def
+%%EndPageSetup
+do_header
+5 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+5 523 M
+( ) s
+5 515 M
+( ) s
+5 507 M
+(3.2. RR definitions) s
+5 499 M
+( ) s
+5 491 M
+(3.2.1. Format) s
+5 483 M
+( ) s
+5 475 M
+(All RRs have the same top level format shown below:) s
+5 467 M
+( ) s
+5 459 M
+(                                    1  1  1  1  1  1) s
+5 451 M
+(      0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5) s
+5 443 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 435 M
+(    |                                               |) s
+5 427 M
+(    /                                               /) s
+5 419 M
+(    /                      NAME                     /) s
+5 411 M
+(    |                                               |) s
+5 403 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 395 M
+(    |                      TYPE                     |) s
+5 387 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 379 M
+(    |                     CLASS                     |) s
+5 371 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 363 M
+(    |                      TTL                      |) s
+5 355 M
+(    |                                               |) s
+5 347 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 339 M
+(    |                   RDLENGTH                    |) s
+5 331 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--|) s
+5 323 M
+(    /                     RDATA                     /) s
+5 315 M
+(    /                                               /) s
+5 307 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 299 M
+( ) s
+5 291 M
+( ) s
+5 283 M
+(where:) s
+5 275 M
+( ) s
+5 267 M
+(NAME            an owner name, i.e., the name of the node to which this) s
+5 259 M
+(                resource record pertains.) s
+5 251 M
+( ) s
+5 243 M
+(TYPE            two octets containing one of the RR TYPE codes.) s
+5 235 M
+( ) s
+5 227 M
+(CLASS           two octets containing one of the RR CLASS codes.) s
+5 219 M
+( ) s
+5 211 M
+(TTL             a 32 bit signed integer that specifies the time interval) s
+5 203 M
+(                that the resource record may be cached before the source) s
+5 195 M
+(                of the information should again be consulted.  Zero) s
+5 187 M
+(                values are interpreted to mean that the RR can only be) s
+5 179 M
+(                used for the transaction in progress, and should not be) s
+5 171 M
+(                cached.  For example, SOA records are always distributed) s
+5 163 M
+(                with a zero TTL to prohibit caching.  Zero values can) s
+5 155 M
+(                also be used for extremely volatile data.) s
+5 147 M
+( ) s
+5 139 M
+(RDLENGTH        an unsigned 16 bit integer that specifies the length in) s
+5 131 M
+(                octets of the RDATA field.) s
+5 123 M
+( ) s
+5 115 M
+( ) s
+5 107 M
+( ) s
+5 99 M
+(Mockapetris                                                    [Page 11]) s
+377 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+377 523 M
+( ) s
+377 515 M
+( ) s
+377 507 M
+(RDATA           a variable length string of octets that describes the) s
+377 499 M
+(                resource.  The format of this information varies) s
+377 491 M
+(                according to the TYPE and CLASS of the resource record.) s
+377 483 M
+( ) s
+377 475 M
+(3.2.2. TYPE values) s
+377 467 M
+( ) s
+377 459 M
+(TYPE fields are used in resource records.  Note that these types are a) s
+377 451 M
+(subset of QTYPEs.) s
+377 443 M
+( ) s
+377 435 M
+(TYPE            value and meaning) s
+377 427 M
+( ) s
+377 419 M
+(A               1 a host address) s
+377 411 M
+( ) s
+377 403 M
+(NS              2 an authoritative name server) s
+377 395 M
+( ) s
+377 387 M
+(MD              3 a mail destination \(Obsolete - use MX\)) s
+377 379 M
+( ) s
+377 371 M
+(MF              4 a mail forwarder \(Obsolete - use MX\)) s
+377 363 M
+( ) s
+377 355 M
+(CNAME           5 the canonical name for an alias) s
+377 347 M
+( ) s
+377 339 M
+(SOA             6 marks the start of a zone of authority) s
+377 331 M
+( ) s
+377 323 M
+(MB              7 a mailbox domain name \(EXPERIMENTAL\)) s
+377 315 M
+( ) s
+377 307 M
+(MG              8 a mail group member \(EXPERIMENTAL\)) s
+377 299 M
+( ) s
+377 291 M
+(MR              9 a mail rename domain name \(EXPERIMENTAL\)) s
+377 283 M
+( ) s
+377 275 M
+(NULL            10 a null RR \(EXPERIMENTAL\)) s
+377 267 M
+( ) s
+377 259 M
+(WKS             11 a well known service description) s
+377 251 M
+( ) s
+377 243 M
+(PTR             12 a domain name pointer) s
+377 235 M
+( ) s
+377 227 M
+(HINFO           13 host information) s
+377 219 M
+( ) s
+377 211 M
+(MINFO           14 mailbox or mail list information) s
+377 203 M
+( ) s
+377 195 M
+(MX              15 mail exchange) s
+377 187 M
+( ) s
+377 179 M
+(TXT             16 text strings) s
+377 171 M
+( ) s
+377 163 M
+(3.2.3. QTYPE values) s
+377 155 M
+( ) s
+377 147 M
+(QTYPE fields appear in the question part of a query.  QTYPES are a) s
+377 139 M
+(superset of TYPEs, hence all TYPEs are valid QTYPEs.  In addition, the) s
+377 131 M
+(following QTYPEs are defined:) s
+377 123 M
+( ) s
+377 115 M
+( ) s
+377 107 M
+( ) s
+377 99 M
+(Mockapetris                                                    [Page 12]) s
+_R
+S
+%%Page: (7) 7
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 7 def
+/fname (rfc1035.txt) def
+/fdir () def
+/ftail (rfc1035.txt) def
+% User defined strings:
+/fmodstr (Thu Aug %2d 10:23:19 2000) def
+%%EndPageSetup
+do_header
+5 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+5 523 M
+( ) s
+5 515 M
+( ) s
+5 507 M
+(AXFR            252 A request for a transfer of an entire zone) s
+5 499 M
+( ) s
+5 491 M
+(MAILB           253 A request for mailbox-related records \(MB, MG or MR\)) s
+5 483 M
+( ) s
+5 475 M
+(MAILA           254 A request for mail agent RRs \(Obsolete - see MX\)) s
+5 467 M
+( ) s
+5 459 M
+(*               255 A request for all records) s
+5 451 M
+( ) s
+5 443 M
+(3.2.4. CLASS values) s
+5 435 M
+( ) s
+5 427 M
+(CLASS fields appear in resource records.  The following CLASS mnemonics) s
+5 419 M
+(and values are defined:) s
+5 411 M
+( ) s
+5 403 M
+(IN              1 the Internet) s
+5 395 M
+( ) s
+5 387 M
+(CS              2 the CSNET class \(Obsolete - used only for examples in) s
+5 379 M
+(                some obsolete RFCs\)) s
+5 371 M
+( ) s
+5 363 M
+(CH              3 the CHAOS class) s
+5 355 M
+( ) s
+5 347 M
+(HS              4 Hesiod [Dyer 87]) s
+5 339 M
+( ) s
+5 331 M
+(3.2.5. QCLASS values) s
+5 323 M
+( ) s
+5 315 M
+(QCLASS fields appear in the question section of a query.  QCLASS values) s
+5 307 M
+(are a superset of CLASS values; every CLASS is a valid QCLASS.  In) s
+5 299 M
+(addition to CLASS values, the following QCLASSes are defined:) s
+5 291 M
+( ) s
+5 283 M
+(*               255 any class) s
+5 275 M
+( ) s
+5 267 M
+(3.3. Standard RRs) s
+5 259 M
+( ) s
+5 251 M
+(The following RR definitions are expected to occur, at least) s
+5 243 M
+(potentially, in all classes.  In particular, NS, SOA, CNAME, and PTR) s
+5 235 M
+(will be used in all classes, and have the same format in all classes.) s
+5 227 M
+(Because their RDATA format is known, all domain names in the RDATA) s
+5 219 M
+(section of these RRs may be compressed.) s
+5 211 M
+( ) s
+5 203 M
+(<domain-name> is a domain name represented as a series of labels, and) s
+5 195 M
+(terminated by a label with zero length.  <character-string> is a single) s
+5 187 M
+(length octet followed by that number of characters.  <character-string>) s
+5 179 M
+(is treated as binary information, and can be up to 256 characters in) s
+5 171 M
+(length \(including the length octet\).) s
+5 163 M
+( ) s
+5 155 M
+( ) s
+5 147 M
+( ) s
+5 139 M
+( ) s
+5 131 M
+( ) s
+5 123 M
+( ) s
+5 115 M
+( ) s
+5 107 M
+( ) s
+5 99 M
+(Mockapetris                                                    [Page 13]) s
+377 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+377 523 M
+( ) s
+377 515 M
+( ) s
+377 507 M
+(3.3.1. CNAME RDATA format) s
+377 499 M
+( ) s
+377 491 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 483 M
+(    /                     CNAME                     /) s
+377 475 M
+(    /                                               /) s
+377 467 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 459 M
+( ) s
+377 451 M
+(where:) s
+377 443 M
+( ) s
+377 435 M
+(CNAME           A <domain-name> which specifies the canonical or primary) s
+377 427 M
+(                name for the owner.  The owner name is an alias.) s
+377 419 M
+( ) s
+377 411 M
+(CNAME RRs cause no additional section processing, but name servers may) s
+377 403 M
+(choose to restart the query at the canonical name in certain cases.  See) s
+377 395 M
+(the description of name server logic in [RFC-1034] for details.) s
+377 387 M
+( ) s
+377 379 M
+(3.3.2. HINFO RDATA format) s
+377 371 M
+( ) s
+377 363 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 355 M
+(    /                      CPU                      /) s
+377 347 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 339 M
+(    /                       OS                      /) s
+377 331 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 323 M
+( ) s
+377 315 M
+(where:) s
+377 307 M
+( ) s
+377 299 M
+(CPU             A <character-string> which specifies the CPU type.) s
+377 291 M
+( ) s
+377 283 M
+(OS              A <character-string> which specifies the operating) s
+377 275 M
+(                system type.) s
+377 267 M
+( ) s
+377 259 M
+(Standard values for CPU and OS can be found in [RFC-1010].) s
+377 251 M
+( ) s
+377 243 M
+(HINFO records are used to acquire general information about a host.  The) s
+377 235 M
+(main use is for protocols such as FTP that can use special procedures) s
+377 227 M
+(when talking between machines or operating systems of the same type.) s
+377 219 M
+( ) s
+377 211 M
+(3.3.3. MB RDATA format \(EXPERIMENTAL\)) s
+377 203 M
+( ) s
+377 195 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 187 M
+(    /                   MADNAME                     /) s
+377 179 M
+(    /                                               /) s
+377 171 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 163 M
+( ) s
+377 155 M
+(where:) s
+377 147 M
+( ) s
+377 139 M
+(MADNAME         A <domain-name> which specifies a host which has the) s
+377 131 M
+(                specified mailbox.) s
+377 123 M
+( ) s
+377 115 M
+( ) s
+377 107 M
+( ) s
+377 99 M
+(Mockapetris                                                    [Page 14]) s
+_R
+S
+%%Page: (8) 8
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 8 def
+/fname (rfc1035.txt) def
+/fdir () def
+/ftail (rfc1035.txt) def
+% User defined strings:
+/fmodstr (Thu Aug %2d 10:23:19 2000) def
+%%EndPageSetup
+do_header
+5 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+5 523 M
+( ) s
+5 515 M
+( ) s
+5 507 M
+(MB records cause additional section processing which looks up an A type) s
+5 499 M
+(RRs corresponding to MADNAME.) s
+5 491 M
+( ) s
+5 483 M
+(3.3.4. MD RDATA format \(Obsolete\)) s
+5 475 M
+( ) s
+5 467 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 459 M
+(    /                   MADNAME                     /) s
+5 451 M
+(    /                                               /) s
+5 443 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 435 M
+( ) s
+5 427 M
+(where:) s
+5 419 M
+( ) s
+5 411 M
+(MADNAME         A <domain-name> which specifies a host which has a mail) s
+5 403 M
+(                agent for the domain which should be able to deliver) s
+5 395 M
+(                mail for the domain.) s
+5 387 M
+( ) s
+5 379 M
+(MD records cause additional section processing which looks up an A type) s
+5 371 M
+(record corresponding to MADNAME.) s
+5 363 M
+( ) s
+5 355 M
+(MD is obsolete.  See the definition of MX and [RFC-974] for details of) s
+5 347 M
+(the new scheme.  The recommended policy for dealing with MD RRs found in) s
+5 339 M
+(a master file is to reject them, or to convert them to MX RRs with a) s
+5 331 M
+(preference of 0.) s
+5 323 M
+( ) s
+5 315 M
+(3.3.5. MF RDATA format \(Obsolete\)) s
+5 307 M
+( ) s
+5 299 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 291 M
+(    /                   MADNAME                     /) s
+5 283 M
+(    /                                               /) s
+5 275 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 267 M
+( ) s
+5 259 M
+(where:) s
+5 251 M
+( ) s
+5 243 M
+(MADNAME         A <domain-name> which specifies a host which has a mail) s
+5 235 M
+(                agent for the domain which will accept mail for) s
+5 227 M
+(                forwarding to the domain.) s
+5 219 M
+( ) s
+5 211 M
+(MF records cause additional section processing which looks up an A type) s
+5 203 M
+(record corresponding to MADNAME.) s
+5 195 M
+( ) s
+5 187 M
+(MF is obsolete.  See the definition of MX and [RFC-974] for details ofw) s
+5 179 M
+(the new scheme.  The recommended policy for dealing with MD RRs found in) s
+5 171 M
+(a master file is to reject them, or to convert them to MX RRs with a) s
+5 163 M
+(preference of 10.) s
+5 155 M
+( ) s
+5 147 M
+( ) s
+5 139 M
+( ) s
+5 131 M
+( ) s
+5 123 M
+( ) s
+5 115 M
+( ) s
+5 107 M
+( ) s
+5 99 M
+(Mockapetris                                                    [Page 15]) s
+377 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+377 523 M
+( ) s
+377 515 M
+( ) s
+377 507 M
+(3.3.6. MG RDATA format \(EXPERIMENTAL\)) s
+377 499 M
+( ) s
+377 491 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 483 M
+(    /                   MGMNAME                     /) s
+377 475 M
+(    /                                               /) s
+377 467 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 459 M
+( ) s
+377 451 M
+(where:) s
+377 443 M
+( ) s
+377 435 M
+(MGMNAME         A <domain-name> which specifies a mailbox which is a) s
+377 427 M
+(                member of the mail group specified by the domain name.) s
+377 419 M
+( ) s
+377 411 M
+(MG records cause no additional section processing.) s
+377 403 M
+( ) s
+377 395 M
+(3.3.7. MINFO RDATA format \(EXPERIMENTAL\)) s
+377 387 M
+( ) s
+377 379 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 371 M
+(    /                    RMAILBX                    /) s
+377 363 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 355 M
+(    /                    EMAILBX                    /) s
+377 347 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 339 M
+( ) s
+377 331 M
+(where:) s
+377 323 M
+( ) s
+377 315 M
+(RMAILBX         A <domain-name> which specifies a mailbox which is) s
+377 307 M
+(                responsible for the mailing list or mailbox.  If this) s
+377 299 M
+(                domain name names the root, the owner of the MINFO RR is) s
+377 291 M
+(                responsible for itself.  Note that many existing mailing) s
+377 283 M
+(                lists use a mailbox X-request for the RMAILBX field of) s
+377 275 M
+(                mailing list X, e.g., Msgroup-request for Msgroup.  This) s
+377 267 M
+(                field provides a more general mechanism.) s
+377 259 M
+( ) s
+377 251 M
+( ) s
+377 243 M
+(EMAILBX         A <domain-name> which specifies a mailbox which is to) s
+377 235 M
+(                receive error messages related to the mailing list or) s
+377 227 M
+(                mailbox specified by the owner of the MINFO RR \(similar) s
+377 219 M
+(                to the ERRORS-TO: field which has been proposed\).  If) s
+377 211 M
+(                this domain name names the root, errors should be) s
+377 203 M
+(                returned to the sender of the message.) s
+377 195 M
+( ) s
+377 187 M
+(MINFO records cause no additional section processing.  Although these) s
+377 179 M
+(records can be associated with a simple mailbox, they are usually used) s
+377 171 M
+(with a mailing list.) s
+377 163 M
+( ) s
+377 155 M
+( ) s
+377 147 M
+( ) s
+377 139 M
+( ) s
+377 131 M
+( ) s
+377 123 M
+( ) s
+377 115 M
+( ) s
+377 107 M
+( ) s
+377 99 M
+(Mockapetris                                                    [Page 16]) s
+_R
+S
+%%Page: (9) 9
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 9 def
+/fname (rfc1035.txt) def
+/fdir () def
+/ftail (rfc1035.txt) def
+% User defined strings:
+/fmodstr (Thu Aug %2d 10:23:19 2000) def
+%%EndPageSetup
+do_header
+5 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+5 523 M
+( ) s
+5 515 M
+( ) s
+5 507 M
+(3.3.8. MR RDATA format \(EXPERIMENTAL\)) s
+5 499 M
+( ) s
+5 491 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 483 M
+(    /                   NEWNAME                     /) s
+5 475 M
+(    /                                               /) s
+5 467 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 459 M
+( ) s
+5 451 M
+(where:) s
+5 443 M
+( ) s
+5 435 M
+(NEWNAME         A <domain-name> which specifies a mailbox which is the) s
+5 427 M
+(                proper rename of the specified mailbox.) s
+5 419 M
+( ) s
+5 411 M
+(MR records cause no additional section processing.  The main use for MR) s
+5 403 M
+(is as a forwarding entry for a user who has moved to a different) s
+5 395 M
+(mailbox.) s
+5 387 M
+( ) s
+5 379 M
+(3.3.9. MX RDATA format) s
+5 371 M
+( ) s
+5 363 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 355 M
+(    |                  PREFERENCE                   |) s
+5 347 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 339 M
+(    /                   EXCHANGE                    /) s
+5 331 M
+(    /                                               /) s
+5 323 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 315 M
+( ) s
+5 307 M
+(where:) s
+5 299 M
+( ) s
+5 291 M
+(PREFERENCE      A 16 bit integer which specifies the preference given to) s
+5 283 M
+(                this RR among others at the same owner.  Lower values) s
+5 275 M
+(                are preferred.) s
+5 267 M
+( ) s
+5 259 M
+(EXCHANGE        A <domain-name> which specifies a host willing to act as) s
+5 251 M
+(                a mail exchange for the owner name.) s
+5 243 M
+( ) s
+5 235 M
+(MX records cause type A additional section processing for the host) s
+5 227 M
+(specified by EXCHANGE.  The use of MX RRs is explained in detail in) s
+5 219 M
+([RFC-974].) s
+5 211 M
+( ) s
+5 203 M
+(3.3.10. NULL RDATA format \(EXPERIMENTAL\)) s
+5 195 M
+( ) s
+5 187 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 179 M
+(    /                  <anything>                   /) s
+5 171 M
+(    /                                               /) s
+5 163 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 155 M
+( ) s
+5 147 M
+(Anything at all may be in the RDATA field so long as it is 65535 octets) s
+5 139 M
+(or less.) s
+5 131 M
+( ) s
+5 123 M
+( ) s
+5 115 M
+( ) s
+5 107 M
+( ) s
+5 99 M
+(Mockapetris                                                    [Page 17]) s
+377 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+377 523 M
+( ) s
+377 515 M
+( ) s
+377 507 M
+(NULL records cause no additional section processing.  NULL RRs are not) s
+377 499 M
+(allowed in master files.  NULLs are used as placeholders in some) s
+377 491 M
+(experimental extensions of the DNS.) s
+377 483 M
+( ) s
+377 475 M
+(3.3.11. NS RDATA format) s
+377 467 M
+( ) s
+377 459 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 451 M
+(    /                   NSDNAME                     /) s
+377 443 M
+(    /                                               /) s
+377 435 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 427 M
+( ) s
+377 419 M
+(where:) s
+377 411 M
+( ) s
+377 403 M
+(NSDNAME         A <domain-name> which specifies a host which should be) s
+377 395 M
+(                authoritative for the specified class and domain.) s
+377 387 M
+( ) s
+377 379 M
+(NS records cause both the usual additional section processing to locate) s
+377 371 M
+(a type A record, and, when used in a referral, a special search of the) s
+377 363 M
+(zone in which they reside for glue information.) s
+377 355 M
+( ) s
+377 347 M
+(The NS RR states that the named host should be expected to have a zone) s
+377 339 M
+(starting at owner name of the specified class.  Note that the class may) s
+377 331 M
+(not indicate the protocol family which should be used to communicate) s
+377 323 M
+(with the host, although it is typically a strong hint.  For example,) s
+377 315 M
+(hosts which are name servers for either Internet \(IN\) or Hesiod \(HS\)) s
+377 307 M
+(class information are normally queried using IN class protocols.) s
+377 299 M
+( ) s
+377 291 M
+(3.3.12. PTR RDATA format) s
+377 283 M
+( ) s
+377 275 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 267 M
+(    /                   PTRDNAME                    /) s
+377 259 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 251 M
+( ) s
+377 243 M
+(where:) s
+377 235 M
+( ) s
+377 227 M
+(PTRDNAME        A <domain-name> which points to some location in the) s
+377 219 M
+(                domain name space.) s
+377 211 M
+( ) s
+377 203 M
+(PTR records cause no additional section processing.  These RRs are used) s
+377 195 M
+(in special domains to point to some other location in the domain space.) s
+377 187 M
+(These records are simple data, and don't imply any special processing) s
+377 179 M
+(similar to that performed by CNAME, which identifies aliases.  See the) s
+377 171 M
+(description of the IN-ADDR.ARPA domain for an example.) s
+377 163 M
+( ) s
+377 155 M
+( ) s
+377 147 M
+( ) s
+377 139 M
+( ) s
+377 131 M
+( ) s
+377 123 M
+( ) s
+377 115 M
+( ) s
+377 107 M
+( ) s
+377 99 M
+(Mockapetris                                                    [Page 18]) s
+_R
+S
+%%Page: (10) 10
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 10 def
+/fname (rfc1035.txt) def
+/fdir () def
+/ftail (rfc1035.txt) def
+% User defined strings:
+/fmodstr (Thu Aug %2d 10:23:19 2000) def
+%%EndPageSetup
+do_header
+5 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+5 523 M
+( ) s
+5 515 M
+( ) s
+5 507 M
+(3.3.13. SOA RDATA format) s
+5 499 M
+( ) s
+5 491 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 483 M
+(    /                     MNAME                     /) s
+5 475 M
+(    /                                               /) s
+5 467 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 459 M
+(    /                     RNAME                     /) s
+5 451 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 443 M
+(    |                    SERIAL                     |) s
+5 435 M
+(    |                                               |) s
+5 427 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 419 M
+(    |                    REFRESH                    |) s
+5 411 M
+(    |                                               |) s
+5 403 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 395 M
+(    |                     RETRY                     |) s
+5 387 M
+(    |                                               |) s
+5 379 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 371 M
+(    |                    EXPIRE                     |) s
+5 363 M
+(    |                                               |) s
+5 355 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 347 M
+(    |                    MINIMUM                    |) s
+5 339 M
+(    |                                               |) s
+5 331 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 323 M
+( ) s
+5 315 M
+(where:) s
+5 307 M
+( ) s
+5 299 M
+(MNAME           The <domain-name> of the name server that was the) s
+5 291 M
+(                original or primary source of data for this zone.) s
+5 283 M
+( ) s
+5 275 M
+(RNAME           A <domain-name> which specifies the mailbox of the) s
+5 267 M
+(                person responsible for this zone.) s
+5 259 M
+( ) s
+5 251 M
+(SERIAL          The unsigned 32 bit version number of the original copy) s
+5 243 M
+(                of the zone.  Zone transfers preserve this value.  This) s
+5 235 M
+(                value wraps and should be compared using sequence space) s
+5 227 M
+(                arithmetic.) s
+5 219 M
+( ) s
+5 211 M
+(REFRESH         A 32 bit time interval before the zone should be) s
+5 203 M
+(                refreshed.) s
+5 195 M
+( ) s
+5 187 M
+(RETRY           A 32 bit time interval that should elapse before a) s
+5 179 M
+(                failed refresh should be retried.) s
+5 171 M
+( ) s
+5 163 M
+(EXPIRE          A 32 bit time value that specifies the upper limit on) s
+5 155 M
+(                the time interval that can elapse before the zone is no) s
+5 147 M
+(                longer authoritative.) s
+5 139 M
+( ) s
+5 131 M
+( ) s
+5 123 M
+( ) s
+5 115 M
+( ) s
+5 107 M
+( ) s
+5 99 M
+(Mockapetris                                                    [Page 19]) s
+377 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+377 523 M
+( ) s
+377 515 M
+( ) s
+377 507 M
+(MINIMUM         The unsigned 32 bit minimum TTL field that should be) s
+377 499 M
+(                exported with any RR from this zone.) s
+377 491 M
+( ) s
+377 483 M
+(SOA records cause no additional section processing.) s
+377 475 M
+( ) s
+377 467 M
+(All times are in units of seconds.) s
+377 459 M
+( ) s
+377 451 M
+(Most of these fields are pertinent only for name server maintenance) s
+377 443 M
+(operations.  However, MINIMUM is used in all query operations that) s
+377 435 M
+(retrieve RRs from a zone.  Whenever a RR is sent in a response to a) s
+377 427 M
+(query, the TTL field is set to the maximum of the TTL field from the RR) s
+377 419 M
+(and the MINIMUM field in the appropriate SOA.  Thus MINIMUM is a lower) s
+377 411 M
+(bound on the TTL field for all RRs in a zone.  Note that this use of) s
+377 403 M
+(MINIMUM should occur when the RRs are copied into the response and not) s
+377 395 M
+(when the zone is loaded from a master file or via a zone transfer.  The) s
+377 387 M
+(reason for this provison is to allow future dynamic update facilities to) s
+377 379 M
+(change the SOA RR with known semantics.) s
+377 371 M
+( ) s
+377 363 M
+( ) s
+377 355 M
+(3.3.14. TXT RDATA format) s
+377 347 M
+( ) s
+377 339 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 331 M
+(    /                   TXT-DATA                    /) s
+377 323 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 315 M
+( ) s
+377 307 M
+(where:) s
+377 299 M
+( ) s
+377 291 M
+(TXT-DATA        One or more <character-string>s.) s
+377 283 M
+( ) s
+377 275 M
+(TXT RRs are used to hold descriptive text.  The semantics of the text) s
+377 267 M
+(depends on the domain where it is found.) s
+377 259 M
+( ) s
+377 251 M
+(3.4. Internet specific RRs) s
+377 243 M
+( ) s
+377 235 M
+(3.4.1. A RDATA format) s
+377 227 M
+( ) s
+377 219 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 211 M
+(    |                    ADDRESS                    |) s
+377 203 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 195 M
+( ) s
+377 187 M
+(where:) s
+377 179 M
+( ) s
+377 171 M
+(ADDRESS         A 32 bit Internet address.) s
+377 163 M
+( ) s
+377 155 M
+(Hosts that have multiple Internet addresses will have multiple A) s
+377 147 M
+(records.) s
+377 139 M
+( ) s
+377 131 M
+( ) s
+377 123 M
+( ) s
+377 115 M
+( ) s
+377 107 M
+( ) s
+377 99 M
+(Mockapetris                                                    [Page 20]) s
+_R
+S
+%%Page: (11) 11
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 11 def
+/fname (rfc1035.txt) def
+/fdir () def
+/ftail (rfc1035.txt) def
+% User defined strings:
+/fmodstr (Thu Aug %2d 10:23:19 2000) def
+%%EndPageSetup
+do_header
+5 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+5 523 M
+( ) s
+5 515 M
+( ) s
+5 507 M
+(A records cause no additional section processing.  The RDATA section of) s
+5 499 M
+(an A line in a master file is an Internet address expressed as four) s
+5 491 M
+(decimal numbers separated by dots without any imbedded spaces \(e.g.,) s
+5 483 M
+("10.2.0.52" or "192.0.5.6"\).) s
+5 475 M
+( ) s
+5 467 M
+(3.4.2. WKS RDATA format) s
+5 459 M
+( ) s
+5 451 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 443 M
+(    |                    ADDRESS                    |) s
+5 435 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 427 M
+(    |       PROTOCOL        |                       |) s
+5 419 M
+(    +--+--+--+--+--+--+--+--+                       |) s
+5 411 M
+(    |                                               |) s
+5 403 M
+(    /                   <BIT MAP>                   /) s
+5 395 M
+(    /                                               /) s
+5 387 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 379 M
+( ) s
+5 371 M
+(where:) s
+5 363 M
+( ) s
+5 355 M
+(ADDRESS         An 32 bit Internet address) s
+5 347 M
+( ) s
+5 339 M
+(PROTOCOL        An 8 bit IP protocol number) s
+5 331 M
+( ) s
+5 323 M
+(<BIT MAP>       A variable length bit map.  The bit map must be a) s
+5 315 M
+(                multiple of 8 bits long.) s
+5 307 M
+( ) s
+5 299 M
+(The WKS record is used to describe the well known services supported by) s
+5 291 M
+(a particular protocol on a particular internet address.  The PROTOCOL) s
+5 283 M
+(field specifies an IP protocol number, and the bit map has one bit per) s
+5 275 M
+(port of the specified protocol.  The first bit corresponds to port 0,) s
+5 267 M
+(the second to port 1, etc.  If the bit map does not include a bit for a) s
+5 259 M
+(protocol of interest, that bit is assumed zero.  The appropriate values) s
+5 251 M
+(and mnemonics for ports and protocols are specified in [RFC-1010].) s
+5 243 M
+( ) s
+5 235 M
+(For example, if PROTOCOL=TCP \(6\), the 26th bit corresponds to TCP port) s
+5 227 M
+(25 \(SMTP\).  If this bit is set, a SMTP server should be listening on TCP) s
+5 219 M
+(port 25; if zero, SMTP service is not supported on the specified) s
+5 211 M
+(address.) s
+5 203 M
+( ) s
+5 195 M
+(The purpose of WKS RRs is to provide availability information for) s
+5 187 M
+(servers for TCP and UDP.  If a server supports both TCP and UDP, or has) s
+5 179 M
+(multiple Internet addresses, then multiple WKS RRs are used.) s
+5 171 M
+( ) s
+5 163 M
+(WKS RRs cause no additional section processing.) s
+5 155 M
+( ) s
+5 147 M
+(In master files, both ports and protocols are expressed using mnemonics) s
+5 139 M
+(or decimal numbers.) s
+5 131 M
+( ) s
+5 123 M
+( ) s
+5 115 M
+( ) s
+5 107 M
+( ) s
+5 99 M
+(Mockapetris                                                    [Page 21]) s
+377 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+377 523 M
+( ) s
+377 515 M
+( ) s
+377 507 M
+(3.5. IN-ADDR.ARPA domain) s
+377 499 M
+( ) s
+377 491 M
+(The Internet uses a special domain to support gateway location and) s
+377 483 M
+(Internet address to host mapping.  Other classes may employ a similar) s
+377 475 M
+(strategy in other domains.  The intent of this domain is to provide a) s
+377 467 M
+(guaranteed method to perform host address to host name mapping, and to) s
+377 459 M
+(facilitate queries to locate all gateways on a particular network in the) s
+377 451 M
+(Internet.) s
+377 443 M
+( ) s
+377 435 M
+(Note that both of these services are similar to functions that could be) s
+377 427 M
+(performed by inverse queries; the difference is that this part of the) s
+377 419 M
+(domain name space is structured according to address, and hence can) s
+377 411 M
+(guarantee that the appropriate data can be located without an exhaustive) s
+377 403 M
+(search of the domain space.) s
+377 395 M
+( ) s
+377 387 M
+(The domain begins at IN-ADDR.ARPA and has a substructure which follows) s
+377 379 M
+(the Internet addressing structure.) s
+377 371 M
+( ) s
+377 363 M
+(Domain names in the IN-ADDR.ARPA domain are defined to have up to four) s
+377 355 M
+(labels in addition to the IN-ADDR.ARPA suffix.  Each label represents) s
+377 347 M
+(one octet of an Internet address, and is expressed as a character string) s
+377 339 M
+(for a decimal value in the range 0-255 \(with leading zeros omitted) s
+377 331 M
+(except in the case of a zero octet which is represented by a single) s
+377 323 M
+(zero\).) s
+377 315 M
+( ) s
+377 307 M
+(Host addresses are represented by domain names that have all four labels) s
+377 299 M
+(specified.  Thus data for Internet address 10.2.0.52 is located at) s
+377 291 M
+(domain name 52.0.2.10.IN-ADDR.ARPA.  The reversal, though awkward to) s
+377 283 M
+(read, allows zones to be delegated which are exactly one network of) s
+377 275 M
+(address space.  For example, 10.IN-ADDR.ARPA can be a zone containing) s
+377 267 M
+(data for the ARPANET, while 26.IN-ADDR.ARPA can be a separate zone for) s
+377 259 M
+(MILNET.  Address nodes are used to hold pointers to primary host names) s
+377 251 M
+(in the normal domain space.) s
+377 243 M
+( ) s
+377 235 M
+(Network numbers correspond to some non-terminal nodes at various depths) s
+377 227 M
+(in the IN-ADDR.ARPA domain, since Internet network numbers are either 1,) s
+377 219 M
+(2, or 3 octets.  Network nodes are used to hold pointers to the primary) s
+377 211 M
+(host names of gateways attached to that network.  Since a gateway is, by) s
+377 203 M
+(definition, on more than one network, it will typically have two or more) s
+377 195 M
+(network nodes which point at it.  Gateways will also have host level) s
+377 187 M
+(pointers at their fully qualified addresses.) s
+377 179 M
+( ) s
+377 171 M
+(Both the gateway pointers at network nodes and the normal host pointers) s
+377 163 M
+(at full address nodes use the PTR RR to point back to the primary domain) s
+377 155 M
+(names of the corresponding hosts.) s
+377 147 M
+( ) s
+377 139 M
+(For example, the IN-ADDR.ARPA domain will contain information about the) s
+377 131 M
+(ISI gateway between net 10 and 26, an MIT gateway from net 10 to MIT's) s
+377 123 M
+( ) s
+377 115 M
+( ) s
+377 107 M
+( ) s
+377 99 M
+(Mockapetris                                                    [Page 22]) s
+_R
+S
+%%Page: (12) 12
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 12 def
+/fname (rfc1035.txt) def
+/fdir () def
+/ftail (rfc1035.txt) def
+% User defined strings:
+/fmodstr (Thu Aug %2d 10:23:19 2000) def
+%%EndPageSetup
+do_header
+5 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+5 523 M
+( ) s
+5 515 M
+( ) s
+5 507 M
+(net 18, and hosts A.ISI.EDU and MULTICS.MIT.EDU.  Assuming that ISI) s
+5 499 M
+(gateway has addresses 10.2.0.22 and 26.0.0.103, and a name MILNET-) s
+5 491 M
+(GW.ISI.EDU, and the MIT gateway has addresses 10.0.0.77 and 18.10.0.4) s
+5 483 M
+(and a name GW.LCS.MIT.EDU, the domain database would contain:) s
+5 475 M
+( ) s
+5 467 M
+(    10.IN-ADDR.ARPA.           PTR MILNET-GW.ISI.EDU.) s
+5 459 M
+(    10.IN-ADDR.ARPA.           PTR GW.LCS.MIT.EDU.) s
+5 451 M
+(    18.IN-ADDR.ARPA.           PTR GW.LCS.MIT.EDU.) s
+5 443 M
+(    26.IN-ADDR.ARPA.           PTR MILNET-GW.ISI.EDU.) s
+5 435 M
+(    22.0.2.10.IN-ADDR.ARPA.    PTR MILNET-GW.ISI.EDU.) s
+5 427 M
+(    103.0.0.26.IN-ADDR.ARPA.   PTR MILNET-GW.ISI.EDU.) s
+5 419 M
+(    77.0.0.10.IN-ADDR.ARPA.    PTR GW.LCS.MIT.EDU.) s
+5 411 M
+(    4.0.10.18.IN-ADDR.ARPA.    PTR GW.LCS.MIT.EDU.) s
+5 403 M
+(    103.0.3.26.IN-ADDR.ARPA.   PTR A.ISI.EDU.) s
+5 395 M
+(    6.0.0.10.IN-ADDR.ARPA.     PTR MULTICS.MIT.EDU.) s
+5 387 M
+( ) s
+5 379 M
+(Thus a program which wanted to locate gateways on net 10 would originate) s
+5 371 M
+(a query of the form QTYPE=PTR, QCLASS=IN, QNAME=10.IN-ADDR.ARPA.  It) s
+5 363 M
+(would receive two RRs in response:) s
+5 355 M
+( ) s
+5 347 M
+(    10.IN-ADDR.ARPA.           PTR MILNET-GW.ISI.EDU.) s
+5 339 M
+(    10.IN-ADDR.ARPA.           PTR GW.LCS.MIT.EDU.) s
+5 331 M
+( ) s
+5 323 M
+(The program could then originate QTYPE=A, QCLASS=IN queries for MILNET-) s
+5 315 M
+(GW.ISI.EDU. and GW.LCS.MIT.EDU. to discover the Internet addresses of) s
+5 307 M
+(these gateways.) s
+5 299 M
+( ) s
+5 291 M
+(A resolver which wanted to find the host name corresponding to Internet) s
+5 283 M
+(host address 10.0.0.6 would pursue a query of the form QTYPE=PTR,) s
+5 275 M
+(QCLASS=IN, QNAME=6.0.0.10.IN-ADDR.ARPA, and would receive:) s
+5 267 M
+( ) s
+5 259 M
+(    6.0.0.10.IN-ADDR.ARPA.     PTR MULTICS.MIT.EDU.) s
+5 251 M
+( ) s
+5 243 M
+(Several cautions apply to the use of these services:) s
+5 235 M
+(   - Since the IN-ADDR.ARPA special domain and the normal domain) s
+5 227 M
+(     for a particular host or gateway will be in different zones,) s
+5 219 M
+(     the possibility exists that that the data may be inconsistent.) s
+5 211 M
+( ) s
+5 203 M
+(   - Gateways will often have two names in separate domains, only) s
+5 195 M
+(     one of which can be primary.) s
+5 187 M
+( ) s
+5 179 M
+(   - Systems that use the domain database to initialize their) s
+5 171 M
+(     routing tables must start with enough gateway information to) s
+5 163 M
+(     guarantee that they can access the appropriate name server.) s
+5 155 M
+( ) s
+5 147 M
+(   - The gateway data only reflects the existence of a gateway in a) s
+5 139 M
+(     manner equivalent to the current HOSTS.TXT file.  It doesn't) s
+5 131 M
+(     replace the dynamic availability information from GGP or EGP.) s
+5 123 M
+( ) s
+5 115 M
+( ) s
+5 107 M
+( ) s
+5 99 M
+(Mockapetris                                                    [Page 23]) s
+377 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+377 523 M
+( ) s
+377 515 M
+( ) s
+377 507 M
+(3.6. Defining new types, classes, and special namespaces) s
+377 499 M
+( ) s
+377 491 M
+(The previously defined types and classes are the ones in use as of the) s
+377 483 M
+(date of this memo.  New definitions should be expected.  This section) s
+377 475 M
+(makes some recommendations to designers considering additions to the) s
+377 467 M
+(existing facilities.  The mailing list NAMEDROPPERS@SRI-NIC.ARPA is the) s
+377 459 M
+(forum where general discussion of design issues takes place.) s
+377 451 M
+( ) s
+377 443 M
+(In general, a new type is appropriate when new information is to be) s
+377 435 M
+(added to the database about an existing object, or we need new data) s
+377 427 M
+(formats for some totally new object.  Designers should attempt to define) s
+377 419 M
+(types and their RDATA formats that are generally applicable to all) s
+377 411 M
+(classes, and which avoid duplication of information.  New classes are) s
+377 403 M
+(appropriate when the DNS is to be used for a new protocol, etc which) s
+377 395 M
+(requires new class-specific data formats, or when a copy of the existing) s
+377 387 M
+(name space is desired, but a separate management domain is necessary.) s
+377 379 M
+( ) s
+377 371 M
+(New types and classes need mnemonics for master files; the format of the) s
+377 363 M
+(master files requires that the mnemonics for type and class be disjoint.) s
+377 355 M
+( ) s
+377 347 M
+(TYPE and CLASS values must be a proper subset of QTYPEs and QCLASSes) s
+377 339 M
+(respectively.) s
+377 331 M
+( ) s
+377 323 M
+(The present system uses multiple RRs to represent multiple values of a) s
+377 315 M
+(type rather than storing multiple values in the RDATA section of a) s
+377 307 M
+(single RR.  This is less efficient for most applications, but does keep) s
+377 299 M
+(RRs shorter.  The multiple RRs assumption is incorporated in some) s
+377 291 M
+(experimental work on dynamic update methods.) s
+377 283 M
+( ) s
+377 275 M
+(The present system attempts to minimize the duplication of data in the) s
+377 267 M
+(database in order to insure consistency.  Thus, in order to find the) s
+377 259 M
+(address of the host for a mail exchange, you map the mail domain name to) s
+377 251 M
+(a host name, then the host name to addresses, rather than a direct) s
+377 243 M
+(mapping to host address.  This approach is preferred because it avoids) s
+377 235 M
+(the opportunity for inconsistency.) s
+377 227 M
+( ) s
+377 219 M
+(In defining a new type of data, multiple RR types should not be used to) s
+377 211 M
+(create an ordering between entries or express different formats for) s
+377 203 M
+(equivalent bindings, instead this information should be carried in the) s
+377 195 M
+(body of the RR and a single type used.  This policy avoids problems with) s
+377 187 M
+(caching multiple types and defining QTYPEs to match multiple types.) s
+377 179 M
+( ) s
+377 171 M
+(For example, the original form of mail exchange binding used two RR) s
+377 163 M
+(types one to represent a "closer" exchange \(MD\) and one to represent a) s
+377 155 M
+("less close" exchange \(MF\).  The difficulty is that the presence of one) s
+377 147 M
+(RR type in a cache doesn't convey any information about the other) s
+377 139 M
+(because the query which acquired the cached information might have used) s
+377 131 M
+(a QTYPE of MF, MD, or MAILA \(which matched both\).  The redesigned) s
+377 123 M
+( ) s
+377 115 M
+( ) s
+377 107 M
+( ) s
+377 99 M
+(Mockapetris                                                    [Page 24]) s
+_R
+S
+%%Page: (13) 13
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 13 def
+/fname (rfc1035.txt) def
+/fdir () def
+/ftail (rfc1035.txt) def
+% User defined strings:
+/fmodstr (Thu Aug %2d 10:23:19 2000) def
+%%EndPageSetup
+do_header
+5 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+5 523 M
+( ) s
+5 515 M
+( ) s
+5 507 M
+(service used a single type \(MX\) with a "preference" value in the RDATA) s
+5 499 M
+(section which can order different RRs.  However, if any MX RRs are found) s
+5 491 M
+(in the cache, then all should be there.) s
+5 483 M
+( ) s
+5 475 M
+(4. MESSAGES) s
+5 467 M
+( ) s
+5 459 M
+(4.1. Format) s
+5 451 M
+( ) s
+5 443 M
+(All communications inside of the domain protocol are carried in a single) s
+5 435 M
+(format called a message.  The top level format of message is divided) s
+5 427 M
+(into 5 sections \(some of which are empty in certain cases\) shown below:) s
+5 419 M
+( ) s
+5 411 M
+(    +---------------------+) s
+5 403 M
+(    |        Header       |) s
+5 395 M
+(    +---------------------+) s
+5 387 M
+(    |       Question      | the question for the name server) s
+5 379 M
+(    +---------------------+) s
+5 371 M
+(    |        Answer       | RRs answering the question) s
+5 363 M
+(    +---------------------+) s
+5 355 M
+(    |      Authority      | RRs pointing toward an authority) s
+5 347 M
+(    +---------------------+) s
+5 339 M
+(    |      Additional     | RRs holding additional information) s
+5 331 M
+(    +---------------------+) s
+5 323 M
+( ) s
+5 315 M
+(The header section is always present.  The header includes fields that) s
+5 307 M
+(specify which of the remaining sections are present, and also specify) s
+5 299 M
+(whether the message is a query or a response, a standard query or some) s
+5 291 M
+(other opcode, etc.) s
+5 283 M
+( ) s
+5 275 M
+(The names of the sections after the header are derived from their use in) s
+5 267 M
+(standard queries.  The question section contains fields that describe a) s
+5 259 M
+(question to a name server.  These fields are a query type \(QTYPE\), a) s
+5 251 M
+(query class \(QCLASS\), and a query domain name \(QNAME\).  The last three) s
+5 243 M
+(sections have the same format: a possibly empty list of concatenated) s
+5 235 M
+(resource records \(RRs\).  The answer section contains RRs that answer the) s
+5 227 M
+(question; the authority section contains RRs that point toward an) s
+5 219 M
+(authoritative name server; the additional records section contains RRs) s
+5 211 M
+(which relate to the query, but are not strictly answers for the) s
+5 203 M
+(question.) s
+5 195 M
+( ) s
+5 187 M
+( ) s
+5 179 M
+( ) s
+5 171 M
+( ) s
+5 163 M
+( ) s
+5 155 M
+( ) s
+5 147 M
+( ) s
+5 139 M
+( ) s
+5 131 M
+( ) s
+5 123 M
+( ) s
+5 115 M
+( ) s
+5 107 M
+( ) s
+5 99 M
+(Mockapetris                                                    [Page 25]) s
+377 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+377 523 M
+( ) s
+377 515 M
+( ) s
+377 507 M
+(4.1.1. Header section format) s
+377 499 M
+( ) s
+377 491 M
+(The header contains the following fields:) s
+377 483 M
+( ) s
+377 475 M
+(                                    1  1  1  1  1  1) s
+377 467 M
+(      0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5) s
+377 459 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 451 M
+(    |                      ID                       |) s
+377 443 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 435 M
+(    |QR|   Opcode  |AA|TC|RD|RA|   Z    |   RCODE   |) s
+377 427 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 419 M
+(    |                    QDCOUNT                    |) s
+377 411 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 403 M
+(    |                    ANCOUNT                    |) s
+377 395 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 387 M
+(    |                    NSCOUNT                    |) s
+377 379 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 371 M
+(    |                    ARCOUNT                    |) s
+377 363 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 355 M
+( ) s
+377 347 M
+(where:) s
+377 339 M
+( ) s
+377 331 M
+(ID              A 16 bit identifier assigned by the program that) s
+377 323 M
+(                generates any kind of query.  This identifier is copied) s
+377 315 M
+(                the corresponding reply and can be used by the requester) s
+377 307 M
+(                to match up replies to outstanding queries.) s
+377 299 M
+( ) s
+377 291 M
+(QR              A one bit field that specifies whether this message is a) s
+377 283 M
+(                query \(0\), or a response \(1\).) s
+377 275 M
+( ) s
+377 267 M
+(OPCODE          A four bit field that specifies kind of query in this) s
+377 259 M
+(                message.  This value is set by the originator of a query) s
+377 251 M
+(                and copied into the response.  The values are:) s
+377 243 M
+( ) s
+377 235 M
+(                0               a standard query \(QUERY\)) s
+377 227 M
+( ) s
+377 219 M
+(                1               an inverse query \(IQUERY\)) s
+377 211 M
+( ) s
+377 203 M
+(                2               a server status request \(STATUS\)) s
+377 195 M
+( ) s
+377 187 M
+(                3-15            reserved for future use) s
+377 179 M
+( ) s
+377 171 M
+(AA              Authoritative Answer - this bit is valid in responses,) s
+377 163 M
+(                and specifies that the responding name server is an) s
+377 155 M
+(                authority for the domain name in question section.) s
+377 147 M
+( ) s
+377 139 M
+(                Note that the contents of the answer section may have) s
+377 131 M
+(                multiple owner names because of aliases.  The AA bit) s
+377 123 M
+( ) s
+377 115 M
+( ) s
+377 107 M
+( ) s
+377 99 M
+(Mockapetris                                                    [Page 26]) s
+_R
+S
+%%Page: (14) 14
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 14 def
+/fname (rfc1035.txt) def
+/fdir () def
+/ftail (rfc1035.txt) def
+% User defined strings:
+/fmodstr (Thu Aug %2d 10:23:19 2000) def
+%%EndPageSetup
+do_header
+5 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+5 523 M
+( ) s
+5 515 M
+( ) s
+5 507 M
+(                corresponds to the name which matches the query name, or) s
+5 499 M
+(                the first owner name in the answer section.) s
+5 491 M
+( ) s
+5 483 M
+(TC              TrunCation - specifies that this message was truncated) s
+5 475 M
+(                due to length greater than that permitted on the) s
+5 467 M
+(                transmission channel.) s
+5 459 M
+( ) s
+5 451 M
+(RD              Recursion Desired - this bit may be set in a query and) s
+5 443 M
+(                is copied into the response.  If RD is set, it directs) s
+5 435 M
+(                the name server to pursue the query recursively.) s
+5 427 M
+(                Recursive query support is optional.) s
+5 419 M
+( ) s
+5 411 M
+(RA              Recursion Available - this be is set or cleared in a) s
+5 403 M
+(                response, and denotes whether recursive query support is) s
+5 395 M
+(                available in the name server.) s
+5 387 M
+( ) s
+5 379 M
+(Z               Reserved for future use.  Must be zero in all queries) s
+5 371 M
+(                and responses.) s
+5 363 M
+( ) s
+5 355 M
+(RCODE           Response code - this 4 bit field is set as part of) s
+5 347 M
+(                responses.  The values have the following) s
+5 339 M
+(                interpretation:) s
+5 331 M
+( ) s
+5 323 M
+(                0               No error condition) s
+5 315 M
+( ) s
+5 307 M
+(                1               Format error - The name server was) s
+5 299 M
+(                                unable to interpret the query.) s
+5 291 M
+( ) s
+5 283 M
+(                2               Server failure - The name server was) s
+5 275 M
+(                                unable to process this query due to a) s
+5 267 M
+(                                problem with the name server.) s
+5 259 M
+( ) s
+5 251 M
+(                3               Name Error - Meaningful only for) s
+5 243 M
+(                                responses from an authoritative name) s
+5 235 M
+(                                server, this code signifies that the) s
+5 227 M
+(                                domain name referenced in the query does) s
+5 219 M
+(                                not exist.) s
+5 211 M
+( ) s
+5 203 M
+(                4               Not Implemented - The name server does) s
+5 195 M
+(                                not support the requested kind of query.) s
+5 187 M
+( ) s
+5 179 M
+(                5               Refused - The name server refuses to) s
+5 171 M
+(                                perform the specified operation for) s
+5 163 M
+(                                policy reasons.  For example, a name) s
+5 155 M
+(                                server may not wish to provide the) s
+5 147 M
+(                                information to the particular requester,) s
+5 139 M
+(                                or a name server may not wish to perform) s
+5 131 M
+(                                a particular operation \(e.g., zone) s
+5 123 M
+( ) s
+5 115 M
+( ) s
+5 107 M
+( ) s
+5 99 M
+(Mockapetris                                                    [Page 27]) s
+377 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+377 523 M
+( ) s
+377 515 M
+( ) s
+377 507 M
+(                                transfer\) for particular data.) s
+377 499 M
+( ) s
+377 491 M
+(                6-15            Reserved for future use.) s
+377 483 M
+( ) s
+377 475 M
+(QDCOUNT         an unsigned 16 bit integer specifying the number of) s
+377 467 M
+(                entries in the question section.) s
+377 459 M
+( ) s
+377 451 M
+(ANCOUNT         an unsigned 16 bit integer specifying the number of) s
+377 443 M
+(                resource records in the answer section.) s
+377 435 M
+( ) s
+377 427 M
+(NSCOUNT         an unsigned 16 bit integer specifying the number of name) s
+377 419 M
+(                server resource records in the authority records) s
+377 411 M
+(                section.) s
+377 403 M
+( ) s
+377 395 M
+(ARCOUNT         an unsigned 16 bit integer specifying the number of) s
+377 387 M
+(                resource records in the additional records section.) s
+377 379 M
+( ) s
+377 371 M
+(4.1.2. Question section format) s
+377 363 M
+( ) s
+377 355 M
+(The question section is used to carry the "question" in most queries,) s
+377 347 M
+(i.e., the parameters that define what is being asked.  The section) s
+377 339 M
+(contains QDCOUNT \(usually 1\) entries, each of the following format:) s
+377 331 M
+( ) s
+377 323 M
+(                                    1  1  1  1  1  1) s
+377 315 M
+(      0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5) s
+377 307 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 299 M
+(    |                                               |) s
+377 291 M
+(    /                     QNAME                     /) s
+377 283 M
+(    /                                               /) s
+377 275 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 267 M
+(    |                     QTYPE                     |) s
+377 259 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 251 M
+(    |                     QCLASS                    |) s
+377 243 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 235 M
+( ) s
+377 227 M
+(where:) s
+377 219 M
+( ) s
+377 211 M
+(QNAME           a domain name represented as a sequence of labels, where) s
+377 203 M
+(                each label consists of a length octet followed by that) s
+377 195 M
+(                number of octets.  The domain name terminates with the) s
+377 187 M
+(                zero length octet for the null label of the root.  Note) s
+377 179 M
+(                that this field may be an odd number of octets; no) s
+377 171 M
+(                padding is used.) s
+377 163 M
+( ) s
+377 155 M
+(QTYPE           a two octet code which specifies the type of the query.) s
+377 147 M
+(                The values for this field include all codes valid for a) s
+377 139 M
+(                TYPE field, together with some more general codes which) s
+377 131 M
+(                can match more than one type of RR.) s
+377 123 M
+( ) s
+377 115 M
+( ) s
+377 107 M
+( ) s
+377 99 M
+(Mockapetris                                                    [Page 28]) s
+_R
+S
+%%Page: (15) 15
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 15 def
+/fname (rfc1035.txt) def
+/fdir () def
+/ftail (rfc1035.txt) def
+% User defined strings:
+/fmodstr (Thu Aug %2d 10:23:19 2000) def
+%%EndPageSetup
+do_header
+5 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+5 523 M
+( ) s
+5 515 M
+( ) s
+5 507 M
+(QCLASS          a two octet code that specifies the class of the query.) s
+5 499 M
+(                For example, the QCLASS field is IN for the Internet.) s
+5 491 M
+( ) s
+5 483 M
+(4.1.3. Resource record format) s
+5 475 M
+( ) s
+5 467 M
+(The answer, authority, and additional sections all share the same) s
+5 459 M
+(format: a variable number of resource records, where the number of) s
+5 451 M
+(records is specified in the corresponding count field in the header.) s
+5 443 M
+(Each resource record has the following format:) s
+5 435 M
+(                                    1  1  1  1  1  1) s
+5 427 M
+(      0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5) s
+5 419 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 411 M
+(    |                                               |) s
+5 403 M
+(    /                                               /) s
+5 395 M
+(    /                      NAME                     /) s
+5 387 M
+(    |                                               |) s
+5 379 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 371 M
+(    |                      TYPE                     |) s
+5 363 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 355 M
+(    |                     CLASS                     |) s
+5 347 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 339 M
+(    |                      TTL                      |) s
+5 331 M
+(    |                                               |) s
+5 323 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 315 M
+(    |                   RDLENGTH                    |) s
+5 307 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--|) s
+5 299 M
+(    /                     RDATA                     /) s
+5 291 M
+(    /                                               /) s
+5 283 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 275 M
+( ) s
+5 267 M
+(where:) s
+5 259 M
+( ) s
+5 251 M
+(NAME            a domain name to which this resource record pertains.) s
+5 243 M
+( ) s
+5 235 M
+(TYPE            two octets containing one of the RR type codes.  This) s
+5 227 M
+(                field specifies the meaning of the data in the RDATA) s
+5 219 M
+(                field.) s
+5 211 M
+( ) s
+5 203 M
+(CLASS           two octets which specify the class of the data in the) s
+5 195 M
+(                RDATA field.) s
+5 187 M
+( ) s
+5 179 M
+(TTL             a 32 bit unsigned integer that specifies the time) s
+5 171 M
+(                interval \(in seconds\) that the resource record may be) s
+5 163 M
+(                cached before it should be discarded.  Zero values are) s
+5 155 M
+(                interpreted to mean that the RR can only be used for the) s
+5 147 M
+(                transaction in progress, and should not be cached.) s
+5 139 M
+( ) s
+5 131 M
+( ) s
+5 123 M
+( ) s
+5 115 M
+( ) s
+5 107 M
+( ) s
+5 99 M
+(Mockapetris                                                    [Page 29]) s
+377 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+377 523 M
+( ) s
+377 515 M
+( ) s
+377 507 M
+(RDLENGTH        an unsigned 16 bit integer that specifies the length in) s
+377 499 M
+(                octets of the RDATA field.) s
+377 491 M
+( ) s
+377 483 M
+(RDATA           a variable length string of octets that describes the) s
+377 475 M
+(                resource.  The format of this information varies) s
+377 467 M
+(                according to the TYPE and CLASS of the resource record.) s
+377 459 M
+(                For example, the if the TYPE is A and the CLASS is IN,) s
+377 451 M
+(                the RDATA field is a 4 octet ARPA Internet address.) s
+377 443 M
+( ) s
+377 435 M
+(4.1.4. Message compression) s
+377 427 M
+( ) s
+377 419 M
+(In order to reduce the size of messages, the domain system utilizes a) s
+377 411 M
+(compression scheme which eliminates the repetition of domain names in a) s
+377 403 M
+(message.  In this scheme, an entire domain name or a list of labels at) s
+377 395 M
+(the end of a domain name is replaced with a pointer to a prior occurance) s
+377 387 M
+(of the same name.) s
+377 379 M
+( ) s
+377 371 M
+(The pointer takes the form of a two octet sequence:) s
+377 363 M
+( ) s
+377 355 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 347 M
+(    | 1  1|                OFFSET                   |) s
+377 339 M
+(    +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+377 331 M
+( ) s
+377 323 M
+(The first two bits are ones.  This allows a pointer to be distinguished) s
+377 315 M
+(from a label, since the label must begin with two zero bits because) s
+377 307 M
+(labels are restricted to 63 octets or less.  \(The 10 and 01 combinations) s
+377 299 M
+(are reserved for future use.\)  The OFFSET field specifies an offset from) s
+377 291 M
+(the start of the message \(i.e., the first octet of the ID field in the) s
+377 283 M
+(domain header\).  A zero offset specifies the first byte of the ID field,) s
+377 275 M
+(etc.) s
+377 267 M
+( ) s
+377 259 M
+(The compression scheme allows a domain name in a message to be) s
+377 251 M
+(represented as either:) s
+377 243 M
+( ) s
+377 235 M
+(   - a sequence of labels ending in a zero octet) s
+377 227 M
+( ) s
+377 219 M
+(   - a pointer) s
+377 211 M
+( ) s
+377 203 M
+(   - a sequence of labels ending with a pointer) s
+377 195 M
+( ) s
+377 187 M
+(Pointers can only be used for occurances of a domain name where the) s
+377 179 M
+(format is not class specific.  If this were not the case, a name server) s
+377 171 M
+(or resolver would be required to know the format of all RRs it handled.) s
+377 163 M
+(As yet, there are no such cases, but they may occur in future RDATA) s
+377 155 M
+(formats.) s
+377 147 M
+( ) s
+377 139 M
+(If a domain name is contained in a part of the message subject to a) s
+377 131 M
+(length field \(such as the RDATA section of an RR\), and compression is) s
+377 123 M
+( ) s
+377 115 M
+( ) s
+377 107 M
+( ) s
+377 99 M
+(Mockapetris                                                    [Page 30]) s
+_R
+S
+%%Page: (16) 16
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 16 def
+/fname (rfc1035.txt) def
+/fdir () def
+/ftail (rfc1035.txt) def
+% User defined strings:
+/fmodstr (Thu Aug %2d 10:23:19 2000) def
+%%EndPageSetup
+do_header
+5 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+5 523 M
+( ) s
+5 515 M
+( ) s
+5 507 M
+(used, the length of the compressed name is used in the length) s
+5 499 M
+(calculation, rather than the length of the expanded name.) s
+5 491 M
+( ) s
+5 483 M
+(Programs are free to avoid using pointers in messages they generate,) s
+5 475 M
+(although this will reduce datagram capacity, and may cause truncation.) s
+5 467 M
+(However all programs are required to understand arriving messages that) s
+5 459 M
+(contain pointers.) s
+5 451 M
+( ) s
+5 443 M
+(For example, a datagram might need to use the domain names F.ISI.ARPA,) s
+5 435 M
+(FOO.F.ISI.ARPA, ARPA, and the root.  Ignoring the other fields of the) s
+5 427 M
+(message, these domain names might be represented as:) s
+5 419 M
+( ) s
+5 411 M
+(       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 403 M
+(    20 |           1           |           F           |) s
+5 395 M
+(       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 387 M
+(    22 |           3           |           I           |) s
+5 379 M
+(       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 371 M
+(    24 |           S           |           I           |) s
+5 363 M
+(       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 355 M
+(    26 |           4           |           A           |) s
+5 347 M
+(       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 339 M
+(    28 |           R           |           P           |) s
+5 331 M
+(       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 323 M
+(    30 |           A           |           0           |) s
+5 315 M
+(       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 307 M
+( ) s
+5 299 M
+(       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 291 M
+(    40 |           3           |           F           |) s
+5 283 M
+(       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 275 M
+(    42 |           O           |           O           |) s
+5 267 M
+(       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 259 M
+(    44 | 1  1|                20                       |) s
+5 251 M
+(       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 243 M
+( ) s
+5 235 M
+(       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 227 M
+(    64 | 1  1|                26                       |) s
+5 219 M
+(       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 211 M
+( ) s
+5 203 M
+(       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 195 M
+(    92 |           0           |                       |) s
+5 187 M
+(       +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+) s
+5 179 M
+( ) s
+5 171 M
+(The domain name for F.ISI.ARPA is shown at offset 20.  The domain name) s
+5 163 M
+(FOO.F.ISI.ARPA is shown at offset 40; this definition uses a pointer to) s
+5 155 M
+(concatenate a label for FOO to the previously defined F.ISI.ARPA.  The) s
+5 147 M
+(domain name ARPA is defined at offset 64 using a pointer to the ARPA) s
+5 139 M
+(component of the name F.ISI.ARPA at 20; note that this pointer relies on) s
+5 131 M
+(ARPA being the last label in the string at 20.  The root domain name is) s
+5 123 M
+( ) s
+5 115 M
+( ) s
+5 107 M
+( ) s
+5 99 M
+(Mockapetris                                                    [Page 31]) s
+377 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+377 523 M
+( ) s
+377 515 M
+( ) s
+377 507 M
+(defined by a single octet of zeros at 92; the root domain name has no) s
+377 499 M
+(labels.) s
+377 491 M
+( ) s
+377 483 M
+(4.2. Transport) s
+377 475 M
+( ) s
+377 467 M
+(The DNS assumes that messages will be transmitted as datagrams or in a) s
+377 459 M
+(byte stream carried by a virtual circuit.  While virtual circuits can be) s
+377 451 M
+(used for any DNS activity, datagrams are preferred for queries due to) s
+377 443 M
+(their lower overhead and better performance.  Zone refresh activities) s
+377 435 M
+(must use virtual circuits because of the need for reliable transfer.) s
+377 427 M
+( ) s
+377 419 M
+(The Internet supports name server access using TCP [RFC-793] on server) s
+377 411 M
+(port 53 \(decimal\) as well as datagram access using UDP [RFC-768] on UDP) s
+377 403 M
+(port 53 \(decimal\).) s
+377 395 M
+( ) s
+377 387 M
+(4.2.1. UDP usage) s
+377 379 M
+( ) s
+377 371 M
+(Messages sent using UDP user server port 53 \(decimal\).) s
+377 363 M
+( ) s
+377 355 M
+(Messages carried by UDP are restricted to 512 bytes \(not counting the IP) s
+377 347 M
+(or UDP headers\).  Longer messages are truncated and the TC bit is set in) s
+377 339 M
+(the header.) s
+377 331 M
+( ) s
+377 323 M
+(UDP is not acceptable for zone transfers, but is the recommended method) s
+377 315 M
+(for standard queries in the Internet.  Queries sent using UDP may be) s
+377 307 M
+(lost, and hence a retransmission strategy is required.  Queries or their) s
+377 299 M
+(responses may be reordered by the network, or by processing in name) s
+377 291 M
+(servers, so resolvers should not depend on them being returned in order.) s
+377 283 M
+( ) s
+377 275 M
+(The optimal UDP retransmission policy will vary with performance of the) s
+377 267 M
+(Internet and the needs of the client, but the following are recommended:) s
+377 259 M
+( ) s
+377 251 M
+(   - The client should try other servers and server addresses) s
+377 243 M
+(     before repeating a query to a specific address of a server.) s
+377 235 M
+( ) s
+377 227 M
+(   - The retransmission interval should be based on prior) s
+377 219 M
+(     statistics if possible.  Too aggressive retransmission can) s
+377 211 M
+(     easily slow responses for the community at large.  Depending) s
+377 203 M
+(     on how well connected the client is to its expected servers,) s
+377 195 M
+(     the minimum retransmission interval should be 2-5 seconds.) s
+377 187 M
+( ) s
+377 179 M
+(More suggestions on server selection and retransmission policy can be) s
+377 171 M
+(found in the resolver section of this memo.) s
+377 163 M
+( ) s
+377 155 M
+(4.2.2. TCP usage) s
+377 147 M
+( ) s
+377 139 M
+(Messages sent over TCP connections use server port 53 \(decimal\).  The) s
+377 131 M
+(message is prefixed with a two byte length field which gives the message) s
+377 123 M
+( ) s
+377 115 M
+( ) s
+377 107 M
+( ) s
+377 99 M
+(Mockapetris                                                    [Page 32]) s
+_R
+S
+%%Page: (17) 17
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 17 def
+/fname (rfc1035.txt) def
+/fdir () def
+/ftail (rfc1035.txt) def
+% User defined strings:
+/fmodstr (Thu Aug %2d 10:23:19 2000) def
+%%EndPageSetup
+do_header
+5 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+5 523 M
+( ) s
+5 515 M
+( ) s
+5 507 M
+(length, excluding the two byte length field.  This length field allows) s
+5 499 M
+(the low-level processing to assemble a complete message before beginning) s
+5 491 M
+(to parse it.) s
+5 483 M
+( ) s
+5 475 M
+(Several connection management policies are recommended:) s
+5 467 M
+( ) s
+5 459 M
+(   - The server should not block other activities waiting for TCP) s
+5 451 M
+(     data.) s
+5 443 M
+( ) s
+5 435 M
+(   - The server should support multiple connections.) s
+5 427 M
+( ) s
+5 419 M
+(   - The server should assume that the client will initiate) s
+5 411 M
+(     connection closing, and should delay closing its end of the) s
+5 403 M
+(     connection until all outstanding client requests have been) s
+5 395 M
+(     satisfied.) s
+5 387 M
+( ) s
+5 379 M
+(   - If the server needs to close a dormant connection to reclaim) s
+5 371 M
+(     resources, it should wait until the connection has been idle) s
+5 363 M
+(     for a period on the order of two minutes.  In particular, the) s
+5 355 M
+(     server should allow the SOA and AXFR request sequence \(which) s
+5 347 M
+(     begins a refresh operation\) to be made on a single connection.) s
+5 339 M
+(     Since the server would be unable to answer queries anyway, a) s
+5 331 M
+(     unilateral close or reset may be used instead of a graceful) s
+5 323 M
+(     close.) s
+5 315 M
+( ) s
+5 307 M
+(5. MASTER FILES) s
+5 299 M
+( ) s
+5 291 M
+(Master files are text files that contain RRs in text form.  Since the) s
+5 283 M
+(contents of a zone can be expressed in the form of a list of RRs a) s
+5 275 M
+(master file is most often used to define a zone, though it can be used) s
+5 267 M
+(to list a cache's contents.  Hence, this section first discusses the) s
+5 259 M
+(format of RRs in a master file, and then the special considerations when) s
+5 251 M
+(a master file is used to create a zone in some name server.) s
+5 243 M
+( ) s
+5 235 M
+(5.1. Format) s
+5 227 M
+( ) s
+5 219 M
+(The format of these files is a sequence of entries.  Entries are) s
+5 211 M
+(predominantly line-oriented, though parentheses can be used to continue) s
+5 203 M
+(a list of items across a line boundary, and text literals can contain) s
+5 195 M
+(CRLF within the text.  Any combination of tabs and spaces act as a) s
+5 187 M
+(delimiter between the separate items that make up an entry.  The end of) s
+5 179 M
+(any line in the master file can end with a comment.  The comment starts) s
+5 171 M
+(with a ";" \(semicolon\).) s
+5 163 M
+( ) s
+5 155 M
+(The following entries are defined:) s
+5 147 M
+( ) s
+5 139 M
+(    <blank>[<comment>]) s
+5 131 M
+( ) s
+5 123 M
+( ) s
+5 115 M
+( ) s
+5 107 M
+( ) s
+5 99 M
+(Mockapetris                                                    [Page 33]) s
+377 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+377 523 M
+( ) s
+377 515 M
+( ) s
+377 507 M
+(    $ORIGIN <domain-name> [<comment>]) s
+377 499 M
+( ) s
+377 491 M
+(    $INCLUDE <file-name> [<domain-name>] [<comment>]) s
+377 483 M
+( ) s
+377 475 M
+(    <domain-name><rr> [<comment>]) s
+377 467 M
+( ) s
+377 459 M
+(    <blank><rr> [<comment>]) s
+377 451 M
+( ) s
+377 443 M
+(Blank lines, with or without comments, are allowed anywhere in the file.) s
+377 435 M
+( ) s
+377 427 M
+(Two control entries are defined: $ORIGIN and $INCLUDE.  $ORIGIN is) s
+377 419 M
+(followed by a domain name, and resets the current origin for relative) s
+377 411 M
+(domain names to the stated name.  $INCLUDE inserts the named file into) s
+377 403 M
+(the current file, and may optionally specify a domain name that sets the) s
+377 395 M
+(relative domain name origin for the included file.  $INCLUDE may also) s
+377 387 M
+(have a comment.  Note that a $INCLUDE entry never changes the relative) s
+377 379 M
+(origin of the parent file, regardless of changes to the relative origin) s
+377 371 M
+(made within the included file.) s
+377 363 M
+( ) s
+377 355 M
+(The last two forms represent RRs.  If an entry for an RR begins with a) s
+377 347 M
+(blank, then the RR is assumed to be owned by the last stated owner.  If) s
+377 339 M
+(an RR entry begins with a <domain-name>, then the owner name is reset.) s
+377 331 M
+( ) s
+377 323 M
+(<rr> contents take one of the following forms:) s
+377 315 M
+( ) s
+377 307 M
+(    [<TTL>] [<class>] <type> <RDATA>) s
+377 299 M
+( ) s
+377 291 M
+(    [<class>] [<TTL>] <type> <RDATA>) s
+377 283 M
+( ) s
+377 275 M
+(The RR begins with optional TTL and class fields, followed by a type and) s
+377 267 M
+(RDATA field appropriate to the type and class.  Class and type use the) s
+377 259 M
+(standard mnemonics, TTL is a decimal integer.  Omitted class and TTL) s
+377 251 M
+(values are default to the last explicitly stated values.  Since type and) s
+377 243 M
+(class mnemonics are disjoint, the parse is unique.  \(Note that this) s
+377 235 M
+(order is different from the order used in examples and the order used in) s
+377 227 M
+(the actual RRs; the given order allows easier parsing and defaulting.\)) s
+377 219 M
+( ) s
+377 211 M
+(<domain-name>s make up a large share of the data in the master file.) s
+377 203 M
+(The labels in the domain name are expressed as character strings and) s
+377 195 M
+(separated by dots.  Quoting conventions allow arbitrary characters to be) s
+377 187 M
+(stored in domain names.  Domain names that end in a dot are called) s
+377 179 M
+(absolute, and are taken as complete.  Domain names which do not end in a) s
+377 171 M
+(dot are called relative; the actual domain name is the concatenation of) s
+377 163 M
+(the relative part with an origin specified in a $ORIGIN, $INCLUDE, or as) s
+377 155 M
+(an argument to the master file loading routine.  A relative name is an) s
+377 147 M
+(error when no origin is available.) s
+377 139 M
+( ) s
+377 131 M
+( ) s
+377 123 M
+( ) s
+377 115 M
+( ) s
+377 107 M
+( ) s
+377 99 M
+(Mockapetris                                                    [Page 34]) s
+_R
+S
+%%Page: (18) 18
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 18 def
+/fname (rfc1035.txt) def
+/fdir () def
+/ftail (rfc1035.txt) def
+% User defined strings:
+/fmodstr (Thu Aug %2d 10:23:19 2000) def
+%%EndPageSetup
+do_header
+5 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+5 523 M
+( ) s
+5 515 M
+( ) s
+5 507 M
+(<character-string> is expressed in one or two ways: as a contiguous set) s
+5 499 M
+(of characters without interior spaces, or as a string beginning with a ") s
+5 491 M
+(and ending with a ".  Inside a " delimited string any character can) s
+5 483 M
+(occur, except for a " itself, which must be quoted using \\ \(back slash\).) s
+5 475 M
+( ) s
+5 467 M
+(Because these files are text files several special encodings are) s
+5 459 M
+(necessary to allow arbitrary data to be loaded.  In particular:) s
+5 451 M
+( ) s
+5 443 M
+(                of the root.) s
+5 435 M
+( ) s
+5 427 M
+(@               A free standing @ is used to denote the current origin.) s
+5 419 M
+( ) s
+5 411 M
+(\\X              where X is any character other than a digit \(0-9\), is) s
+5 403 M
+(                used to quote that character so that its special meaning) s
+5 395 M
+(                does not apply.  For example, "\\." can be used to place) s
+5 387 M
+(                a dot character in a label.) s
+5 379 M
+( ) s
+5 371 M
+(\\DDD            where each D is a digit is the octet corresponding to) s
+5 363 M
+(                the decimal number described by DDD.  The resulting) s
+5 355 M
+(                octet is assumed to be text and is not checked for) s
+5 347 M
+(                special meaning.) s
+5 339 M
+( ) s
+5 331 M
+(\( \)             Parentheses are used to group data that crosses a line) s
+5 323 M
+(                boundary.  In effect, line terminations are not) s
+5 315 M
+(                recognized within parentheses.) s
+5 307 M
+( ) s
+5 299 M
+(;               Semicolon is used to start a comment; the remainder of) s
+5 291 M
+(                the line is ignored.) s
+5 283 M
+( ) s
+5 275 M
+(5.2. Use of master files to define zones) s
+5 267 M
+( ) s
+5 259 M
+(When a master file is used to load a zone, the operation should be) s
+5 251 M
+(suppressed if any errors are encountered in the master file.  The) s
+5 243 M
+(rationale for this is that a single error can have widespread) s
+5 235 M
+(consequences.  For example, suppose that the RRs defining a delegation) s
+5 227 M
+(have syntax errors; then the server will return authoritative name) s
+5 219 M
+(errors for all names in the subzone \(except in the case where the) s
+5 211 M
+(subzone is also present on the server\).) s
+5 203 M
+( ) s
+5 195 M
+(Several other validity checks that should be performed in addition to) s
+5 187 M
+(insuring that the file is syntactically correct:) s
+5 179 M
+( ) s
+5 171 M
+(   1. All RRs in the file should have the same class.) s
+5 163 M
+( ) s
+5 155 M
+(   2. Exactly one SOA RR should be present at the top of the zone.) s
+5 147 M
+( ) s
+5 139 M
+(   3. If delegations are present and glue information is required,) s
+5 131 M
+(      it should be present.) s
+5 123 M
+( ) s
+5 115 M
+( ) s
+5 107 M
+( ) s
+5 99 M
+(Mockapetris                                                    [Page 35]) s
+377 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+377 523 M
+( ) s
+377 515 M
+( ) s
+377 507 M
+(   4. Information present outside of the authoritative nodes in the) s
+377 499 M
+(      zone should be glue information, rather than the result of an) s
+377 491 M
+(      origin or similar error.) s
+377 483 M
+( ) s
+377 475 M
+(5.3. Master file example) s
+377 467 M
+( ) s
+377 459 M
+(The following is an example file which might be used to define the) s
+377 451 M
+(ISI.EDU zone.and is loaded with an origin of ISI.EDU:) s
+377 443 M
+( ) s
+377 435 M
+(@   IN  SOA     VENERA      Action\\.domains \() s
+377 427 M
+(                                 20     ; SERIAL) s
+377 419 M
+(                                 7200   ; REFRESH) s
+377 411 M
+(                                 600    ; RETRY) s
+377 403 M
+(                                 3600000; EXPIRE) s
+377 395 M
+(                                 60\)    ; MINIMUM) s
+377 387 M
+( ) s
+377 379 M
+(        NS      A.ISI.EDU.) s
+377 371 M
+(        NS      VENERA) s
+377 363 M
+(        NS      VAXA) s
+377 355 M
+(        MX      10      VENERA) s
+377 347 M
+(        MX      20      VAXA) s
+377 339 M
+( ) s
+377 331 M
+(A       A       26.3.0.103) s
+377 323 M
+( ) s
+377 315 M
+(VENERA  A       10.1.0.52) s
+377 307 M
+(        A       128.9.0.32) s
+377 299 M
+( ) s
+377 291 M
+(VAXA    A       10.2.0.27) s
+377 283 M
+(        A       128.9.0.33) s
+377 275 M
+( ) s
+377 267 M
+( ) s
+377 259 M
+($INCLUDE <SUBSYS>ISI-MAILBOXES.TXT) s
+377 251 M
+( ) s
+377 243 M
+(Where the file <SUBSYS>ISI-MAILBOXES.TXT is:) s
+377 235 M
+( ) s
+377 227 M
+(    MOE     MB      A.ISI.EDU.) s
+377 219 M
+(    LARRY   MB      A.ISI.EDU.) s
+377 211 M
+(    CURLEY  MB      A.ISI.EDU.) s
+377 203 M
+(    STOOGES MG      MOE) s
+377 195 M
+(            MG      LARRY) s
+377 187 M
+(            MG      CURLEY) s
+377 179 M
+( ) s
+377 171 M
+(Note the use of the \\ character in the SOA RR to specify the responsible) s
+377 163 M
+(person mailbox "Action.domains@E.ISI.EDU".) s
+377 155 M
+( ) s
+377 147 M
+( ) s
+377 139 M
+( ) s
+377 131 M
+( ) s
+377 123 M
+( ) s
+377 115 M
+( ) s
+377 107 M
+( ) s
+377 99 M
+(Mockapetris                                                    [Page 36]) s
+_R
+S
+%%Page: (19) 19
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 19 def
+/fname (rfc1035.txt) def
+/fdir () def
+/ftail (rfc1035.txt) def
+% User defined strings:
+/fmodstr (Thu Aug %2d 10:23:19 2000) def
+%%EndPageSetup
+do_header
+5 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+5 523 M
+( ) s
+5 515 M
+( ) s
+5 507 M
+(6. NAME SERVER IMPLEMENTATION) s
+5 499 M
+( ) s
+5 491 M
+(6.1. Architecture) s
+5 483 M
+( ) s
+5 475 M
+(The optimal structure for the name server will depend on the host) s
+5 467 M
+(operating system and whether the name server is integrated with resolver) s
+5 459 M
+(operations, either by supporting recursive service, or by sharing its) s
+5 451 M
+(database with a resolver.  This section discusses implementation) s
+5 443 M
+(considerations for a name server which shares a database with a) s
+5 435 M
+(resolver, but most of these concerns are present in any name server.) s
+5 427 M
+( ) s
+5 419 M
+(6.1.1. Control) s
+5 411 M
+( ) s
+5 403 M
+(A name server must employ multiple concurrent activities, whether they) s
+5 395 M
+(are implemented as separate tasks in the host's OS or multiplexing) s
+5 387 M
+(inside a single name server program.  It is simply not acceptable for a) s
+5 379 M
+(name server to block the service of UDP requests while it waits for TCP) s
+5 371 M
+(data for refreshing or query activities.  Similarly, a name server) s
+5 363 M
+(should not attempt to provide recursive service without processing such) s
+5 355 M
+(requests in parallel, though it may choose to serialize requests from a) s
+5 347 M
+(single client, or to regard identical requests from the same client as) s
+5 339 M
+(duplicates.  A name server should not substantially delay requests while) s
+5 331 M
+(it reloads a zone from master files or while it incorporates a newly) s
+5 323 M
+(refreshed zone into its database.) s
+5 315 M
+( ) s
+5 307 M
+(6.1.2. Database) s
+5 299 M
+( ) s
+5 291 M
+(While name server implementations are free to use any internal data) s
+5 283 M
+(structures they choose, the suggested structure consists of three major) s
+5 275 M
+(parts:) s
+5 267 M
+( ) s
+5 259 M
+(   - A "catalog" data structure which lists the zones available to) s
+5 251 M
+(     this server, and a "pointer" to the zone data structure.  The) s
+5 243 M
+(     main purpose of this structure is to find the nearest ancestor) s
+5 235 M
+(     zone, if any, for arriving standard queries.) s
+5 227 M
+( ) s
+5 219 M
+(   - Separate data structures for each of the zones held by the) s
+5 211 M
+(     name server.) s
+5 203 M
+( ) s
+5 195 M
+(   - A data structure for cached data. \(or perhaps separate caches) s
+5 187 M
+(     for different classes\)) s
+5 179 M
+( ) s
+5 171 M
+(All of these data structures can be implemented an identical tree) s
+5 163 M
+(structure format, with different data chained off the nodes in different) s
+5 155 M
+(parts: in the catalog the data is pointers to zones, while in the zone) s
+5 147 M
+(and cache data structures, the data will be RRs.  In designing the tree) s
+5 139 M
+(framework the designer should recognize that query processing will need) s
+5 131 M
+(to traverse the tree using case-insensitive label comparisons; and that) s
+5 123 M
+( ) s
+5 115 M
+( ) s
+5 107 M
+( ) s
+5 99 M
+(Mockapetris                                                    [Page 37]) s
+377 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+377 523 M
+( ) s
+377 515 M
+( ) s
+377 507 M
+(in real data, a few nodes have a very high branching factor \(100-1000 or) s
+377 499 M
+(more\), but the vast majority have a very low branching factor \(0-1\).) s
+377 491 M
+( ) s
+377 483 M
+(One way to solve the case problem is to store the labels for each node) s
+377 475 M
+(in two pieces: a standardized-case representation of the label where all) s
+377 467 M
+(ASCII characters are in a single case, together with a bit mask that) s
+377 459 M
+(denotes which characters are actually of a different case.  The) s
+377 451 M
+(branching factor diversity can be handled using a simple linked list for) s
+377 443 M
+(a node until the branching factor exceeds some threshold, and) s
+377 435 M
+(transitioning to a hash structure after the threshold is exceeded.  In) s
+377 427 M
+(any case, hash structures used to store tree sections must insure that) s
+377 419 M
+(hash functions and procedures preserve the casing conventions of the) s
+377 411 M
+(DNS.) s
+377 403 M
+( ) s
+377 395 M
+(The use of separate structures for the different parts of the database) s
+377 387 M
+(is motivated by several factors:) s
+377 379 M
+( ) s
+377 371 M
+(   - The catalog structure can be an almost static structure that) s
+377 363 M
+(     need change only when the system administrator changes the) s
+377 355 M
+(     zones supported by the server.  This structure can also be) s
+377 347 M
+(     used to store parameters used to control refreshing) s
+377 339 M
+(     activities.) s
+377 331 M
+( ) s
+377 323 M
+(   - The individual data structures for zones allow a zone to be) s
+377 315 M
+(     replaced simply by changing a pointer in the catalog.  Zone) s
+377 307 M
+(     refresh operations can build a new structure and, when) s
+377 299 M
+(     complete, splice it into the database via a simple pointer) s
+377 291 M
+(     replacement.  It is very important that when a zone is) s
+377 283 M
+(     refreshed, queries should not use old and new data) s
+377 275 M
+(     simultaneously.) s
+377 267 M
+( ) s
+377 259 M
+(   - With the proper search procedures, authoritative data in zones) s
+377 251 M
+(     will always "hide", and hence take precedence over, cached) s
+377 243 M
+(     data.) s
+377 235 M
+( ) s
+377 227 M
+(   - Errors in zone definitions that cause overlapping zones, etc.,) s
+377 219 M
+(     may cause erroneous responses to queries, but problem) s
+377 211 M
+(     determination is simplified, and the contents of one "bad") s
+377 203 M
+(     zone can't corrupt another.) s
+377 195 M
+( ) s
+377 187 M
+(   - Since the cache is most frequently updated, it is most) s
+377 179 M
+(     vulnerable to corruption during system restarts.  It can also) s
+377 171 M
+(     become full of expired RR data.  In either case, it can easily) s
+377 163 M
+(     be discarded without disturbing zone data.) s
+377 155 M
+( ) s
+377 147 M
+(A major aspect of database design is selecting a structure which allows) s
+377 139 M
+(the name server to deal with crashes of the name server's host.  State) s
+377 131 M
+(information which a name server should save across system crashes) s
+377 123 M
+( ) s
+377 115 M
+( ) s
+377 107 M
+( ) s
+377 99 M
+(Mockapetris                                                    [Page 38]) s
+_R
+S
+%%Page: (20) 20
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 20 def
+/fname (rfc1035.txt) def
+/fdir () def
+/ftail (rfc1035.txt) def
+% User defined strings:
+/fmodstr (Thu Aug %2d 10:23:19 2000) def
+%%EndPageSetup
+do_header
+5 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+5 523 M
+( ) s
+5 515 M
+( ) s
+5 507 M
+(includes the catalog structure \(including the state of refreshing for) s
+5 499 M
+(each zone\) and the zone data itself.) s
+5 491 M
+( ) s
+5 483 M
+(6.1.3. Time) s
+5 475 M
+( ) s
+5 467 M
+(Both the TTL data for RRs and the timing data for refreshing activities) s
+5 459 M
+(depends on 32 bit timers in units of seconds.  Inside the database,) s
+5 451 M
+(refresh timers and TTLs for cached data conceptually "count down", while) s
+5 443 M
+(data in the zone stays with constant TTLs.) s
+5 435 M
+( ) s
+5 427 M
+(A recommended implementation strategy is to store time in two ways:  as) s
+5 419 M
+(a relative increment and as an absolute time.  One way to do this is to) s
+5 411 M
+(use positive 32 bit numbers for one type and negative numbers for the) s
+5 403 M
+(other.  The RRs in zones use relative times; the refresh timers and) s
+5 395 M
+(cache data use absolute times.  Absolute numbers are taken with respect) s
+5 387 M
+(to some known origin and converted to relative values when placed in the) s
+5 379 M
+(response to a query.  When an absolute TTL is negative after conversion) s
+5 371 M
+(to relative, then the data is expired and should be ignored.) s
+5 363 M
+( ) s
+5 355 M
+(6.2. Standard query processing) s
+5 347 M
+( ) s
+5 339 M
+(The major algorithm for standard query processing is presented in) s
+5 331 M
+([RFC-1034].) s
+5 323 M
+( ) s
+5 315 M
+(When processing queries with QCLASS=*, or some other QCLASS which) s
+5 307 M
+(matches multiple classes, the response should never be authoritative) s
+5 299 M
+(unless the server can guarantee that the response covers all classes.) s
+5 291 M
+( ) s
+5 283 M
+(When composing a response, RRs which are to be inserted in the) s
+5 275 M
+(additional section, but duplicate RRs in the answer or authority) s
+5 267 M
+(sections, may be omitted from the additional section.) s
+5 259 M
+( ) s
+5 251 M
+(When a response is so long that truncation is required, the truncation) s
+5 243 M
+(should start at the end of the response and work forward in the) s
+5 235 M
+(datagram.  Thus if there is any data for the authority section, the) s
+5 227 M
+(answer section is guaranteed to be unique.) s
+5 219 M
+( ) s
+5 211 M
+(The MINIMUM value in the SOA should be used to set a floor on the TTL of) s
+5 203 M
+(data distributed from a zone.  This floor function should be done when) s
+5 195 M
+(the data is copied into a response.  This will allow future dynamic) s
+5 187 M
+(update protocols to change the SOA MINIMUM field without ambiguous) s
+5 179 M
+(semantics.) s
+5 171 M
+( ) s
+5 163 M
+(6.3. Zone refresh and reload processing) s
+5 155 M
+( ) s
+5 147 M
+(In spite of a server's best efforts, it may be unable to load zone data) s
+5 139 M
+(from a master file due to syntax errors, etc., or be unable to refresh a) s
+5 131 M
+(zone within the its expiration parameter.  In this case, the name server) s
+5 123 M
+( ) s
+5 115 M
+( ) s
+5 107 M
+( ) s
+5 99 M
+(Mockapetris                                                    [Page 39]) s
+377 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+377 523 M
+( ) s
+377 515 M
+( ) s
+377 507 M
+(should answer queries as if it were not supposed to possess the zone.) s
+377 499 M
+( ) s
+377 491 M
+(If a master is sending a zone out via AXFR, and a new version is created) s
+377 483 M
+(during the transfer, the master should continue to send the old version) s
+377 475 M
+(if possible.  In any case, it should never send part of one version and) s
+377 467 M
+(part of another.  If completion is not possible, the master should reset) s
+377 459 M
+(the connection on which the zone transfer is taking place.) s
+377 451 M
+( ) s
+377 443 M
+(6.4. Inverse queries \(Optional\)) s
+377 435 M
+( ) s
+377 427 M
+(Inverse queries are an optional part of the DNS.  Name servers are not) s
+377 419 M
+(required to support any form of inverse queries.  If a name server) s
+377 411 M
+(receives an inverse query that it does not support, it returns an error) s
+377 403 M
+(response with the "Not Implemented" error set in the header.  While) s
+377 395 M
+(inverse query support is optional, all name servers must be at least) s
+377 387 M
+(able to return the error response.) s
+377 379 M
+( ) s
+377 371 M
+(6.4.1. The contents of inverse queries and responses          Inverse) s
+377 363 M
+(queries reverse the mappings performed by standard query operations;) s
+377 355 M
+(while a standard query maps a domain name to a resource, an inverse) s
+377 347 M
+(query maps a resource to a domain name.  For example, a standard query) s
+377 339 M
+(might bind a domain name to a host address; the corresponding inverse) s
+377 331 M
+(query binds the host address to a domain name.) s
+377 323 M
+( ) s
+377 315 M
+(Inverse queries take the form of a single RR in the answer section of) s
+377 307 M
+(the message, with an empty question section.  The owner name of the) s
+377 299 M
+(query RR and its TTL are not significant.  The response carries) s
+377 291 M
+(questions in the question section which identify all names possessing) s
+377 283 M
+(the query RR WHICH THE NAME SERVER KNOWS.  Since no name server knows) s
+377 275 M
+(about all of the domain name space, the response can never be assumed to) s
+377 267 M
+(be complete.  Thus inverse queries are primarily useful for database) s
+377 259 M
+(management and debugging activities.  Inverse queries are NOT an) s
+377 251 M
+(acceptable method of mapping host addresses to host names; use the IN-) s
+377 243 M
+(ADDR.ARPA domain instead.) s
+377 235 M
+( ) s
+377 227 M
+(Where possible, name servers should provide case-insensitive comparisons) s
+377 219 M
+(for inverse queries.  Thus an inverse query asking for an MX RR of) s
+377 211 M
+("Venera.isi.edu" should get the same response as a query for) s
+377 203 M
+("VENERA.ISI.EDU"; an inverse query for HINFO RR "IBM-PC UNIX" should) s
+377 195 M
+(produce the same result as an inverse query for "IBM-pc unix".  However,) s
+377 187 M
+(this cannot be guaranteed because name servers may possess RRs that) s
+377 179 M
+(contain character strings but the name server does not know that the) s
+377 171 M
+(data is character.) s
+377 163 M
+( ) s
+377 155 M
+(When a name server processes an inverse query, it either returns:) s
+377 147 M
+( ) s
+377 139 M
+(   1. zero, one, or multiple domain names for the specified) s
+377 131 M
+(      resource as QNAMEs in the question section) s
+377 123 M
+( ) s
+377 115 M
+( ) s
+377 107 M
+( ) s
+377 99 M
+(Mockapetris                                                    [Page 40]) s
+_R
+S
+%%Page: (21) 21
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 21 def
+/fname (rfc1035.txt) def
+/fdir () def
+/ftail (rfc1035.txt) def
+% User defined strings:
+/fmodstr (Thu Aug %2d 10:23:19 2000) def
+%%EndPageSetup
+do_header
+5 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+5 523 M
+( ) s
+5 515 M
+( ) s
+5 507 M
+(   2. an error code indicating that the name server doesn't support) s
+5 499 M
+(      inverse mapping of the specified resource type.) s
+5 491 M
+( ) s
+5 483 M
+(When the response to an inverse query contains one or more QNAMEs, the) s
+5 475 M
+(owner name and TTL of the RR in the answer section which defines the) s
+5 467 M
+(inverse query is modified to exactly match an RR found at the first) s
+5 459 M
+(QNAME.) s
+5 451 M
+( ) s
+5 443 M
+(RRs returned in the inverse queries cannot be cached using the same) s
+5 435 M
+(mechanism as is used for the replies to standard queries.  One reason) s
+5 427 M
+(for this is that a name might have multiple RRs of the same type, and) s
+5 419 M
+(only one would appear.  For example, an inverse query for a single) s
+5 411 M
+(address of a multiply homed host might create the impression that only) s
+5 403 M
+(one address existed.) s
+5 395 M
+( ) s
+5 387 M
+(6.4.2. Inverse query and response example          The overall structure) s
+5 379 M
+(of an inverse query for retrieving the domain name that corresponds to) s
+5 371 M
+(Internet address 10.1.0.52 is shown below:) s
+5 363 M
+( ) s
+5 355 M
+(                         +-----------------------------------------+) s
+5 347 M
+(           Header        |          OPCODE=IQUERY, ID=997          |) s
+5 339 M
+(                         +-----------------------------------------+) s
+5 331 M
+(          Question       |                 <empty>                 |) s
+5 323 M
+(                         +-----------------------------------------+) s
+5 315 M
+(           Answer        |        <anyname> A IN 10.1.0.52         |) s
+5 307 M
+(                         +-----------------------------------------+) s
+5 299 M
+(          Authority      |                 <empty>                 |) s
+5 291 M
+(                         +-----------------------------------------+) s
+5 283 M
+(         Additional      |                 <empty>                 |) s
+5 275 M
+(                         +-----------------------------------------+) s
+5 267 M
+( ) s
+5 259 M
+(This query asks for a question whose answer is the Internet style) s
+5 251 M
+(address 10.1.0.52.  Since the owner name is not known, any domain name) s
+5 243 M
+(can be used as a placeholder \(and is ignored\).  A single octet of zero,) s
+5 235 M
+(signifying the root, is usually used because it minimizes the length of) s
+5 227 M
+(the message.  The TTL of the RR is not significant.  The response to) s
+5 219 M
+(this query might be:) s
+5 211 M
+( ) s
+5 203 M
+( ) s
+5 195 M
+( ) s
+5 187 M
+( ) s
+5 179 M
+( ) s
+5 171 M
+( ) s
+5 163 M
+( ) s
+5 155 M
+( ) s
+5 147 M
+( ) s
+5 139 M
+( ) s
+5 131 M
+( ) s
+5 123 M
+( ) s
+5 115 M
+( ) s
+5 107 M
+( ) s
+5 99 M
+(Mockapetris                                                    [Page 41]) s
+377 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+377 523 M
+( ) s
+377 515 M
+( ) s
+377 507 M
+(                         +-----------------------------------------+) s
+377 499 M
+(           Header        |         OPCODE=RESPONSE, ID=997         |) s
+377 491 M
+(                         +-----------------------------------------+) s
+377 483 M
+(          Question       |QTYPE=A, QCLASS=IN, QNAME=VENERA.ISI.EDU |) s
+377 475 M
+(                         +-----------------------------------------+) s
+377 467 M
+(           Answer        |  VENERA.ISI.EDU  A IN 10.1.0.52         |) s
+377 459 M
+(                         +-----------------------------------------+) s
+377 451 M
+(          Authority      |                 <empty>                 |) s
+377 443 M
+(                         +-----------------------------------------+) s
+377 435 M
+(         Additional      |                 <empty>                 |) s
+377 427 M
+(                         +-----------------------------------------+) s
+377 419 M
+( ) s
+377 411 M
+(Note that the QTYPE in a response to an inverse query is the same as the) s
+377 403 M
+(TYPE field in the answer section of the inverse query.  Responses to) s
+377 395 M
+(inverse queries may contain multiple questions when the inverse is not) s
+377 387 M
+(unique.  If the question section in the response is not empty, then the) s
+377 379 M
+(RR in the answer section is modified to correspond to be an exact copy) s
+377 371 M
+(of an RR at the first QNAME.) s
+377 363 M
+( ) s
+377 355 M
+(6.4.3. Inverse query processing) s
+377 347 M
+( ) s
+377 339 M
+(Name servers that support inverse queries can support these operations) s
+377 331 M
+(through exhaustive searches of their databases, but this becomes) s
+377 323 M
+(impractical as the size of the database increases.  An alternative) s
+377 315 M
+(approach is to invert the database according to the search key.) s
+377 307 M
+( ) s
+377 299 M
+(For name servers that support multiple zones and a large amount of data,) s
+377 291 M
+(the recommended approach is separate inversions for each zone.  When a) s
+377 283 M
+(particular zone is changed during a refresh, only its inversions need to) s
+377 275 M
+(be redone.) s
+377 267 M
+( ) s
+377 259 M
+(Support for transfer of this type of inversion may be included in future) s
+377 251 M
+(versions of the domain system, but is not supported in this version.) s
+377 243 M
+( ) s
+377 235 M
+(6.5. Completion queries and responses) s
+377 227 M
+( ) s
+377 219 M
+(The optional completion services described in RFC-882 and RFC-883 have) s
+377 211 M
+(been deleted.  Redesigned services may become available in the future.) s
+377 203 M
+( ) s
+377 195 M
+( ) s
+377 187 M
+( ) s
+377 179 M
+( ) s
+377 171 M
+( ) s
+377 163 M
+( ) s
+377 155 M
+( ) s
+377 147 M
+( ) s
+377 139 M
+( ) s
+377 131 M
+( ) s
+377 123 M
+( ) s
+377 115 M
+( ) s
+377 107 M
+( ) s
+377 99 M
+(Mockapetris                                                    [Page 42]) s
+_R
+S
+%%Page: (22) 22
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 22 def
+/fname (rfc1035.txt) def
+/fdir () def
+/ftail (rfc1035.txt) def
+% User defined strings:
+/fmodstr (Thu Aug %2d 10:23:19 2000) def
+%%EndPageSetup
+do_header
+5 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+5 523 M
+( ) s
+5 515 M
+( ) s
+5 507 M
+(7. RESOLVER IMPLEMENTATION) s
+5 499 M
+( ) s
+5 491 M
+(The top levels of the recommended resolver algorithm are discussed in) s
+5 483 M
+([RFC-1034].  This section discusses implementation details assuming the) s
+5 475 M
+(database structure suggested in the name server implementation section) s
+5 467 M
+(of this memo.) s
+5 459 M
+( ) s
+5 451 M
+(7.1. Transforming a user request into a query) s
+5 443 M
+( ) s
+5 435 M
+(The first step a resolver takes is to transform the client's request,) s
+5 427 M
+(stated in a format suitable to the local OS, into a search specification) s
+5 419 M
+(for RRs at a specific name which match a specific QTYPE and QCLASS.) s
+5 411 M
+(Where possible, the QTYPE and QCLASS should correspond to a single type) s
+5 403 M
+(and a single class, because this makes the use of cached data much) s
+5 395 M
+(simpler.  The reason for this is that the presence of data of one type) s
+5 387 M
+(in a cache doesn't confirm the existence or non-existence of data of) s
+5 379 M
+(other types, hence the only way to be sure is to consult an) s
+5 371 M
+(authoritative source.  If QCLASS=* is used, then authoritative answers) s
+5 363 M
+(won't be available.) s
+5 355 M
+( ) s
+5 347 M
+(Since a resolver must be able to multiplex multiple requests if it is to) s
+5 339 M
+(perform its function efficiently, each pending request is usually) s
+5 331 M
+(represented in some block of state information.  This state block will) s
+5 323 M
+(typically contain:) s
+5 315 M
+( ) s
+5 307 M
+(   - A timestamp indicating the time the request began.) s
+5 299 M
+(     The timestamp is used to decide whether RRs in the database) s
+5 291 M
+(     can be used or are out of date.  This timestamp uses the) s
+5 283 M
+(     absolute time format previously discussed for RR storage in) s
+5 275 M
+(     zones and caches.  Note that when an RRs TTL indicates a) s
+5 267 M
+(     relative time, the RR must be timely, since it is part of a) s
+5 259 M
+(     zone.  When the RR has an absolute time, it is part of a) s
+5 251 M
+(     cache, and the TTL of the RR is compared against the timestamp) s
+5 243 M
+(     for the start of the request.) s
+5 235 M
+( ) s
+5 227 M
+(     Note that using the timestamp is superior to using a current) s
+5 219 M
+(     time, since it allows RRs with TTLs of zero to be entered in) s
+5 211 M
+(     the cache in the usual manner, but still used by the current) s
+5 203 M
+(     request, even after intervals of many seconds due to system) s
+5 195 M
+(     load, query retransmission timeouts, etc.) s
+5 187 M
+( ) s
+5 179 M
+(   - Some sort of parameters to limit the amount of work which will) s
+5 171 M
+(     be performed for this request.) s
+5 163 M
+( ) s
+5 155 M
+(     The amount of work which a resolver will do in response to a) s
+5 147 M
+(     client request must be limited to guard against errors in the) s
+5 139 M
+(     database, such as circular CNAME references, and operational) s
+5 131 M
+(     problems, such as network partition which prevents the) s
+5 123 M
+( ) s
+5 115 M
+( ) s
+5 107 M
+( ) s
+5 99 M
+(Mockapetris                                                    [Page 43]) s
+377 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+377 523 M
+( ) s
+377 515 M
+( ) s
+377 507 M
+(     resolver from accessing the name servers it needs.  While) s
+377 499 M
+(     local limits on the number of times a resolver will retransmit) s
+377 491 M
+(     a particular query to a particular name server address are) s
+377 483 M
+(     essential, the resolver should have a global per-request) s
+377 475 M
+(     counter to limit work on a single request.  The counter should) s
+377 467 M
+(     be set to some initial value and decremented whenever the) s
+377 459 M
+(     resolver performs any action \(retransmission timeout,) s
+377 451 M
+(     retransmission, etc.\)  If the counter passes zero, the request) s
+377 443 M
+(     is terminated with a temporary error.) s
+377 435 M
+( ) s
+377 427 M
+(     Note that if the resolver structure allows one request to) s
+377 419 M
+(     start others in parallel, such as when the need to access a) s
+377 411 M
+(     name server for one request causes a parallel resolve for the) s
+377 403 M
+(     name server's addresses, the spawned request should be started) s
+377 395 M
+(     with a lower counter.  This prevents circular references in) s
+377 387 M
+(     the database from starting a chain reaction of resolver) s
+377 379 M
+(     activity.) s
+377 371 M
+( ) s
+377 363 M
+(   - The SLIST data structure discussed in [RFC-1034].) s
+377 355 M
+( ) s
+377 347 M
+(     This structure keeps track of the state of a request if it) s
+377 339 M
+(     must wait for answers from foreign name servers.) s
+377 331 M
+( ) s
+377 323 M
+(7.2. Sending the queries) s
+377 315 M
+( ) s
+377 307 M
+(As described in [RFC-1034], the basic task of the resolver is to) s
+377 299 M
+(formulate a query which will answer the client's request and direct that) s
+377 291 M
+(query to name servers which can provide the information.  The resolver) s
+377 283 M
+(will usually only have very strong hints about which servers to ask, in) s
+377 275 M
+(the form of NS RRs, and may have to revise the query, in response to) s
+377 267 M
+(CNAMEs, or revise the set of name servers the resolver is asking, in) s
+377 259 M
+(response to delegation responses which point the resolver to name) s
+377 251 M
+(servers closer to the desired information.  In addition to the) s
+377 243 M
+(information requested by the client, the resolver may have to call upon) s
+377 235 M
+(its own services to determine the address of name servers it wishes to) s
+377 227 M
+(contact.) s
+377 219 M
+( ) s
+377 211 M
+(In any case, the model used in this memo assumes that the resolver is) s
+377 203 M
+(multiplexing attention between multiple requests, some from the client,) s
+377 195 M
+(and some internally generated.  Each request is represented by some) s
+377 187 M
+(state information, and the desired behavior is that the resolver) s
+377 179 M
+(transmit queries to name servers in a way that maximizes the probability) s
+377 171 M
+(that the request is answered, minimizes the time that the request takes,) s
+377 163 M
+(and avoids excessive transmissions.  The key algorithm uses the state) s
+377 155 M
+(information of the request to select the next name server address to) s
+377 147 M
+(query, and also computes a timeout which will cause the next action) s
+377 139 M
+(should a response not arrive.  The next action will usually be a) s
+377 131 M
+(transmission to some other server, but may be a temporary error to the) s
+377 123 M
+( ) s
+377 115 M
+( ) s
+377 107 M
+( ) s
+377 99 M
+(Mockapetris                                                    [Page 44]) s
+_R
+S
+%%Page: (23) 23
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 23 def
+/fname (rfc1035.txt) def
+/fdir () def
+/ftail (rfc1035.txt) def
+% User defined strings:
+/fmodstr (Thu Aug %2d 10:23:19 2000) def
+%%EndPageSetup
+do_header
+5 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+5 523 M
+( ) s
+5 515 M
+( ) s
+5 507 M
+(client.) s
+5 499 M
+( ) s
+5 491 M
+(The resolver always starts with a list of server names to query \(SLIST\).) s
+5 483 M
+(This list will be all NS RRs which correspond to the nearest ancestor) s
+5 475 M
+(zone that the resolver knows about.  To avoid startup problems, the) s
+5 467 M
+(resolver should have a set of default servers which it will ask should) s
+5 459 M
+(it have no current NS RRs which are appropriate.  The resolver then adds) s
+5 451 M
+(to SLIST all of the known addresses for the name servers, and may start) s
+5 443 M
+(parallel requests to acquire the addresses of the servers when the) s
+5 435 M
+(resolver has the name, but no addresses, for the name servers.) s
+5 427 M
+( ) s
+5 419 M
+(To complete initialization of SLIST, the resolver attaches whatever) s
+5 411 M
+(history information it has to the each address in SLIST.  This will) s
+5 403 M
+(usually consist of some sort of weighted averages for the response time) s
+5 395 M
+(of the address, and the batting average of the address \(i.e., how often) s
+5 387 M
+(the address responded at all to the request\).  Note that this) s
+5 379 M
+(information should be kept on a per address basis, rather than on a per) s
+5 371 M
+(name server basis, because the response time and batting average of a) s
+5 363 M
+(particular server may vary considerably from address to address.  Note) s
+5 355 M
+(also that this information is actually specific to a resolver address /) s
+5 347 M
+(server address pair, so a resolver with multiple addresses may wish to) s
+5 339 M
+(keep separate histories for each of its addresses.  Part of this step) s
+5 331 M
+(must deal with addresses which have no such history; in this case an) s
+5 323 M
+(expected round trip time of 5-10 seconds should be the worst case, with) s
+5 315 M
+(lower estimates for the same local network, etc.) s
+5 307 M
+( ) s
+5 299 M
+(Note that whenever a delegation is followed, the resolver algorithm) s
+5 291 M
+(reinitializes SLIST.) s
+5 283 M
+( ) s
+5 275 M
+(The information establishes a partial ranking of the available name) s
+5 267 M
+(server addresses.  Each time an address is chosen and the state should) s
+5 259 M
+(be altered to prevent its selection again until all other addresses have) s
+5 251 M
+(been tried.  The timeout for each transmission should be 50-100% greater) s
+5 243 M
+(than the average predicted value to allow for variance in response.) s
+5 235 M
+( ) s
+5 227 M
+(Some fine points:) s
+5 219 M
+( ) s
+5 211 M
+(   - The resolver may encounter a situation where no addresses are) s
+5 203 M
+(     available for any of the name servers named in SLIST, and) s
+5 195 M
+(     where the servers in the list are precisely those which would) s
+5 187 M
+(     normally be used to look up their own addresses.  This) s
+5 179 M
+(     situation typically occurs when the glue address RRs have a) s
+5 171 M
+(     smaller TTL than the NS RRs marking delegation, or when the) s
+5 163 M
+(     resolver caches the result of a NS search.  The resolver) s
+5 155 M
+(     should detect this condition and restart the search at the) s
+5 147 M
+(     next ancestor zone, or alternatively at the root.) s
+5 139 M
+( ) s
+5 131 M
+( ) s
+5 123 M
+( ) s
+5 115 M
+( ) s
+5 107 M
+( ) s
+5 99 M
+(Mockapetris                                                    [Page 45]) s
+377 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+377 523 M
+( ) s
+377 515 M
+( ) s
+377 507 M
+(   - If a resolver gets a server error or other bizarre response) s
+377 499 M
+(     from a name server, it should remove it from SLIST, and may) s
+377 491 M
+(     wish to schedule an immediate transmission to the next) s
+377 483 M
+(     candidate server address.) s
+377 475 M
+( ) s
+377 467 M
+(7.3. Processing responses) s
+377 459 M
+( ) s
+377 451 M
+(The first step in processing arriving response datagrams is to parse the) s
+377 443 M
+(response.  This procedure should include:) s
+377 435 M
+( ) s
+377 427 M
+(   - Check the header for reasonableness.  Discard datagrams which) s
+377 419 M
+(     are queries when responses are expected.) s
+377 411 M
+( ) s
+377 403 M
+(   - Parse the sections of the message, and insure that all RRs are) s
+377 395 M
+(     correctly formatted.) s
+377 387 M
+( ) s
+377 379 M
+(   - As an optional step, check the TTLs of arriving data looking) s
+377 371 M
+(     for RRs with excessively long TTLs.  If a RR has an) s
+377 363 M
+(     excessively long TTL, say greater than 1 week, either discard) s
+377 355 M
+(     the whole response, or limit all TTLs in the response to 1) s
+377 347 M
+(     week.) s
+377 339 M
+( ) s
+377 331 M
+(The next step is to match the response to a current resolver request.) s
+377 323 M
+(The recommended strategy is to do a preliminary matching using the ID) s
+377 315 M
+(field in the domain header, and then to verify that the question section) s
+377 307 M
+(corresponds to the information currently desired.  This requires that) s
+377 299 M
+(the transmission algorithm devote several bits of the domain ID field to) s
+377 291 M
+(a request identifier of some sort.  This step has several fine points:) s
+377 283 M
+( ) s
+377 275 M
+(   - Some name servers send their responses from different) s
+377 267 M
+(     addresses than the one used to receive the query.  That is, a) s
+377 259 M
+(     resolver cannot rely that a response will come from the same) s
+377 251 M
+(     address which it sent the corresponding query to.  This name) s
+377 243 M
+(     server bug is typically encountered in UNIX systems.) s
+377 235 M
+( ) s
+377 227 M
+(   - If the resolver retransmits a particular request to a name) s
+377 219 M
+(     server it should be able to use a response from any of the) s
+377 211 M
+(     transmissions.  However, if it is using the response to sample) s
+377 203 M
+(     the round trip time to access the name server, it must be able) s
+377 195 M
+(     to determine which transmission matches the response \(and keep) s
+377 187 M
+(     transmission times for each outgoing message\), or only) s
+377 179 M
+(     calculate round trip times based on initial transmissions.) s
+377 171 M
+( ) s
+377 163 M
+(   - A name server will occasionally not have a current copy of a) s
+377 155 M
+(     zone which it should have according to some NS RRs.  The) s
+377 147 M
+(     resolver should simply remove the name server from the current) s
+377 139 M
+(     SLIST, and continue.) s
+377 131 M
+( ) s
+377 123 M
+( ) s
+377 115 M
+( ) s
+377 107 M
+( ) s
+377 99 M
+(Mockapetris                                                    [Page 46]) s
+_R
+S
+%%Page: (24) 24
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 24 def
+/fname (rfc1035.txt) def
+/fdir () def
+/ftail (rfc1035.txt) def
+% User defined strings:
+/fmodstr (Thu Aug %2d 10:23:19 2000) def
+%%EndPageSetup
+do_header
+5 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+5 523 M
+( ) s
+5 515 M
+( ) s
+5 507 M
+(7.4. Using the cache) s
+5 499 M
+( ) s
+5 491 M
+(In general, we expect a resolver to cache all data which it receives in) s
+5 483 M
+(responses since it may be useful in answering future client requests.) s
+5 475 M
+(However, there are several types of data which should not be cached:) s
+5 467 M
+( ) s
+5 459 M
+(   - When several RRs of the same type are available for a) s
+5 451 M
+(     particular owner name, the resolver should either cache them) s
+5 443 M
+(     all or none at all.  When a response is truncated, and a) s
+5 435 M
+(     resolver doesn't know whether it has a complete set, it should) s
+5 427 M
+(     not cache a possibly partial set of RRs.) s
+5 419 M
+( ) s
+5 411 M
+(   - Cached data should never be used in preference to) s
+5 403 M
+(     authoritative data, so if caching would cause this to happen) s
+5 395 M
+(     the data should not be cached.) s
+5 387 M
+( ) s
+5 379 M
+(   - The results of an inverse query should not be cached.) s
+5 371 M
+( ) s
+5 363 M
+(   - The results of standard queries where the QNAME contains "*") s
+5 355 M
+(     labels if the data might be used to construct wildcards.  The) s
+5 347 M
+(     reason is that the cache does not necessarily contain existing) s
+5 339 M
+(     RRs or zone boundary information which is necessary to) s
+5 331 M
+(     restrict the application of the wildcard RRs.) s
+5 323 M
+( ) s
+5 315 M
+(   - RR data in responses of dubious reliability.  When a resolver) s
+5 307 M
+(     receives unsolicited responses or RR data other than that) s
+5 299 M
+(     requested, it should discard it without caching it.  The basic) s
+5 291 M
+(     implication is that all sanity checks on a packet should be) s
+5 283 M
+(     performed before any of it is cached.) s
+5 275 M
+( ) s
+5 267 M
+(In a similar vein, when a resolver has a set of RRs for some name in a) s
+5 259 M
+(response, and wants to cache the RRs, it should check its cache for) s
+5 251 M
+(already existing RRs.  Depending on the circumstances, either the data) s
+5 243 M
+(in the response or the cache is preferred, but the two should never be) s
+5 235 M
+(combined.  If the data in the response is from authoritative data in the) s
+5 227 M
+(answer section, it is always preferred.) s
+5 219 M
+( ) s
+5 211 M
+(8. MAIL SUPPORT) s
+5 203 M
+( ) s
+5 195 M
+(The domain system defines a standard for mapping mailboxes into domain) s
+5 187 M
+(names, and two methods for using the mailbox information to derive mail) s
+5 179 M
+(routing information.  The first method is called mail exchange binding) s
+5 171 M
+(and the other method is mailbox binding.  The mailbox encoding standard) s
+5 163 M
+(and mail exchange binding are part of the DNS official protocol, and are) s
+5 155 M
+(the recommended method for mail routing in the Internet.  Mailbox) s
+5 147 M
+(binding is an experimental feature which is still under development and) s
+5 139 M
+(subject to change.) s
+5 131 M
+( ) s
+5 123 M
+( ) s
+5 115 M
+( ) s
+5 107 M
+( ) s
+5 99 M
+(Mockapetris                                                    [Page 47]) s
+377 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+377 523 M
+( ) s
+377 515 M
+( ) s
+377 507 M
+(The mailbox encoding standard assumes a mailbox name of the form) s
+377 499 M
+("<local-part>@<mail-domain>".  While the syntax allowed in each of these) s
+377 491 M
+(sections varies substantially between the various mail internets, the) s
+377 483 M
+(preferred syntax for the ARPA Internet is given in [RFC-822].) s
+377 475 M
+( ) s
+377 467 M
+(The DNS encodes the <local-part> as a single label, and encodes the) s
+377 459 M
+(<mail-domain> as a domain name.  The single label from the <local-part>) s
+377 451 M
+(is prefaced to the domain name from <mail-domain> to form the domain) s
+377 443 M
+(name corresponding to the mailbox.  Thus the mailbox HOSTMASTER@SRI-) s
+377 435 M
+(NIC.ARPA is mapped into the domain name HOSTMASTER.SRI-NIC.ARPA.  If the) s
+377 427 M
+(<local-part> contains dots or other special characters, its) s
+377 419 M
+(representation in a master file will require the use of backslash) s
+377 411 M
+(quoting to ensure that the domain name is properly encoded.  For) s
+377 403 M
+(example, the mailbox Action.domains@ISI.EDU would be represented as) s
+377 395 M
+(Action\\.domains.ISI.EDU.) s
+377 387 M
+( ) s
+377 379 M
+(8.1. Mail exchange binding) s
+377 371 M
+( ) s
+377 363 M
+(Mail exchange binding uses the <mail-domain> part of a mailbox) s
+377 355 M
+(specification to determine where mail should be sent.  The <local-part>) s
+377 347 M
+(is not even consulted.  [RFC-974] specifies this method in detail, and) s
+377 339 M
+(should be consulted before attempting to use mail exchange support.) s
+377 331 M
+( ) s
+377 323 M
+(One of the advantages of this method is that it decouples mail) s
+377 315 M
+(destination naming from the hosts used to support mail service, at the) s
+377 307 M
+(cost of another layer of indirection in the lookup function.  However,) s
+377 299 M
+(the addition layer should eliminate the need for complicated "%", "!",) s
+377 291 M
+(etc encodings in <local-part>.) s
+377 283 M
+( ) s
+377 275 M
+(The essence of the method is that the <mail-domain> is used as a domain) s
+377 267 M
+(name to locate type MX RRs which list hosts willing to accept mail for) s
+377 259 M
+(<mail-domain>, together with preference values which rank the hosts) s
+377 251 M
+(according to an order specified by the administrators for <mail-domain>.) s
+377 243 M
+( ) s
+377 235 M
+(In this memo, the <mail-domain> ISI.EDU is used in examples, together) s
+377 227 M
+(with the hosts VENERA.ISI.EDU and VAXA.ISI.EDU as mail exchanges for) s
+377 219 M
+(ISI.EDU.  If a mailer had a message for Mockapetris@ISI.EDU, it would) s
+377 211 M
+(route it by looking up MX RRs for ISI.EDU.  The MX RRs at ISI.EDU name) s
+377 203 M
+(VENERA.ISI.EDU and VAXA.ISI.EDU, and type A queries can find the host) s
+377 195 M
+(addresses.) s
+377 187 M
+( ) s
+377 179 M
+(8.2. Mailbox binding \(Experimental\)) s
+377 171 M
+( ) s
+377 163 M
+(In mailbox binding, the mailer uses the entire mail destination) s
+377 155 M
+(specification to construct a domain name.  The encoded domain name for) s
+377 147 M
+(the mailbox is used as the QNAME field in a QTYPE=MAILB query.) s
+377 139 M
+( ) s
+377 131 M
+(Several outcomes are possible for this query:) s
+377 123 M
+( ) s
+377 115 M
+( ) s
+377 107 M
+( ) s
+377 99 M
+(Mockapetris                                                    [Page 48]) s
+_R
+S
+%%Page: (25) 25
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 25 def
+/fname (rfc1035.txt) def
+/fdir () def
+/ftail (rfc1035.txt) def
+% User defined strings:
+/fmodstr (Thu Aug %2d 10:23:19 2000) def
+%%EndPageSetup
+do_header
+5 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+5 523 M
+( ) s
+5 515 M
+( ) s
+5 507 M
+(   1. The query can return a name error indicating that the mailbox) s
+5 499 M
+(      does not exist as a domain name.) s
+5 491 M
+( ) s
+5 483 M
+(      In the long term, this would indicate that the specified) s
+5 475 M
+(      mailbox doesn't exist.  However, until the use of mailbox) s
+5 467 M
+(      binding is universal, this error condition should be) s
+5 459 M
+(      interpreted to mean that the organization identified by the) s
+5 451 M
+(      global part does not support mailbox binding.  The) s
+5 443 M
+(      appropriate procedure is to revert to exchange binding at) s
+5 435 M
+(      this point.) s
+5 427 M
+( ) s
+5 419 M
+(   2. The query can return a Mail Rename \(MR\) RR.) s
+5 411 M
+( ) s
+5 403 M
+(      The MR RR carries new mailbox specification in its RDATA) s
+5 395 M
+(      field.  The mailer should replace the old mailbox with the) s
+5 387 M
+(      new one and retry the operation.) s
+5 379 M
+( ) s
+5 371 M
+(   3. The query can return a MB RR.) s
+5 363 M
+( ) s
+5 355 M
+(      The MB RR carries a domain name for a host in its RDATA) s
+5 347 M
+(      field.  The mailer should deliver the message to that host) s
+5 339 M
+(      via whatever protocol is applicable, e.g., b,SMTP.) s
+5 331 M
+( ) s
+5 323 M
+(   4. The query can return one or more Mail Group \(MG\) RRs.) s
+5 315 M
+( ) s
+5 307 M
+(      This condition means that the mailbox was actually a mailing) s
+5 299 M
+(      list or mail group, rather than a single mailbox.  Each MG RR) s
+5 291 M
+(      has a RDATA field that identifies a mailbox that is a member) s
+5 283 M
+(      of the group.  The mailer should deliver a copy of the) s
+5 275 M
+(      message to each member.) s
+5 267 M
+( ) s
+5 259 M
+(   5. The query can return a MB RR as well as one or more MG RRs.) s
+5 251 M
+( ) s
+5 243 M
+(      This condition means the the mailbox was actually a mailing) s
+5 235 M
+(      list.  The mailer can either deliver the message to the host) s
+5 227 M
+(      specified by the MB RR, which will in turn do the delivery to) s
+5 219 M
+(      all members, or the mailer can use the MG RRs to do the) s
+5 211 M
+(      expansion itself.) s
+5 203 M
+( ) s
+5 195 M
+(In any of these cases, the response may include a Mail Information) s
+5 187 M
+(\(MINFO\) RR.  This RR is usually associated with a mail group, but is) s
+5 179 M
+(legal with a MB.  The MINFO RR identifies two mailboxes.  One of these) s
+5 171 M
+(identifies a responsible person for the original mailbox name.  This) s
+5 163 M
+(mailbox should be used for requests to be added to a mail group, etc.) s
+5 155 M
+(The second mailbox name in the MINFO RR identifies a mailbox that should) s
+5 147 M
+(receive error messages for mail failures.  This is particularly) s
+5 139 M
+(appropriate for mailing lists when errors in member names should be) s
+5 131 M
+(reported to a person other than the one who sends a message to the list.) s
+5 123 M
+( ) s
+5 115 M
+( ) s
+5 107 M
+( ) s
+5 99 M
+(Mockapetris                                                    [Page 49]) s
+377 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+377 523 M
+( ) s
+377 515 M
+( ) s
+377 507 M
+(New fields may be added to this RR in the future.) s
+377 499 M
+( ) s
+377 491 M
+( ) s
+377 483 M
+(9. REFERENCES and BIBLIOGRAPHY) s
+377 475 M
+( ) s
+377 467 M
+([Dyer 87]       S. Dyer, F. Hsu, "Hesiod", Project Athena) s
+377 459 M
+(                Technical Plan - Name Service, April 1987, version 1.9.) s
+377 451 M
+( ) s
+377 443 M
+(                Describes the fundamentals of the Hesiod name service.) s
+377 435 M
+( ) s
+377 427 M
+([IEN-116]       J. Postel, "Internet Name Server", IEN-116,) s
+377 419 M
+(                USC/Information Sciences Institute, August 1979.) s
+377 411 M
+( ) s
+377 403 M
+(                A name service obsoleted by the Domain Name System, but) s
+377 395 M
+(                still in use.) s
+377 387 M
+( ) s
+377 379 M
+([Quarterman 86] J. Quarterman, and J. Hoskins, "Notable Computer Networks",) s
+377 371 M
+(                Communications of the ACM, October 1986, volume 29, number) s
+377 363 M
+(                10.) s
+377 355 M
+( ) s
+377 347 M
+([RFC-742]       K. Harrenstien, "NAME/FINGER", RFC-742, Network) s
+377 339 M
+(                Information Center, SRI International, December 1977.) s
+377 331 M
+( ) s
+377 323 M
+([RFC-768]       J. Postel, "User Datagram Protocol", RFC-768,) s
+377 315 M
+(                USC/Information Sciences Institute, August 1980.) s
+377 307 M
+( ) s
+377 299 M
+([RFC-793]       J. Postel, "Transmission Control Protocol", RFC-793,) s
+377 291 M
+(                USC/Information Sciences Institute, September 1981.) s
+377 283 M
+( ) s
+377 275 M
+([RFC-799]       D. Mills, "Internet Name Domains", RFC-799, COMSAT,) s
+377 267 M
+(                September 1981.) s
+377 259 M
+( ) s
+377 251 M
+(                Suggests introduction of a hierarchy in place of a flat) s
+377 243 M
+(                name space for the Internet.) s
+377 235 M
+( ) s
+377 227 M
+([RFC-805]       J. Postel, "Computer Mail Meeting Notes", RFC-805,) s
+377 219 M
+(                USC/Information Sciences Institute, February 1982.) s
+377 211 M
+( ) s
+377 203 M
+([RFC-810]       E. Feinler, K. Harrenstien, Z. Su, and V. White, "DOD) s
+377 195 M
+(                Internet Host Table Specification", RFC-810, Network) s
+377 187 M
+(                Information Center, SRI International, March 1982.) s
+377 179 M
+( ) s
+377 171 M
+(                Obsolete.  See RFC-952.) s
+377 163 M
+( ) s
+377 155 M
+([RFC-811]       K. Harrenstien, V. White, and E. Feinler, "Hostnames) s
+377 147 M
+(                Server", RFC-811, Network Information Center, SRI) s
+377 139 M
+(                International, March 1982.) s
+377 131 M
+( ) s
+377 123 M
+( ) s
+377 115 M
+( ) s
+377 107 M
+( ) s
+377 99 M
+(Mockapetris                                                    [Page 50]) s
+_R
+S
+%%Page: (26) 26
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 26 def
+/fname (rfc1035.txt) def
+/fdir () def
+/ftail (rfc1035.txt) def
+% User defined strings:
+/fmodstr (Thu Aug %2d 10:23:19 2000) def
+%%EndPageSetup
+do_header
+5 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+5 523 M
+( ) s
+5 515 M
+( ) s
+5 507 M
+(                Obsolete.  See RFC-953.) s
+5 499 M
+( ) s
+5 491 M
+([RFC-812]       K. Harrenstien, and V. White, "NICNAME/WHOIS", RFC-812,) s
+5 483 M
+(                Network Information Center, SRI International, March) s
+5 475 M
+(                1982.) s
+5 467 M
+( ) s
+5 459 M
+([RFC-819]       Z. Su, and J. Postel, "The Domain Naming Convention for) s
+5 451 M
+(                Internet User Applications", RFC-819, Network) s
+5 443 M
+(                Information Center, SRI International, August 1982.) s
+5 435 M
+( ) s
+5 427 M
+(                Early thoughts on the design of the domain system.) s
+5 419 M
+(                Current implementation is completely different.) s
+5 411 M
+( ) s
+5 403 M
+([RFC-821]       J. Postel, "Simple Mail Transfer Protocol", RFC-821,) s
+5 395 M
+(                USC/Information Sciences Institute, August 1980.) s
+5 387 M
+( ) s
+5 379 M
+([RFC-830]       Z. Su, "A Distributed System for Internet Name Service",) s
+5 371 M
+(                RFC-830, Network Information Center, SRI International,) s
+5 363 M
+(                October 1982.) s
+5 355 M
+( ) s
+5 347 M
+(                Early thoughts on the design of the domain system.) s
+5 339 M
+(                Current implementation is completely different.) s
+5 331 M
+( ) s
+5 323 M
+([RFC-882]       P. Mockapetris, "Domain names - Concepts and) s
+5 315 M
+(                Facilities," RFC-882, USC/Information Sciences) s
+5 307 M
+(                Institute, November 1983.) s
+5 299 M
+( ) s
+5 291 M
+(                Superceeded by this memo.) s
+5 283 M
+( ) s
+5 275 M
+([RFC-883]       P. Mockapetris, "Domain names - Implementation and) s
+5 267 M
+(                Specification," RFC-883, USC/Information Sciences) s
+5 259 M
+(                Institute, November 1983.) s
+5 251 M
+( ) s
+5 243 M
+(                Superceeded by this memo.) s
+5 235 M
+( ) s
+5 227 M
+([RFC-920]       J. Postel and J. Reynolds, "Domain Requirements",) s
+5 219 M
+(                RFC-920, USC/Information Sciences Institute,) s
+5 211 M
+(                October 1984.) s
+5 203 M
+( ) s
+5 195 M
+(                Explains the naming scheme for top level domains.) s
+5 187 M
+( ) s
+5 179 M
+([RFC-952]       K. Harrenstien, M. Stahl, E. Feinler, "DoD Internet Host) s
+5 171 M
+(                Table Specification", RFC-952, SRI, October 1985.) s
+5 163 M
+( ) s
+5 155 M
+(                Specifies the format of HOSTS.TXT, the host/address) s
+5 147 M
+(                table replaced by the DNS.) s
+5 139 M
+( ) s
+5 131 M
+( ) s
+5 123 M
+( ) s
+5 115 M
+( ) s
+5 107 M
+( ) s
+5 99 M
+(Mockapetris                                                    [Page 51]) s
+377 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+377 523 M
+( ) s
+377 515 M
+( ) s
+377 507 M
+([RFC-953]       K. Harrenstien, M. Stahl, E. Feinler, "HOSTNAME Server",) s
+377 499 M
+(                RFC-953, SRI, October 1985.) s
+377 491 M
+( ) s
+377 483 M
+(                This RFC contains the official specification of the) s
+377 475 M
+(                hostname server protocol, which is obsoleted by the DNS.) s
+377 467 M
+(                This TCP based protocol accesses information stored in) s
+377 459 M
+(                the RFC-952 format, and is used to obtain copies of the) s
+377 451 M
+(                host table.) s
+377 443 M
+( ) s
+377 435 M
+([RFC-973]       P. Mockapetris, "Domain System Changes and) s
+377 427 M
+(                Observations", RFC-973, USC/Information Sciences) s
+377 419 M
+(                Institute, January 1986.) s
+377 411 M
+( ) s
+377 403 M
+(                Describes changes to RFC-882 and RFC-883 and reasons for) s
+377 395 M
+(                them.) s
+377 387 M
+( ) s
+377 379 M
+([RFC-974]       C. Partridge, "Mail routing and the domain system",) s
+377 371 M
+(                RFC-974, CSNET CIC BBN Labs, January 1986.) s
+377 363 M
+( ) s
+377 355 M
+(                Describes the transition from HOSTS.TXT based mail) s
+377 347 M
+(                addressing to the more powerful MX system used with the) s
+377 339 M
+(                domain system.) s
+377 331 M
+( ) s
+377 323 M
+([RFC-1001]      NetBIOS Working Group, "Protocol standard for a NetBIOS) s
+377 315 M
+(                service on a TCP/UDP transport: Concepts and Methods",) s
+377 307 M
+(                RFC-1001, March 1987.) s
+377 299 M
+( ) s
+377 291 M
+(                This RFC and RFC-1002 are a preliminary design for) s
+377 283 M
+(                NETBIOS on top of TCP/IP which proposes to base NetBIOS) s
+377 275 M
+(                name service on top of the DNS.) s
+377 267 M
+( ) s
+377 259 M
+([RFC-1002]      NetBIOS Working Group, "Protocol standard for a NetBIOS) s
+377 251 M
+(                service on a TCP/UDP transport: Detailed) s
+377 243 M
+(                Specifications", RFC-1002, March 1987.) s
+377 235 M
+( ) s
+377 227 M
+([RFC-1010]      J. Reynolds, and J. Postel, "Assigned Numbers", RFC-1010,) s
+377 219 M
+(                USC/Information Sciences Institute, May 1987.) s
+377 211 M
+( ) s
+377 203 M
+(                Contains socket numbers and mnemonics for host names,) s
+377 195 M
+(                operating systems, etc.) s
+377 187 M
+( ) s
+377 179 M
+([RFC-1031]      W. Lazear, "MILNET Name Domain Transition", RFC-1031,) s
+377 171 M
+(                November 1987.) s
+377 163 M
+( ) s
+377 155 M
+(                Describes a plan for converting the MILNET to the DNS.) s
+377 147 M
+( ) s
+377 139 M
+([RFC-1032]      M. Stahl, "Establishing a Domain - Guidelines for) s
+377 131 M
+(                Administrators", RFC-1032, November 1987.) s
+377 123 M
+( ) s
+377 115 M
+( ) s
+377 107 M
+( ) s
+377 99 M
+(Mockapetris                                                    [Page 52]) s
+_R
+S
+%%Page: (27) 27
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 27 def
+/fname (rfc1035.txt) def
+/fdir () def
+/ftail (rfc1035.txt) def
+% User defined strings:
+/fmodstr (Thu Aug %2d 10:23:19 2000) def
+%%EndPageSetup
+do_header
+5 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+5 523 M
+( ) s
+5 515 M
+( ) s
+5 507 M
+(                Describes the registration policies used by the NIC to) s
+5 499 M
+(                administer the top level domains and delegate subzones.) s
+5 491 M
+( ) s
+5 483 M
+([RFC-1033]      M. Lottor, "Domain Administrators Operations Guide",) s
+5 475 M
+(                RFC-1033, November 1987.) s
+5 467 M
+( ) s
+5 459 M
+(                A cookbook for domain administrators.) s
+5 451 M
+( ) s
+5 443 M
+([Solomon 82]    M. Solomon, L. Landweber, and D. Neuhengen, "The CSNET) s
+5 435 M
+(                Name Server", Computer Networks, vol 6, nr 3, July 1982.) s
+5 427 M
+( ) s
+5 419 M
+(                Describes a name service for CSNET which is independent) s
+5 411 M
+(                from the DNS and DNS use in the CSNET.) s
+5 403 M
+( ) s
+5 395 M
+( ) s
+5 387 M
+( ) s
+5 379 M
+( ) s
+5 371 M
+( ) s
+5 363 M
+( ) s
+5 355 M
+( ) s
+5 347 M
+( ) s
+5 339 M
+( ) s
+5 331 M
+( ) s
+5 323 M
+( ) s
+5 315 M
+( ) s
+5 307 M
+( ) s
+5 299 M
+( ) s
+5 291 M
+( ) s
+5 283 M
+( ) s
+5 275 M
+( ) s
+5 267 M
+( ) s
+5 259 M
+( ) s
+5 251 M
+( ) s
+5 243 M
+( ) s
+5 235 M
+( ) s
+5 227 M
+( ) s
+5 219 M
+( ) s
+5 211 M
+( ) s
+5 203 M
+( ) s
+5 195 M
+( ) s
+5 187 M
+( ) s
+5 179 M
+( ) s
+5 171 M
+( ) s
+5 163 M
+( ) s
+5 155 M
+( ) s
+5 147 M
+( ) s
+5 139 M
+( ) s
+5 131 M
+( ) s
+5 123 M
+( ) s
+5 115 M
+( ) s
+5 107 M
+( ) s
+5 99 M
+(Mockapetris                                                    [Page 53]) s
+377 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+377 523 M
+( ) s
+377 515 M
+( ) s
+377 507 M
+(Index) s
+377 499 M
+( ) s
+377 491 M
+(          *   13) s
+377 483 M
+( ) s
+377 475 M
+(          ;   33, 35) s
+377 467 M
+( ) s
+377 459 M
+(          <character-string>   35) s
+377 451 M
+(          <domain-name>   34) s
+377 443 M
+( ) s
+377 435 M
+(          @   35) s
+377 427 M
+( ) s
+377 419 M
+(          \\   35) s
+377 411 M
+( ) s
+377 403 M
+(          A   12) s
+377 395 M
+( ) s
+377 387 M
+(          Byte order   8) s
+377 379 M
+( ) s
+377 371 M
+(          CH   13) s
+377 363 M
+(          Character case   9) s
+377 355 M
+(          CLASS   11) s
+377 347 M
+(          CNAME   12) s
+377 339 M
+(          Completion   42) s
+377 331 M
+(          CS   13) s
+377 323 M
+( ) s
+377 315 M
+(          Hesiod   13) s
+377 307 M
+(          HINFO   12) s
+377 299 M
+(          HS   13) s
+377 291 M
+( ) s
+377 283 M
+(          IN   13) s
+377 275 M
+(          IN-ADDR.ARPA domain   22) s
+377 267 M
+(          Inverse queries   40) s
+377 259 M
+( ) s
+377 251 M
+(          Mailbox names   47) s
+377 243 M
+(          MB   12) s
+377 235 M
+(          MD   12) s
+377 227 M
+(          MF   12) s
+377 219 M
+(          MG   12) s
+377 211 M
+(          MINFO   12) s
+377 203 M
+(          MINIMUM   20) s
+377 195 M
+(          MR   12) s
+377 187 M
+(          MX   12) s
+377 179 M
+( ) s
+377 171 M
+(          NS   12) s
+377 163 M
+(          NULL   12) s
+377 155 M
+( ) s
+377 147 M
+(          Port numbers   32) s
+377 139 M
+(          Primary server   5) s
+377 131 M
+(          PTR   12, 18) s
+377 123 M
+( ) s
+377 115 M
+( ) s
+377 107 M
+( ) s
+377 99 M
+(Mockapetris                                                    [Page 54]) s
+_R
+S
+%%Page: (28) 28
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 28 def
+/fname (rfc1035.txt) def
+/fdir () def
+/ftail (rfc1035.txt) def
+% User defined strings:
+/fmodstr (Thu Aug %2d 10:23:19 2000) def
+%%EndPageSetup
+do_header
+5 531 M
+(RFC 1035        Domain Implementation and Specification    November 1987) s
+5 523 M
+( ) s
+5 515 M
+( ) s
+5 507 M
+(          QCLASS   13) s
+5 499 M
+(          QTYPE   12) s
+5 491 M
+( ) s
+5 483 M
+(          RDATA   12) s
+5 475 M
+(          RDLENGTH  11) s
+5 467 M
+( ) s
+5 459 M
+(          Secondary server   5) s
+5 451 M
+(          SOA   12) s
+5 443 M
+(          Stub resolvers   7) s
+5 435 M
+( ) s
+5 427 M
+(          TCP   32) s
+5 419 M
+(          TXT   12) s
+5 411 M
+(          TYPE   11) s
+5 403 M
+( ) s
+5 395 M
+(          UDP   32) s
+5 387 M
+( ) s
+5 379 M
+(          WKS   12) s
+5 371 M
+( ) s
+5 363 M
+( ) s
+5 355 M
+( ) s
+5 347 M
+( ) s
+5 339 M
+( ) s
+5 331 M
+( ) s
+5 323 M
+( ) s
+5 315 M
+( ) s
+5 307 M
+( ) s
+5 299 M
+( ) s
+5 291 M
+( ) s
+5 283 M
+( ) s
+5 275 M
+( ) s
+5 267 M
+( ) s
+5 259 M
+( ) s
+5 251 M
+( ) s
+5 243 M
+( ) s
+5 235 M
+( ) s
+5 227 M
+( ) s
+5 219 M
+( ) s
+5 211 M
+( ) s
+5 203 M
+( ) s
+5 195 M
+( ) s
+5 187 M
+( ) s
+5 179 M
+( ) s
+5 171 M
+( ) s
+5 163 M
+( ) s
+5 155 M
+( ) s
+5 147 M
+( ) s
+5 139 M
+( ) s
+5 131 M
+( ) s
+5 123 M
+( ) s
+5 115 M
+( ) s
+5 107 M
+( ) s
+5 99 M
+(Mockapetris                                                    [Page 55]) s
+_R
+S
+%%Trailer
+%%Pages: 28
+%%DocumentNeededResources: font Courier-Bold Courier 
+%%EOF

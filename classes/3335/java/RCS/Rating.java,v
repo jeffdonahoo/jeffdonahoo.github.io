@@ -1,0 +1,292 @@
+head	1.5;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.5
+date	2017.09.18.13.47.47;	author donahoo;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2017.09.14.12.36.24;	author donahoo;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2016.09.15.14.30.41;	author donahoo;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2013.10.15.12.48.02;	author donahoo;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2013.09.09.17.58.08;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@public enum Rating {
+  G(0) {
+    @@Override
+    public String advertise() {
+      return "Stuffed animal";
+    }
+    
+  }, PG(8) {
+    @@Override
+    public String advertise() {
+      return "Gummy bears";
+    }
+  }, PG13(13) {
+    @@Override
+    public String advertise() {
+      return "Glow-in-the-dark braces bands";
+    }
+  }, R(17) {
+    @@Override
+    public String advertise() {
+      return "1040 tax form";
+    }
+  };
+
+  Rating(int age) {
+    minAge = age;
+  }
+
+  public boolean oldEnough(int age) {
+    return age >= minAge;
+  }
+
+  public static Rating maxMovie(int age) {
+    // Assume first movie age is 0, age >=0, movie enums in age order
+    // and I'm lazy (repeat G and don't terminate early).
+    Rating maxMovie = G;
+    for (Rating r : Rating.values()) {
+      if (r.minAge <= age) {
+        maxMovie = r;
+      }
+    }
+    return maxMovie;
+  }
+
+  public abstract String advertise();
+  
+  private int minAge; // Minimum age to purchase
+
+  public static void main(String args[]) {
+    System.out.println(Rating.PG.oldEnough(12));
+
+    for (Rating r : Rating.values()) {
+      System.out.println(r.name() + ": "+ r.ordinal());
+    }
+
+    Rating war = Rating.valueOf("H");
+
+    if (war.equals(Direction.LEFT)) {
+      System.out.println("Boo");
+    }
+  }
+}
+
+enum Direction {
+  LEFT, RIGHT
+}
+
+/**
+ * 1.  Show Rating (G, PG, etc.) and print with values(), name(), ordinal(),
+ *      valueOf() - Free methods
+ * 2.  Add parameterized constructor and oldEnough()
+ * 3.  Add enum Direction {LEFT, RIGHT} below
+ *     Add Rating war = null; in main()
+ *     Add if (war.equals(Direction.LEFT)) {... in main()
+ *     Run and observe NullPointerException
+ *     Fix war = R;
+ *     Run and observe non-equality
+ *     If used == instead of .equals() both NullPointerException
+ *       and bad comparison are caught at compile time
+ *       only applicable if Enum constant used (see JLS)
+ * 4.  How do enums works?  Instance of Rating per enum with private constructor
+ * 4.  Add maxMovie()
+ * 5.  Add abstract advertise()
+ */
+@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@d69 11
+a79 11
+* 1.  Show Rating (G, PG, etc.) and print with values(), name(), ordinal(),
+*      valueOf() - Free methods
+* 2.  Add parameterized constructor and oldEnough()                                                                                                                                                                                                      
+ * 3.  Add enum Direction {LEFT, RIGHT} below                                                                                                                                                                                                             
+ *     Add Rating war = null; in main()                                                                                                                                                                                                                   
+ *     Add if (war.equals(Direction.LEFT)) {... in main()                                                                                                                                                                                               
+ *     Run and observe NullPointerException                                                                                                                                                                                                               
+ *     Fix war = R;                                                                                                                                                                                                                                       
+ *     Run and observe non-equality                                                                                                                                                                                                                       
+ *     If used == instead of .equals() both NullPointerException                                                                                                                                                                                          
+ *       and bad comparison are caught at compile time                                                                                                                                                                                                    
+d83 1
+a83 1
+ * 5.  Add abstract advertise()                                                                                                                                                                                                  
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d4 2
+a5 2
+    public boolean processPatron() {
+      return true;
+d10 2
+a11 3
+    public boolean processPatron() {
+      // ask if your mom is ok with this
+      return true;
+d15 2
+a16 3
+    public boolean processPatron() {
+      // check if 13 (how?)
+      return true;
+d20 2
+a21 4
+    public boolean processPatron() {
+      // check if 17
+      // ask them if ID is fake
+      return true;
+d45 1
+a45 1
+  public abstract boolean processPatron();
+d53 1
+a53 1
+      System.out.println(r);
+d56 1
+a56 1
+    Rating war = Rating.R;
+d66 1
+a66 1
+};
+d68 4
+a71 3
+/**                                                                                                                                                                                                                                                       
+ * 1.  Show Rating (G, PG, etc.) and print with values()                                                                                                                                                                                                  
+ * 2.  Add parameterized constructor and oldEnough()                                                                                                                                                                                                      
+d81 1
+d83 2
+a84 2
+ * 5.  Add abstract processPatron()                                                                                                                                                                                                  
+ */@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d2 26
+a27 1
+    G(0), PG(8), PG13(13), R(17);
+d29 16
+a44 2
+    Rating(int age) {
+        minAge = age;
+d46 2
+d49 9
+a57 2
+    boolean oldEnough(int age) {
+        return age >= minAge;
+d60 1
+a60 1
+    private int minAge; // Minimum age to purchase
+d62 2
+a63 12
+    public static void main(String args[]) {
+        System.out.println(Rating.PG.oldEnough(12));
+
+        for (Rating r : Rating.values()) {
+            System.out.println(r);
+        }
+        
+        Rating benji = Rating.R;
+        
+        if (benji.equals(Direction.LEFT)) {
+            System.out.println("Boo");
+        }
+d65 1
+a65 14
+    
+    /**
+     * 1.  Show Rating (G, PG, etc.) and print with values()
+     * 2.  Add parameterized constructor and oldEnough()
+     * 3.  Add enum Direction {LEFT, RIGHT} below
+     *     Add Rating war = null; in main()
+     *     Add if (benji.equals(Direction.LEFT)) {... in main()
+     *     Run and observe NullPointerException
+     *     Fix war = R;
+     *     Run and observe non-equality
+     *     If used == instead of .equals() both NullPointerException 
+     *       and bad comparison are caught at compile time
+     *       only applicable if Enum constant used (see JLS)
+     */
+d68 19
+a86 1
+enum Direction {LEFT, RIGHT};
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 43
+a43 26
+// enum Rating {G, PG};
+
+public final class Rating implements Comparable {
+
+  private static final Rating[] VALUES;
+  private String name;
+  private int ordinal;
+
+  private Rating(String name, int ordinal) {
+    this.name = name;
+    this.ordinal = ordinal;
+  }
+
+  public static final Rating[] values() {
+    return VALUES;
+  }
+
+  public static Rating valueOf(String name){}
+
+  public static final Rating G = new Rating("G", 0);
+  public static final Rating PG = new Rating("PG", 1);
+
+  static {
+    VALUES = new Rating[] {G, PG};
+  }
+}
+@

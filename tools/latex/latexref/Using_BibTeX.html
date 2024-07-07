@@ -1,0 +1,64 @@
+<HTML>
+<!-- created Thu Apr 9 23:20:43 MET DST 1998
+ from ../latex2e.texi line 2343 via texi2www -->
+<HEAD>
+<TITLE>Using BibTeX</TITLE>
+<LINK REL="Precedes" HREF="">
+<LINK REV="Precedes" HREF="$5cnocite.html">
+<LINK REV="Subdocument" HREF="thebibliography.html">
+</HEAD><BODY><P>
+<A HREF="$5cnocite.html"><IMG ALIGN=MIDDLE SRC="prev-arrow.gif" ALT="PREV"></A>
+<A HREF="thebibliography.html"> <IMG ALIGN=MIDDLE SRC="up-arrow.gif" ALT="UP"></A>
+<A><IMG ALIGN=MIDDLE SRC="missing-arrow.gif" ALT="next"></A>
+<CITE>LaTeX2e help 1.6</CITE></P>
+<H4>2.6.20.4: Using BibTeX</H4>
+<P>
+If you use the BibTeX program by Oren Patashnik (highly recommended if
+you need a bibliography of more than a couple of titles) to maintain
+your bibliography, you don't use the <CODE>thebibliography</CODE>
+environment. Instead, you include the lines
+</P>
+<DL><DT><DD>
+<PRE>
+        \bibliographystyle{style}
+        \bibliography{bibfile}
+</PRE>
+</DL>
+<P>
+where <CODE>style</CODE> refers to a file <CODE>style.bst</CODE>, which defines how
+your citations will look. The standard styles distributed with BibTeX
+are:
+</P>
+<TABLE>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>alpha</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+Sorted alphabetically. Labels are formed from name of author and year of
+publication. 
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>plain</CODE>
+</TD>
+    <TD VALIGN=TOP>Sorted alphabetically. Labels are numeric.
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>unsrt</CODE>
+</TD>
+    <TD VALIGN=TOP>Like <CODE>plain</CODE>, but entries are in order of citation.
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>abbrv</CODE>
+</TD>
+    <TD VALIGN=TOP>Like <CODE>plain</CODE>, but more compact labels.
+</TD></TR>
+</TABLE>
+</P>
+<P>
+In addition, numerous other BibTeX style files exist tailored to the
+demands of various publications.
+</P>
+<P>
+The argument to <CODE>\bibliography</CODE> refers to the file
+<CODE>bibfile.bib</CODE>, which should contain your database in BibTeX
+format. Only the entries referred to via <CODE>\cite</CODE> and <CODE>\nocite</CODE>
+will be listed in the bibliography.
+</P>
+</BODY></HTML>

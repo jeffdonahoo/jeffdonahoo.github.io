@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+
+<table width="880" border="0" cellpadding="0" cellspacing="0">
+  <!--DWLayoutDefaultTable-->
+  <tr> 
+    <td width="101" height="56">&nbsp;</td>
+    <td width="114">&nbsp;</td>
+    <td width="177">&nbsp;</td>
+    <td width="122">&nbsp;</td>
+    <td width="197">&nbsp;</td>
+    <td width="50">&nbsp;</td>
+    <td width="119">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td height="40">&nbsp;</td>
+    <td valign="top"><font size="+2" face="Verdana, Arial, Helvetica, sans-serif"><a href="motehandling.html">&lt;&lt;Prev</a></font></td>
+    <td>&nbsp;</td>
+    <td valign="top"><div align="center"><font size="+2" face="Verdana, Arial, Helvetica, sans-serif"><a href="tinyos.html">Home</a></font></div></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td valign="top"><div align="right"><font size="+2" face="Verdana, Arial, Helvetica, sans-serif"><a href="programming.html">Next&gt;&gt;</a></font></div></td>
+  </tr>
+  <tr> 
+    <td height="77"></td>
+    <td></td>
+    <td colspan="3" valign="top"><div align="center"><font size="+3" face="Verdana, Arial, Helvetica, sans-serif">The 
+        TinyOS Simulator - TOSSIM</font></div></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr> 
+    <td height="727">&nbsp;</td>
+    <td colspan="6" valign="top"><font face="Verdana, Arial, Helvetica, sans-serif">TOSSIM, 
+      the TinyOS simulator, is a very useful tool for debugging and testing TinyOS 
+      programs. This tool is especially important because of the large number 
+      of possible problems that could be encountered by the motes which may not 
+      have anything to do with the NesC program. It would help a great deal to 
+      know that your code works fine, before you actually upload it to the motes. 
+      <p>We are currently writing programs in NesC which have all been tested 
+        using TOSSIM. We expect to upload these programs as soon as we resolve 
+        the hardware problems we had with the motes.</p>
+      <p>See <a href="http://webs.cs.berkeley.edu/tos/nest/doc/tutorial/tossim-lesson.html">http://webs.cs.berkeley.edu/tos/nest/doc/tutorial/tossim-lesson.html</a> 
+        for a more complete description of how TOSSIM is used. </p>
+      <p>We summarize the steps for using TOSSIM and the related GUI-based 
+        application TinyViz.</p>
+      <p>TOSSIM<br>
+        1. CD into the directory containing your NesC code.<br>
+        2. Run &#8216;make pc&#8217; for generating a TOSSIM version of the application. 
+        The TOSSIM executable is in build/pc/main.exe.<br>
+        3. Run &#8216;./build/pc/main.exe &lt;no. of motes&gt;&#8217; where &lt;no.of 
+        motes&gt; is the number of motes that are to be simulated. You should 
+        see the screen fill up with messages.<br>
+        4. To filter this output, set the DBG environment variable. For this,<br>
+        Type &#8216;export DBG=led&#8217; (to see only led specific files).<br>
+        Type &#8216;export DBG=am, led&#8217;(for seeing only active messages 
+        and leds).<br>
+        For full set of DBG modules, <br>
+        Type in &#8216;./build/pc/main.exe &#8211;help&#8217;.<br>
+        TinyViz<br>
+        TinyViz provides a user interface for debugging, visualizing and interacting 
+        with the TOSSIM simulations. It provides easy tracing of TinyOS applications, 
+        visualizing radio messages and radio connectivity of motes. See Pages 
+        4-8 <a href="http://webs.cs.berkeley.edu/tos/nest/doc/tutorial/tossim-lesson.html">here</a> 
+        for more details on using the various features provided by TinyViz. To 
+        start TinyViz, do the following:<br>
+        export DBG=usr1<br>
+        /opt/tinyos-1.x/tools/java/net/tinyos/sim/tinyviz &#8211;run build/pc/main.exe 
+        &lt;no. of motes&gt;</p>
+      <p>where &lt;no. of motes&gt; is the number of motes to be simulated by 
+        TOSSIM.</p>
+      </font> <p><font face="Verdana, Arial, Helvetica, sans-serif">You should 
+        be able to see the motes visually, with the LEDs on them turning on and 
+        off according to the program they are running. There is also a debug messages 
+        option in the plugins that allows you to see the debug messages according 
+        to how you set the DBG option. We will let you explore the rest of the 
+        plugins provided, or see <a href="http://webs.cs.berkeley.edu/tos/nest/doc/tutorial/tossim-lesson.html">http://webs.cs.berkeley.edu/tos/nest/doc/tutorial/tossim-lesson.html</a> 
+        for a description. </font><br>
+      </p></td>
+  </tr>
+  <tr> 
+    <td height="37">&nbsp;</td>
+    <td>&nbsp;</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+</body>
+</html>

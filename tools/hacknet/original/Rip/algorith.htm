@@ -1,0 +1,249 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.6 [en] (Win95; I) [Netscape]">
+   <title> RIP algorithm </title>
+</head>
+<body background="blue_lines.jpg">
+
+<center>
+<h1>
+RIP Algorithm</h1></center>
+
+<center>
+<hr WIDTH="100%"></center>
+
+<p>Let's look at what happens when a <a href="diction.htm#datagram">datagram</a>
+is sent from one source to a destination. If the source and the destination
+are in the same <a href="intro.htm#as">autonomous system </a>it is delivered
+by the system's technology. But, if the destination is in another <a href="intro.htm#as">autonomous
+system </a>the <a href="diction.htm#datagram">datagram</a> should be transferred
+to that <a href="intro.htm#as">autonomous system</a>. There it will be
+delivered by that system technology. <a href="diction.htm#router">router</a>s
+are the ones that should do the transferring. Therefore, they should know
+all the autonomous systems in the supernet. When they receive a <a href="diction.htm#datagram">datagram</a>
+addressed to <a href="intro.htm#as">autonomous system</a> `A' they should
+transfer it to `A'. A trivial way to implement a <a href="diction.htm#router">router</a>
+is having one <a href="diction.htm#router">router</a> that is connected
+to all <a href="intro.htm#as">autonomous system</a>s. However this is not
+practical. A more practical way is having many <a href="diction.htm#router">router</a>s.
+Each connected to few <a href="intro.htm#as">autonomous system</a>s. Let
+a <a href="diction.htm#datagram">datagram</a> be sent from one <a href="intro.htm#as">autonomous
+system</a> to another. The <a href="diction.htm#router">router</a> of the
+first <a href="intro.htm#as">autonomous system</a> would transfer the <a href="diction.htm#datagram">datagram</a>
+to that <a href="intro.htm#as">autonomous system</a> (if it can), or transfer
+it to another <a href="diction.htm#router">router</a>, that knows how to
+reach the destination. Eventually the <a href="diction.htm#datagram">datagram</a>
+will reach a <a href="diction.htm#router">router</a> that has a connection
+to that <a href="intro.htm#as">autonomous system</a> and the <a href="diction.htm#datagram">datagram</a>
+will be transferred correctly.
+<p>This way requires each <a href="diction.htm#router">router</a> to hold
+a database of all the possible destinations. Each entry in the database
+should hold the next <a href="diction.htm#router">router</a> that <a href="diction.htm#datagram">datagram</a>s
+should be sent to. This way could have worked very well. Alas, the network
+cannot be kept still. New <a href="diction.htm#router">router</a>s can
+be installed Old <a href="diction.htm#router">router</a>s can crash. Crashed
+<a href="diction.htm#router">router</a>
+can come up. Therefore, our connection through a <a href="diction.htm#router">router</a>
+is not guaranteed. Even if the <a href="diction.htm#router">router </a>doesn't
+crash, a new <a href="diction.htm#router">router</a> may be installed,
+providing better service.
+<p><a NAME="metric"></a>Before we continue this discussion, we have to
+make few things clearer. We have to define what we mean by saying that
+one line is better than the other. There are many ways to measure a connections.
+You can measure it by the Dollar cost, number of hops in the way, error
+rate, latency, etc. We will assume that connection are measured by the
+number of hops in its path. This assumption is no way, obligatory and any
+system administrator can define a measure of his own. We will treat measure
+as costs. That means that the lower the number associated with the connection,
+the better. RIP treats any number higher than fifteen as infinity (sixteen).
+So, sixteen means 'no connection'. This method of calculating the cost
+is called <i>metric.</i>
+<p>Let d(<i> i </i>,<i> j </i>) be the cost of the direct link from <i>i
+</i>to
+<i>j </i>.
+<p>d(<i> i </i>,<i> i </i>) = 0 for any <i>i </i>.
+<p>Let D(<i> i </i>,<i> j </i>) be the cost of the best route from <i>i
+</i>to
+<i>j </i>. It is defined for any two entities <i>i </i>,<i> j </i>.
+<p>D(<i> i </i>,<i> i </i>) = 0 for any <i>i </i>.
+<p>D(<i> i </i>,<i> j </i>) = min [d(<i> i </i>,<i> k </i>) + D(<i> k </i>,<i>
+j </i>)] for <i>i </i>&lt;> <i>j</i>
+<p>The last equation can be proven using induction over the number of steps
+in the routes. The metrics can be calculated using a simple algorithm.
+Entity <i>i </i>gets its neighbor <i>k </i>to send their estimates of their
+distance from <i>j </i>. When <i>i </i>gets the estimates from <i>k </i>,
+it adds d(<i> i </i>,<i> k </i>) to each of the numbers. Then <i>i </i>picks
+the smallest value. A proof that this algorithm converges to the correct
+values of D(<i> i </i>,<i> j </i>) in finite time, when the network topology
+does not change. Very few assumption were made about the order in which
+the entities send each other their information. No assumption were made
+on the initial values of D(<i> i </i>,<i> j </i>), except that they have
+to be non-negative. That means that it is safe to run the algorithm asynchronously.
+Entities can send updates by their own clock. Updates may be dropped, as
+long as they don't get all dropped. Because there are no assumptions on
+the initials values, the algorithm handles changes. when the topology changes,
+the system will move to a new equilibrium using the old one as its starting
+point.
+<p>Once a <a href="diction.htm#router">router</a> is installed, or started,
+it should send messages to all of its neighbors. This is necessary in order
+to update their tables. Consider this case:
+<center>
+<p><img SRC="im1.gif" height=331 width=251></center>
+
+<p><i>A </i>was connected to <i>D </i>through <i>B </i>and <i>C </i>. Once
+<i>E
+</i>has been installed, <i>A </i>can connect to <i>D </i>through <i>E
+</i>.
+This line costs less. That's why <i>E </i>has to announce its existence
+to <i>A </i>. If <i>E </i>should ever crash, <i>A </i>must know about it.
+Otherwise it will continue to send <a href="diction.htm#datagram">datagram
+</a>s
+through <i>E </i>. Unfortunately, a <a href="diction.htm#router">router</a>
+can't always inform others, that it is about to crash. A <a href="diction.htm#router">router</a>
+can't depend on such message to warn it. Therefore a <a href="diction.htm#router">router</a>
+crash, must be learned in other ways. RIP forces a <a href="diction.htm#router">router</a>
+to send update messages every thirty seconds. These messages contain routes,
+that that <a href="diction.htm#router">router</a> knows; and their metrics.
+If a <a href="diction.htm#router">router</a> does not receive an update
+message for 180 seconds. from another <a href="diction.htm#router">router</a>.
+It assumes that <a href="diction.htm#router">router</a> to be unreachable.
+This timeout of 180 seconds allow a <a href="diction.htm#router">router</a>
+to miss five update messages, without being marked unreachable. This is
+necessary, because the media might be unreliable and loose <a href="diction.htm#datagram">datagram</a>s.
+<p>The algorithm so far, sends update messages every thirty seconds. Every
+update message contains a list of the <a href="intro.htm#as">autonomous
+system</a> the <a href="diction.htm#router">router</a>s knows to reach
+and their metrics. If the metric in an update message is lower than the
+metric in the <a href="diction.htm#router">router </a>'s table, the <a href="diction.htm#router">router</a>
+would update the metric and the next hop fields in its table. If for some
+destination, an update had come from the next hop, indicating a different
+metric, then the metric in the table should be changed. This is necessary
+because if the metric changes in the next hop, we must change the metric
+in our <a href="diction.htm#router">router</a>, as well. This guarantees
+correct performance, but not good enough. Consider this case:
+<center>
+<p><img SRC="im2.gif" height=161 width=416></center>
+
+<p>All links have cost of 1, except for the direct link from <i>C </i>to
+<i>B
+</i>which has cost 10. Each <a href="diction.htm#router">router</a> will
+have a table showing the next hop and the metric for each destination.
+We're interested only in the connection to the target network.
+<p><i>D </i>: directly connected, metric 1.
+<p><i>B </i>: connected via <i>D </i>, metric 2.
+<p><i>C </i>: connected via <i>B </i>, metric 3.
+<p><i>A </i>: connected via <i>B </i>, metric 3.
+<p>Now suppose that the link from <i>B </i>to <i>D </i>fails. The routes
+should adjust to use the link from <i>C </i>to <i>D </i>. Unfortunately
+it will take quite a while for this to happen. The routing changes start
+when <i>B </i>notices that the route to <i>D </i>is no longer usable. The
+chart below assumes that all <a href="diction.htm#router">router </a>s
+send updates at the same time. the chart shows the metrics for the target.
+<pre>time --->&nbsp;
+
+<i>&nbsp;B </i>: unreachable |&nbsp;<i> C </i>, 4 |&nbsp;&nbsp;<i> C </i>, 5&nbsp;&nbsp; ....&nbsp;
+
+<i>&nbsp;C </i>:&nbsp;<i> B </i>,&nbsp; 3&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;<i> A </i>, 4 |&nbsp;&nbsp;<i> A </i>, 5&nbsp;
+
+<i>&nbsp;A </i>:&nbsp;<i> B </i>,&nbsp; 3&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;<i> C </i>, 4 |&nbsp;&nbsp;<i> C </i>, 5&nbsp;
+
+
+The problem is that <i>A </i>and <i>C </i>both believe they can connect to the target through each other. 
+It happened because they sent messages indicating they can connect to the target at cost of 3. When they received 
+the message from <i>B </i>saying that the target is unreachable, they received another message. The second message 
+said they can connect to the target in cost of 3. This cost is of course not true, because the link from <i>B
+</i>to <i>D </i>is unusable. Since <i>A </i>and <i>C </i>don't know that the route from each other uses another 
+link that is no longer usable, they would both update their tables to point at each other. Since, they increase 
+the metric by one, they will both report that the cost is now four. Since <i>A </i>uses <i>C </i>as next connection, 
+and <i>C </i>signals that the cost had change, <i>A </i>would change the cost of the link. Same thing would happen 
+to <i>C </i>. This way the cost of the connection will slowly rise. The worst case is when the target is really unusable, 
+and then the cost will rise up to infinity. This effect is called 'counting to infinity'. This is why infinity was 
+chosen to be such a small number. If some <a href="intro.htm#as">autonomous system</a> becomes completely unreachable, 
+we would like the counting to be over as soon as possible.</pre>
+
+<p><br>There are several ways to prevent this from happening. The ones
+that RIP uses are called 'split horizon with poison reverse' and 'triggered
+update'.
+<p><a NAME="Split_Horizon"></a>
+<h2>
+Split horizon.</h2>
+Notice that the problem above is caused because both <i>A </i>and <i>C
+</i>deceive
+each other. They both claim they have a connection. Since they both think
+they can connect through each other, a real link is not established. This
+could have been prevented if <i>A </i>hadn't told <i>C </i>that it can
+connect to the target. Generally, it is not useful to claim reachability
+for a destination to the neighbor from which the route was learned. The
+"simple split horizon" omits routes learned from one neighbor in updates
+to that neighbor. "split horizon with poisoned reverse" include those routes
+but with cost of infinity.
+<p>If <i>A </i>thinks it can get to <i>D </i>through <i>C </i>its message
+to <i>C </i>should indicate that <i>D </i>is unreachable. If <i>C </i>still
+claim reachability to <i>D </i>, then either it is connected directly to
+<i>D
+</i>, or it knows another <a href="diction.htm#router">router </a>that
+claim reachability. <i>C </i>'s route to the destination cannot go back
+to any route that points to <i>C </i>.
+<p>In general, split horizon with poisoned reverse, is safer than simple
+split horizon. If two <a href="diction.htm#router">router</a>s point at
+each other, advertising reverse routes with metric of 16 will brake the
+loop immediately. If the reverse routes are simply omitted, those routes
+will have to be eliminated by waiting for a timeout. Alas, poisoned reverse
+increases the size of the messages. Consider the case of a campus backbone
+connecting many buildings. Each building has a <a href="diction.htm#router">router</a>.
+In simple split horizon only the network that is connected to the <a href="diction.htm#router">router</a>
+is included in the updates messages. In split horizon with poisoned reverse,
+ALL networks learned must be published as well.
+<p>Implementors may use simple split horizon if they like. Or they can
+offer a configuration option, to allow the system manager to choose which
+way to use. It is also possible to advertise some reverse routes with metric
+of sixteen, and omit others.
+<h2>
+Triggered updates.</h2>
+Split horizon with poisoned reverse will break any loop of two <a href="diction.htm#router">router
+</a>s.
+However, it is still possible for loops of three or more <a href="diction.htm#router">router
+</a>s,
+to occur. <i>A </i>may think it can reach the target through <i>B
+</i>.
+<i>B </i>may think it can reach the target through <i>C </i>. <i>C
+</i>may
+think it can reach the target through <i>A </i>. This loop will break only
+when infinity will be reached. Triggered updates are an attempt to speed
+up this convergence. To imply triggered updates, we simply add a rule that
+whenever a <a href="diction.htm#router">router</a> changes the metric of
+a route, it is required to send update messages almost immediately. The
+triggered update messages will be sent even if it is not time to the regular
+update message. Consider a case were <i>G </i>can connect to a target network,
+and then its link becomes unusable. <i>G </i>will send its neighbor updates
+about the change. Its neighbors will update their tables if necessary.
+The ones that updated their tables will send their own update messages.
+Some of the neighbors' neighbors will update their tables, and send their
+own update messages. The update messages will propagate back, until they
+reach a portion of the network that uses another route to connect to the
+target.
+<p>If the system could be made to stay still while the update messages
+propagate back, it had been possible to prove that counting to infinity
+would never happen. A bad <a href="diction.htm#router">router</a> will
+be removed from the tables, using update messages. Alas, this is not the
+case. While the triggered updates are being sent, regular updates can be
+sent, from <a href="diction.htm#router">router</a> who hasn't got the update
+yet. Their update will indicate that the target is still reachable. It
+is possible that a <a href="diction.htm#router">router</a> will receive
+a false regular update saying the target is reachable, after it received
+a triggered update saying the target is unreachable. This could reestablish
+a connection incorrectly. Triggered updates reduce the chance to get counting
+to infinity, however this can still happen.
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+</body>
+</html>

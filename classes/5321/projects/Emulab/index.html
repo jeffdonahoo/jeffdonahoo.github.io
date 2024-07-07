@@ -1,0 +1,120 @@
+<html>
+<title>Emulab Example</title>
+
+<font face="Tahoma">
+<h3>Example Network Topology Creation</h3>
+
+<ol>
+<li>Log on to your account in emulab by going to 
+	<a href="http://www.emulab.net/index.php3">
+	http://www.emulab.net/index.php3</a></li>
+<li>Once logged in, you can begin an experiment and create a 
+	network topology for an experiment. Look for "Begin 
+	an Experiment" link on lower left corner.</li>
+<li>Once at the "Begin a test bed experiment" page you 
+	have the option of creating a network topology by 
+	either giving the path of your NS script file or using their GUI for creating a topology. Here we will explain creating a network topology using their GUI (or download our <a href="example.ns">ns script file</a>).</li>
+<li>Go to net build GUI page by clicking on "go to the 
+	NetBuild GUI" link. We will show how to build a network 
+	topology by taking an example. Say we want three nodes – 
+	2 clients and a server connected through a router.</li>
+<li>Once at the build GUI page you should be able to see 
+	<ol>
+		<li type="a">new node</li>
+		<li type="a">new LAN</li>
+		<li type="a">trash</li>
+	</ol>
+</li>
+<li>To create a client (a node) drag the node icon in the 
+	main drawing area. At this point you can see this node's 
+	properties on the right side panel. Change the name of 
+	the node from node0 to client1 (or whatever you want -
+	for this experiment, we assume the names client1, client2, 
+	and server).  You can leave the hardware and O.S to 
+	&lt;auto&gt;.</li>
+<li>Repeat this process for two more times for client2 and server.</li>
+<li>At this point you should have 3 nodes in the drawing area.</li>
+<li>Now drag the new LAN icon and place it in between above 
+	created nodes to form a star topology.</li>
+<li>Set this LAN's properties, say name = router1, bandwidth = 100Mb/s, 
+	latency(delay) = 10ms., loss-rate = 0.1(meaning 10% of packets 
+	going through this router are dropped. Don't worry if you don't 
+	know how much to set these values. You can always change these values 
+	afterwards, so for the moment you can select default values.)</li>
+<li>Now it is time to create links between clients, server through router1.</li>
+<li>Click on client1 then keep ctrl key pressed, and click on router1. 
+	A link should be formed  between client1 and router1. Leave the 
+	properties value to &lt;auto&gt; for time being.  We can play around 
+	with them later if we want to.</li>
+<li>Repeat this step (step 12) for server and client2.</li>
+<li>All set to go, click on create experiment tab on lower right side.</li>
+<li>This opens a new web page "Begin testbed experiment".</li>
+<li>Select project group (by default it should be NIUNet and in general 
+	you don't have to change this unless you are a member of more than 
+	one group).</li>
+<li>Provide a name to the experiment and a brief description of the 
+	project. Leave other values to default and click on submit button. </li>
+<li>At this point a new web page will open saying that your experiment 
+	is being configured, and this should ideally take less than 10 
+	minutes. Once done you will receive an email stating that your 
+	experiment is configured and giving you alloted nodes details so 
+	that you can ssh into those machines and upload your program.</li>
+<li>The topology building process is now complete and you are ready to upload 
+	your programs and run the experiment.</li>
+</ol>
+
+<h3>Example Running an Experiment</h3>
+
+	To get you started with your first experiment, we provide 
+	a <a title="NIUNet demo program source files" 
+	href="NIUNetDemo.zip">code sample</a> of a client/server 
+	program.  (<a href="http://cs.ecs.baylor.edu/~donahoo/practical/CSockets/textcode.html">This excellent site</a> 
+	has other source code samples to choose from.)  The example 
+	we provide is an echo client/server example where a client 
+	sends text to a server and the server responds by echoing 
+	that text back to the client.
+<ol>
+<li>After completing the topology building process, you can 
+	directly ssh into the machines at emulab. To get the 
+	address/name of the machines look in the received email and 
+	locate for the Qualified Names. For the above topology your 
+	Qualified Name section should look something like:</li>
+	<ol>
+		<li type="a">client1.emulabTest.NIUNet.emulab.net</li>
+		<li type="a">client2.emulabTest.NIUNet.emulab.net</li>
+		<li type="a">server.emulabTest.NIUNet.emulab.net</li>
+	</ol>
+<li>With ssh, terminal into these three machines with your emulab user 
+	name and password.  At this point upload the 
+	<a title="NIUNet demo program source files" 
+	href="NIUNetDemo.zip">program files</a>.
+	At the clients, upload the following:
+	<ol>
+		<li type="a">DieWithError.c</li>
+		<li type="a">ResolveName.c</li>
+		<li type="a">TCPEchoClient.c</li>
+	</ol>
+	At the server, upload these files:
+	<ol>
+		<li type="a">DieWithError.c</li>
+		<li type="a">TCPEchoServer.c</li>
+		<li type="a">HandleTCPClient.c</li>
+	</ol> </li>
+<li>Now compile these programs by executing 'sh make.src'. The default 
+	executable names for the client and server programs are 
+	<em>cli</em> and <em>srv</em>.</li>
+<li>Run the client and server programs, you can play around with 
+	various network properties like changing the latency, 
+	loss rate and see the effect of these on the program.</li>
+<li>To change these properties go the project homepage on emulab 
+	website and then click on the current experiment's name. 
+	This will bring the current experiment page and somewhere 
+	on left side under "Experiment Options" you can see link 
+	– 'traffic shaping', click on this link, change some
+	parameters, save your settings, and 
+	run the experiment again.</li>
+<li>Experiment by changing different variables, and observe the 
+	effects on your testbed.</li>
+</ol>
+</font>
+</html>

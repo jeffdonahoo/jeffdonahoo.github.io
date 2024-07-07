@@ -1,0 +1,54 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>New Page 1</title>
+</head>
+
+<body>
+
+<p align="center"><b><font size="5">Our Definition of&nbsp; &quot;Secure&quot;</font></b></p>
+<p align="center">&nbsp;</p>
+<p align="left">&nbsp;&nbsp;&nbsp; An important thing to realize is what it
+means to be &quot;secure.&quot;&nbsp; This is not meant to be a course in
+security, but a few things do need to be explained and understood.&nbsp; These
+are outlined below.</p>
+<p align="left">&nbsp;&nbsp;&nbsp; </p>
+<p align="left">&nbsp;&nbsp;&nbsp; First, and foremost, nothing is absolutely
+secure.&nbsp; Absolutely secure would mean that no one would have access to it
+in any shape or form (and that doesn't sound very useful to me.)&nbsp; Security
+deals with everything from people not handing out their passwords like it was
+candy on Halloween to people having physical access to the computer to hackers
+trying to infiltrate (or bring down) a foreign system.</p>
+<p align="left">&nbsp;&nbsp;&nbsp; Because of this, we limit our definition of
+security to just the ability of hackers to view the login names and their
+associated passwords.&nbsp; </p>
+<p align="left">&nbsp;&nbsp;&nbsp; So, in programs such as <b>telnet</b> (and
+even worse, <b>ftp</b>), we say that these are very insecure since they allow
+anyone to sniff the IP packets and determine the information based on a
+clear-cut formula.&nbsp; Which means that even if you had two
+&quot;totally&quot; secure machines, they couldn't talk to each other over the
+network without others able to listen in easily to the packets.</p>
+<p align="left">&nbsp;&nbsp;&nbsp; Thus Secure Shell was made, so that two
+&quot;totally&quot; secure machines could relatively be secure even when talking
+to each other.</p>
+<p align="left">&nbsp;&nbsp;&nbsp; These &quot;totally&quot; secure machines
+don't really exist, but the Secure Shell does not bother with the endpoint's
+security.&nbsp; It's main purpose to make connections BETWEEN machines
+secure.&nbsp; It should be noted that even when we say &quot;secure&quot; here,
+it is still not absolutely secure, but due to the way encryption algorithms
+work, it is highly doubtful that anyone could crack the code in a timely manner
+(for more detailed understanding of how encryption works, one would need to
+understand complexity classes.&nbsp; See here for the theory, and here for more
+information on encryption.)</p>
+<p align="left">&nbsp;&nbsp;&nbsp; Therefore, we will define &quot;secure&quot;,
+with regards to network communication, as the lack of ease that hackers or other
+malcontents could listen in to IP packets going over the network and understand
+the actual information within the packets.</p>
+
+</body>
+
+</html>

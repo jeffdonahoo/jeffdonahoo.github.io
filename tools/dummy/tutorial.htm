@@ -1,0 +1,642 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="Tutorial_files/filelist.xml">
+<link rel=Edit-Time-Data href="Tutorial_files/editdata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>Basic DummyNet Tutorial</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>donahoo</o:Author>
+  <o:LastAuthor>donahoo</o:LastAuthor>
+  <o:Revision>6</o:Revision>
+  <o:TotalTime>77</o:TotalTime>
+  <o:Created>2006-11-17T15:06:00Z</o:Created>
+  <o:LastSaved>2006-11-17T16:28:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>978</o:Words>
+  <o:Characters>5576</o:Characters>
+  <o:Company>Baylor University ECS</o:Company>
+  <o:Lines>46</o:Lines>
+  <o:Paragraphs>13</o:Paragraphs>
+  <o:CharactersWithSpaces>6541</o:CharactersWithSpaces>
+  <o:Version>11.8107</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:SpellingState>Clean</w:SpellingState>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+ </w:LatentStyles>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;
+	mso-font-charset:2;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:0 268435456 0 0 -2147483648 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+p
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+pre
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt;
+	font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";}
+tt
+	{font-family:"Courier New";
+	mso-ascii-font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	mso-hansi-font-family:"Courier New";
+	mso-bidi-font-family:"Courier New";}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
+span.GramE
+	{mso-style-name:"";
+	mso-gram-e:yes;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:117334397;
+	mso-list-template-ids:-2107233716;}
+@list l0:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l1
+	{mso-list-id:284385332;
+	mso-list-template-ids:-536865134;}
+@list l1:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l2
+	{mso-list-id:547760563;
+	mso-list-template-ids:-774614128;}
+@list l2:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3
+	{mso-list-id:550269256;
+	mso-list-template-ids:1226969660;}
+@list l3:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l4
+	{mso-list-id:1123309925;
+	mso-list-template-ids:-1724509810;}
+@list l4:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5
+	{mso-list-id:1138693053;
+	mso-list-template-ids:-1017609734;}
+@list l5:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l6
+	{mso-list-id:1683164690;
+	mso-list-template-ids:413833912;}
+@list l6:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l7
+	{mso-list-id:1774933030;
+	mso-list-template-ids:-439735050;}
+@list l7:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l8
+	{mso-list-id:1801605703;
+	mso-list-template-ids:1564145680;}
+@list l8:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l9
+	{mso-list-id:2012636429;
+	mso-list-template-ids:-1088368778;}
+@list l9:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l10
+	{mso-list-id:2107185768;
+	mso-list-template-ids:1738830042;}
+@list l10:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+</style>
+<![endif]--><!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="2050"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body lang=EN-US link=blue vlink=blue style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p align=center style='text-align:center'><b><u><span style='font-size:18.0pt'>Tutorial<o:p></o:p></span></u></b></p>
+
+<div class=MsoNormal align=center style='text-align:center'>
+
+<hr size=2 width="100%" align=center>
+
+</div>
+
+<p><u><span style='font-size:13.5pt;mso-bidi-font-size:12.0pt'>Enabling IPFW
+and <span class=SpellE>DummyNet</span>:<o:p></o:p></span></u></p>
+
+<p class=MsoNormal>1. Install and boot
+FreeBSD</p>
+
+<p class=MsoNormal>2. Add the following
+lines to /etc/<span class=SpellE>rc.conf</span>:</p>
+
+<p class=MsoNormal><span class=SpellE>firewall_enable</span>="YES"</p>
+
+<p class=MsoNormal><span class=SpellE>firewall_type</span>="OPEN"</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>Load <span class=SpellE>dummynet</span> with:</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<pre><span class=SpellE><span class=GramE>kldload</span></span> <span
+class=SpellE>dummynet</span><o:p></o:p></pre>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>Next you need to configure the <span class=SpellE>ipfw</span>
+rules. <span style='mso-spacerun:yes'> </span>List the rules <span
+class=SpellE>with</span></p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:.5in;text-indent:-.5in'><span
+class=SpellE><span class=GramE>ipfw</span></span> list</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>Add the -a option to list how many
+times each rule has been used.<span style='mso-spacerun:yes'>  </span>Note that
+the rules have order, determined by their rule numbers.<span
+style='mso-spacerun:yes'>  </span>If a packet is handles by a rule before your
+rule, it may never make it to your rule.</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>You can delete rules with</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><span class=SpellE><span class=GramE>ipfw</span></span>
+delete RULE#</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>You can delete all rules with</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><span class=SpellE><span class=GramE>ipfw</span></span> flush</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>Add access with</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><span class=SpellE><span class=GramE>ipfw</span></span> add
+1000 allow all from any to any</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<div class=MsoNormal align=center style='text-align:center'>
+
+<hr size=2 width="100%" align=center>
+
+</div>
+
+<p><u><span style='font-size:13.5pt'>Basic <span class=SpellE>ipfw</span>
+commands:</span></u></p>
+
+<p><span class=SpellE><span class=GramE><span style='font-size:13.5pt'>ipfw</span></span></span><span
+style='font-size:13.5pt'> add [N] [<span class=SpellE>prob</span> X] action
+PROTO from SRC to DST [options]</span></p>
+
+<p class=MsoNormal><span class=GramE>where</span> N is the rule number X is a
+number between 0 and 1 that, which indicates the probability of getting a match
+on this rule if all other fields are correct. '<span class=GramE><tt><span
+style='mso-ansi-font-size:12.0pt;mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>action</span></tt></span><tt><span
+style='font-size:10.0pt'>'</span></tt> is one of the actions executed on a
+match, which can be any of <tt><span style='font-size:10.0pt'>allow, deny, <span
+class=SpellE>skipto</span> N, pipe N</span></tt> and others.&nbsp; </p>
+
+<p>To send a packet to a <span class=SpellE>dummynet</span> pipe, we have to use
+<tt><span style='font-size:10.0pt'>pipe N</span></tt>; PROTO is the protocol
+type we want to match (IP, TCP, UDP, ...)<span class=GramE>;</span><br>
+SRC and DST are address <span class=SpellE>specifier</span> (we can use
+addresses with <span class=SpellE>netmasks</span> and optionally followed by
+ports or port ranges);<br>
+<tt><span style='font-size:10.0pt'>options</span></tt> can be used to restrict
+the attention to packets coming from/to specific interfaces, or carrying some
+TCP flags or ICMP options, or bridged, etc.</p>
+
+<div class=MsoNormal align=center style='text-align:center'>
+
+<hr size=2 width="100%" align=center>
+
+</div>
+
+<p><u><span style='font-size:13.5pt'>Creating and <span class=GramE>Destroying</span>
+a single pipe:</span></u></p>
+
+<p>Let us consider the traffic flowing between two hosts
+&quot;larry.baylor.edu&quot; (<span class=SpellE><span class=GramE>larry</span></span>)
+and &quot;curly.baylor.edu&quot; (curly)&nbsp;</p>
+
+<p>To create a pipe (1) between <span class=SpellE><span class=GramE>larry</span></span>
+and curly.</p>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l4 level1 lfo1;tab-stops:list .5in'><span class=SpellE><b>ipfw</b></span><b>
+     add 100 pipe 1 <span class=SpellE>ip</span> from any to
+     any</b></li><br>Note that this should come before allow/deny ipfw rules.
+</ul>
+
+<p>This command will create a single pipe on the network allowing full duplex
+data transfer between <span class=SpellE><span class=GramE>larry</span></span>
+and curly.</p>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l6 level1 lfo2;tab-stops:list .5in'><span class=SpellE><b>ipfw</b></span><b>
+     pipe 1 show</b></li>
+</ul>
+
+<p>This command will show all the parameters associated with the pipe. For a
+dynamically created pipe, all the corresponding pipes are shown.</p>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l10 level1 lfo3;tab-stops:list .5in'><span class=SpellE><b>ipfw</b></span><b>
+     pipe 1 delete</b></li>
+</ul>
+
+<p>This command will destroy the pipe 1.</p>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l8 level1 lfo4;tab-stops:list .5in'><span class=SpellE><b>ipfw</b></span><b>
+     pipe flush</b></li>
+</ul>
+
+<p>This command will destroy all the pipes generated.</p>
+
+<div class=MsoNormal align=center style='text-align:center'>
+
+<hr size=2 width="100%" align=center>
+
+</div>
+
+<p><u><span style='font-size:13.5pt'>Configuring the pipes:</span></u></p>
+
+<p><u><span style='font-size:13.5pt'>Bandwidth</span></u></p>
+
+<p><span class=GramE>Setting the bandwidth of the traffic between the hosts.</span>
+The bandwidth can be any of bit/<span class=GramE>s ,</span> Kbit/<span
+class=SpellE>s,Mbits</span>/s, Byte/s. <span class=SpellE>KByte</span>/s , <span
+class=SpellE>MByte</span>/s. A bandwidth of zero results in no bandwidth
+limitation.</p>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l3 level1 lfo5;tab-stops:list .5in'><span class=SpellE><b>ipfw</b></span><b>
+     pipe 1 <span class=SpellE>config</span> <span class=SpellE>bw</span>&nbsp;
+     100Kbit/s</b></li>
+</ul>
+
+<p>This command limits the bandwidth of the pipe 1 to 100Kbit/s.</p>
+
+<p>_______________________________________________________________________________________________________________</p>
+
+<p><u><span style='font-size:13.5pt'>Queue Size</span></u></p>
+
+<p>The queue size can also be set, which along with bandwidth influences the <span
+class=SpellE>queueing</span> delay. The queue size can be specified as number
+of slots, in Bytes or in <span class=SpellE>KBytes</span>.</p>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l0 level1 lfo6;tab-stops:list .5in'><span class=SpellE><b>ipfw</b></span><b>
+     pipe 1 <span class=SpellE>config</span> queue 100KByte/s</b></li>
+</ul>
+
+<p>This command limits the queue <span class=SpellE>sizeof</span> the pipe 1 to
+100KByte/s.</p>
+
+<p>_______________________________________________________________________________________________________________</p>
+
+<p><u><span style='font-size:13.5pt'>Delay</span></u></p>
+
+<p>The <span class=SpellE>propogation</span> delay of the pipes can also be
+controlled and can be set to any desired value <span class=SpellE>ain</span>
+milliseconds. The documentation states that the <span class=SpellE>queueing</span>
+delay is independent of the <span class=SpellE>propogation</span> delay.</p>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l9 level1 lfo7;tab-stops:list .5in'><span class=SpellE><b>ipfw</b></span><b>
+     pipe 1 <span class=SpellE>config</span> delay 100ms</b></li>
+</ul>
+
+<p>This command sets the desired <span class=SpellE>propogation</span> delay to
+100ms.</p>
+
+<p>_______________________________________________________________________________________________________________</p>
+
+<p><u><span style='font-size:13.5pt'>Random Packet Loss</span></u></p>
+
+<p>The packet loss in a network can also be simulated in the <span
+class=SpellE>dummynet</span>. The command <span class=SpellE>plr</span> X,
+where X is a floating point number between 0 and 1 which causes packets to be
+dropped at random simulates packet loss, where 0 is for no loss and 1 is for
+100%packet loss.</p>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l5 level1 lfo8;tab-stops:list .5in'><span class=SpellE><b>ipfw</b></span><b>
+     pipe 1 <span class=SpellE>config</span> <span class=SpellE>plr</span> 0.5</b></li>
+</ul>
+
+<p>This command drops packets <span class=GramE>randomly ,</span> sending
+almost half the number of packets across the network.</p>
+
+<p>_______________________________________________________________________________________________________________</p>
+
+<p><u><span style='font-size:13.5pt'>Dynamic queue creation:</span></u></p>
+
+<p>Associating a mask to a particular pipe handles the packets separately to
+that <span class=GramE>pipe .</span> Thus the bandwidth and the <span
+class=SpellE>queueing</span> limitations are enforced separately for the
+packets with a particular mask. One or many masks can be <span class=GramE>set
+,</span> or the &quot;all&quot; keyword to mean that all fields are significant
+for the same flow</p>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l7 level1 lfo9;tab-stops:list .5in'><span class=SpellE><b>ipfw</b></span><b>
+     pipe 1 <span class=SpellE>config</span> mask ([proto N] [<span
+     class=SpellE>src-ip</span> N] [<span class=SpellE>dest-ip</span> N] [<span
+     class=SpellE>src</span>-port N] [<span class=SpellE>dest</span>-port N] </b></li>
+</ul>
+
+<p>N is the bitmask where significant bits are set to 1. </p>
+
+<p>_______________________________________________________________________________________________________________</p>
+
+<p><span class=GramE><u><span style='font-size:13.5pt'>Using Dummy Net for
+testing Protocols.</span></u></span></p>
+
+<p>Since <span class=SpellE>dummynet</span> was originally developed to test
+network protocols and applications, on a network and<span class=GramE>&nbsp;
+also</span> on a standalone system , its features can be used to test
+protocols. The author gives a few suggestion while configuring the <span
+class=SpellE><span class=GramE>dummynet</span></span><span class=GramE> ,</span>
+to avoid incorrect results.</p>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l2 level1 lfo10;tab-stops:list .5in'>Choose a reasonable buffer
+     size.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l2 level1 lfo10;tab-stops:list .5in'>Dummy net can simulate
+     Half-Duplex as well as Full-Duplex, but since its non-realistic, he
+     suggests to use it only for testing purposes</li>
+</ul>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Half-Duplex transmission</p>
+
+<p><span class=SpellE><span class=GramE><b>ipfw</b></span></span><b> add pipe 1
+<span class=SpellE>ip</span> from curly to <span class=SpellE>larry</span></b></p>
+
+<p><span class=SpellE><span class=GramE><b>ipfw</b></span></span><b> pipe 1 <span
+class=SpellE>config</span> [different parameters]</b></p>
+
+<p><span class=GramE>this</span> command simulates a half-duplex from curly to <span
+class=SpellE>larry</span>, and the different parameters can be tested for that
+pipe.</p>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo11;tab-stops:list .5in'>While implementing multicast
+     on <span class=SpellE>dummynet</span>, the author suggests <span
+     class=GramE>to set</span> the rules right keeping in mind that the traffic
+     between in the bridge goes through the firewall code twice.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo11;tab-stops:list .5in'>Since <span class=SpellE>dummynet</span>
+     can be used on a standalone system <span class=GramE>also ,</span> there
+     are a few suggestions by the author, while testing this feature.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo11;tab-stops:list .5in'>The firewall is invoked on
+     all packets, the MTU of the loopback interface defaults to 16KB, and
+     special care has to be taken while running TCP keeping in mind the window
+     size with which TCP starts the transmission.</li>
+</ul>
+
+<p>_______________________________________________________________________________________________________________</p>
+
+<p><span class=SpellE><span class=GramE><u><span style='font-size:13.5pt'>Multipath</span></u></span></span><span
+class=GramE><u><span style='font-size:13.5pt'> transmission using <span
+class=SpellE>dummynet</span>.</span></u></span></p>
+
+<p>Using <span class=SpellE>dummynet</span> multiple paths between hosts can
+easily be <span class=GramE>simulated ,</span> using the probabilistic feature.</p>
+
+<p><span class=SpellE><span class=GramE><b>ipfw</b></span></span><b> add <span
+class=SpellE>prob</span> 0.33 pipe 1 <span class=SpellE>ip</span> from <span
+class=SpellE>larry</span> to curly</b></p>
+
+<p><span class=SpellE><span class=GramE><b>ipfw</b></span></span><b> pipe 1 <span
+class=SpellE>config</span> [parameters]</b></p>
+
+<p><span class=SpellE><span class=GramE><b>ipfw</b></span></span><b> add <span
+class=SpellE>prob</span> 0.5 pipe 2 <span class=SpellE>ip</span> from <span
+class=SpellE>larry</span> to curly</b></p>
+
+<p><span class=SpellE><span class=GramE><b>ipfw</b></span></span><b> pipe 2 <span
+class=SpellE>config</span> [parameters]</b></p>
+
+<p><span class=SpellE><span class=GramE><b>ipfw</b></span></span><b> add pipe 3
+<span class=SpellE>ip</span> from <span class=SpellE>larry</span> to curly.</b></p>
+
+<p>Given the right packet, the first rule will match with probability 1/3, of
+the remaining 2/3rds, by the second rule the packets will match with 1/2
+probability and the remaining will move to the third rule. Each of these pipes
+can be individually configured to emulate desired phenomenon.</p>
+
+<div class=MsoNormal align=center style='text-align:center'>
+
+<hr size=2 width="100%" align=center>
+
+</div>
+
+<p>References:</p>
+
+<p><a href="http://www.iet.unipi.it/~luigi/research.html"><span class=SpellE>Dummynet</span>:
+A simple approach to the evaluation of network protocols.</a></p>
+
+<p><a href="http://www.iet.unipi.it/~luigi/ip_dummynet/"><span class=SpellE><span
+class=GramE>Dummynet</span></span><span class=GramE> home.</span></a></p>
+
+<div class=MsoNormal align=center style='text-align:center'>
+
+<hr size=2 width="100%" align=center>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

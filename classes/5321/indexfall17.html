@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<link rel="stylesheet" type="text/css" href="../class.css">
+<title>5321 - Advanced Data Communication</title>
+</head>
+<body>
+<div class="pagetitle">
+Advanced Data Communication<br/>
+CSI5321
+</div>
+
+<h2>Reading Assignments</h2>
+<table>
+<tr><th>Due Date</th><th>Assignment</th></tr>
+<tr><td>12 Jan.</td><td>Van Jacobson and Michael. Karels. <a href="papers/JK88.pdf">Congestion Avoidance and Control</a>. SIGCOMM, 1988.<br>S:1</td></tr>
+<tr><td>17</td><td>Floyd, S., and Jacobson, V. <a href="papers/FJ93.pdf">Random Early Detection Gateways for Congestion Avoidance</a>. IEEE/ACM Transactions on Networking, volume 1, number 4, August 1993, p. 397-413.<br>S:12</td></tr>
+<tr><td>19</td><td>S:13</td></tr>
+<tr><td>24</td><td>S:14</td></tr>
+<tr><td>26</td><td>Dina Katabi, Mark Handley, and Charlie Rohrs. <a href="papers/KHR02.pdf">Congestion Control for High Bandwidth-Delay Product Networks</a>. SIGCOMM, 2002.</td></tr>
+<tr><td>31</td><td>J.H. Saltzer, D.P. Reed and D.D. Clark. <a href="papers/SRC84.pdf">End-to-end Arguments in System Design</a>. ACM Transactions on Computer Systems, Nov 1984, p. 277-288.</br>S:15</td></tr>
+<tr><td>2 Feb.</td><td>S:16.1-16.7</td></tr>
+<tr><td>5</td><td>Jeffrey C. Mogul. <a href="papers/M95.pdf">The Case for Persistent-Connection HTTP</a>. SIGCOMM, 1995, pp. 299-313, Cambridge, MA, August 1995.</td></tr>
+<tr><td>9</td><td>S:17</td></tr>
+<tr><td>14</td><td><a href="papers/IPMI95.pdf">How IP Multicast Works</a>. IP Multicast Initiaitive (IPMI) White Paper.<br/>S:2</td></tr>
+<tr><td>16</td><td>S:3</td></tr>
+<tr><td>21</td><td>M. Ammar, K. Almeroth, R. Clark, and Z. Fei. <a href="papers/AAC+98.ps">Multicast Delivery of Web Pages OR How to Make Web Servers Pushy</a>. Workshop on Internet Server Performance (WISP '98), Madison, Wisconsin, USA, June.<br/>S:4</td></tr>
+<tr><td>23</td><td>Hugh W. Holbrook and Sandeep K. Singkal and David R. Cheriton. <a href="papers/HSC95.pdf">Log-based Receiver-Reliable Multicast</a>. SIGCOMM, 1995.</td></tr>
+<tr><td>28</td><td>Chung Kei Wong, Mohamed Gouda, and Simon S. Lam. <a href="papers/KeyGraphs.pdf">Secure Group Communications Using Key Graphs</a>. SIGCOMM, volume 28, number 4, October 1998.<br/>S:5</td></tr>
+<tr><td>14 Mar</td><td>S. McCanne, V. Jacobson, and M. Vetterli. <a href="papers/MVJ96.pdf">Receiver-driven Layered Multicast</a>. SIGCOMM, 1996.<br/>S:6.1-2,6.4,6.6-7</td></tr>
+<tr><td>16</td><td>S:7-7.3.4,7.4-7.4.1,7.5</td></tr>
+<tr><td>23<td>Sylvia Ratnasamy, Paul Francis, Mark Handley, Richard Karp, and Scott Shenker.  <a href="papers/CAN.pdf">A Scalable Content-Addressable Network</A>. SIGCOMM, 2001.<br/>S:8-8.2</td></tr>
+<tr><td>30</td><td>Ion Stoica, Daniel Adkins, Shelley Zhuang, Scott Shenker and Sonesh Surana. <a href="papers/SAZ+02.pdf">Internet Indirection Infrastructure</a>. SIGCOMM, 2002.</td></tr>
+<tr><td>4 Apr</td><td>Bram Cohen. <a href="papers/C03.pdf">Incentives Build Robustness in BitTorrent</a>.P2P Economics Workshop. 2003.<br/>S:10-10.4<tr>
+<tr><td>13</td><td>Ian Clarke, Oskar Sandberg, Brandon Wiley, and Theodore W. Hong. <a href="papers/icsi2.pdf">Freenet: A Distributed Anonymous Information Storage and Retrieval System</a>. ICSI Workshop on Design Issues in Anonymity and Unobservability, July 2000.<br/>S:11-11.5</td></tr>
+<tr><td>18</td><td>Vivek Vishnumurthy, Sangeeth Chandrakumar and Emin Gun Sirer.  <a href="papers/VCS03.pdf">KARMA: A Secure Economic Framework for P2P Resource Sharing</a>. Workshop on the Economics of Peer-to-Peer Systems 2003.</td></tr>
+<tr><td></td><td><b>If your name is next to the paper, you are leading the discussion as the topic expert</b></td></tr>
+<tr><td>20</td><td>Satoshi Nakamot. <a href="http://bitcoin.org/bitcoin.pdf">Bitcoin: A Peer-to-Peer Electronic Cash System</a> (Nathaniel)</td></tr>
+<tr><td>25</td><td>Exam covering papers through 15 Mar. and S:1,5,10,12-17</td></tr>
+<tr><td>27</td><td>Larry Seltzer, <a href="http://resources.idgenterprise.com/original/AST-0036092_Best_Practices_and_Applications_of_TLS_SSL.pdf">Best Practices and Applications of TLS/SSL</a> (Feng)<br/>Roger Dingledine, Nick Mathewson, and Paul Syverson. <a href="https://svn.torproject.org/svn/projects/design-paper/tor-design.pdf">Tor: The Second-Generation Onion Router and Tor Anonymity Flaws</a> (Jonathan)
+<!--
+<tr><td>22</td><td>Kevin Fall.<a href="papers/F03.pdf">A Delay-Tolerant Network Architecture for Challenged Internets</a>. SIGCOMM, 2003. 
+<tr><td>19</td><td>S:4</td></tr>
+
+<tr><td>9</td><td>S:8-8.2<br/><tr>
+<tr><td>28</td><td>Research: Jan and Vaclav<br/>S:10-10.4</td><tr>
+<tr><td>30</td><td>Research: Qiaoli and Ryan<br/>S:11-11.5</td><tr>
+<tr><td>30</td><td>S:15</td></tr>
+<tr><td>20</td><td>S:3</td></tr>
+<tr><td>10</td><td>Diadeloso</td></tr>
+<td>17</td><td>Dongsu Han, Robert Grandly, Aditya Akella, and Srinivasan Seshan, FCP: A Flexible Transport Framework for Accommodating Diversity.  SIGCOMM 2013 [Li]<br/>Khakpour, A.R., et al., Firewall fingerprinting. INFOCOM 2012 [Ryan]<br/>S:10-10.4
+<tr><td>22<td>Test A (S:1,12-17;Papers through 4 Feb)<br/>Chi-Yao Hong, et al., Finishing flows quickly with preemptive scheduling. SIGCOMM 2012 [Rovshen]</td></tr>
+<tr><td>24</td><td>André Zúquete and Carlos Frade, A new location layer for the TCP/IP protocol stack.  SIGCOMM 2012 [Petr R]<br/>Tobias Flach, et al., Reducing Web Latency: the Virtue of Gentle Aggression. SIGCOMM 2013 [Roman]<br/>S:11-11.4
+<tr><td>29</td><td>Test B (Not in Test A)<br/>Team Left Exchange Presentation<br/>Team Right Exchange Presentation</td></tr>
+<tr><td>25</td><td>Vivek Vishnumurthy, Sangeeth Chandrakumar and Emin Gun Sirer.  <a href="papers/VCS03.pdf">KARMA: A Secure Economic Framework for P2P Resource Sharing</a>. Workshop on the Economics of Peer-to-Peer Systems 2003.<br/>S:3</td></tr>
+<tr><td>25</td><td>Yang-hua Chu and Sanjay G. Rao and Hui Zhang. <a href="papers/CRZ00.ps">A Case for End System Multicast</a>. Proceedings of ACM Sigmetrics 2000.</td></tr>
+<tr><td>30</td><td>S:8-8.3</td></tr>
+<tr><td>1 Nov.</td><td>M. Castro, P. Druschel, A-M. Kermarrec, A. Nandi, A. Rowstron and A. Singh. <a href="papers/CDK+03.pdf"> SplitStream: High-bandwidth content distribution in a cooperative environment</a>. IPTPS'03, Berkeley, CA, February, 2003.</td></tr>
+<tr><td>20</td><td>Student paper presentations</td></tr>
+<tr><td>21</td><td><a href="papers/pastryoverview.pdf">Pastry Overview</a><br />
+A. Rowstron, A-M. Kermarrec, M. Castro and P. Druschel. <a
+href="papers/RKC+01.pdf">SCRIBE: The design of a large-scale event
+notification infrastructure</a>. NGC2001, UCL, London, November
+2001.<br/>S:3<br/>
+<font size="-2">For the SCRIBE paper, you only need to read the
+abstract, introduction, and Section 3 through 3.1.</font>
+</td></tr>
+<tr><td>17</td><td>
+Rob Sherwood and Ryan Braud and Bobby Bhattacharjee. <a
+href="papers/SBB04.pdf">Slurpie: A Cooperative Bulk Data Transfer
+Protocol</a>. INFOCOM, 2004. [Jonathan]<br/>S:5
+</td></tr>
+<tr><td>24</td><td>
+A. Keromytis, V. Misra  and D. Rubenstein. <a
+href="papers/sos.pdf">SOS: Secure Overlay Services</a>. SIGCOMM,
+2002. [Yanqing]<br/>
+Christos Gkantsidis and Pablo Rodriguez Rodriguez. <a
+href="papers/GR05.pdf">Network Coding for Large Scale Content
+Distribution</a>. INFOCOM, 2005. [Zach]
+</td></tr>
+<tr><td>26</td><td>Continue Network Coding and Wrapup<br/>,
+    , S:8-8.3, S:10-10.4, S:11-11.4</td></tr>
+-->
+</table>
+S: TCP/IP Illustrated Vol. I, Second Edition
+
+<h2>Programming Assignments</h2>
+<!--
+<ol>
+<li>NTP Serialization (Due 29 Jan) - Individually implement
+  the NTPMessage class with (de)serialization.  Individually
+  implement JUnit testing for your NTPMessage class.<br/>
+Team Left: Determine interface (23 Jan)<br/>
+Team Right: Determine protocol functionality to initially include (22
+  Jan)
+<li>Ultimate JUnit Test (Due 3 Feb) - Team Left and Team Right
+  implement the
+ultimate JUnit test for the NTPMessage class.  Tests should:
+<ul>
+<li> include happy path and edge case serialization and
+  deserialization
+<li> demonstrate proper JUnit 4 design (e.g., exception handling,
+  parameterized
+tests, independent, single focus, simple, etc.)
+<li> provide full coverage of the public interface
+<li> be well organized, properly/consistently named, commented, and
+  JavaDoc'd
+<li> include a test suite if you have multiple unit test classes
+</ul>
+<li>Specification Details (Due 12 Feb)<br/>
+Team Left:
+<ul>
+<li>Send Team Right the Server Response Specifications by 3pm
+  11 Feb.
+<li>Send Team Right the updated NTPMessage interface by noon
+  11 Feb.
+<li>Bring full, written description of NTP Server Discovery to
+  class.  This will be integrated into our final NTP
+  specification.
+</ul>
+Team Right:
+<ul>
+<li>Final and complete (except for discovery) NTP specification (simplified for our use).
+  This must include the Server and Client Response Specification.
+<li>Identity of a v4 NTP server.
+</ul>
+<li>NTP Client and Server (Due 17 Feb) - Individually implement an NTP
+  client and server with the following classes:
+  ntp.protocol.NTPMessage, ntp.protocol.test.&lt;tests&gt;,
+  ntp.app.NTPClient, and ntp.app.NTPServer.  NTPClient should take two
+  parameters: server ID, server port.  NTPServer should take a single
+  parameter: server port.<br/>
+Team Left:
+<ul>
+<li>Implement a set of test servers.  These tests should be
+  independent of your individual NTP code.  Place these servers in
+  ntp.app.test.&lt;tests&gt;.<br/>
+<li>Submit an updated version of your team's ultimate JUnit tests to
+  match the finalized specification.
+</ul>
+Team Right:
+<ul>
+<li> Implement JUnit tests that test NTP servers.  These
+  tests should be independent of your individual NTP code.  Place these
+  tests in ntp.app.test.NTPServerTest.java.
+<li>Submit an updated version of your team's ultimate JUnit tests to
+  match the finalized specification.
+</ul>
+<li>NTP Client and Server Discovery (Due 5 Mar) - Individually 
+  extend your NTP client and server to perform discovery.  Your 
+  new NTPClient should now need with one parameter (-d) if it should do 
+  discovery or two parameters (server id and port) if it should not.<br/>
+Team Left:
+<ul>
+<li> Final and complete (including discovery) NTP specification (simplified for our use). This must include the Server and Client Response Specification.
+</ul>
+Team Right:
+<ul>
+<li> Extend your NTP Server tests to cover discovery.
+</ul>
+<li>NTP Client and Server (Due 27 Apr) - Individually implement an NTP
+  client and server according to the specification.  Your
+  serialization should pass all of my tests.<br/>
+Team Left:
+<ul>
+<li>Implement a set of servers designed to test your client according
+  to the most recent specification.  These tests should be
+  independent of your individual NTP code.  Your server should test
+  your client's ability to perform NTP Server Discovery.  Place these servers in
+  ntp.app.test.&lt;tests&gt;.  You must also include a README.txt
+  explaining the various test and how to use them to test clients.<br/>
+</ul>
+Team Right:
+<ul>
+<li> Implement JUnit tests that test NTP servers according to the most
+  recent specification.  These
+  tests should be independent of your individual NTP code.  Your test
+  must cover testing of server-side NTP Server Discovery.  Your tests
+  must be sufficiently commented to understand what each test
+  verified.  Place these tests in the JUnit class ntp.app.test.NTPServerTest.java.
+</ul>
+</ol>
+-->
+
+<h2>Notes</h2>
+<ul>
+<li> <a href="papers/DNS.doc">DNS</a></li>
+<li> <a href="JavaCodePreparation.pdf">Code Preparation</a></li>
+<li> <a href="JavaCodingConvention.pdf">Coding Convention</a></li>
+</ul>
+
+<h2>Past Project Pages</h2>
+<ul>
+<li> <a href="http://niunet.ecs.baylor.edu/hacknet">Hacknet</a></li>
+<li> <a href="http://cs.baylor.edu/~donahoo/tools/sniffer">Packet Sniffers</a></li>
+<li> <a href="http://cs.baylor.edu/~donahoo/tools/gdb">GDB Tutorial</a></li>
+<li> <a href="http://cs.baylor.edu/~donahoo/tools/mbone">Multicast Apps</a></li>
+<li> <a href="http://cs.baylor.edu/~donahoo/tools/dummy/">Dummynet</a></li>
+<li> <a href="projects/fnetgtell/">Freenet vs. Gnutella</a></li>
+<li> <a href="projects/NAT">NAT</a></li>
+<li> <a href="projects/DHCP">DHCP</a></li>
+<li> <a href="projects/SSL">SSL</a></li>
+<li> <a href="projects/Emulab">Emulab</a></li>
+<li> <a href="projects/vmware">VMWare</a></li>
+<li> <a href="projects/rfid">RFID</a></li>
+<li> <a href="projects/bluetooth">Bluetooth</a></li>
+<li> <a href="projects/SensorNet">SensorNet</a></li>
+<li> <a href="projects/freeoxy1">FreeOxy 1</a></li>
+<li> <a href="projects/freeoxya">FreeOxy A</a></li>
+<li> <a href="projects/bittorrent">BitTorrent</a></li>
+</ul>
+
+<h2>Papers</h2>
+<ul>
+<li> TCP/IP </li>
+<ul>
+<li> <a href="papers/rfc791.ps">Internet Protocol</a>. RFC 791, 1981
+<li> <a href="papers/rfc793.ps">Transport Control Protocol</a>. RFC
+793, 1981
+<li> <a href="papers/rfc2616.txt">Hypertext Transfer Protocol -- HTTP/1.1</a>. RFC 2616, 1999
+<li> P. Mockapetris. <a href="papers/rfc1034.ps">Domain Names - Concepts and
+Facilities</a>. RFC 1034, 1987
+<li> P. Mockapetris. <a href="papers/rfc1035.ps">Domain Names - Implementation
+and Specification</a>. RFC 1035, 1987
+<li> D. Katabi and J. Wroclawski.  <a href="papers/KW00.ps">A Scalable
+Framework for a Global IP-Anycast Service (GIA)</a>. Proceedings of
+SIGCOMM 2000
+<li> Theodore Faber and Joe Touch and Wei Yue. <a
+href="papers/FTY99.ps">The TIME-WAIT State in TCP and its Effect on
+Busy Servers</a>. INFOCOM, 1999
+<li>Aleksandar Kuzmanovic and Edward W. Knightly <a
+href="papers/KK03.pdf">Low-Rate TCP-Targeted Denial of Service
+Attacks</a>. SIGCOMM 2003.
+</ul>
+<li> Congestion Control </li>
+<ul>
+<li> Van Jacobson and Michael J. Karels. <a
+href="ftp://ftp.ee.lbl.gov/papers/congavoid.ps.Z">Congestion Avoidance
+and Control</a>. SIGCOMM, 1988.
+<li> Floyd, S., and Jacobson, V. <a
+href="/papers/FJ93.pdf">Random Early
+Detection Gateways for Congestion Avoidance</a>. IEEE/ACM Transactions
+on Networking, volume 1, number 4, August 1993, p. 397-413. (<a
+href="http://www.aciri.org/floyd/papers/collapse/ns2/promoting.html">Simulation Scripts</a>)
+<li> Dong Lin and Robert Morris. <a
+href="http://www.acm.org/sigcomm/sigcomm97/papers/p078.ps">Dynamics
+of Random Early Detection</a>. SIGCOMM, 27(4), October
+1997. 
+<li> M. Shreedhar, and George Varghese. <a
+href="http://www.ccrc.wustl.edu/~varghese/PAPERS/fq.ps">Efficient fair
+queueing using deficit round-robin</a>. IEEE/ACM Transactions on Networking, 4(3):375 - 385, June, 1996.
+<li> Raj Jain. <a href="papers/J90.ps">Congestion Control in Computer
+Networks: Trends and Issues</a>. IEEE Network, pg. 24-30, May 1990,
+<li>Raj Jain. <a href="papers/J92.pdf">Myths about Congestion Management in High Speed
+Networks</a>. Internetworking: Research and Experience, pg. 101-113, 1993.
+<li>Dina Katabi, Mark Handley, and Charlie Rohrs. <a
+href="papers/KHR02.pdf">Congestion Control for High Bandwidth-Delay
+Product Networks</a>. SIGCOMM, 2002.
+</ul>
+<li> QoS </li>
+<ul>
+<li> Scott Shenker <a
+href="http://www-users.cs.umn.edu/~zhzhang/cs8299/Readings/Shen95:Fund.ps">Fundamental
+Design Issues for the Future Internet</a>. Journal of Selected Areas in
+Communications, Sept. 1995.
+<li> K. Nichols, V. Jacobson, L. Zhang <a
+href="ftp://ftp.ee.lbl.gov/papers/dsarch.pdf">A Two-bit Differentiated
+Services Architecture for the Internet</a>. IETF Internet Draft -
+draft-nichols-diff-svc-arch.
+<li> Lee Breslau and Scott Shenker <a
+href="http://www.acm.org/sigcomm/sigcomm98/tp/paper01.ps">Best-Effort
+versus Reservations: A Simple Comparative Analysis</a>. SIGCOMM,
+28(4), October 1998.
+<li> L. Zhang and S. Deering and D. Estrin and S. Shenker and
+D. Zappala.
+<a href="http://www.cs.umd.edu/class/fall1999/cmsc711/papers/rsvp.ps">
+RSVP: A New Resource Reservation Protocol</a>. IEEE Communications
+Magazine, 31(9):8-18, Sept 1993.
+</ul>
+<li> Internet Design Principles </li>
+<ul>
+<li>Dave Clark. <a
+href="http://www.cs.umd.edu/class/fall1999/cmsc711/papers/design-philosophy.pdf">The
+Design Philosophy of the DARPA Internet Protocols</a>. SIGCOMM,
+106-114, Sept 1988.
+<li>J.H. Saltzer, D.P. Reed and D.D. Clark. <a
+href="http://www.cs.umd.edu/class/fall1999/cmsc711/papers/endtoend.ps">End-to-end 
+Arguments in System Design</a>. ACM Transactions on Computer
+Systems, 277-288, Nov 1984.
+<li>J. Noel Chiappa. <a
+href="http://users.exis.net/~jnc/tech/end_end.html">Will the Real
+End-End Principle Please Stand Up?</a>.
+<li>David D. Clark, John Wroclawski, Karen Sollins and Robert Braden. <a
+href="papers/CWS+02.pdf">Tussle in Cyberspace: Defining Tomorrow's
+Internet</a>. SIGCOMM 2002.
+</ul> 
+<li> Security
+<ul>
+<li> David Chaum. <a
+href="http://www.digicash.com/news/archive/bigbro.html">Security
+without Identification: Card Computers to make Big Brother
+Obsolete</a>. Communications of the ACM, 28(10), Oct. 1985.
+<li>Ronald L. Rivest. <a href="papers/R98b.txt">Chaffing and
+Winnowing: Confidentiality without Encryption</a>. March 1998
+<li>A. Keromytis, V. Misra  and D. Rubenstein. <a
+href="papers/sos.pdf">SOS: Secure Overlay Services</a>. SIGCOMM 2002.
+<li>Nikita Borisov, Ian Goldberg, and David Wagner. <a
+href="papers/WEP.pdf">Intercepting Mobile Communications: The
+Insecurity of 802.11</a>. Mobicom 2001.
+<li>Seungjoon Lee, Rob Sherwood and Samrat Bhattacharjee. <a
+href="papers/LSB03.pdf">Cooperative Peer Groups in NICE</a>. INFOCOM 2003.
+</ul>
+
+<li> Multicast<ul>
+
+<li> <a
+href="papers/IPMI95.pdf">How
+IP Multicast Works</a>. IP Multicast Initiaitive (IPMI) White Paper.
+
+<li> <a
+href="http://www.cis.ohio-state.edu/htbin/rfc/rfc1112.html">Host
+extensions for IP multicasting</a>. S.E. Deering. Aug-01-1989.
+
+<li> <a
+href="http://catarina.usc.edu/pim/pimsm/PIM-Arch.ps.gz">Protocol
+Independent Multicast-Sparse Mode (PIM-SM): Motivation and
+Architecture</a>. Deering, et. al. draft-ietf-idmr-pim-arch-04</a>
+
+<li> DVMRP
+
+<li> <a href="papers/CRZ00.ps">A Case for End System Multicast</a>.
+Yang-hua Chu and Sanjay G. Rao and Hui Zhang, Proceedings of ACM
+Sigmetrics 2000.
+
+<li> Congestion/Flow Control
+
+<li> M. Castro, P. Druschel, A-M. Kermarrec, A. Nandi, A. Rowstron and
+A. Singh, <a href="papers/CDK+03.pdf"> SplitStream: High-bandwidth
+content distribution in a cooperative environment</a>. IPTPS'03,
+Berkeley, CA, February, 2003
+<li> Scalability
+<ul>
+<li> Hugh W. Holbrook and Sandeep K. Singkal and David R. Cheriton <a
+href="papers/HSC95.pdf">Log-based
+Receiver-Reliable Multicast</a>. SIGCOMM, 1995.
+</ul>
+
+<li> Elastic Applications
+<ul>
+<li> S. McCanne, V. Jacobson, and M. Vetterli <a
+href="ftp://ftp.ee.lbl.gov/papers/mccanne-sigcomm96.ps.gz">Receiver-driven
+Layered Multicast</a>. SIGCOMM, 1996.
+</ul>
+<li> Application Adaptation
+<ul>
+<li> M. Ammar, K. Almeroth, R. Clark, and Z. Fei, <a
+href="http://imj.ucsb.edu/papers/WISP-98.ps.gz">Multicast Delivery of
+Web Pages OR How to Make Web Servers Pushy</a>. Workshop on Internet
+Server Performance (WISP '98), Madison, Wisconsin, USA, June 1998. 
+<li> Fairness
+</ul>
+<li> Security </li>
+<ul>
+<li> Chung Kei Wong, Mohamed Gouda, and Simon S. Lam <a
+href="papers/KeyGraphs.pdf">Secure
+Group Communications Using Key Graphs</a>. SIGCOMM, volume 28, number
+4, October 1998.
+</ul>
+</ul>
+<li> Peer-to-Peer </li>
+<ul>
+
+<li> Ian Clarke, Oskar Sandberg, Brandon Wiley, and Theodore W. Hong. <a
+href="papers/CSW+00.ps.gz">Freenet: A Distributed Anonymous
+Information Storage and Retrieval System</a>. ICSI Workshop on Design
+Issues in Anonymity and Unobservability, July 2000
+
+<li>Ian Clarke. <a
+href="papers/C99.pdf">A Distributed Decentralised Information Storage
+and Retrieval System</a>. Technical Report, Division of Informatics,
+University of Edinburgh, 1999
+
+<li> Sylvia Ratnasamy and Paul Francis and Mark Handley and Richard
+Karp and Scott Shenker. <a href="papers/CAN.ps">A Scalable
+Content-Addressable Network</a>. SIGCOMM, 2001.
+
+<li> John Byers, Jeffrey Considine, Michael Mitzenmacher, and
+Stanislav Rost. <a href="papers/BCM+02.pdf">Informed Content Delivery 
+Across Adaptive Overlay Networks</a>. SIGCOMM, 2002.
+
+<li> A. Rowstron and P. Druschel. <a href="papers/RD01.pdf">Pastry:
+Scalable, distributed object location and routing for large-scale
+peer-to-peer systems</a>. IFIP/ACM International Conference on
+Distributed Systems Platforms (Middleware), 329-350, November, 2001.
+
+<li> <a href="papers/pastryoverview.pdf">Pastry Overview.</a>
+
+<li> A. Rowstron, A-M. Kermarrec, M. Castro and P. Druschel. <a
+href="papers/RKC+01.pdf">SCRIBE: The design of a large-scale event
+notification infrastructure</a>. NGC2001, UCL, London, November 2001.
+
+<li> M. Castro, P. Druschel, A-M. Kermarrec, A. Nandi, A. Rowstron,
+and A. Singh. <a href="papers/CDK+03.pdf">SplitStream: High-bandwidth
+content distribution in a cooperative environment</a>. IPTPS,
+Berkeley, CA, February, 2003.
+
+<li> Ashwin R. Bharambe, Mukesh Agrawal, and Srinivasan Seshan. <a
+href="papers/BAS04.pdf">Mercury: Supporting Scalable Multi-Attribute
+Range Queries</a>. SIGCOMM, August, 2004.
+
+<li> Praveen Yalagandul and Mike Dahlin. <a
+href="papers/YD04.pdf">A Scalable Distributed Information Management
+System</a>. SIGCOMM, August, 2004.
+
+<li>Kevin Fall. <a href="papers/F04.pdf">Messaging in Difficult
+Environments</a>. Intel Research Berekeley. IRB-TR-04-019. 2004.
+
+<li>Kevin Fall. <a href="papers/F03.pdf">A Delay-Tolerant Network
+Architecture for Challenged Internets</a>. SIGCOMM 2003.
+
+<li>Jian Liang, Rakesh Kumar, Yongjian Xi and Keith W. Ross. <a
+href="papers/LKX+05.pdf">Pollution in P2P File Sharing Systems</a>.
+INFOCOM. 2005.
+
+<li>Christos Gkantsidis and Pablo Rodriguez Rodriguez. <a
+href="papers/GR05.pdf">Network Coding for Large Scale Content Distribution</a>. INFOCOM 2005.
+
+<li>Rob Sherwood and Ryan Braud and Bobby Bhattacharjee. <a
+href="papers/SBB04.pdf">Slurpie: A Cooperative Bulk Data Transfer
+Protocol</a>. INFOCOM 2004.
+
+<li>Vivek Vishnumurthy, Sangeeth Chandrakumar and Emin Gun Sirer. <a
+href="papers/VCS03.pdf">KARMA: A Secure Economic Framework for P2P
+Resource Sharing</a>. Workshop on the Economics of Peer-to-Peer
+Systems 2003.
+
+<li>Yatin Chawathe, Sriram Ramabhadran, Sylvia Ratnasamy, Anthony
+LaMarca, Scott Shenker, and Joseph Hellerstein. <a
+href="papers/CRR+05.pdf">A Case Study in Building Layered DHT
+Applications</a>. SIGCOMM 2005.
+
+<li>Leon Poutievski and Ken Calvert and James Griffioen.
+<a href="papers/PCG04.pdf">Speccast</a>. INFOCOM 2004.
+
+</ul>
+
+<li> Application Layer Protocols </li>
+<ul>
+<li> J. Myers and M. Rose. <a href="papers/POP3-RFC1939.txt">Post
+Office Protocol - Version 3</a>. RFC 1939, May 1996.
+</ul>
+<li> Miscellaneous Topics </li>
+<ul>
+<li> David L. Tennenhouse, Jonathan M. Smith, W. David Sincoskie,
+David J. Wetherall, and Gary J. Minden. <a
+href="ftp://ftp.tns.lcs.mit.edu/pub/papers/ieeecomms97.ps.gz">A Survey
+of Active Network Research</a>. IEEE Communications Magazine, 35(1),
+pp80-86. January 1997.
+<li> Suchitra Raman and Steven McCanne. <a
+href="http://www.acm.org/sigs/sigcomm99/papers/session1-2.ps">A Model,
+Analysis, and Protocol Framework for Soft State-based
+Communication</a>. SIGCOMM, 1999.
+<li> Jeffrey C. Mogul. <a href="papers/M95.ps">The Case for
+Persistent-Connection HTTP</a>. SIGCOMM, 299-313, August 1995.  
+<li> S. Shenker, D. Clark, D. Estrin, and S. Herzog. <a
+href="http://www.cs.umn.edu/~zhzhang/cs8299/Readings/Shenker:Pricing-Reshape.ps">Pricing
+in Computer Networks: Reshaping the Research Agenda</a>. ACM Computer
+Communication Review, 26(2):19-43, April 1996. 
+</ul>
+</ul>
+
+<li> <a href="../gennet/">General Networking Stuff</a>
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+<html>
+<head>
+   <title>ConTest</title>
+</head>
+<body>
+
+<center><b><font size=+3>ConTest:  A Tool for Testing Multi-threaded Java Applications</font></b></center>
+
+<a
+href="http://www.haifa.ibm.com/projects/verification/contest/index.html">ConTest</a>
+is system for detecting synchronization problems.  Basically, ConTest
+executes a program, trying various combinations of thread scheduling that could lead to
+race conditions, deadlocks, etc.  To use ConTest, download it from the
+site above.
+<p />
+To see a demo of ConTest,
+
+<ol>
+  <li>Download ConTest from <a
+  href="http://www.haifa.ibm.com/projects/verification/contest/index.html">
+  here</a>.
+  <li>Extract the download and open the JavaConTest/README.html
+  file.</li>
+  <li>Follow the Demo link and run the demo.</li>
+<!--
+  <li>Go to your test directory.  We'll call the directory <i>test</i> for this demo.</li>
+  <li>Copy ParalInc.java, ConTest.jar, and KingProperties from the
+  download into test.</li>
+  <li>Edit KingProperties, find the targetClasses =... line, and change
+  it to targetClasses = ParalInc</li>
+  <li>Compile ParalInc.java as usual (i.e., javac ParalInc.java) and
+  run it (i.e., java ParalInc).  Everything works!</li>
+  <li>Comment out the synchronization in ParalInc.java as follows:
+<pre>
+// synchronized(ParalInc.class) {
+     i++;
+//}
+</pre></li>
+  <li>Compile ParalInc.java again.</li>
+  <li>Execute ParalInc using ConTest (i.e., java
+  -javaagent:ConTest.jar ParalInc).  This should break the test.  If
+  not, run it again.
+-->
+</ol>
+
+</body>
+</html>

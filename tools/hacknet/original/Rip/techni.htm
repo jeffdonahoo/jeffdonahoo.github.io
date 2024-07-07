@@ -1,0 +1,296 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.6 [en] (Win95; I) [Netscape]">
+   <title>RIP Header Format </title>
+</head>
+<body background="blue_lines.jpg">
+
+<center>
+<h1>
+RIP Specifications</h1></center>
+
+<center>
+<h3>
+
+<hr WIDTH="100%"></h3></center>
+
+<ol>
+<li>
+<a href="#headrformt">Format of RIP Datagram </a>(And RIP commands)</li>
+
+<li>
+<a href="#address">Addressing considerations</a></li>
+
+<li>
+<a href="#timers">Timers</a></li>
+
+<li>
+<a href="#input">Input processing</a></li>
+
+<li>
+<a href="#output">Output processing</a></li>
+</ol>
+
+<p><br><a NAME="headerformat"></a>
+<h2>
+Format of RIP Datagram:</h2>
+The format of the RIP header is shown here:
+<p><img SRC="format.gif" ALT="" height=456 width=666>
+<p>&nbsp;<b>EACH WORD (LINE) IS 32 BITS</b>
+<br>&nbsp;<b>THE FIELDS SIZE (e.g, (1) ) ARE IN OCTETS</b>
+<p>The portion of the <a href="diction.htm#datagram">datagram </a>from
+address family field through metric may appear up to 25 times.<a href="tcpip2.html" target="_blank">
+IP address</a><a href="/networks/1994/ip_addr/tcpip2.html"> </a>is the
+usual 4-octet Internet address, in network order. The special address 0.0.0.0
+is used to describe a default route. The address family identifier for
+IP is 2. The metric field must contain a value between 1 and 15 inclusive,
+specifying the current metric for the destination, or the value 16, which
+indicates that the destination is not reachable. The maximum <a href="diction.htm#datagram">datagram
+</a>size
+is 512 octets. (IP or<a href="diction.htm#udp"> UDP </a>headers not counted)
+Every <a href="diction.htm#datagram">datagram
+</a>contains a command, a
+version number, and possible arguments.
+<br><a NAME="commands"></a>Here is a summary of the commands implemented
+in version 1 of RIP:
+<ol>
+<li>
+<a href="request.htm" target="_blank">request </a>A request for the responding
+system to send all or part of its routing table.</li>
+
+<li>
+<a href="request.htm#respond" target="_blank">response</a> A message containing
+all or part of the sender's routing table. This message may be sent in
+response to a request or poll, or it may be an update message generated
+by the sender.</li>
+
+<li>
+<b>traceon</b> Obsolete. Messages containing this command are to be ignored.</li>
+
+<li>
+<b>traceoff</b> Obsolete. Messages containing this command are to be ignored.</li>
+
+<li>
+<b>reserved</b> This value is used by Sun Microsystems for its own purposes.
+If new commands are added in any succeeding version, they should begin
+with 6. Messages containing this command may safely be ignored by implementations
+that do not choose to respond to it.</li>
+</ol>
+<a NAME="address"></a>
+<h2>
+<img SRC="greenbal.gif" height=14 width=14> Addressing considerations</h2>
+The RIP <a href="diction.htm#packet">packet </a>formats do not distinguish
+among various types of address. Fields that are labeled "address" can contain
+any of the following:
+<ul>
+<li>
+<a href="diction.htm#host">host </a>address</li>
+
+<li>
+subnet number</li>
+
+<li>
+network number</li>
+
+<li>
+0, indicating a default route</li>
+</ul>
+When routing a <a href="diction.htm#datagram">datagram </a>, its destination
+address must first be checked against the list of <a href="diction.htm#host">host
+</a>addresses.
+Then it must be checked to see whether it matches any known subnet or network
+number. Finally, if none of these match, the default route is used.
+<p>"Border" <a href="diction.htm#gate">gateway </a>s send only a single
+entry for the network as a whole to <a href="diction.htm#host">host </a>s
+in other networks. This means that a border <a href="diction.htm#gate">gateway
+</a>will
+send different information to different neighbors. For neighbors connected
+to the subnetted network, it generates a list of all subnets to which it
+is directly connected, using the subnet number. For neighbors connected
+to other networks, it makes a single entry for the network as a whole,
+showing the metric associated with that network. (This metric would normally
+be the smallest metric for the subnets to which the <a href="diction.htm#gate">gateway
+</a>is
+attached.)
+<p><a NAME="timers"></a>
+<h2>
+<img SRC="greenbal.gif" height=14 width=14> Timers</h2>
+Every 30 seconds, the <a href="#output">output process </a>is instructed
+to generate a complete response to every neighboring <a href="diction.htm#gate">gateway
+</a>.
+<p>There are two timers associated with each route, a "timeout" and a "garbage-collection
+time". Upon expiration of the timeout, the route is no longer valid. However,
+it is retained in the table for a short time, so that neighbors can be
+notified that the route has been dropped. Upon expiration of the garbage-collection
+timer, the route is finally removed from the tables.
+<p>The timeout is initialized when a route is established, and any time
+an update message is received for the route. If 180 seconds elapse from
+the last time the timeout was initialized, the route is considered to have
+expired, and the deletion process which we are about to describe is started
+for it.
+<p>Deletions can occur for one of two reasons: (1) the timeout expires,
+or (2) the metric is set to 16 because of an update received from the current
+<a href="diction.htm#gate">gateway
+</a>.
+(See <a href="request.htm#respond" target="_blank">response</a> command
+for a discussion processing updates from other <a href="diction.htm#gate">gateway
+</a>s.)
+In either case, the following events happen:
+<p>- The garbage-collection timer is set for 120 seconds.
+<p>- The metric for the route is set to 16 (infinity). This causes the
+route to be removed from service.
+<p>- A flag is set noting that this entry has been changed, and the output
+process is signalled to trigger a response.
+<p>Until the garbage-collection timer expires, the route is included in
+all updates sent by this <a href="diction.htm#host">host </a>, with a metric
+of 16 (infinity). When the garbage-collection timer expires, the route
+is deleted from the tables.
+<p>Should a new route to this network be established while the garbage-
+collection timer is running, the new route will replace the one that is
+about to be deleted. In this case the garbage-collection timer must be
+cleared.
+<p><a NAME="input"></a>
+<h2>
+<img SRC="greenbal.gif" height=14 width=14> Input processing</h2>
+Before processing the recived <a href="diction.htm#datagram">datagram </a>s,
+certain general format checks must be made. These depend upon the version
+number field in the <a href="diction.htm#datagram">datagram </a>, as follows:
+<ul>
+<li>
+0 <a href="diction.htm#datagram">datagram </a>s whose version number is
+zero are to be ignored. These are from a previous version of the protocol,
+whose <a href="diction.htm#packet">packet </a>format was machine-specific.</li>
+
+<li>
+1 <a href="diction.htm#datagram">datagram </a>s whose version number is
+one are to be processed as described in this document. All fields that
+are described above as "must be zero" are to be checked. If any such field
+contains a non-zero value, the entire message is to be ignored.</li>
+
+<li>
+>1 <a href="diction.htm#datagram">datagram </a>s whose version number are
+greater than one are to be processed as described in the rest of this specification.
+All fields that are described above as "must be zero" are to be ignored.
+Future versions of the protocol may put data into these fields. Version
+1 implementations are to ignore this extra data and process only the fields
+specified in this document.</li>
+</ul>
+After checking the version number and doing any other preliminary checks,
+processing will depend upon the value in the <a href="techni.htm#commands">command
+field</a>.
+<br>&nbsp;
+<br>&nbsp;
+<p><a NAME="output"></a>
+<h2>
+<img SRC="greenbal.gif" height=14 width=14> Output processing</h2>
+Let describe the processing used to create <a href="request.htm#respond" target="_blank">response
+</a>messages
+that contain all or part of the routing table. This processing may be triggered
+in any of the following ways:
+<br>- by <a href="#input">input processing</a> when a request is seen.
+In this case, the resulting message is sent to only one destination.
+<br>- by the regular routing update. Every 30 seconds, a response containing
+the whole routing table is sent to every neighboring <a href="diction.htm#gate">gateway
+</a>.
+<br>- by triggered updates. Whenever the metric for a route is changed,
+an update is triggered. (The update may be delayed.)
+<p>Triggered updates require special handling for two reasons. First, experience
+shows that triggered updates can cause excessive loads on networks with
+limited capacity or with many <a href="diction.htm#gate">gateway </a>s
+on them. Thus the protocol requires that implementors include provisions
+to limit the frequency of triggered updates. After a triggered update is
+sent, a timer should be set for a random time between 1 and 5 seconds.
+If other changes that would trigger updates occur before the timer expires,
+a single update is triggered when the timer expires, and the timer is then
+set to another random value between 1 and 5 seconds. Triggered updates
+may be suppressed if a regular update is due by the time the triggered
+update would be sent.
+<p>Second, triggered updates do not need to include the entire routing
+table. In principle, only those routes that have changed need to be included.
+Thus messages generated as part of a triggered update must include at least
+those routes that have their route change flag set. They may include additional
+routes, or all routes, at the discretion of the implementor; however, when
+full routing updates require multiple <a href="diction.htm#packet">packet
+</a>s,
+sending all routes is strongly discouraged. When a triggered update is
+processed, messages should be generated for every directly-connected network.
+<a href="algorith.htm#Split_Horizon">Split
+horizon </a>processing is done when generating triggered updates as well
+as normal updates.
+<p>If, after split horizon processing, a changed route will appear identical
+on a network as it did previously, the route need not be sent; if, as a
+result, no routes need be sent, the update may be omitted on that network.
+(If a route had only a metric change, or uses a new <a href="diction.htm#gate">gateway
+</a>that
+is on the same network as the old <a href="diction.htm#gate">gateway
+</a>,
+the route will be sent to the network of the old <a href="diction.htm#gate">gateway
+</a>with
+a metric of infinity both before and after the change.) Once all of the
+triggered updates have been generated, the route change flags should be
+cleared.
+<p>If input processing is allowed while output is being generated, appropriate
+interlocking must be done. The route change flags should not be changed
+as a result of processing input while a triggered update message is being
+generated.
+<p>The only difference between a triggered update and other update messages
+is the possible omission of routes that have not changed. The rest of the
+mechanisms about to be described must all apply to triggered updates.
+<p>Here is how a response <a href="diction.htm#datagram">datagram </a>is
+generated for a particular directly-connected network:
+<p>The IP source address must be the sending <a href="diction.htm#host">host
+</a>'s
+address on that network. This is important because the source address is
+put into routing tables in other <a href="diction.htm#host">host </a>s.
+If an incorrect source address is used, other <a href="diction.htm#host">host
+</a>s
+may be unable to route <a href="diction.htm#datagram">datagram </a>s. Sometimes
+<a href="diction.htm#gate">gateway
+</a>s
+are set up with multiple IP addresses on a single physical interface. Normally,
+this means that several logical IP networks are being carried over one
+physical medium. In such cases, a separate update message must be sent
+for each address, with that address as the IP source address.
+<p>Set the version number to the current version of RIP.
+<br>Set the command to response. Set the bytes labeled "must be zero" to
+zero. Now start filling in entries. To fill in the entries, go down all
+the routes in the internal routing table. Recall that the maximum <a href="diction.htm#datagram">datagram
+</a>size
+is 512 bytes. When there is no more space in the <a href="diction.htm#datagram">datagram
+</a>,
+send the current message and start a new one. If a triggered update is
+being generated, only entries whose route change flags are set need be
+included.
+<p>Routes to subnets will be meaningless outside the network, and must
+be omitted if the destination is not on the same subnetted network. they
+should be replaced with a single route to the network of which the subnets
+are a part. Similarly, routes to <a href="diction.htm#host">host </a>s
+must be eliminated if they are subsumed by a network route.
+<p>If the route passes these tests, then the destination and metric are
+put into the entry in the output <a href="diction.htm#datagram">datagram
+</a>.
+Routes must be included in the <a href="diction.htm#datagram">datagram
+</a>even
+if their metrics are infinite. If the <a href="diction.htm#gate">gateway
+</a>for
+the route is on the network for which the <a href="diction.htm#datagram">datagram
+</a>is
+being prepared, the metric in the entry is set to 16, or the entire entry
+is omitted. Omitting the entry is simple split horizon. Including an entry
+with metric 16 is split horizon with poisoned reverse.
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+</body>
+</html>

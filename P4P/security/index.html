@@ -1,0 +1,26 @@
+<!--#INCLUDE VIRTUAL="shared/header.html" -->
+
+Overlay networks typically do not provide admission control for
+membership.  This allows unauthorized members to both produce and
+consume services on the overlay.  We can secure communication in two
+ways: overlay access control and data encryption.  
+
+<p />
+
+<font  class="sectiontitle"><a href="access">Overlay Access Control</a></font><br />
+
+We develop an authorization technique that allows existing overlay
+nodes to determine if their neighbors are legitimate and kick them out
+if they are not.
+
+<p />
+
+<font  class="sectiontitle"><a href="encryption">Data Encryption</a></font><br />
+
+If we cannot control access to the overlay, we encrypt the data with a
+key known only to the legitimate members of the overlay.  While rogue
+nodes can easily join the overlay and receive data, they cannot
+decrypt the data.
+
+</body>
+</html>

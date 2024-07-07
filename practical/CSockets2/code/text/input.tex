@@ -1,0 +1,373 @@
+% Shortcut for \noindent
+%\newcommand{\noind}{\noindent}
+
+% Macro to introduce invisible (play) character as formatting trick
+%\newcommand{\pc}{\mbox{}}
+
+% Macro to define appearance of program source code file name in text
+\newcommand{\codename}[1]{\texttt{#1}}
+
+% Macro to define appearance of a term to define
+\newcommand{\defn}[1]{\index{#1}\emph{#1}}
+
+% Macro to input code from a source file and label
+%
+% 1 - Label of code segment
+% 2 - source file
+%
+% Example:  \jcode{Bob}{bob.c}
+%
+% Bob
+% ____________________________________________________________
+% #include <stdio.h>...
+% \newcommand{\jcode}[2]{\label{#2}\vspace*{0.05in}\hspace*{\fill}{\bf \codename{#1}} \\
+% \hrule \small{\listinginput{0}{#2}} \hrulefill\\ \hspace*{\fill}{\bf \codename{#1}}}
+% I hope none of our programs are over 10000 lines long!
+% 1 - Last line number from file (optional) - SPECIFY IN [] when using
+% 2 - Title of code segment
+% 3 - source file
+% 4 - First line number to display
+% 5 - First line number from file (start from 1)
+%
+% Example:  \jcode{Bob}{bob.c}{0}{1}
+%           \jcode[20]{Bob}{bob.c}{0}{1}
+\renewcommand{\theFancyVerbLine}{\arabic{FancyVerbLine}}
+% 1 - Title of code segment
+% 2 - source file
+\newcommand{\jcodestartdivide}[2]{\index{#2}\label{#2}\vspace*{0.05in}\hspace*{\fill}\textbf{\codename{#1}} \\ \hrule}
+% 1 - Title of code segment
+\newcommand{\jcodestopdivide}[1]{\hrulefill \\ \hspace*{\fill}\textbf{\codename{#1}}}
+% 1 - Last line number from file (optional) - SPECIFY IN [] when using
+% 2 - source file
+% 3 - First line number to display
+% 4 - First line number from file (start from 1)
+%\newcommand{\jcodenoem}[4][10000]{\VerbatimInput[numbers=left,fontfamily=courier,fontsize=\small,firstnumber=#3,
+\newcommand{\jcodenoem}[4][10000]{\VerbatimInput[numbers=left,fontfamily=courier,fontsize=\normalsize,firstnumber=#3,
+firstline=#4,lastline=#1,xleftmargin=0.23in,numbersep=5pt]{#2}}
+% 1 - Last line number from file (optional) - SPECIFY IN [] when using
+% 2 - source file
+% 3 - First line number to display
+% 4 - First line number from file (start from 1)
+\newcommand{\jcodeem}[4][10000]{\VerbatimInput[numbers=left,fontfamily=courier,fontsize=\normalsize,firstnumber=#3,
+firstline=#4,lastline=#1,xleftmargin=0.23in,numbersep=5pt,fontseries=b]{#2}}
+\newcommand{\jcode}[5][10000]{\jcodestartdivide{#2}{#3} \jcodenoem[#1]{#3}{#4}{#5} \jcodestopdivide{#2}}
+
+% Use this to connect previous code snippets
+%
+% Example:  This prints the start divider, the first 5 lines normally, the remaining lines emphasized (bold)
+%           and the stop divider
+% \jcodestartdivide{Bob}{bob.c}
+% \jcodenoem[5]{bob.c}{0}{1}
+% \jcodeconnect
+% \jcodeem{bob.c}{0}{6}
+% \jcodestopdivide{Bob}
+\newcommand{\jcodeconnect}{\vspace*{-0.27in}}
+
+\newcommand{\jtitle}{JUNK}
+\newcommand{\jfile}{JUNK}
+
+% Macro to create pamphelet part.  Pamphlet consist of (in decreasing 
+% order of importance): Parts, chapters (\pampchap), sections
+% (\pampsect), and subsection (\pampsubsect, \apihdr)
+%
+% 1 - Part name (e.g. Tutorial)
+%
+% Example:  \pamppart{Tutorial}
+%
+% <new page>
+% ...
+%                    Part I:
+% ...
+%                   Tutorial
+% ...
+% \newcounter{partcnt}
+% \renewcommand{\thepartcnt}{\Roman{partcnt}}
+% \newcommand{\pamppart}[1]{
+% \stepcounter{partcnt}
+% \newpage % create new page
+% \thispagestyle{empty}  % No page number
+
+% \vspace*{\fill}
+
+% \begin{center}  % Include pamphlet part major name on one line 
+%                 % and minor name on next line
+% {\bf\Huge Part \thepartcnt\\ \vskip .5in #1}
+% \addtocontents{toc}{\vspace*{0.1in}\noindent{\LARGE\bf Part \Roman{partcnt}\hfill #1}\vspace*{0.1in}}
+% \end{center}
+% \vfill  % Fill remainder of page
+
+% \newpage  % create new page
+% }
+
+\newcommand{\pamppart}[1]{\part{#1}}
+
+% Macro to create chapter header (e.g. Introduction)
+%
+% 1 - Chapter name
+%
+% Example: \pampchap{Introduction}
+%
+% 1 Introduction (right justified)
+%
+% \newcounter{chapcnt} %[partcnt] Add back in to get chapcnt to restart with each part
+% \renewcommand{\thechapcnt}{\arabic{chapcnt}}
+% \newcommand{\pampchap}[1]{\stepcounter{chapcnt}\label{chap:#1}\vspace*{0.1in}\noindent{\Large\bf Chapter~\thechapcnt:  #1}\\[0.1in]\addcontentsline{toc}{section}{\thechapcnt~#1}}
+
+%\newcommand{\pampchap}[1]{\newpage%
+%\stepcounter{chapter}\vspace*{0.1in}\noindent{\LARGE\bf Chapter~\thechapter:  #1}
+%\\[0.1in]\addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}}
+
+\newcommand{\pampchap}[1]{\chapter{#1}}
+
+% Macro to create section header (e.g. What is a socket)
+%
+% 1 - Section name
+%
+% Example: \pampsect{What is a socket}
+%
+% 1.1 What is a socket
+% ___________________________________________________________
+%
+% \newcounter{sectcnt}[chapcnt]
+% \renewcommand{\thesectcnt}{\arabic{chapcnt}.\arabic{sectcnt}}
+% \newcommand{\pampsect}[1]{\stepcounter{sectcnt}\vspace*{0.1in}\noindent{\bf \thesectcnt~#1} \hrulefill\addcontentsline{toc}{subsection}{\thesectcnt~#1}}
+
+\newcommand{\pampsect}[1]{\section{#1}}
+
+% Macro to create subsection header (e.g. What is a socket)
+%
+% 1 - Subsection name
+%
+% Example: \pampsubsect{What is a socket}
+%
+% 1.1.1 What is a socket
+%
+% \newcounter{subsectcnt}[sectcnt]
+% \renewcommand{\thesubsectcnt}{\arabic{chapcnt}.\arabic{sectcnt}.\arabic{subsectcnt}}
+% \newcommand{\pampsubsect}[1]{\stepcounter{subsectcnt}\vspace*{0.1in}\noindent{\bf \thesubsectcnt~#1}\addcontentsline{toc}{subsection}{\thesubsectcnt~#1}}
+
+\newcommand{\pampsubsect}[1]{\subsection{#1}}
+
+% Macro to create header for an API chapter (e.g. Socket Creation)
+%
+% 1 - API chapter name
+%
+% Example: \apichap{Socket Creation}
+%
+%\newcommand{\apichap}[1]{\pagebreak[4]\label{api:#1}\vspace*{0.1in}%
+\newcommand{\apichap}[1]{\vspace*{0.1in}%
+\noindent{\Large\bf #1}\\[0.1in]\addcontentsline{toc}{chapter}{#1}}
+
+% Macro to create header for API (e.g. socket())
+%
+% 1 - API function name
+% 2 - Additional phrase
+%
+% Example: \apihdr{listen()}{- Stream/TCP socket only}
+%
+% o listen() - Stream/TCP socket only
+% ----------
+%
+\newcommand{\apihdr}[2]{\noindent $\circ$ \texttt{\large \underline{#1}#2}%
+\addcontentsline{toc}{section}{#1}}
+
+% Macros for appearance of functions (\fnc), function types (\type), and 
+% function parameters (\var)
+\newcommand{\var}[1]{\textsl{#1}}
+\newcommand{\varsys}[1]{\var{#1}\index{#1}}
+\newcommand{\const}[1]{\textsc{#1}}
+\newcommand{\constsys}[1]{\const{#1}\index{#1}}
+\newcommand{\type}[1]{\textbf{#1}}
+\newcommand{\typesys}[1]{\type{#1}\index{#1}}
+\newcommand{\fcn}[1]{\texttt{#1}}
+\newcommand{\fcnsys}[1]{\fcn{#1}\index{#1}}
+\newcommand{\structmem}[1]{\texttt{#1}}
+\newcommand{\param}[1]{\var{#1}}
+\newcommand{\file}[1]{\texttt{#1}}
+\newcommand{\fcnref}[1]{\texttt{#1}}
+\newcommand{\fcnrefsys}[1]{\fcnref{#1}\index{#1}}
+\newcommand{\returncode}[1]{$#1$}
+\newcommand{\exec}[1]{\texttt{#1}}
+\newcommand{\errnum}[1]{\constsys{#1}}
+\newcommand{\errno}{\texttt{errno}}
+\newcommand{\codesegref}[1]{\texttt{#1}}
+
+% Macro for code file reference
+\newcommand{\coderef}[1]{\file{#1} (pg.~\pageref{#1})}
+
+% Macro for defining a parameter to an API function
+\newcommand{\paramdesc}[2]{\var{#1} & --- & #2 \\}
+
+% Macro for adding an include file
+\newcommand{\newincl}[1]{\#include $<$#1$>$}
+
+% Macro to place box around API entries to avoid page breaks
+\newcommand{\apibox}[1]{\parbox{\textwidth}{#1}}
+
+% Macro to define an API function
+% 
+% Parameters:
+% 1 - function name (e.g. socket())
+% 2 - option phrase (e.g. Stream/TCP sockets only)
+% 3 - function description (e.g. creates a socket...)
+% 4 - include files
+% 5 - function declaration (e.g. socket(int ...))
+% 6 - parameter table (e.g. \begin{tabular}...)
+% 7 - return information (e.g. -1 for failure...)
+%
+\newcommand{\apifunc}[7]{
+\index{#1}
+\apihdr{#1}{#2}\\[0.1in]
+%\vspace*{0.1in}
+#3
+\begin{quote}
+
+#4	
+
+#5
+
+\begin{quote}
+#6
+\end{quote}
+#7
+\end{quote}
+}
+
+% No parameter version of \apifunc
+\newcommand{\apifuncnp}[6]{
+\index{#1}
+\apihdr{#1}{#2}\\[0.1in]
+%\vspace*{0.1in}
+#3  #6
+\begin{quote}
+
+#4	
+
+\fcn{#5}
+\end{quote}
+}
+
+% Macro for code references in api specifications
+%
+% 1 - Name of program
+% 2 - Program page reference
+% 3 - Lines
+\newcommand{\seecode}[3]{\noindent See \codename{#1} pg.~\pageref{#2}/ln. #3 \\}
+
+% Top-level code description environment
+\newenvironment{topcode}{\begin{enumerate}}{\end{enumerate}}
+
+% Macro for top level code description
+%
+% Parameters:
+% 1 - Tag
+% 2 - Line numbers
+%
+\newcommand{\tlcitem}[2]{\item \textbf{#1:} line {#2}}
+\newcommand{\tlcitems}[2]{\item \textbf{#1:} lines {#2}}
+
+% Bottom-level code description environment
+\newenvironment{bottomcode}{\begin{itemize}}{\end{itemize}}
+
+% Macro for top level code description
+%
+% Parameters:
+% 1 - Tag
+% 2 - Line numbers
+%
+\newcommand{\blcitem}[2]{\item \textbf{#1:} line {#2}}%
+\newcommand{\blcitems}[2]{\item \textbf{#1:} lines {#2}}%
+%
+% Constant for default client IP/name and server IP/name
+\newcommand{\clientIPiv}{169.1.1.2}
+\newcommand{\clientName}{tractor.farm.com}
+\newcommand{\serverIPiv}{169.1.1.1}
+\newcommand{\serverName}{base.farm.com}
+\newcommand{\clientIPvi}{FE80::2}
+\newcommand{\serverIPvi}{FE80::1}
+\newcommand{\mkpweb}{\textit{www.mkp.com}}
+
+% Termination character
+\newcommand{\termchar}{0}
+
+% Names for queues. XXXX  CHANGE THESE -- KLC
+\newcommand{\sque}{\textit{SendQ}}
+\newcommand{\rque}{\textit{RecvQ}}
+\newcommand{\dque}{\textit{Delivered}}
+\newcommand{\sqsize}{\textit{SQS}}
+\newcommand{\rqsize}{\textit{RQS}}
+
+% Environment for including shell execution
+%
+% Parameters:
+% 1 - C
+% 2 - Line numbers
+%
+\newcommand{\prompt}{\% }
+\newcommand{\typed}[1]{\textbf{#1}}
+\newcommand{\response}[1]{#1}
+\newenvironment{shell}
+{\begin{quote} \ttfamily \vskip -.1in}
+{\end{quote}\vskip -.1in}
+
+% EPS figure insertion
+%
+% Parameters:
+% 1 - Filename
+% 2 - Options (e.g. ,width=11in,height=12in)
+%
+% Example: \jfig{bob.eps}{}
+%
+\newcommand{\jfig}[2]{\centerline{\psfig{file=#1#2}}} %XXX don't use this!
+\newcommand{\jfigs}[2]{\begin{center}\includegraphics[width={#2}]{#1}%
+\end{center}}
+
+% Inline code insertion
+\DefineVerbatimEnvironment%
+  {inlinecode}{Verbatim}
+  {fontfamily=courier,fontsize=\normalsize,xleftmargin=.25in}
+
+% Inline function definitions
+\newenvironment{inlinefcn}
+{\vspace*{0.2in}\noindent\rule{\textwidth}{1pt}\\[0.1in]}
+{\\[0.1in]\noindent\rule{\textwidth}{1pt}\vspace*{0.1in}}
+
+% Ken macros
+\newcommand{\Fig}[1]{Figure~\ref{#1}}
+\newcommand{\Sect}[1]{Section~\ref{#1}}
+
+% List redefinitions
+\newcounter{enumct}
+\renewenvironment{enumerate}{\begin{list}%
+{\arabic{enumct}. }%
+{\usecounter{enumct}
+\setlength{\parsep}{0.15ex plus0.1ex minus0.1ex}
+\setlength{\topsep}{0.15ex plus0.1ex minus0.1ex}
+\setlength{\partopsep}{0.15ex plus0.1ex minus0.1ex}
+%\setlength{\leftmargin}{0in}
+\setlength{\itemsep}{0.15ex plus0.1ex minus0.1ex}}}
+{\end{list}}
+
+\renewenvironment{itemize}{\begin{list}%
+{$\bullet$}%
+{\setlength{\parsep}{0.15ex plus0.1ex minus0.1ex}
+\setlength{\topsep}{0.15ex plus0.1ex minus0.1ex}
+\setlength{\partopsep}{0.15ex plus0.1ex minus0.1ex}
+%\setlength{\leftmargin}{0in}
+\setlength{\itemsep}{0.15ex plus0.1ex minus0.1ex}}}
+{\end{list}}
+
+\newcommand{\copyrightnotice}{%
+\begin{center}
+\copyright 2000, Morgan Kaufmann Publishers.  Reproduced with permission from 
+\emph{The Pocket Socket Guide in C}
+\end{center}}
+
+% Thought question section -- XXXX DEPRECATED
+\newenvironment{tquestlist}{\section*{Thought Questions}\begin{enumerate}}{\end{enumerate}}
+% Exercises section
+\newenvironment{exercises}{\section*{Exercises}\begin{enumerate}}{\end{enumerate}}
+% Marginal mark for points to be emphasized
+\newsavebox{\NB}
+\newcommand{\callout}[1]{\textbf{#1}\marginpar{\usebox{\NB}}}
+\sbox{\NB}{\Huge !*!}

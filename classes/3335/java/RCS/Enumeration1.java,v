@@ -1,0 +1,48 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2013.09.09.17.58.08;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@public class Enumeration1 {
+  public static void main(String[] args) {
+    int bobShirt = ShirtSize.SMALL;
+    int janeShirt = ShirtSize.LARGE;
+    int earlShirt = ShirtSize.LARGE;
+
+    System.out.println(bobShirt < janeShirt);
+    System.out.println(bobShirt == janeShirt);
+    System.out.println(janeShirt == earlShirt);
+
+    janeShirt = 18;  // No type safety
+
+    f(18);           // Again, no type safety
+  }
+
+  public static void f(int x) {
+  }
+}
+
+interface ShirtSize {
+    int SMALL = 0;
+    int MEDIUM = 1;
+    int LARGE = 2;
+    int XLARGE = 3;
+}
+@

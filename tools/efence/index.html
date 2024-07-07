@@ -1,0 +1,41 @@
+<html>
+<head>
+   <title>Electric Fence</title>
+</head>
+<body>
+
+<center><b><font size=+3>Electric Fence</font></b></center>
+
+<p>Electric Fence helps you detect two common programming bugs:
+software that overruns the boundaries of a malloc() memory allocation,
+and software that touches a memory allocation that has been released
+by free(). Unlike other malloc() debuggers, Electric Fence will detect
+read accesses as well as writes, and it will pinpoint the exact
+instruction that causes an error.  It is commonly used with a debugger
+(e.g., <A HREF="../gdb">GDB</A>) to detect where such memory
+violations occur.
+
+<UL>
+<LI> Compile bob.c as gcc -g bob.c -lefence
+<LI> <A HREF="example.html">Example</A>
+<LI> <A HREF="man.html">Manual page</A>
+</UL>
+
+The Electric Fence manual page suggests the following strategy for
+testing:
+<OL>
+<LI> Link with libefence.a as explained above.
+<LI> Run your program in a debugger and fix any overruns or accesses to free memory.
+<LI> Quit the debugger.
+<LI> Set EF_PROTECT_BELOW = 1 in the shell  environment.
+<LI> Repeat  step  2,  this  time repairing underruns if they occur.
+<LI> Quit the debugger.
+<LI> Read the restrictions in the section on WORD-ALIGNMENT AND
+OVERRUN DETECTION.  See if you can set EF_ALIGNMENT to 0 and repeat
+step 2. Sometimes this will  be  too  much work, or there will be
+problems with library routines for which you don't have the source,
+that will prevent you from doing this.
+</OL>
+
+</body>
+</html>

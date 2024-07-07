@@ -1,0 +1,50 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Peter Lakov">
+   <meta name="GENERATOR" content="Mozilla/4.61 [en] (WinNT; I) [Netscape]">
+   <title>Telnet Session Between Moe and Curly without Secure Shell</title>
+</head>
+<body>
+Here is how we
+tested.&nbsp; The following list of actions was performed exactly in the
+order in which the actions are numbered:
+<ol>
+<li>
+First, we created a dummy user with user name <tt>lakov</tt> and password
+<tt>01234.</tt>
+on Curly.</li>
+
+<li>
+We run the command <tt>tcpdump -x -s 1000 | tee captured.telnet</tt> on
+Larry.&nbsp; This command captures in hexadecimal mode the first 1000 bytes
+of an IP packet, or the whole IP packet it if is smaller than 1000 bytes,
+and prints the captured information both on the screen and into the file
+<tt>captured.telnet</tt>
+(the effect of the <tt>tee</tt> command.)</li>
+
+<li>
+We run the command <tt>telnet curly</tt> on <tt>Moe</tt>.&nbsp; When prompted
+for a login name, we entered <tt>lakov</tt> and then when prompted for
+a password, we entered <tt>01234.</tt>&nbsp;&nbsp; You should keep in mind,
+that the <tt>telnet</tt> program works in the following way (this is a
+quick and dirty description): it establishes a TCP connection to the <i>telnet
+server</i>, and when the user presses a button, the code for that button
+is sent to the server, and a return command is sent back, which roughly
+says "now you can print that letter on the screen."&nbsp; So, even if we
+are able to capture the keystrokes, you should expect to see the user name
+and the password in separate packets, one symbol per packet, rather than
+together in one packet.</li>
+
+<br>Finally, we logged on Curly.&nbsp; Unfortunately, the file <tt>captured.telnet</tt>
+on Larry now contained the user name and the password.&nbsp; For brevity,
+we decided to include only that part of <tt>captured.telnet</tt> which
+shows how we can extract password, but we could have also included the
+dump of the user name and any commands that the user typed after he/she
+had gained access to the machine.&nbsp; Here is that specific part of captured.telnet
+- first in its <a href="captured_telnet_raw_version.html">raw version</a>,
+and then <a href="captured_telnet_annotated.html">annotated</a>.</ol>
+
+</body>
+</html>

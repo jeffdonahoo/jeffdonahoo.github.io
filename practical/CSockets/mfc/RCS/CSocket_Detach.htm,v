@@ -1,0 +1,81 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2001.11.11.23.46.12;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@
+
+<head>
+</head>
+
+<h1>CSocket::Attach</h1>
+<p>This method attaches an <i>hSocket</i> handle to a <b>CSocket</b> object. The
+<b>SOCKET</b> handle is stored in the <b>m_hSocket</b> data member of the
+object.</p>
+<pre class="syntax"><b>BOOL Attach( 
+SOCKET </b><i>hSocket</i> <b>);</b><i> </i></pre>
+<h4>Parameters</h4>
+<dl>
+  <dt><i>hSocket</i>
+  <dd>Contains a handle to a socket.</dd>
+</dl>
+<h4>Return Value</h4>
+<p>Nonzero if the function is successful.</p>
+<h4>Example</h4>
+<pre>// ...
+class CSockThread : public CWinThread
+{
+// ... Other function and member declarations
+protected:
+  CSocket m_sConnected;
+};
+
+SOCKET hConnected;
+
+BOOL CSockThread::InitInstance()
+{
+&nbsp;&nbsp;// Attach the socket object to the socket handle
+&nbsp;&nbsp;// in the context of this thread.
+&nbsp;&nbsp;m_sConnected.Attach(hConnected);
+
+&nbsp;&nbsp;return TRUE;
+}
+
+// This listening socket has been constructed
+// in the primary thread.
+void CListeningSocket::OnAccept(int nErrorCode)
+{
+&nbsp;&nbsp;// This CSocket object is used just temporarily
+&nbsp;&nbsp;// to accept the incoming connection.
+&nbsp;&nbsp;CSocket sConnected;
+&nbsp;&nbsp;Accept(sConnected);
+
+&nbsp;&nbsp;// Detach the newly accepted socket and save
+&nbsp;&nbsp;// the SOCKET handle.
+&nbsp;&nbsp;hConnected = sConnected.Detach();
+
+&nbsp;&nbsp;// After detaching it, it should no longer be
+&nbsp;&nbsp;// used in the context of this thread.
+
+&nbsp;&nbsp;// Start the other thread.
+&nbsp;&nbsp;AfxBeginThread(RUNTIME_CLASS(CSockThread));
+}
+</pre>
+@

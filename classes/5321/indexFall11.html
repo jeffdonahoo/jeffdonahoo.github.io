@@ -1,0 +1,459 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>5321 - Advanced Data Communication</title>
+</head>
+<body link="#0000ff" vlink="#800080">
+
+<center>
+<b><font size=4>Advanced Data Communication<br />
+</font>CS5321<br />
+</b>
+</center>
+
+<ul>
+<li>Reading Assignments</li>
+<table border="1">
+<tr><th>Due Date</th><th>Assignment</th></tr>
+<tr><td>13 Jan.</td><td>Bram Cohen. <a
+href="papers/C03.pdf">Incentives Build Robustness in BitTorrent</a>.
+P2P Economics Workshop. 2003.
+<tr><td>18<td>Sylvia Ratnasamy, Paul Francis, Mark Handley, Richard
+Karp, and Scott Shenker.  <a href="papers/CAN.pdf">A Scalable
+Content-Addressable Network</A>. SIGCOMM, 2001.<br>S:17</td></tr>
+<tr><td>20</td><td>S:18</td></tr>
+<tr><td>25</td><td>Ian Clarke, Oskar Sandberg, Brandon Wiley, and
+Theodore W. Hong. <a href="papers/icsi2.pdf">Freenet: A Distributed Anonymous
+Information Storage and Retrieval System</a>. ICSI Workshop on Design
+Issues in Anonymity and Unobservability, July 2000.<br>S:19
+<tr><td>27</td><td>
+Van Jacobson and Michael J. Karels. <a HREF="papers/JK88.pdf">Congestion Avoidance
+and Control</a>. SIGCOMM, 1988.</td></tr>
+<tr><td>1 Feb.</td><td>S:20-21</td></tr>
+<tr><td>3</td><td>Ion Stoica, Daniel Adkins, Shelley Zhuang, Scott
+Shenker and Sonesh Surana. <a href="papers/SAZ+02.pdf">Internet
+Indirection Infrastructure</a>. SIGCOMM, 2002.</td></tr>
+<tr><td>8</td><td><a href="papers/pastryoverview.pdf">Pastry Overview</a><br />
+A. Rowstron, A-M. Kermarrec, M. Castro and P. Druschel. <a
+href="papers/RKC+01.pdf">SCRIBE: The design of a large-scale event
+notification infrastructure</a>. NGC2001, UCL, London, November
+2001.<br/>S:22<br/>
+<font size="-2">For the SCRIBE paper, you only need to read the
+abstract, introduction, and Section 3 through 3.1.</font>
+<tr><td>10</td><td>Kevin Fall. <a href="papers/F03.pdf">A Delay-Tolerant Network
+Architecture for Challenged Internets</a>. SIGCOMM, 2003.</td></tr>
+<tr><td>15</td><td>Floyd, S., and Jacobson, V. <a
+href="papers/FJ93.pdf">Random Early
+Detection Gateways for Congestion Avoidance</a>. IEEE/ACM Transactions
+on Networking, volume 1, number 4, August 1993, p. 397-413.<br/>S:23</td></tr>
+<tr><td>17</td><td>S:24</td></tr>
+<tr><td>22</td><td>Dina Katabi, Mark Handley, and Charlie Rohrs. <a
+href="papers/KHR02.pdf">Congestion Control for High Bandwidth-Delay
+Product Networks</a>. SIGCOMM, 2002.</td></tr>
+<tr><td>24<td>J.H. Saltzer, D.P. Reed and D.D. Clark, <a
+href="papers/SRC84.pdf">End-to-end 
+Arguments in System Design</A>. ACM Transactions on Computer
+Systems, Nov 1984, p. 277-288.</td><br/>S:1</tr>
+<tr><td>1 Mar</td><td>Jeffrey C. Mogul. <a href="papers/M95.pdf">The Case for
+Persistent-Connection HTTP</a>. SIGCOMM, 1995, pp. 299-313, Cambridge, MA, August 1995.<br/>S:2, Sections 1-3,7-9</td></tr>
+<tr><td>3<td> <a
+href="papers/IPMI95.pdf">How
+IP Multicast Works</A>. IP Multicast Initiaitive (IPMI) White Paper.</td>
+<tr><td>15</td><td>M. Ammar, K. Almeroth, R. Clark, and Z. Fei. <a
+href="papers/AAC+98.ps">Multicast Delivery of
+Web Pages OR How to Make Web Servers Pushy</a>. Workshop on Internet
+Server Performance (WISP '98), Madison, Wisconsin, USA, June.<br/>S:3</td></tr>
+<tr><td>17</td><td>Hugh W. Holbrook and Sandeep K. Singkal and David R. Cheriton. <a
+href="papers/HSC95.pdf">Log-based
+Receiver-Reliable Multicast</a>. SIGCOMM, 1995.</td></tr>
+<tr><td>22</td><td>S. McCanne, V. Jacobson, and M. Vetterli. <a
+href="papers/MVJ96.pdf">Receiver-driven
+Layered Multicast</a>. SIGCOMM, 1996.<br/>S:6</td></tr>
+<tr><td>24</td><td>Chung Kei Wong, Mohamed Gouda, and Simon S. Lam. <a
+href="papers/KeyGraphs.pdf">Secure
+Group Communications Using Key Graphs</a>. SIGCOMM, volume 28, number
+4, October 1998.</td></tr>
+<tr><td>29<td>S:7-8</td></tr>
+<tr><td>5 Apr.</td><td>TCP/IP Exam (S:1,2,3,6, 17-24)
+<tr><td>7<td>Yang-hua Chu and Sanjay G. Rao and Hui Zhang. <a
+href="papers/CRZ00.pdf">A Case for End System Multicast</a>.
+Proceedings of ACM Sigmetrics 2000.</td></tr>
+<tr><td>12</td><td>Paper Exam (up to and including 24 Mar. papers)<br/>Moxie Marlinspike. <a
+href="http://www.thoughtcrime.org/papers/null-prefix-attacks.pdf">Null
+Prefix Attacks against SSL Certificates</a>. DEFCON, 2009.<br> 
+Moxie Marlinspike.  <a href="http://www.thoughtcrime.org/papers/ocsp-attack.pdf">
+Prefix Attacks against SSL Certificates</a>. DEFCON, 2009.<br/>
+Watch <a href="http://www.mefeedia.com/watch/26711228">presentation</a> in class.
+</td></tr>
+<tr><td>14<td>Diadeloso</td></tr>
+<tr><td>19</td><td>M. Castro, P. Druschel, A-M. Kermarrec, A. Nandi, A. Rowstron,
+and A. Singh. <a href="papers/CDK+03.pdf">SplitStream: High-bandwidth
+Content Distribution in a Cooperative Environment</a>. IPTPS'03,
+Berkeley, CA, February, 2003.<br/>S:4,9</td></tr>
+<tr><td>21</td><td>Jian Liang, Rakesh Kumar, Yongjian Xi and Keith W. Ross. <a
+href="papers/LKX+05.pdf">Pollution in P2P File Sharing Systems</a>.
+INFOCOM, 2005.<br />S:10</td></tr>
+<tr><td>26</td><td>Vivek Vishnumurthy, Sangeeth
+Chandrakumar and Emin Gun Sirer.  <a href="papers/VCS03.pdf">KARMA: A
+Secure Economic Framework for P2P Resource Sharing</a>. Workshop on
+the Economics of Peer-to-Peer Systems 2003.<br/>S:11-12</td></tr>
+<tr><td>28</td><td>Christos Gkantsidis and Pablo Rodriguez Rodriguez. <a
+href="papers/GR05.pdf">Network Coding for Large Scale Content
+Distribution</a>. INFOCOM, 2005.<br/>S:14, 25.1-25.2</td></tr>
+<!--
+<tr><td>Nov. 23</td><td>Ronald L. Rivest, <a href="papers/R98b.txt">Chaffing and
+Winnowing: Confidentiality without Encryption</a>. March 1998.<br>S:14</td></tr>
+<tr><td>Nov. 25</td><td>Thanksgiving</td></tr>
+<tr><td>Nov. 27</td><td>Thanksgiving</td></tr>
+<tr><td>Nov. 30</td><td>[Yao]<a
+href="http://computer.howstuffworks.com/vpn.htm/printable">VPN</a> and <a
+href="http://www.tcpipguide.com/free/t_IPSecurityIPSecProtocols.htm">IPSec</a></td></tr>
+<tr><td>Dec. 2</td><td>[Radu]<a
+href="http://www.tcpipguide.com/free/t_InternetProtocolVersion6IPv6IPNextGenerationIPng.htm">IPv6</a>
+(Only first two sections:  IPv6 Overview, Changes and Transition/IPv6
+Addressing)<br><a href="http://www.tcpipguide.com/free/t_TCPIPDynamicHostConfigurationProtocolDHCP.htm">DHCP</a></td></tr>
+<tr><td>Dec. 4</td><td>[Yao]<a href="http://www.tcpipguide.com/free/t_IPNetworkAddressTranslationNATProtocol.htm">NAT</a><br>S:25</td></tr>
+<tr><td>Dec. 7</td><td>[Radu]<a href="http://www.tcpipguide.com/free/t_IPSubnetAddressingSubnettingConcepts.htm">Subnetting</a> and <a href="http://www.tcpipguide.com/free/t_IPClasslessAddressingClasslessInterDomainRoutingCI.htm">Supernetting</a><br>S:28</td></tr>
+<tr><td>11/17<td>Rob Sherwood and Ryan Braud and Bobby Bhattacharjee. <a
+href="papers/SBB04.pdf">Slurpie: A Cooperative Bulk Data Transfer
+Protocol</a>. INFOCOM, 2004.
+<tr><td>11/19<td>Haifeng Yu and Michael Kaminsky and Phillip B. Gibbons and Abraham Flaxman.
+<A href="papers/YKG+06.pdf">SybilGuard: Defending against Sybil Attacks via Social Networks</a>. SIGCOMM 2006.<br>S:14
+<tr><td>11/21<td>S:25.1-25.2, 27
+<tr><td>10/26<td>A. Keromytis, V. Misra  and D. Rubenstein <a
+href="papers/sos.pdf">SOS: Secure Overlay Services</A>. SIGCOMM,
+2002.<br>S:12
+<tr><td>10/29<td>Christos Gkantsidis and Pablo Rodriguez Rodriguez. <a
+href="papers/GR06.pdf">Cooperative Security for Network Coding File Distribution</A>. INFOCOMM,
+2006.<br>S:13
+<tr><td>10/31<td>Midterm Exam (material through 10/5)
+<tr><td>11/12<td>[Anthony]<a href="http://www.tcpipguide.com/free/t_TCPIPDynamicHostConfigurationProtocolDHCP.htm">DHCP</a>
+<tr><td>11/14<td>[Nate]<a href="http://www.tcpipguide.com/free/t_IPNetworkAddressTranslationNATProtocol.htm">NAT</a>
+<tr><td>11/16<td>[Aaron]<a
+href="http://computer.howstuffworks.com/vpn.htm/printable">VPN</a> and <a
+<tr><td>Aug. 28</td><td>S:17-18</td></tr>
+<tr><td>Sept. 2</td><td>S:19-20</td></tr>
+<tr><td>Sept. 14</td><td>S:24, 2</td></tr>
+<tr><td>Sept. 18</td><td>S:3</td></tr>
+<tr><td>Sept. 30</td><td>S:6</td>
+<tr><td>Oct. 12</td><td>S:7</td>
+<tr><td>Oct. 19</td><td>S:8</td>
+<tr><td>Oct. 23</td><td>S:9/td>
+<tr><td>Nov. 2</td><td>S:11-12</td></tr>
+<tr><td>Nov. 9</td><td>Exam</td>
+href="http://www.tcpipguide.com/free/t_IPSecurityIPSecProtocols.htm">IPSec</a>
+<tr><td>11/19<td>[Joel]<a
+href="http://www.tcpipguide.com/free/t_InternetProtocolVersion6IPv6IPNextGenerationIPng.htm">IPv6</a>
+(Only first two sections:  IPv6 Overview, Changes and Transition/IPv6
+Addressing)
+<tr><td>11/26<td>[Anthony] T. Koponen, M. Chawla, B.-G. Chun, A. Ermolinskiy, K. H. Kim, S. Shenker, I. Stoica.
+<a href="http://www.sigcomm.org/ccr/drupal/?q=node/257">A Data-Oriented (and Beyond) Network Architecture</a>. SIGCOMM 2007.
+<tr><td>11/28<td>[Nate] Hitesh Ballani, Paul Francis, Xinyang Zhang.
+<a href="http://www.sigcomm.org/ccr/drupal/?q=node/264">A Study of
+Prefix Hijacking and Interception in the Internet</a>.  SIGCOMM 2007.<br>S:14
+<tr><td>11/30<td>[Aaron] Mea Wang, Baochun Li.
+<a
+href="http://www.eecg.toronto.edu/~bli/papers/mwang-infocom07.pdf">Lava:
+A Reality Check of Network Coding in Peer-to-Peer Live Streaming</a>.
+INFOCOM 2007.<br>S:25
+<tr><td>12/3<td>S:27
+-->
+</table>
+S:  Steven's TCP/IP Illustrated Vol. I
+<p> 
+
+<li> Programming Assignments
+
+<li> Notes
+<ul>
+<li> <a HREF="papers/DNS.doc">DNS</A>
+<li> <a HREF="JavaCodePreparation.pdf">Code Preparation</A></LI>
+<li> <a HREF="JavaCodingConvention.pdf">Coding Convention</A>
+</UL>
+
+<li> Past Project Pages
+<ul>
+<li> <a HREF="http://niunet.ecs.baylor.edu/hacknet">Hacknet</A>
+<li> <a HREF="http://cs.baylor.edu/~donahoo/tools/sniffer">Packet Sniffers</A>
+<li> <a HREF="http://cs.baylor.edu/~donahoo/tools/gdb">GDB Tutorial</A>
+<li> <a HREF="http://cs.baylor.edu/~donahoo/tools/mbone">Multicast Apps</A>
+<li> <a HREF="http://cs.baylor.edu/~donahoo/tools/dummy/">Dummynet</A>
+<li> <a HREF="projects/fnetgtell/">Freenet vs. Gnutella</A>
+<li> <a HREF="projects/NAT">NAT</A>
+<li> <a HREF="projects/DHCP">DHCP</A>
+<li> <a HREF="projects/SSL">SSL</A>
+<li> <a HREF="projects/Emulab">Emulab</A>
+<li> <a HREF="projects/vmware">VMWare</A>
+<li> <a HREF="projects/rfid">RFID</A>
+<li> <a HREF="projects/bluetooth">Bluetooth</A>
+<li> <a HREF="projects/SensorNet">SensorNet</A>
+<li> <a HREF="projects/freeoxy1">FreeOxy 1</A>
+<li> <a HREF="projects/freeoxya">FreeOxy A</A>
+<li> <a HREF="projects/bittorrent">BitTorrent</A>
+</UL>
+
+<li> Papers
+<ul>
+<li> TCP/IP </LI>
+<ul>
+<li> <a HREF="papers/rfc791.ps">Internet Protocol</A>. RFC 791, 1981
+<li> <a HREF="papers/rfc793.ps">Transport Control Protocol</A>. RFC
+793, 1981
+<li> <a HREF="papers/rfc2616.txt">Hypertext Transfer Protocol -- HTTP/1.1</A>. RFC 2616, 1999
+<li> P. Mockapetris. <a HREF="papers/rfc1034.ps">Domain Names - Concepts and
+Facilities</A>. RFC 1034, 1987
+<li> P. Mockapetris. <a HREF="papers/rfc1035.ps">Domain Names - Implementation
+and Specification</A>. RFC 1035, 1987
+<li> D. Katabi and J. Wroclawski.  <a HREF="papers/KW00.ps">A Scalable
+Framework for a Global IP-Anycast Service (GIA)</A>. Proceedings of
+SIGCOMM 2000
+<li> Theodore Faber and Joe Touch and Wei Yue. <a
+HREF="papers/FTY99.ps">The TIME-WAIT State in TCP and its Effect on
+Busy Servers</A>. INFOCOM, 1999
+<li>Aleksandar Kuzmanovic and Edward W. Knightly <a
+HREF="papers/KK03.pdf">Low-Rate TCP-Targeted Denial of Service
+Attacks</A>. SIGCOMM 2003.
+</UL>
+<li> Congestion Control </LI>
+<ul>
+<li> Van Jacobson and Michael J. Karels. <a
+HREF="ftp://ftp.ee.lbl.gov/papers/congavoid.ps.Z">Congestion Avoidance
+and Control</A>. SIGCOMM, 1988.
+<li> Floyd, S., and Jacobson, V. <a
+HREF="/papers/FJ93.pdf">Random Early
+Detection Gateways for Congestion Avoidance</A>. IEEE/ACM Transactions
+on Networking, volume 1, number 4, August 1993, p. 397-413. (<a
+HREF="http://www.aciri.org/floyd/papers/collapse/ns2/promoting.html">Simulation Scripts</A>)
+<li> Dong Lin and Robert Morris. <a
+HREF="http://www.acm.org/sigcomm/sigcomm97/papers/p078.ps">Dynamics
+of Random Early Detection</A>. SIGCOMM, 27(4), October
+1997. 
+<li> M. Shreedhar, and George Varghese. <a
+HREF="http://www.ccrc.wustl.edu/~varghese/PAPERS/fq.ps">Efficient fair
+queueing using deficit round-robin</A>. IEEE/ACM Transactions on Networking, 4(3):375 - 385, June, 1996.
+<li> Raj Jain. <a HREF="papers/J90.ps">Congestion Control in Computer
+Networks: Trends and Issues</A>. IEEE Network, pg. 24-30, May 1990,
+<li>Raj Jain. <a HREF="papers/J92.pdf">Myths about Congestion Management in High Speed
+Networks</A>. Internetworking: Research and Experience, pg. 101-113, 1993.
+<li>Dina Katabi, Mark Handley, and Charlie Rohrs. <a
+HREF="papers/KHR02.pdf">Congestion Control for High Bandwidth-Delay
+Product Networks</A>. SIGCOMM, 2002.
+</UL>
+<li> QoS </LI>
+<ul>
+<li> Scott Shenker <a
+HREF="http://www-users.cs.umn.edu/~zhzhang/cs8299/Readings/Shen95:Fund.ps">Fundamental
+Design Issues for the Future Internet</A>. Journal of Selected Areas in
+Communications, Sept. 1995.
+<li> K. Nichols, V. Jacobson, L. Zhang <a
+HREF="ftp://ftp.ee.lbl.gov/papers/dsarch.pdf">A Two-bit Differentiated
+Services Architecture for the Internet</A>. IETF Internet Draft -
+draft-nichols-diff-svc-arch.
+<li> Lee Breslau and Scott Shenker <a
+HREF="http://www.acm.org/sigcomm/sigcomm98/tp/paper01.ps">Best-Effort
+versus Reservations: A Simple Comparative Analysis</A>. SIGCOMM,
+28(4), October 1998.
+<li> L. Zhang and S. Deering and D. Estrin and S. Shenker and
+D. Zappala.
+<a HREF="http://www.cs.umd.edu/class/fall1999/cmsc711/papers/rsvp.ps">
+RSVP: A New Resource Reservation Protocol</A>. IEEE Communications
+Magazine, 31(9):8-18, Sept 1993.
+</UL>
+<li> Internet Design Principles </LI>
+<ul>
+<li>Dave Clark. <a
+HREF="http://www.cs.umd.edu/class/fall1999/cmsc711/papers/design-philosophy.pdf">The
+Design Philosophy of the DARPA Internet Protocols</A>. SIGCOMM,
+106-114, Sept 1988.
+<li>J.H. Saltzer, D.P. Reed and D.D. Clark. <a
+HREF="http://www.cs.umd.edu/class/fall1999/cmsc711/papers/endtoend.ps">End-to-end 
+Arguments in System Design</A>. ACM Transactions on Computer
+Systems, 277-288, Nov 1984.
+<li>J. Noel Chiappa. <a
+HREF="http://users.exis.net/~jnc/tech/end_end.html">Will the Real
+End-End Principle Please Stand Up?</A>.
+<li>David D. Clark, John Wroclawski, Karen Sollins and Robert Braden. <a
+HREF="papers/CWS+02.pdf">Tussle in Cyberspace: Defining Tomorrow's
+Internet</A>. SIGCOMM 2002.
+</UL> 
+<li> Security
+<ul>
+<li> David Chaum. <a
+HREF="http://www.digicash.com/news/archive/bigbro.html">Security
+without Identification: Card Computers to make Big Brother
+Obsolete</A>. Communications of the ACM, 28(10), Oct. 1985.
+<li>Ronald L. Rivest. <a HREF="papers/R98b.txt">Chaffing and
+Winnowing: Confidentiality without Encryption</A>. March 1998
+<li>A. Keromytis, V. Misra  and D. Rubenstein. <a
+HREF="papers/sos.pdf">SOS: Secure Overlay Services</A>. SIGCOMM 2002.
+<li>Nikita Borisov, Ian Goldberg, and David Wagner. <a
+HREF="papers/WEP.pdf">Intercepting Mobile Communications: The
+Insecurity of 802.11</A>. Mobicom 2001.
+<li>Seungjoon Lee, Rob Sherwood and Samrat Bhattacharjee. <a
+HREF="papers/LSB03.pdf">Cooperative Peer Groups in NICE</A>. INFOCOM 2003.
+</UL>
+
+<li> Multicast<ul>
+
+<li> <a
+HREF="papers/IPMI95.pdf">How
+IP Multicast Works</A>. IP Multicast Initiaitive (IPMI) White Paper.
+
+<li> <a
+HREF="http://www.cis.ohio-state.edu/htbin/rfc/rfc1112.html">Host
+extensions for IP multicasting</A>. S.E. Deering. Aug-01-1989.
+
+<li> <a
+HREF="http://catarina.usc.edu/pim/pimsm/PIM-Arch.ps.gz">Protocol
+Independent Multicast-Sparse Mode (PIM-SM): Motivation and
+Architecture</A>. Deering, et. al. draft-ietf-idmr-pim-arch-04</A>
+
+<li> DVMRP
+
+<li> <a HREF="papers/CRZ00.ps">A Case for End System Multicast</A>.
+Yang-hua Chu and Sanjay G. Rao and Hui Zhang, Proceedings of ACM
+Sigmetrics 2000.
+
+<li> Congestion/Flow Control
+
+<li> M. Castro, P. Druschel, A-M. Kermarrec, A. Nandi, A. Rowstron and
+A. Singh, <a HREF="papers/CDK+03.pdf"> SplitStream: High-bandwidth
+content distribution in a cooperative environment</A>. IPTPS'03,
+Berkeley, CA, February, 2003
+<li> Scalability
+<ul>
+<li> Hugh W. Holbrook and Sandeep K. Singkal and David R. Cheriton <a
+HREF="papers/HSC95.pdf">Log-based
+Receiver-Reliable Multicast</A>. SIGCOMM, 1995.
+</UL>
+
+<li> Elastic Applications
+<ul>
+<li> S. McCanne, V. Jacobson, and M. Vetterli <a
+HREF="ftp://ftp.ee.lbl.gov/papers/mccanne-sigcomm96.ps.gz">Receiver-driven
+Layered Multicast</A>. SIGCOMM, 1996.
+</UL>
+<li> Application Adaptation
+<ul>
+<li> M. Ammar, K. Almeroth, R. Clark, and Z. Fei, <a
+HREF="http://imj.ucsb.edu/papers/WISP-98.ps.gz">Multicast Delivery of
+Web Pages OR How to Make Web Servers Pushy</A>. Workshop on Internet
+Server Performance (WISP '98), Madison, Wisconsin, USA, June 1998. 
+<li> Fairness
+</UL>
+<li> Security </LI>
+<ul>
+<li> Chung Kei Wong, Mohamed Gouda, and Simon S. Lam <a
+HREF="papers/KeyGraphs.pdf">Secure
+Group Communications Using Key Graphs</A>. SIGCOMM, volume 28, number
+4, October 1998.
+</UL>
+</UL>
+<li> Peer-to-Peer </LI>
+<ul>
+
+<li> Ian Clarke, Oskar Sandberg, Brandon Wiley, and Theodore W. Hong. <a
+HREF="papers/CSW+00.ps.gz">Freenet: A Distributed Anonymous
+Information Storage and Retrieval System</A>. ICSI Workshop on Design
+Issues in Anonymity and Unobservability, July 2000
+
+<li>Ian Clarke. <a
+HREF="papers/C99.pdf">A Distributed Decentralised Information Storage
+and Retrieval System</A>. Technical Report, Division of Informatics,
+University of Edinburgh, 1999
+
+<li> Sylvia Ratnasamy and Paul Francis and Mark Handley and Richard
+Karp and Scott Shenker. <a HREF="papers/CAN.ps">A Scalable
+Content-Addressable Network</A>. SIGCOMM, 2001.
+
+<li> John Byers, Jeffrey Considine, Michael Mitzenmacher, and
+Stanislav Rost. <a HREF="papers/BCM+02.pdf">Informed Content Delivery 
+Across Adaptive Overlay Networks</A>. SIGCOMM, 2002.
+
+<li> A. Rowstron and P. Druschel. <a HREF="papers/RD01.pdf">Pastry:
+Scalable, distributed object location and routing for large-scale
+peer-to-peer systems</A>. IFIP/ACM International Conference on
+Distributed Systems Platforms (Middleware), 329-350, November, 2001.
+
+<li> <a HREF="papers/pastryoverview.pdf">Pastry Overview.</a>
+
+<li> A. Rowstron, A-M. Kermarrec, M. Castro and P. Druschel. <a
+HREF="papers/RKC+01.pdf">SCRIBE: The design of a large-scale event
+notification infrastructure</a>. NGC2001, UCL, London, November 2001.
+
+<li> M. Castro, P. Druschel, A-M. Kermarrec, A. Nandi, A. Rowstron,
+and A. Singh. <a HREF="papers/CDK+03.pdf">SplitStream: High-bandwidth
+content distribution in a cooperative environment</A>. IPTPS,
+Berkeley, CA, February, 2003.
+
+<li> Ashwin R. Bharambe, Mukesh Agrawal, and Srinivasan Seshan. <a
+HREF="papers/BAS04.pdf">Mercury: Supporting Scalable Multi-Attribute
+Range Queries</A>. SIGCOMM, August, 2004.
+
+<li> Praveen Yalagandul and Mike Dahlin. <a
+HREF="papers/YD04.pdf">A Scalable Distributed Information Management
+System</A>. SIGCOMM, August, 2004.
+
+<li>Kevin Fall. <a HREF="papers/F04.pdf">Messaging in Difficult
+Environments</A>. Intel Research Berekeley. IRB-TR-04-019. 2004.
+
+<li>Kevin Fall. <a HREF="papers/F03.pdf">A Delay-Tolerant Network
+Architecture for Challenged Internets</A>. SIGCOMM 2003.
+
+<li>Jian Liang, Rakesh Kumar, Yongjian Xi and Keith W. Ross. <a
+HREF="papers/LKX+05.pdf">Pollution in P2P File Sharing Systems</A>.
+INFOCOM. 2005.
+
+<li>Christos Gkantsidis and Pablo Rodriguez Rodriguez. <a
+HREF="papers/GR05.pdf">Network Coding for Large Scale Content Distribution</A>. INFOCOM 2005.
+
+<li>Rob Sherwood and Ryan Braud and Bobby Bhattacharjee. <a
+HREF="papers/SBB04.pdf">Slurpie: A Cooperative Bulk Data Transfer
+Protocol</A>. INFOCOM 2004.
+
+<li>Vivek Vishnumurthy, Sangeeth Chandrakumar and Emin Gun Sirer. <a
+HREF="papers/VCS03.pdf">KARMA: A Secure Economic Framework for P2P
+Resource Sharing</A>. Workshop on the Economics of Peer-to-Peer
+Systems 2003.
+
+<li>Yatin Chawathe, Sriram Ramabhadran, Sylvia Ratnasamy, Anthony
+LaMarca, Scott Shenker, and Joseph Hellerstein. <a
+HREF="papers/CRR+05.pdf">A Case Study in Building Layered DHT
+Applications</A>. SIGCOMM 2005.
+
+<li>Leon Poutievski and Ken Calvert and James Griffioen.
+<a HREF="papers/PCG04.pdf">Speccast</A>. INFOCOM 2004.
+
+</UL>
+
+<li> Application Layer Protocols </LI>
+<ul>
+<li> J. Myers and M. Rose. <a HREF="papers/POP3-RFC1939.txt">Post
+Office Protocol - Version 3</A>. RFC 1939, May 1996.
+</UL>
+<li> Miscellaneous Topics </LI>
+<ul>
+<li> David L. Tennenhouse, Jonathan M. Smith, W. David Sincoskie,
+David J. Wetherall, and Gary J. Minden. <a
+HREF="ftp://ftp.tns.lcs.mit.edu/pub/papers/ieeecomms97.ps.gz">A Survey
+of Active Network Research</A>. IEEE Communications Magazine, 35(1),
+pp80-86. January 1997.
+<li> Suchitra Raman and Steven McCanne. <a
+HREF="http://www.acm.org/sigs/sigcomm99/papers/session1-2.ps">A Model,
+Analysis, and Protocol Framework for Soft State-based
+Communication</A>. SIGCOMM, 1999.
+<li> Jeffrey C. Mogul. <a HREF="papers/M95.ps">The Case for
+Persistent-Connection HTTP</A>. SIGCOMM, 299-313, August 1995.  
+<li> S. Shenker, D. Clark, D. Estrin, and S. Herzog. <a
+HREF="http://www.cs.umn.edu/~zhzhang/cs8299/Readings/Shenker:Pricing-Reshape.ps">Pricing
+in Computer Networks: Reshaping the Research Agenda</A>. ACM Computer
+Communication Review, 26(2):19-43, April 1996. 
+</UL>
+</UL>
+
+<li> <a HREF="../gennet/">General Networking Stuff</A>
+</ul>
+
+</body>
+</html>

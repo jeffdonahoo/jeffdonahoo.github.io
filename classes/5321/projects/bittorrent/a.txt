@@ -1,0 +1,28 @@
+Congestion Control and avoidance
+1. Slow start for every ack increase window by1
+2. Rtt measured by Low pass Filter
+3. Window adj -- additive increase and multip decrease
+
+Randome Early Gateways
+
+1.Red average quueue size .. drop or mark packets based on its
+share of connection
+2. global synch(everyone doesnt slow down , no bias against bursty traffic,
+3. min and max threshold -- < min no mark > max all mark else prob mark
+
+The case of Phttp
+one connection
+aviod excessive overhead of multiple connections
+avoid time wait,slow start over head
+pipelined requests
+Protocol negotiation
+Interaction with proxy servers -- client experiences 1 sec delay because of server's timer
+multi connection approach
+	
+
+Freenet
+Anonymity
+Deniablity for storers of info
+Resistance to attempts to deny access to info
+Efficient dynamic storage and routing of info
+Decentr of all network functions	

@@ -1,0 +1,60 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <title>JNI</title>
+</head>
+<body>
+
+<center><b><font size=+3>JNI</font></b></center>
+
+<p>Java<sup>TM</sup> cannot do it all.  Sometimes you need to write system-specific
+code.  This can be done use JNI (Java Native Interface).  It allows
+your Java programs to use functions written in C.  Here's the way I
+got it to work under Linux. 
+
+<OL>
+
+<LI> Write your java program
+<pre>
+class Hello {
+
+  public native void printGreeting();
+
+  static {
+    System.loadLibrary("hello");
+  }
+
+  public static void main(String[] args) {
+    Hello hello = new Hello();
+    hello.printGreeting();
+  }
+}
+</pre>
+
+<LI> Compile it (javac Hello.java)
+
+<LI> Generate the C header, Hello.h (javah Hello)
+
+<LI> Using the prototype in the header file, create the C file,
+Hello.c
+<pre>
+#include "Hello.h"
+#include &lt;stdio.h&gt;
+
+JNIEXPORT void JNICALL Java_Hello_printGreeting(JNIEnv *env, jobject obj) {
+  printf("Hello World\n");
+}
+</pre>
+
+<LI> Generate a shared library
+<pre>
+gcc -o libhello.so -shared -Wl,-soname,libhello.so -I/usr/local/java/include -I/usr/local/java/include/linux Hello.c -static -lc
+</pre>
+
+<LI> Set your library path (setenv LD_LIBRARY_PATH $LD_LIBRARY_PATH:. or whatever is appropriate for your shell/system)
+
+<LI> Run (java Hello)
+</OL>
+
+</body>
+</html>

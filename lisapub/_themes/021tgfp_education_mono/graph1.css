@@ -1,0 +1,99 @@
+.mstheme
+{
+	separator-image: url(hr.gif);
+	list-image-1: url(bullet1.gif);
+	list-image-2: url(bullet2.gif);
+	list-image-3: url(bullet3.gif);
+	nav-banner-image: url(bnr.gif);
+	navbutton-horiz-normal: url(nav.gif);
+	navbutton-horiz-hovered: url(nav_h.gif);
+	navbutton-horiz-pushed: url(nav_s.gif);
+	navbutton-vert-normal: url(nav.gif);
+	navbutton-vert-hovered: url(nav_h.gif);
+	navbutton-vert-pushed: url(nav_s.gif);
+	navbutton-home-normal: url(back.gif);
+	navbutton-home-hovered: url(back_h.gif);
+	navbutton-home-pushed: url(blhomep.gif);
+	navbutton-next-normal: url(next.gif);
+	navbutton-next-hovered: url(next_h.gif);
+	navbutton-next-pushed: url(blnextp.gif);
+	navbutton-prev-normal: url(back.gif);
+	navbutton-prev-hovered: url(back_h.gif);
+	navbutton-prev-pushed: url(blprevp.gif);
+	navbutton-up-normal: url(up.gif);
+	navbutton-up-hovered: url(up_h.gif);
+	navbutton-up-pushed: url(blupp.gif);
+}
+.mstheme-bannertxt
+{
+	font-family: verdana, Arial, Helvetica;
+	color: rgb(255, 255, 255);
+	font-size: 3;
+	font-style: normal;
+	font-weight: bold;
+	text-align: left;
+}
+.mstheme-horiz-navtxt
+{
+	font-family: Verdana, Arial, Helvetica;
+	color: rgb(0, 0, 0);
+	font-size: 1;
+	font-style: normal;
+	font-weight: normal;
+	text-align: center;
+	vertical-align: middle;
+}
+.mstheme-vert-navtxt
+{
+	font-family: Verdana, Arial, Helvetica;
+	color: rgb(0, 0, 0);
+	font-size: 1;
+	font-style: normal;
+	font-weight: normal;
+	text-align: center;
+	vertical-align: middle;
+}
+.mstheme-navtxthome
+{
+	font-family: verdana, Arial, Helvetica;
+	color: rgb(0, 0, 0);
+	font-size: 1;
+	font-style: normal;
+	font-weight: normal;
+}
+.mstheme-navtxtnext
+{
+	font-family: verdana, Arial, Helvetica;
+	color: rgb(0, 0, 0);
+	font-size: 1;
+	font-style: normal;
+	font-weight: normal;
+}
+.mstheme-navtxtprev
+{
+	font-family: verdana, Arial, Helvetica;
+	color: rgb(0, 0, 0);
+	font-size: 1;
+	font-style: normal;
+	font-weight: normal;
+}
+.mstheme-navtxtup
+{
+	font-family: verdana, Arial, Helvetica;
+	color: rgb(0, 0, 0);
+	font-size: 1;
+	font-style: normal;
+	font-weight: normal;
+}
+ul
+{
+	list-style-image: url(bullet1.gif);
+}
+ul ul
+{
+	list-style-image: url(bullet2.gif);
+}
+ul ul ul
+{
+	list-style-image: url(bullet3.gif);
+}

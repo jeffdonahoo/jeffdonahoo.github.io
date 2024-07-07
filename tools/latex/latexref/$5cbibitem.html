@@ -1,0 +1,30 @@
+<HTML>
+<!-- created Thu Apr 9 23:20:43 MET DST 1998
+ from ../latex2e.texi line 2285 via texi2www -->
+<HEAD>
+<TITLE>\bibitem</TITLE>
+<LINK REL="Precedes" HREF="$5ccite.html">
+<LINK REV="Precedes" HREF="">
+<LINK REV="Subdocument" HREF="thebibliography.html">
+</HEAD><BODY><P>
+<A><IMG ALIGN=MIDDLE SRC="missing-arrow.gif" ALT="prev"></A>
+<A HREF="thebibliography.html"> <IMG ALIGN=MIDDLE SRC="up-arrow.gif" ALT="UP"></A>
+<A HREF="$5ccite.html"><IMG ALIGN=MIDDLE SRC="next-arrow.gif" ALT="NEXT"></A>
+<CITE>LaTeX2e help 1.6</CITE></P>
+<H4>2.6.20.1: \bibitem</H4>
+<P>
+<CODE>\bibitem[label]{cite_key}</CODE>
+</P>
+<P>
+The <CODE>\bibitem</CODE> command generates an entry labelled by <CODE>label</CODE>.
+If the <CODE>label</CODE> argument is missing, a number is generated as the
+<CODE>label</CODE>, using the <CODE>enumi</CODE> counter.  The <CODE>cite_key</CODE> is
+any sequence of letters, numbers, and punctuation symbols not containing
+a comma.  This command writes an entry on the `<CODE>.aux</CODE>' file
+containing <CODE>cite_key</CODE> and the item's <CODE>label</CODE>.  When this
+`<CODE>.aux</CODE>' file is read by the <CODE>\begin{document}</CODE> command, the
+item's <CODE>label</CODE> is associated with <CODE>cite_key</CODE>, causing the
+reference to <CODE>cite_key</CODE> by a <CODE>\cite</CODE> command to produce the
+associated <CODE>label</CODE>.
+</P>
+</BODY></HTML>

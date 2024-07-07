@@ -1,0 +1,159 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2016.01.26.20.23.33;	author donahoo;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2015.01.29.15.57.22;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
+
+@@RunWith(Parameterized.class)
+public class ArrayListParameterizedTest {
+
+  private static int BIGTESTSIZE = 500;
+
+  private ArrayList<Integer> testList = new ArrayList<>();
+  private Integer[] expList;
+  private int expCount;
+  
+  @@Parameters(name="Testing list {0} at # {index}")
+  public static Collection<Object[]> data() {
+    Integer[] big = new Integer[BIGTESTSIZE];
+    for (int i = 0; i < BIGTESTSIZE; i++) {
+      big[i] = i;
+    }
+    return Arrays.asList(new Object[][] {
+      {new Integer[] {}, 0},
+      {new Integer[] {1}, 1},
+      {new Integer[] {3, 2}, 2},
+      {big, BIGTESTSIZE}
+    });
+  }
+
+  public ArrayListParameterizedTest(final Integer[] expList, final int expCount) {
+    this.expList = expList;
+    this.expCount = expCount;
+  }
+
+  @@Test
+  public void testAdd() {
+    for (Integer i : expList) {
+      testList.add(i);
+    }
+    assertEquals(expCount, testList.size());
+    assertArrayEquals(expList, testList.toArray());
+  }
+
+  @@Test
+  public void testRemove() {
+    if (expList.length == 0) {
+      return;
+    }
+
+    for (Integer i : expList) {
+      testList.add(i);
+    }
+
+    int i = 0;
+    assertEquals(expList[i++], testList.remove(0));
+    assertEquals(expCount - 1, testList.size());
+    for (Integer listItem : testList) {
+      assertEquals(expList[i++], listItem);
+    }
+  }
+}
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a6 2
+import java.util.LinkedList;
+import java.util.List;
+a10 1
+import org.junit.runners.Parameterized.Parameter;
+d15 50
+a64 23
+	
+	private List<Integer> list;
+	@@Parameter
+	public Integer[] expList;
+	
+//	public ArrayListParameterizedTest(final Integer[] expList) {
+//		this.expList = expList;
+//	}
+	
+    @@Parameters(name="Testing list {0} at # {index}")
+    public static Collection<Object[]> data() {
+
+    	int BIGSIZE = 500;
+    	Integer[] big = new Integer[BIGSIZE];
+    	for (int i=0; i < BIGSIZE; i++) {
+    		big[i] = i;
+    	}
+        return Arrays.asList(new Object[][] {
+        		{new Integer[] {}},
+        		{new Integer[] {1}},
+        		{new Integer[] {3, 2}},
+        		{big}
+        });
+d66 1
+a66 23
+    
+	@@Test
+	public void testAdd() {
+		list = new ArrayList<>();
+		for (Integer i : expList) {
+			list.add(i);
+		}
+		assertEquals(Arrays.asList(expList), list);
+	}
+	
+    
+	@@Test
+	public void testRemove() {
+		if (expList.length == 0) {
+			return;
+		}
+		list = new LinkedList<>(Arrays.asList(expList));
+		int i=0;
+		assertEquals(expList[i++], list.remove(0));
+		for (Integer listItem : list) {
+			assertEquals(expList[i++], listItem);
+		}
+	}
+@

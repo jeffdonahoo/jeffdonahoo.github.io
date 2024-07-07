@@ -1,0 +1,40 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2013.09.09.17.58.08;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@import java.awt.Point;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.FileOutputStream;
+
+public class WriteObject {
+
+  public static void main(String[] args) throws IOException {
+    ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("data"));
+    Point p = new Point(1, 1);
+    out.writeObject(p);
+    // out.reset();
+    p.setLocation(2, 2);
+    out.writeObject(p);
+    out.close();
+  }
+}
+@

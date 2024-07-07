@@ -1,0 +1,47 @@
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.crypto.CipherInputStream;
+
+/**
+ * Implements an input byte stream decrypter.
+ */
+public class SecretInputStream extends CipherInputStream {
+
+	/**
+	 * Creates a new SecretInputStream that inputs bytes and decrypts them using the
+	 * given password.
+	 *
+	 * @param inputStream encrypted byte input stream.
+	 * @param password password to use in decryption.
+	 * @throws IOException if an I/O error has occurred.
+	 */
+	public SecretInputStream(InputStream inputStream, String password)
+			throws IOException {
+		super(inputStream, SecretOutputStream.createCipher(password, false));
+	}
+
+	/**
+	 * Demonstrate using SecretInputStream.  Given an encrypted source
+	 * file and the password, this program decrypts the file and writes it to a
+	 * specified destination file.
+	 *
+	 * <src. file> - name of encrypted source file.
+	 * <dest. file> - name of decrypted destination file.
+	 * <password> - password for the decryption.
+	 */
+	public static void main(String args[]) throws Exception {
+
+		if (args.length != 3) {
+			System.err
+					.println("Parameter(s): <src. file> <dest. file> <password>");
+			System.exit(1);
+		}
+
+		SecretOutputStream.streamCopyAndClose(new SecretInputStream(
+				new FileInputStream(args[0]), args[2]), new FileOutputStream(
+				args[1]));
+	}
+}

@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+
+<table width="892" border="0" cellpadding="0" cellspacing="0">
+  <!--DWLayoutDefaultTable-->
+  <tr> 
+    <td width="109" height="50">&nbsp;</td>
+    <td width="93">&nbsp;</td>
+    <td width="130">&nbsp;</td>
+    <td width="76">&nbsp;</td>
+    <td width="170">&nbsp;</td>
+    <td width="80">&nbsp;</td>
+    <td width="120">&nbsp;</td>
+    <td width="114">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td height="29">&nbsp;</td>
+    <td valign="top"><font size="+2" face="Verdana, Arial, Helvetica, sans-serif"><a href="vmnetworking.html">&lt;&lt;Prev</a></font></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td valign="top"><div align="center"><font size="+2" face="Verdana, Arial, Helvetica, sans-serif"><a href="vmware.html">Home</a></font></div></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td valign="top"><div align="right"><font size="+2"><a href="vmresources.html">Next&gt;&gt;</a></font></div></td>
+  </tr>
+  <tr> 
+    <td height="19">&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td height="40">&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td colspan="3" valign="top"><div align="center"><strong><font size="+2" face="Verdana, Arial, Helvetica, sans-serif">Firewall 
+        Configuration</font></strong></div></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td height="634">&nbsp;</td>
+    <td colspan="7" valign="top"><p><br>
+        <font face="Verdana, Arial, Helvetica, sans-serif">These notes are specific 
+        to the LinkSys firewall router <a href="http://www.linksys.com/products/product.asp?grid=34&scid=29&prid=433">BEFSX41</a>. 
+        For other firewall routers, please see the associated vendor documentation. 
+        For BEFSX41, the complete user guide is located at <a href="ftp://ftp.linksys.com/pdf/befsx41ug.pdf">ftp://ftp.linksys.com/pdf/befsx41ug.pdf</a> 
+        .</font></p>
+      <p><font face="Verdana, Arial, Helvetica, sans-serif">Go through the following 
+        steps to set up the firewall router on your VMWare machine:<br>
+        <br>
+        1. Connect the router between your machine and the LAN. To do this, connect 
+        one end of an Ethernet cable to one of the LAN ports(labeled 1,2,3 or 
+        4/DMZ) on the back of the router and the other end to your machine&#8217;s 
+        network port. Now, connect your WAN/LAN cable to the port marked &#8216;WAN&#8217; 
+        on the router. Make sure the router is powered off during this step.<br>
+        <br>
+        2. Now, power the router on. You should see it go through a diagnostic 
+        phase for a few seconds(watch the LEDs on the router).<br>
+        <br>
+        3. Configure your PC to obtain an IP address automatically(DHCP). To do 
+        this on Windows XP, go to <strong>Control Panel&gt; Network And Internet 
+        Connections&gt;Network Connections&gt;Local Area Connection</strong>, 
+        click on the <strong>Properties</strong> button, select <strong>TCP/IP</strong> 
+        and click on the <strong>Properties</strong> button, and then select <strong>Obtain 
+        an IP Address Automatically</strong> . Click <strong>OK</strong> until 
+        you get back to where you started out from, and then restart the system 
+        to complete the configuration.<br>
+        <br>
+        4. Open a web browser and type in <a href="http://192.168.1.1">http://192.168.1.1</a> 
+        . You should see a screen prompting you for a username and password. <strong>admin</strong> 
+        is the default username and password. You can set this to something else 
+        after you log in the first time. <br>
+        <br>
+        5. The default configuration of the router should work fine. If not, you 
+        might have to tweak the parameters in the <strong>SetUp</strong> tab. 
+        Look at the router documentation on how to do this. You can always use 
+        the Help tab to go to the latest documentation for the product on LinkSys&#8217; 
+        website.<br>
+        <br>
+        6. We will let you explore what all the options in each of the tabs do 
+        for the firewall. <br>
+        <br>
+        7. For port forwarding, click on the <strong>Forwarding</strong> tab(Note: 
+        Before you use forwarding, you will have to disable the DHCP function 
+        in the DHCP tab). For adding a service, enter the name of your application, 
+        the range of external port(s) used by the server, the IP address of the 
+        server you want the Internet users to access under the appropriate text 
+        boxes. Check the <strong>Enable</strong> checkbox and then click <strong>Apply</strong> 
+        to enable this service. We did this so that Internet users could connect 
+        to our SSH port(port 22) through the firewall. The firewall should block 
+        any requests that are not enabled.</font></p>
+      <p><font face="Verdana, Arial, Helvetica, sans-serif">Note: This is a very 
+        brief exposition on the firewall&#8217;s capabilities. Please see the 
+        complete documentation on how each option can be used. </font><br>
+      </p></td>
+  </tr>
+</table>
+</body>
+</html>

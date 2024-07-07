@@ -1,0 +1,42 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2013.09.09.17.58.08;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@import javax.swing.JFrame;
+import javax.swing.JButton;
+
+public class JiffyButton0 extends JFrame {
+
+  public JiffyButton0() {
+    super("Jiffy Messenger");
+    setSize(300, 400);
+    setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+    JButton sendButton = new JButton("Send Hello");
+    getContentPane().add(sendButton);
+  }
+
+  public static void main(String[] args) {
+    JiffyButton0 msgr = new JiffyButton0();
+    msgr.setVisible(true);
+  }
+}
+@

@@ -1,0 +1,426 @@
+The binaries (specifically relFixPath) that come with the distribution of xkernel are in a.out
+format.  You want ELF.
+
+1) Unpack xkernel.tar.gz
+   mkdir xkernel
+   cd xkernel
+   tar xvfz xkernel.tar.gz
+
+2) Prepare xsim for compilation
+
+   cd simulator/build
+   mkdir linux
+   cd linux  ** Jeff added this
+   cp ../Template/Makefile.linux.x86 Makefile
+   cp ../Template/example/* .
+   mkdir db
+
+   And add the two directories from the manual, bin/ and bin/linux-x86/, in
+   the $PATH.
+
+3) Now we want to recompile the binaries from bin/linux-x86/ because they
+are in a.out format which we don't use anymore in Linux.
+
+   cd simulator/build/linux
+   make util
+
+   After this, in xkernel/util directory we can find the new utilities but 
+they are scattered in various subdirectories.  We must collect and copy
+them to the bin/linux-x86 directory.  The easiest way is to do:
+
+   find . -perm -111 -type f | xargs -i\{\} cp \{\} ../bin/linux-x86/
+
+Now we check that the new binaries are in ELF format.
+
+   cd bin/linux-x86
+   file *
+
+And the output is:
+
+compose:     ELF 32-bit LSB executable, Intel 386, version 1, not stripped
+fixRelPaths: ELF 32-bit LSB executable, Intel 386, version 1, not stripped
+fperm:       ELF 32-bit LSB executable, Intel 386, version 1, not stripped
+pfakeether:  ELF 32-bit LSB executable, Intel 386, version 1, not stripped
+phostnumber: ELF 32-bit LSB executable, Intel 386, version 1, not stripped
+pnetnum:     ELF 32-bit LSB executable, Intel 386, version 1, not stripped
+promfile:    ELF 32-bit LSB executable, Intel 386, version 1, not stripped
+random_int:  ELF 32-bit LSB executable, Intel 386, version 1, not stripped
+
+We have our own GNU make so the one in this directory can safely be
+removed.  (Note. ptbldef was not recompiled.)
+
+4) Apply xkernel-patch1 to the source
+
+   First we test if the patch works as it should.
+
+  cd xkernel
+  patch --dry-run -p0 < xkernel-patch1
+
+  Here's the output that the previous two lines *should* produce.
+
+    patching file `lib/tcplib/Makefile'
+    Hunk #1 succeeded at 25 (offset -3 lines).
+    patching file `protocols/test/asptest.c'
+    patching file `protocols/test/msptest.c'
+    patching file `protocols/test/simple_tcptest.c'
+    patching file `protocols/test/simple_udptest.c'
+    patching file `protocols/test/swptest.c'
+    patching file `protocols/test/tcptest.c'
+    patching file `protocols/test/udptest.c'
+    patching file `simulator/build/linux/Makefile'
+    Hunk #1 succeeded at 38 (offset -3 lines).
+    patching file `simulator/platforms/linux/include/x86/xendian_arch.h'
+    Hunk #1 succeeded at 21 (offset -3 lines).
+    patching file `user_level/platforms/linux/include/x86/xendian_arch.h'
+    Hunk #1 succeeded at 24 (offset -3 lines).
+    patching file `user_level/platforms/linux/pd/machine.c'
+
+   The output may vary a bit but the important thing is that you don't get
+   'FAILED' error anywhere.
+
+   If there were no FAILures in the previous output, apply the patch for
+   real by typing:
+
+  patch -p0 < xkernel-patch1
+
+5) cd simulator/build/linux
+   make system
+   make compose
+   make depend
+   make
+
+That's it!  After all this, there should be an xsim executable in the
+simulator/build/linux directory.
+
+
+--=-=-=
+Content-Disposition: inline;
+ filename="~/src/xkernel-patch1"
+Content-Description: xkernel patch for Linux 2.2.x
+
+Index: lib/tcplib/Makefile
+===================================================================
+RCS file: /home/grac/src/cvsdir/xkernel/lib/tcplib/Makefile,v
+retrieving revision 1.1.1.1
+retrieving revision 1.2
+diff -u -r1.1.1.1 -r1.2
+--- lib/tcplib/Makefile	1999/05/28 06:15:15	1.1.1.1
++++ lib/tcplib/Makefile	1999/05/28 08:46:52	1.2
+@@ -25,11 +28,11 @@
+ 
+ .SUFFIXES: .h .tc
+ 
+-VPATH = .:..:../../include
++VPATH = .:..:../../include:../include
+ 
+ DATADIR = data
+ CC = gcc
+-CFLAGS = -O -I. -I.. -I../../include
++CFLAGS = -O -I. -I.. -I../../include -I../include
+ 
+ AR    =ar
+ SHELL = /bin/sh
+Index: protocols/test/asptest.c
+===================================================================
+RCS file: /home/grac/src/cvsdir/xkernel/protocols/test/asptest.c,v
+retrieving revision 1.1.1.1
+retrieving revision 1.3
+diff -u -r1.1.1.1 -r1.3
+--- protocols/test/asptest.c	1999/05/28 06:15:15	1.1.1.1
++++ protocols/test/asptest.c	1999/05/28 09:25:24	1.3
+@@ -7,7 +7,7 @@
+  */
+ 
+ #ifndef SUNOS
+-#ifdef LINUX
++#ifdef linux
+ #include <unistd.h>
+ #else
+ #include <sys/systeminfo.h>
+@@ -87,7 +87,7 @@
+     bzero((char *)ps, sizeof(PState));
+     self->state = (VOID *)ps;
+ 
+-#if defined(SUNOS) || defined(LINUX)
++#if defined(SUNOS) || defined(linux)
+     gethostname(buf, 255);
+ #else
+     sysinfo(SI_HOSTNAME, buf, 255);
+Index: protocols/test/msptest.c
+===================================================================
+RCS file: /home/grac/src/cvsdir/xkernel/protocols/test/msptest.c,v
+retrieving revision 1.1.1.1
+retrieving revision 1.3
+diff -u -r1.1.1.1 -r1.3
+--- protocols/test/msptest.c	1999/05/28 06:15:15	1.1.1.1
++++ protocols/test/msptest.c	1999/05/28 09:25:24	1.3
+@@ -5,7 +5,7 @@
+  */
+ 
+ #ifndef SUNOS
+-#ifdef LINUX
++#ifdef linux
+ #include <unistd.h>
+ #else
+ #include <sys/systeminfo.h>
+@@ -88,7 +88,7 @@
+     self->state = (VOID *)ps;
+     protl_state = ps;
+ 
+-#if defined(SUNOS) || defined(LINUX)
++#if defined(SUNOS) || defined(linux)
+     gethostname(buf, 255);
+ #else
+     sysinfo(SI_HOSTNAME, buf, 255);
+Index: protocols/test/simple_tcptest.c
+===================================================================
+RCS file: /home/grac/src/cvsdir/xkernel/protocols/test/simple_tcptest.c,v
+retrieving revision 1.1.1.1
+retrieving revision 1.3
+diff -u -r1.1.1.1 -r1.3
+--- protocols/test/simple_tcptest.c	1999/05/28 06:15:15	1.1.1.1
++++ protocols/test/simple_tcptest.c	1999/05/28 09:25:24	1.3
+@@ -1,5 +1,5 @@
+ #ifndef SUNOS
+-#ifdef LINUX
++#ifdef linux
+ #include <unistd.h>
+ #else
+ #include <sys/systeminfo.h>
+@@ -136,7 +136,7 @@
+     time_t t = time(0);
+ 
+     printf("%s", ctime(&t));
+-#if defined(SUNOS) || defined(LINUX)
++#if defined(SUNOS) || defined(linux)
+     gethostname(buf, 255);
+ #else
+     sysinfo(SI_HOSTNAME, buf, 255);
+@@ -176,7 +176,7 @@
+     Part   p[2];
+ 
+     printf("%s", ctime(&t));
+-#if defined(SUNOS) || defined(LINUX)
++#if defined(SUNOS) || defined(linux)
+     gethostname(buf, 255);
+ #else
+     sysinfo(SI_HOSTNAME, buf, 255);
+Index: protocols/test/simple_udptest.c
+===================================================================
+RCS file: /home/grac/src/cvsdir/xkernel/protocols/test/simple_udptest.c,v
+retrieving revision 1.1.1.1
+retrieving revision 1.3
+diff -u -r1.1.1.1 -r1.3
+--- protocols/test/simple_udptest.c	1999/05/28 06:15:15	1.1.1.1
++++ protocols/test/simple_udptest.c	1999/05/28 09:25:24	1.3
+@@ -1,5 +1,5 @@
+ #ifndef SUNOS
+-#ifdef LINUX
++#ifdef linux
+ #include <unistd.h>
+ #else
+ #include <sys/systeminfo.h>
+@@ -131,7 +131,7 @@
+     time_t t = time(0);
+ 
+     printf("%s", ctime(&t));
+-#if defined(SUNOS) || defined(LINUX)
++#if defined(SUNOS) || defined(linux)
+     gethostname(buf, 255);
+ #else
+     sysinfo(SI_HOSTNAME, buf, 255);
+@@ -171,7 +171,7 @@
+     Part   p[2];
+ 
+     printf("%s", ctime(&t));
+-#if defined(SUNOS) || defined(LINUX)
++#if defined(SUNOS) || defined(linux)
+     gethostname(buf, 255);
+ #else
+     sysinfo(SI_HOSTNAME, buf, 255);
+Index: protocols/test/swptest.c
+===================================================================
+RCS file: /home/grac/src/cvsdir/xkernel/protocols/test/swptest.c,v
+retrieving revision 1.1.1.1
+retrieving revision 1.3
+diff -u -r1.1.1.1 -r1.3
+--- protocols/test/swptest.c	1999/05/28 06:15:15	1.1.1.1
++++ protocols/test/swptest.c	1999/05/28 09:25:24	1.3
+@@ -5,7 +5,7 @@
+  */
+ 
+ #ifndef SUNOS
+-#ifdef LINUX
++#ifdef linux
+ #include <unistd.h>
+ #else
+ #include <sys/systeminfo.h>
+@@ -85,7 +85,7 @@
+     bzero((char *)ps, sizeof(PState));
+     self->state = (VOID *)ps;
+ 
+-#if defined(SUNOS) || defined(LINUX)
++#if defined(SUNOS) || defined(linux)
+     gethostname(buf, 255);
+ #else
+     sysinfo(SI_HOSTNAME, buf, 255);
+Index: protocols/test/tcptest.c
+===================================================================
+RCS file: /home/grac/src/cvsdir/xkernel/protocols/test/tcptest.c,v
+retrieving revision 1.1.1.1
+retrieving revision 1.3
+diff -u -r1.1.1.1 -r1.3
+--- protocols/test/tcptest.c	1999/05/28 06:15:15	1.1.1.1
++++ protocols/test/tcptest.c	1999/05/28 09:25:24	1.3
+@@ -7,7 +7,7 @@
+ 
+ 
+ #ifndef SUNOS
+-#ifdef LINUX
++#ifdef linux
+ #include <unistd.h>
+ #else
+ #include <sys/systeminfo.h>
+@@ -90,7 +90,7 @@
+     bzero((char *)ps, sizeof(PState));
+     self->state = (VOID *)ps;
+ 
+-#if defined(SUNOS) || defined(LINUX)
++#if defined(SUNOS) || defined(linux)
+     gethostname(buf, 255);
+ #else
+     sysinfo(SI_HOSTNAME, buf, 255);
+Index: protocols/test/udptest.c
+===================================================================
+RCS file: /home/grac/src/cvsdir/xkernel/protocols/test/udptest.c,v
+retrieving revision 1.1.1.1
+retrieving revision 1.3
+diff -u -r1.1.1.1 -r1.3
+--- protocols/test/udptest.c	1999/05/28 06:15:15	1.1.1.1
++++ protocols/test/udptest.c	1999/05/28 09:25:24	1.3
+@@ -1,5 +1,5 @@
+ #ifndef SUNOS
+-#ifdef LINUX
++#ifdef linux
+ #include <unistd.h>
+ #else
+ #include <sys/systeminfo.h>
+@@ -78,7 +78,7 @@
+     bzero((char *)ps, sizeof(PState));
+     self->state = (VOID *)ps;
+ 
+-#if defined(SUNOS) || defined(LINUX)
++#if defined(SUNOS) || defined(linux)
+     gethostname(buf, 255);
+ #else
+     sysinfo(SI_HOSTNAME, buf, 255);
+Index: simulator/build/linux/Makefile
+===================================================================
+RCS file: /home/grac/src/cvsdir/xkernel/simulator/build/linux/Makefile,v
+retrieving revision 1.1.1.1
+retrieving revision 1.3
+diff -u -r1.1.1.1 -r1.3
+--- simulator/build/linux/Makefile	1999/05/28 06:15:15	1.1.1.1
++++ simulator/build/linux/Makefile	1999/05/28 09:16:11	1.3
+@@ -35,6 +41,7 @@
+ 
+ HOW := $(XK_TYPE)-$(HOWTOCOMPILE)-$(XK_BIN_TYPE)
+ HOWUTIL := $(HOWTOCOMPILE)-$(XK_BIN_TYPE)
++XK_VIEW = TRUE
+ 
+ # If XK_BYPASS_RCS is defined (to anything), RCS consistency checks will be
+ # disabled.  This can make a build run significantly faster.
+Index: simulator/platforms/linux/include/x86/xendian_arch.h
+===================================================================
+RCS file: /home/grac/src/cvsdir/xkernel/simulator/platforms/linux/include/x86/xendian_arch.h,v
+retrieving revision 1.1.1.1
+retrieving revision 1.2
+diff -u -r1.1.1.1 -r1.2
+--- simulator/platforms/linux/include/x86/xendian_arch.h	1999/05/28 06:15:15	1.1.1.1
++++ simulator/platforms/linux/include/x86/xendian_arch.h	1999/05/28 08:46:54	1.2
+@@ -21,4 +24,4 @@
+  */
+ #define ENDIAN LITTLE	/* x86 is little-endian */
+ 
+-#include <asm/byteorder.h>
++/* #include <asm/byteorder.h>   We don't need this.  --grac */
+Index: user_level/platforms/linux/include/x86/xendian_arch.h
+===================================================================
+RCS file: /home/grac/src/cvsdir/xkernel/user_level/platforms/linux/include/x86/xendian_arch.h,v
+retrieving revision 1.1.1.1
+retrieving revision 1.2
+diff -u -r1.1.1.1 -r1.2
+--- user_level/platforms/linux/include/x86/xendian_arch.h	1999/05/28 06:15:15	1.1.1.1
++++ user_level/platforms/linux/include/x86/xendian_arch.h	1999/05/28 08:46:56	1.2
+@@ -24,4 +27,4 @@
+  */
+ #define ENDIAN LITTLE	/* x86 is little-endian */
+ 
+-#include <asm/byteorder.h>
++/* #include <asm/byteorder.h> We don't need this. --grac */
+Index: user_level/platforms/linux/pd/machine.c
+===================================================================
+RCS file: /home/grac/src/cvsdir/xkernel/user_level/platforms/linux/pd/machine.c,v
+retrieving revision 1.1.1.1
+retrieving revision 1.2
+diff -u -r1.1.1.1 -r1.2
+--- user_level/platforms/linux/pd/machine.c	1999/05/28 06:15:15	1.1.1.1
++++ user_level/platforms/linux/pd/machine.c	1999/05/28 08:46:57	1.2
+@@ -34,7 +34,7 @@
+ #include "assert.h"
+ 
+ #define handlerresulttype void
+-typedef handlerresulttype (*handlertype)();
++typedef handlerresulttype (*handlertype)(void *);
+ 
+ void xholdsignals (int);
+ void xreleasesignals (int);
+@@ -57,7 +57,7 @@
+ void enable_alarm(int);
+ 
+ struct	int_vector {
+-    int (*handler)();
++    int (*handler)(void *);
+     VOID      *arg;
+ };
+ 
+@@ -67,7 +67,7 @@
+ #define NUMSOCKETSICANUSE 30
+ struct	int_vector  ivec[NUMSOCKETSICANUSE+1];
+ int                 ivec_in_use_mask;
+-extern	int	errno;
++/* extern	int	errno; */
+ 
+ void
+ cancelSignalHandler(sock)
+@@ -240,9 +240,10 @@
+ enable_alarm (int unblock)
+      /* SIGALRM is unblocked iff unblock == 1 */
+ {
+-  static sigset_t mask = 1 << (SIGALRM - 1);
++  static sigset_t mask;
+   static int blocked = 0;
+-  
++
++  sigaddset (&mask, 1 << (SIGALRM - 1));
+   if (unblock && blocked) {
+     blocked = 0;
+     sigprocmask (SIG_UNBLOCK, &mask, NULL);
+@@ -325,13 +326,13 @@
+ 	   handler);
+ 
+   if (handler == SIG_IGN) {
+-    act.sa_mask = 0;
++    sigemptyset (&act.sa_mask);
+     act.sa_handler = SIG_IGN;
+     act.sa_flags = 0;
+     sigaction(sig, &act, NULL);
+   } else {
+     act.sa_handler = handler;
+-    act.sa_mask = 0;
++    sigemptyset (&act.sa_mask);
+     act.sa_flags = 0;
+     act.sa_flags = SA_RESTART;
+     sigaction (sig, &act, NULL);
+
+--=-=-=--

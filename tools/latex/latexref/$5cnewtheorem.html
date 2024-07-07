@@ -1,0 +1,58 @@
+<HTML>
+<!-- created Thu Apr 9 23:20:43 MET DST 1998
+ from ../latex2e.texi line 721 via texi2www -->
+<HEAD>
+<TITLE>\newtheorem</TITLE>
+<LINK REL="Precedes" HREF="$5cnewfont.html">
+<LINK REV="Precedes" HREF="$5cnewenvironment.html">
+<LINK REV="Subdocument" HREF="Definitions.html">
+</HEAD><BODY><P>
+<A HREF="$5cnewenvironment.html"><IMG ALIGN=MIDDLE SRC="prev-arrow.gif" ALT="PREV"></A>
+<A HREF="Definitions.html"> <IMG ALIGN=MIDDLE SRC="up-arrow.gif" ALT="UP"></A>
+<A HREF="$5cnewfont.html"><IMG ALIGN=MIDDLE SRC="next-arrow.gif" ALT="NEXT"></A>
+<CITE>LaTeX2e help 1.6</CITE></P>
+<H3>2.3.3: \newtheorem</H3>
+<DL><DT><DD>
+<PRE>
+ \newtheorem{env_name}{caption}[within]
+ \newtheorem{env_name}[numbered_like]{caption}
+</PRE>
+</DL>
+<P>
+This command defines a theorem-like environment.
+</P>
+<TABLE>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>env_name</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+The name of the environment to be defined. A string of letters.  It must
+not be the name of an existing environment or counter.
+</P>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>caption</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+The text printed at the beginning of the environment, right before the
+number. This may simply say ``Theorem'', for example.
+</P>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>within</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+The name of an already defined counter, usually of a sectional unit.
+Provides a means of resetting the new theorem counter <STRONG>within</STRONG>
+the sectional unit.
+</P>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>numbered_like</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+The name of an already defined theorem-like environment.
+</P>
+</TD></TR>
+</TABLE>
+<P>
+The <CODE>\newtheorem</CODE> command may have at most one optional argument.
+</P>
+</BODY></HTML>

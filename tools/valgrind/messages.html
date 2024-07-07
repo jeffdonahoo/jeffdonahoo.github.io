@@ -1,0 +1,246 @@
+<html>
+<head>
+   <title>Valgrind (Memcheck) Error Messages</title>
+</head>
+<body>
+
+<b>Excerpt from Valgrind documentation</b>
+
+<h3>3.3&nbsp; Explanation of error messages from Memcheck</h3>
+
+Despite considerable sophistication under the hood, Memcheck can only
+really detect two kinds of errors, use of illegal addresses, and use
+of undefined values.  Nevertheless, this is enough to help you
+discover all sorts of memory-management nasties in your code.  This
+section presents a quick summary of what error messages mean.
+
+<h4>3.3.1&nbsp; Illegal read / Illegal write errors</h4>
+
+For example:
+<pre>
+  Invalid read of size 4
+     at 0x40F6BBCC: (within /usr/lib/libpng.so.2.1.0.9)
+     by 0x40F6B804: (within /usr/lib/libpng.so.2.1.0.9)
+     by 0x40B07FF4: read_png_image__FP8QImageIO (kernel/qpngio.cpp:326)
+     by 0x40AC751B: QImageIO::read() (kernel/qimage.cpp:3621)
+     Address 0xBFFFF0E0 is not stack'd, malloc'd or free'd
+</pre>
+
+<p>This happens when your program reads or writes memory at a place
+which Memcheck reckons it shouldn't.  In this example, the program did
+a 4-byte read at address 0xBFFFF0E0, somewhere within the
+system-supplied library libpng.so.2.1.0.9, which was called from
+somewhere else in the same library, called from line 326 of
+qpngio.cpp, and so on.
+
+<p>Memcheck tries to establish what the illegal address might relate
+to, since that's often useful.  So, if it points into a block of
+memory which has already been freed, you'll be informed of this, and
+also where the block was free'd at.  Likewise, if it should turn out
+to be just off the end of a malloc'd block, a common result of
+off-by-one-errors in array subscripting, you'll be informed of this
+fact, and also where the block was malloc'd.
+
+<p>In this example, Memcheck can't identify the address.  Actually the
+address is on the stack, but, for some reason, this is not a valid
+stack address -- it is below the stack pointer, %esp, and that isn't
+allowed.  In this particular case it's probably caused by gcc
+generating invalid code, a known bug in various flavours of gcc.
+
+<p>Note that Memcheck only tells you that your program is about to
+access memory at an illegal address.  It can't stop the access from
+happening.  So, if your program makes an access which normally would
+result in a segmentation fault, you program will still suffer the same
+fate -- but you will get a message from Memcheck immediately prior to
+this.  In this particular example, reading junk on the stack is
+non-fatal, and the program stays alive.
+
+
+<h4>3.3.2&nbsp; Use of uninitialised values</h4>
+For example:
+<pre>
+  Conditional jump or move depends on uninitialised value(s)
+     at 0x402DFA94: _IO_vfprintf (_itoa.h:49)
+     by 0x402E8476: _IO_printf (printf.c:36)
+     by 0x8048472: main (tests/manuel1.c:8)
+     by 0x402A6E5E: __libc_start_main (libc-start.c:129)
+
+</pre>
+
+<p>An uninitialised-value use error is reported when your program uses
+a value which hasn't been initialised -- in other words, is undefined.
+Here, the undefined value is used somewhere inside the printf()
+machinery of the C library.  This error was reported when running the
+following small program:
+<pre>
+  int main()
+  {
+    int x;
+    printf ("x = %d\n", x);
+  }
+</pre>
+
+<p>It is important to understand that your program can copy around
+junk (uninitialised) data to its heart's content.  Memcheck observes
+this and keeps track of the data, but does not complain.  A complaint
+is issued only when your program attempts to make use of uninitialised
+data.  In this example, x is uninitialised.  Memcheck observes the
+value being passed to _IO_printf and thence to _IO_vfprintf, but makes
+no comment.  However, _IO_vfprintf has to examine the value of x so it
+can turn it into the corresponding ASCII string, and it is at this
+point that Memcheck complains.
+
+<p>Sources of uninitialised data tend to be:
+<ul>
+  <li>Local variables in procedures which have not been initialised,
+      as in the example above.</li><p>
+
+  <li>The contents of malloc'd blocks, before you write something
+      there.  In C++, the new operator is a wrapper round malloc, so
+      if you create an object with new, its fields will be
+      uninitialised until you (or the constructor) fill them in, which
+      is only Right and Proper.</li>
+
+</ul>
+
+
+
+<h4>3.3.3&nbsp; Illegal frees</h4>
+For example:
+<pre>
+  Invalid free()
+     at 0x4004FFDF: free (vg_clientmalloc.c:577)
+     by 0x80484C7: main (tests/doublefree.c:10)
+     by 0x402A6E5E: __libc_start_main (libc-start.c:129)
+     by 0x80483B1: (within tests/doublefree)
+     Address 0x3807F7B4 is 0 bytes inside a block of size 177 free'd
+     at 0x4004FFDF: free (vg_clientmalloc.c:577)
+     by 0x80484C7: main (tests/doublefree.c:10)
+     by 0x402A6E5E: __libc_start_main (libc-start.c:129)
+     by 0x80483B1: (within tests/doublefree)
+</pre>
+<p>Memcheck keeps track of the blocks allocated by your program with
+malloc/new, so it can know exactly whether or not the argument to
+free/delete is legitimate or not.  Here, this test program has
+freed the same block twice.  As with the illegal read/write errors,
+Memcheck attempts to make sense of the address free'd.  If, as
+here, the address is one which has previously been freed, you wil
+be told that -- making duplicate frees of the same block easy to spot.
+
+
+<h4>3.3.4&nbsp; When a block is freed with an inappropriate
+deallocation function</h4>
+
+In the following example, a block allocated with <code>new[]</code>
+has wrongly been deallocated with <code>free</code>:
+<pre>
+  Mismatched free() / delete / delete []
+     at 0x40043249: free (vg_clientfuncs.c:171)
+     by 0x4102BB4E: QGArray::~QGArray(void) (tools/qgarray.cpp:149)
+     by 0x4C261C41: PptDoc::~PptDoc(void) (include/qmemarray.h:60)
+     by 0x4C261F0E: PptXml::~PptXml(void) (pptxml.cc:44)
+     Address 0x4BB292A8 is 0 bytes inside a block of size 64 alloc'd
+     at 0x4004318C: __builtin_vec_new (vg_clientfuncs.c:152)
+     by 0x4C21BC15: KLaola::readSBStream(int) const (klaola.cc:314)
+     by 0x4C21C155: KLaola::stream(KLaola::OLENode const *) (klaola.cc:416)
+     by 0x4C21788F: OLEFilter::convert(QCString const &amp;) (olefilter.cc:272)
+</pre>
+The following was told to me be the KDE 3 developers.  I didn't know
+any of it myself.  They also implemented the check itself.
+<p>
+In C++ it's important to deallocate memory in a way compatible with
+how it was allocated.  The deal is:
+<ul>
+<li>If allocated with <code>malloc</code>, <code>calloc</code>,
+    <code>realloc</code>, <code>valloc</code> or
+    <code>memalign</code>, you must deallocate with <code>free</code>.
+
+<li>If allocated with <code>new[]</code>, you must deallocate with
+    <code>delete[]</code>.
+<li>If allocated with <code>new</code>, you must deallocate with
+    <code>delete</code>.
+</ul>
+The worst thing is that on Linux apparently it doesn't matter if you
+do muddle these up, and it all seems to work ok, but the same program
+may then crash on a different platform, Solaris for example.  So it's
+best to fix it properly.  According to the KDE folks "it's amazing how
+many C++ programmers don't know this".  
+<p>
+Pascal Massimino adds the following clarification:
+<code>delete[]</code> must be called associated with a
+
+<code>new[]</code> because the compiler stores the size of the array
+and the pointer-to-member to the destructor of the array's content
+just before the pointer actually returned.  This implies a
+variable-sized overhead in what's returned by <code>new</code> or
+<code>new[]</code>.  It rather surprising how compilers [Ed:
+runtime-support libraries?] are robust to mismatch in
+<code>new</code>/<code>delete</code>
+<code>new[]</code>/<code>delete[]</code>.
+
+
+<h4>3.3.5&nbsp; Passing system call parameters with inadequate
+read/write permissions</h4>
+
+Memcheck checks all parameters to system calls.  If a system call
+needs to read from a buffer provided by your program, Memcheck checks
+that the entire buffer is addressible and has valid data, ie, it is
+readable.  And if the system call needs to write to a user-supplied
+buffer, Memcheck checks that the buffer is addressible.  After the
+system call, Memcheck updates its administrative information to
+precisely reflect any changes in memory permissions caused by the
+system call.
+
+<p>Here's an example of a system call with an invalid parameter:
+<pre>
+  #include &lt;stdlib.h>
+  #include &lt;unistd.h>
+  int main( void )
+  {
+    char* arr = malloc(10);
+    (void) write( 1 /* stdout */, arr, 10 );
+    return 0;
+  }
+</pre>
+
+<p>You get this complaint ...
+<pre>
+  Syscall param write(buf) contains uninitialised or unaddressable byte(s)
+     at 0x4035E072: __libc_write
+     by 0x402A6E5E: __libc_start_main (libc-start.c:129)
+     by 0x80483B1: (within tests/badwrite)
+     by &lt;bogus frame pointer> ???
+     Address 0x3807E6D0 is 0 bytes inside a block of size 10 alloc'd
+     at 0x4004FEE6: malloc (ut_clientmalloc.c:539)
+     by 0x80484A0: main (tests/badwrite.c:6)
+     by 0x402A6E5E: __libc_start_main (libc-start.c:129)
+     by 0x80483B1: (within tests/badwrite)
+</pre>
+
+<p>... because the program has tried to write uninitialised junk from
+the malloc'd block to the standard output.
+
+<h4>3.3.6&nbsp; Overlapping source and destination blocks</h4>
+The following C library functions copy some data from one memory block
+to another (or something similar): <code>memcpy()</code>,
+<code>strcpy()</code>, <code>strncpy()</code>, <code>strcat()</code>,
+<code>strncat()</code>.  The blocks pointed to by their <code>src</code> and
+
+<code>dst</code> pointers aren't allowed to overlap.  Memcheck checks
+for this.
+<p>
+For example:
+<pre>
+==27492== Source and destination overlap in memcpy(0xbffff294, 0xbffff280, 21)
+==27492==    at 0x40026CDC: memcpy (mc_replace_strmem.c:71)
+==27492==    by 0x804865A: main (overlap.c:40)
+==27492==    by 0x40246335: __libc_start_main (../sysdeps/generic/libc-start.c:129)
+==27492==    by 0x8048470: (within /auto/homes/njn25/grind/head6/memcheck/tests/overlap)
+==27492== 
+</pre>
+<p>
+You don't want the two blocks to overlap because one of them could get
+partially trashed by the copying.
+
+</body>
+</html>

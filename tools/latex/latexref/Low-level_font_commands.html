@@ -1,0 +1,102 @@
+<HTML>
+<!-- created Thu Apr 9 23:20:43 MET DST 1998
+ from ../latex2e.texi line 5129 via texi2www -->
+<HEAD>
+<TITLE>Low-level font commands</TITLE>
+<LINK REL="Precedes" HREF="">
+<LINK REV="Precedes" HREF="Sizes.html">
+<LINK REV="Subdocument" HREF="Typefaces.html">
+</HEAD><BODY><P>
+<A HREF="Sizes.html"><IMG ALIGN=MIDDLE SRC="prev-arrow.gif" ALT="PREV"></A>
+<A HREF="Typefaces.html"> <IMG ALIGN=MIDDLE SRC="up-arrow.gif" ALT="UP"></A>
+<A><IMG ALIGN=MIDDLE SRC="missing-arrow.gif" ALT="next"></A>
+<CITE>LaTeX2e help 1.6</CITE></P>
+<H3>2.23.3: Low-level font commands</H3>
+<P>
+These commands are primarily intended for writers of macros and
+packages.  The commands listed here are only a subset of the available
+ones. For full details, you should consult Chapter 7 of <CITE>The LaTeX Companion</CITE>.
+</P>
+<TABLE>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\fontencoding{enc}</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+Select font encoding. Valid encodings include <CODE>OT1</CODE> and <CODE>T1</CODE>.
+</P>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\fontfamily{family}</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+Select font family. Valid families include:
+</P>
+<UL>
+<LI><CODE>cmr</CODE>  for Computer Modern Roman
+<LI><CODE>cmss</CODE> for Computer Modern Sans Serif
+<LI><CODE>cmtt</CODE> for Computer Modern Typewriter
+</UL>
+
+<P>
+and numerous others.
+</P>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\fontseries{series}</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+Select font series. Valid series include:
+</P>
+<UL>
+<LI><CODE>m</CODE>  Medium (normal)
+<LI><CODE>b</CODE>  Bold
+<LI><CODE>c</CODE>  Condensed
+<LI><CODE>bc</CODE> Bold condensed
+<LI><CODE>bx</CODE> Bold extended
+</UL>
+
+<P>
+and various other combinations.
+</P>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\fontshape{shape}</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+Select font shape. Valid shapes are:
+</P>
+<UL>
+<LI><CODE>n</CODE>  Upright (normal)
+<LI><CODE>it</CODE> Italic
+<LI><CODE>sl</CODE> Slanted (oblique)
+<LI><CODE>sc</CODE> Small caps
+<LI><CODE>ui</CODE> Upright italics
+<LI><CODE>ol</CODE> Outline
+</UL>
+
+<P>
+The two last shapes are not available for most font families.
+</P>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\fontsize{size}{skip}</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+Set font size. The first parameter is the font size to switch to; the
+second is the <CODE>\baselineskip</CODE> to use. The unit of both parameters
+defaults to pt. A rule of thumb is that the baselineskip should be 1.2
+times the font size.
+</P>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\selectfont</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+The changes made by calling the four font commands described above do
+not come into effect until <CODE>\selectfont</CODE> is called.
+</P>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\usefont{enc}{family}{series}{shape}</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+Equivalent to calling <CODE>\fontencoding</CODE>, <CODE>\fontfamily</CODE>,
+<CODE>\fontseries</CODE> and <CODE>\fontshape</CODE> with the given parameters, followed by <CODE>\selectfont</CODE>.
+</TD></TR>
+</TABLE>
+</P>
+</BODY></HTML>

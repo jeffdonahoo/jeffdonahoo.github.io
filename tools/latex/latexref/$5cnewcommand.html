@@ -1,0 +1,59 @@
+<HTML>
+<!-- created Thu Apr 9 23:20:43 MET DST 1998
+ from ../latex2e.texi line 631 via texi2www -->
+<HEAD>
+<TITLE>\newcommand</TITLE>
+<LINK REL="Precedes" HREF="$5cnewenvironment.html">
+<LINK REV="Precedes" HREF="Definitions.html">
+<LINK REV="Subdocument" HREF="Definitions.html">
+</HEAD><BODY><P>
+<A HREF="Definitions.html"><IMG ALIGN=MIDDLE SRC="prev-arrow.gif" ALT="PREV"></A>
+<A HREF="Definitions.html"> <IMG ALIGN=MIDDLE SRC="up-arrow.gif" ALT="UP"></A>
+<A HREF="$5cnewenvironment.html"><IMG ALIGN=MIDDLE SRC="next-arrow.gif" ALT="NEXT"></A>
+<CITE>LaTeX2e help 1.6</CITE></P>
+<H3>2.3.1: \newcommand</H3>
+<DL><DT><DD>
+<PRE>
+ \newcommand{cmd}[args]{definition}
+ \newcommand{cmd}[args][default]{definition}
+ \renewcommand{cmd}[args]{definition}
+ \renewcommand{cmd}[args][default]{definition}
+</PRE>
+</DL>
+<P>
+These commands define (or redefine) a command.
+</P>
+<TABLE>
+<TR><TD VALIGN=TOP><CODE>cmd</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+A command name beginning with a <CODE>\</CODE>.  For <CODE>\newcommand</CODE> it
+must not be already defined and must not begin with <CODE>\end</CODE>; for
+<CODE>\renewcommand</CODE> it must already be defined.
+</P>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>args</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+An integer from 1 to 9 denoting the number of arguments of the command
+being defined.  The default is for the command to have no arguments.
+</P>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>def</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+If this optional parameter is present, it means that the command's first
+argument is optional. The default value of the optional argument is
+<CODE>def</CODE>.
+</P>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>definition</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+The text to be substituted for every occurrence of <CODE>cmd</CODE>; a
+parameter of the form <CODE>#n</CODE> in <CODE>cmd</CODE> is replaced by the text of
+the nth argument when this substitution takes place.
+</P>
+</TD></TR>
+</TABLE>
+</BODY></HTML>

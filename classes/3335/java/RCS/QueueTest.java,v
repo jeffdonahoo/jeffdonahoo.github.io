@@ -1,0 +1,60 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2014.11.05.15.31.17;	author donahoo;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2013.09.09.17.58.08;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@<>
+@
+text
+@import java.util.Queue;
+import java.util.LinkedList;
+
+public class QueueTest {
+
+  public static void main(String args[]) {
+
+    Queue<Person> q = new LinkedList<>();
+
+    if (!q.offer(new Person("Bob Smith"))) System.out.println("Add 1 failed");
+    if (!q.offer(new Child("Jane Doe", 5))) System.out.println("Add 2 failed");
+    if (!q.offer(new Person("Bob Jones"))) System.out.println("Add 3 failed");
+
+    while (!q.isEmpty()) {
+      System.out.println(q.remove());
+    }
+  }
+}
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 2
+a2 1
+import java.util.*;
+d8 1
+a8 1
+    Queue<Person> q = new LinkedList<Person>();
+@

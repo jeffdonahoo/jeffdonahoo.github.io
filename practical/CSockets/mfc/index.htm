@@ -1,0 +1,58 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>MFC Sockets</title>
+</head>
+
+<body>
+
+<h1>MFC Socket</h1>
+<p>The MFC CSocket provides a wrapper for the Berkeley C Socket API for TCP and
+UDP sockets. <font size="3">CSocket is a derived class of CAsyncSocket. It
+encapsulates the details of a C socket and thus makes life much easier for
+Windows socket programmers. CSocket can implement both blocking/synchronous and
+unblocking/asynchronous sockets. In this site, you can find a number of
+networking programs we wrote.<span style="mso-spacerun: yes"> Below is a list of
+these programs. </span></font></p>
+<ul>
+  <li>&nbsp;TCP CSocket Examples
+    <ul>
+      <li><a href="TCPEchoClient.cpp">TCPEchoClient.cpp</a> - Implements a
+        simple TCP echo client. It first connects to a TCP echo server, and then
+        it sends and receives an echo word supplied by the user on the command
+        line.</li>
+      <li><a href="TCPEchoServer.cpp">TCPEchoServer.cpp</a> - Implements an
+        iterative TCP echo server.
+      <li><a href="TCPEchoServer-Thread.cpp">TCPEchoServer-Thread.cpp</a> -
+        Implements a simple threaded TCP echo server, which spawns a new thread
+        for each client. </li>
+      <li><a href="HandleTCPClient.cpp">HandleTCPClient.cpp</a> -
+        Function to handle a single client connection for the echo servers. </li>
+    </ul>
+  <li>UDP CSocket Examples
+    <ul>
+      <li><a href="UDPEchoClient.cpp">UDPEchoClient.cpp</a> - Implements a
+        simple UDP echo client. It first connects to a UDP echo server, and then
+        it sends and receives an echo word supplied by the user on the command
+        line.
+      <li><a href="UDPEchoServer.cpp">UDPEchoServer.cpp</a> - Implements a
+        simple UDP echo server.</li>
+    </ul>
+  <li>Utility Program&nbsp; 
+    <ul>
+      <li><a href="DieWithError.cpp">DieWithError.cpp</a> - Handles errors and
+        exits a program on errors.
+    </ul>
+  </li>
+  <li>Make sure to read the <a href="README.txt">README.txt</a> file for
+    compilation instructions.</li>
+  <li>Click <a href="detail.htm">here</a> to get more detailed information about
+    the above programs.</li>
+</ul>
+
+</body>
+
+</html>

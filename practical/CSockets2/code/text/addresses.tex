@@ -1,0 +1,764 @@
+% OUTLINE
+% 1.1  IP Version Independence
+%        TCPEchoClient/Server.c
+% 1.2  Finding Information By Name
+% 1.3  Advanced Name Resolution
+% 1.4  Identifying Endpoints
+%        getpeer/sockname() - Moved earlier?
+	
+\chapter{Of Names and Address Families}
+\label{chap:addrindep}
+
+At this point, you know enough to build working TCP clients and servers.
+However, our examples so far, while useful enough, nevertheless have a
+couple of 
+features that could be improved.  First, \emph{the only way to specify a
+destination is with an IP address},
+like ``169.1.1.1'' or ``FE80:1034::2A97:1001:1''.
+This is a bit painful for most humans, who are---let's face it---not
+that good at dealing with long strings of numbers that have to be
+formatted just right.
+That's why most applications allow the use of \emph{names\/}
+like ``www.mkp.com'' and ``server.example.com'' to specify
+destinations, in addition to Internet Addresses.
+%
+But the Sockets API, as we've seen, \emph{only\/} takes numerical
+arguments so applications need a way to convert names to
+the required numerical form.
+
+Another problem with our examples so far is that \emph{the choice whether
+to use IPv4 or IPv6 is wired into the code}---each progam we've seen
+deals with only \emph{one\/} version of the IP protocol.  That was
+by design---to keep things simple.  But wouldn't it be better
+if we could \emph{hide\/} this choice from the rest of the
+code, letting the argument(s) determine whether to a socket for IPv4
+or IPv6 is created?
+
+It turns out that the API provides solutions to
+both of these problems---and more!
+In this chapter we'll see how to
+(i)~access the \emph{name service\/} to convert between names and
+numeric quantities; and (ii)~write code that
+chooses between IPv4 and IPv6 at run time.
+%
+%Before we proceed, however, note that we'll be dealing with
+%a rather complex interface.  We'll therefore introduce its use gradually,
+%ignoring some of its functionality (and input parameters) at first.
+
+% old text...
+%% you have some tough decisions to make.  One major decision is IPv4
+%% vs. IPv6.  As we write this book, IPv4 is still the dominant protocol
+%% of the Internet; however, as we pointed out in Chapter~\ref{chap:intro},
+%% IPv6 is making inroads and most hosts are already IPv6-ready.  Even
+%% after you've resolved your IP version question, what about address and
+%% port?  As an Internet end-user, you probably rarely, if ever, use
+%% addresses directly; instead, you refer to names (e.g., google.com).
+%% As for ports, most Internet end-users have never heard of them.  In
+%% this chapter, we'll explore mechanisms to create clients and servers
+%% that are oblivious to IP protocol version and even IP addresses and
+%% ports.
+
+\section{Mapping Names to Numbers}
+
+% XXX Kill this?
+Identifying endpoints with strings of dot- or
+colon-separated numbers is not very user-friendly, but that's not the
+only reason to prefer names over addresses.
+Another is that a host's Internet address is tied to the part of the
+network to which it is connected.  This is a source of inflexibility:
+If a host moves to another network or changes Internet service
+providers (ISPs), its Internet address generally has to change.
+Then everybody who refers to the host by that address has to
+be informed of the change, or they won't be able to access the host!
+When this book was written, the Web server for the
+publisher of this text, Morgan Kaufmann, had an Internet address of
+129.35.69.7.  However, we invariably refer to that Web server as \mkpweb.
+Obviously, \mkpweb\ is easier to remember than 129.35.69.7.
+In fact, most likely this is how you typically think of specifying a
+host on the Internet, by name.  In addition, if Morgan Kaufmann's Web
+server changes its Internet address for some reason (e.g., new ISP,
+server moves to another machine), simply changing the mapping of
+www.mkp.com from 129.35.69.7 to the new Internet address
+allows the change to be transparent to all
+programs that use the name to identify the Web server\footnote{MK's 
+address was actually 208.164.121.48 when we wrote the first edition.
+Presumably they changed their address to help us make this point.}.
+%One final
+%advantage of using names is ability to map a single name to multiple addresses
+%as one way to improve service scalability and robustness.
+%As your web service becomes more and more popular, you can distribute
+%it across multiple servers.  When an end user application accesses the service
+%by name, it can randomly select one of the possible addresses, providing
+%a primitive form of load distribution.  In addition, if one of the servers
+%fail or the network is partitioned, the end user application can simply try
+%other addresses in the list until one works.
+
+To solve these problems, most implementations of the sockets API
+provide access to a \emph{name service} that maps names to other
+information, including Internet addresses.  You've already seen names
+that map to Internet addresses (``www.mkp.com'').  Names for services
+(e.g., ``echo'') can also be mapped to port numbers.
+%
+The process of mapping a name to a numeric quantity (address or port
+number) is called \emph{resolution}.  There are a number of ways to
+resolve names into binary quantities; your system probably provides
+access to several of these.  Some of them involve interaction with
+other systems ``under the covers''; others are strictly local.
+
+It is critical to remember that \callout{a name service is not required for
+TCP/IP to work}.  Names simply provide a level of indirection, for the
+reasons discussed above.  The host naming service can
+access information from a wide variety of sources.  Two of the primary
+sources are the \emph{Domain Name System\/} (DNS) and local configuration
+databases.  The DNS~\cite{RFC1034} is a distributed database
+that maps \emph{domain names} such as ``www.mkp.com''
+to Internet addresses and other information; the
+DNS protocol~\cite{RFC1035} allows hosts connected to the Internet
+to retrieve information from that database using TCP or UDP.
+Local configuration databases are generally operating-system-specific
+mechanisms for name-to-Internet-address mappings.
+Fortunately for the programmer, the details of how the name
+service is \emph{implemented\/} are hidden behind the API, so
+the only thing we need to know is how to ask it to \emph{resolve\/} a
+name. 
+
+\subsection{Accessing the Name Service}
+
+The preferred interface to the
+name service interface is through the function
+\fcnsys{getaddrinfo()}:\footnote{Historically, other functions
+were available for this purpose, and many applications still use them.
+However, they have several shortcomings and are considered
+obsolescent as of the POSIX 2001 standard.}
+%
+
+\begin{inlinefcn}
+\type{int} \fcnsys{getaddrinfo} (\type{const char *}\param{hostStr},
+\type{const char *}\param{serviceStr},\\
+\hspace*{1.1in} \type{const struct addrinfo *}\param{hints},
+\type{struct addrinfo **}\param{results});
+\end{inlinefcn}
+
+The first two arguments to \fcn{getaddrinfo()} point to
+null-terminated character strings representing a host name or address and a
+service name or port number, respectively.
+The third argument describes the kind of information to be
+returned; we discuss it below.
+The last argument is the location of a \type{struct addrinfo} pointer,
+where a pointer to a linked list containing results will be stored.
+The return value of \fcn{getaddrinfo()} indicates whether the
+resolution was
+successful (0) or unsuccessful (nonzero error code).
+
+Using \fcn{getaddrinfo()} entails using two other auxiliary functions:
+
+\begin{inlinefcn}
+%
+\type{void }\fcnrefsys{freeaddrinfo(\typesys{struct addrinfo
+    *}\param{addrList})};\\
+%
+\type{const char *}\fcnrefsys{gai\_strerror(\type{int} \param{errorCode})};
+\end{inlinefcn}
+
+\noindent \fcnsys{getaddrinfo()} creates a dynamically allocated linked list of 
+results, which must be deallocated but only after the caller is
+finished with the list.  Given the pointer to the head of the result list, 
+\fcnsys{freeaddrinfo()} frees all the storage
+allocated for the list.  Failure to call this method
+can result in a pernicious memory leak.  The method \callout{should only be
+called when the program is finished with the returned
+information}; no information contained in the list of results is
+reliable after this function has returned.
+%
+In case \fcn{getaddrinfo()} returns a nonzero (error) value,
+passing it to
+\fcnsys{gai\_strerror()} yields a string that describes what went wrong.
+
+Generally speaking, \fcn{getaddrinfo()}
+takes the name of a host/service pair as input,
+and returns a linked list of structures containing everything needed
+to create a socket to connect to the named host/service, including:
+address/protocol family (v4 or v6), socket type
+(e.g. stream or datagram), protocol (TCP or UDP for the Internet
+protocol family), and numeric socket address.
+%
+Each entry in the linked list is placed
+into an \type{addrinfo} structure, declared as follows:
+%
+\begin{inlinecode}
+struct addrinfo {
+  int ai_flags;             // Flags to control info resolution
+  int ai_family;            // Family:  AF_INET, AF_INET6, AF_UNSPEC
+  int ai_socktype;          // Socket type:  SOCK_STREAM, SOCK_DGRAM
+  int ai_protocol;          // Protocol: 0 (default) or IPPROTO_XXX
+  socklen_t ai_addrlen;     // Length of socket address ai_addr
+  struct sockaddr *ai_addr; // Socket address for socket
+  char *ai_canonname;       // Canonical name
+  struct addrinfo *ai_next; // Next addrinfo in linked list
+};
+\end{inlinecode}
+%
+The \type{ai\_sockaddr} field contains a \type{sockaddr} of the
+appropriate type, with (numeric) address and port information filled in.
+It should be obvious which fields contain
+the address family, socket type, and protocol information. (The flags
+field is not used in the result; we will discuss its use shortly.)
+Actually, the results are returned in a pointer to a linked list of
+\type{addrinfo}
+structures; the \varsys{ai\_next} field contains the pointers for this list.
+
+Why a linked list?  Two reasons.  First, for each combination of
+host and service, there might be several different combinations of
+address family (v4 or v6) and socket type/protocol (stream/TCP or
+datagramUDP) that represent possible endpoints.  For example, the host
+``server.example.net'' might have instances of the ``spam'' service
+listening on port 1001 on both IPv4/TCP and IPv6/UDP.  The \fcn{getaddrinfo()}
+function returns both of these.  The second reason is that
+a hostname can map to multiple IP addresses; \fcn{getaddrinfo()}
+helpfully returns all of these.
+
+Thus, \fcn{getaddrinfo()} returns all the viable combinations for a given
+hostname, service pair.
+But wait---what if you don't \emph{need} options,
+and you know exactly what you want in advance?
+You don't want to have to write code that searches through the
+returned list for a particular combination---say, IPv4/TCP.
+That's where the third parameter of
+\fcn{getaddrinfo()} comes in!  It allows you to tell the system to
+\emph{filter the results for you}.  We'll see how it is used in
+our example program, \file{GetAddrInfo.c}.
+
+\jcode{GetAddrInfo.c}{code/GetAddrInfo.c}{1}{1}
+
+\begin{topcode}
+
+\tlcitems{Application setup and parameter parsing}{8--12}
+
+\tlcitems{Construct address specification}{14--19}
+
+The \var{addrCriteria} structure will indicate
+what kinds of results we are interested in.
+
+\begin{bottomcode}
+
+\blcitems{Declare and initialize \typesys{addrinfo} structure}{15--16}
+
+\blcitem{Set address family}{17}
+
+We set the family to \constsys{af\_unspec}, which allows the returned
+address to come from any family (in particular, either
+\const{af\_inet} or \const{af\_inet6}).
+
+\blcitem{Set socket type}{18}
+
+We want a stream/TCP endpoint, so we set this to \const{sock\_stream}.
+The system will filter out results that use different protocols.
+
+\blcitem{Set protocol}{19}
+
+We want a TCP socket, so we set this to \constsys{ipprot\_tcp}.
+Since TCP is the default protocol for stream sockets, leaving this
+field zero would have the same result.
+
+\end{bottomcode}
+
+\tlcitems{Fetch address information}{21--26}
+
+\begin{bottomcode}
+
+\blcitem{Declare pointer for head of result linked list}{22}
+
+\blcitem{Call \fcnrefsys{getaddrinfo()}}{24}
+
+We pass the desired host name, port, and the constraints encoded in
+the \var{addrCriteria} structure.
+
+\blcitems{Check return value}{25--26}
+
+\fcnrefsys{getaddrinfo()} returns 0 if successful.  Otherwise, the
+return value indicates the specific error.
+The auxiliary function \fcnrefsys{gai\_strerror()} returns a character string
+error message explaining the given error return value.  Note that
+these messages are different from the normal \varsys{errno}-based messages.
+
+\end{bottomcode}
+
+\tlcitems{Print addresses}{28--32}
+
+Iterate over the linked list of addresses, printing each to the console.  
+The function
+\fcnref{PrintSocketAddress()} takes an address to print and the stream
+on which to print. We present its code, which is in
+\file{AddressUtility.c}, later in this chapter.
+
+\tlcitem{Free address linked list}{34}
+
+The system allocated storage for the linked list of
+\typesys{addrinfo} structures it returned (if any).
+We must call the auxiliary function \fcnrefsys{freeaddrinfo()} to free that
+memory when we are finished with it.
+
+\end{topcode}
+
+The program \file{GetAddrInfo.c} takes two command-line parameters, a
+host name (or address) and a service name (or port number), and prints
+the address information returned by \fcn{getaddrinfo()}.
+Suppose you want to find an address for the service named ``whois'' on
+the host named ``localhost'' (i.e., the one you are running on).
+Here's how you use it:
+%
+\begin{shell}
+\prompt \typed{GetAddrInfo localhost whois} \\
+\response{127.0.0.1-43}
+\end{shell}
+To find the service ``whois'' on the host
+``pine.netlab.uky.edu'', do this:
+
+\begin{shell}
+\prompt \typed{GetAddrInfo pine.netlab.uy.edu whois} \\
+\response{128.163.140.219-43}
+\end{shell}
+%
+The program can deal with any combination of name and numerical
+arguments:
+\begin{shell}
+\prompt \typed{GetAddrInfo 169.1.1.100 time}\\
+\response{169.1.1.100-37}\\
+\prompt \typed{GetAddrInfo
+  FE80:0000:0000:0000:0000:ABCD:0001:0002:0003 12345}\\
+\response{fe80::abcd:1:2:3-12345}
+\end{shell}
+These examples all return a single answer.  But as we noted above,
+some names have multiple numeric addresses associated with them.
+For example, ``google.com'' is typically associated with a number of
+Internet addresses.  This allows a service (e.g., search
+engine) to be placed on multiple hosts.
+Why do this?  One reason is robustness.
+If any single host fails, the service continues because the client can
+use any of the hosts providing the service.  Another advantage is
+scalability.  If clients randomly select the numeric address (and
+corresponding host) to use, we can spread the load over multiple
+servers.  The good news is that \fcnrefsys{getaddrinfo()}
+returns \emph{all\/} of the addresses
+to which a name maps.  You can experiment with this by
+executing the program with the names of popular web sites.
+(Note that using 0 for the second argument causes only the address
+information to be printed.)
+
+\subsection{Details, Details}
+\label{sect:gaiadv}
+As we noted above, \fcn{getaddrinfo()} is a something of a ``Swiss
+Army Knife'' function.  We'll cover some of the subtleties of
+its capabilities here.
+%
+Beginning readers may wish to skip this section and come back
+to it later.
+
+The third argument (\type{addrinfo} structure) tells the system what
+kinds of endpoints the caller is interested in.  In
+\file{GetAddrInfo.c}, we set this parameter to indicate
+that any address family was acceptable,
+and we wanted a stream/TCP socket.  We could've specified
+datagram/UDP instead, or specified a particular address family (say,
+\const{af\_inet6}), or we could have set the \varsys{ai\_socktype} and
+\var{ai\_protocol} fields to zero, indicating that we wanted to
+receive \emph{all\/} possibilities.  It is even possible to pass a
+NULL pointer for the third argument; the system is supposed to treat
+this case as if an \type{addrinfo} structure had been passed with
+\var{ai\_family} set to \constsys{af\_unspec} and everything else set
+to 0.
+
+
+The \var{ai\_flags} field in the third parameter provides
+additional control over the behavior of \fcnrefsys{getaddrinfo()}.
+It is an integer, individual bits of which are interpreted as boolean
+variables by the system.  The meaning of each flag is given below;
+flags can be combined 
+using the bitwise OR operator ``$\mid$'' (see Section~\ref{sect:bitdiddling} for
+how to do this).
+
+\begin{description}
+% XXXX I changed all these to capitals, because small caps was not
+% working in the arguments to \item.
+\item[AI\_PASSIVE]
+If \param{hostStr} is NULL when this flag is set, any returned 
+\typesys{addrinfo}s will
+have their addresses set to the appropriate ``any'' address
+constant---\constsys{inaddr\_any} (IPv4) 
+or \constsys{in6addr\_any\_init} (IPv6).
+
+\item[AI\_CANONNAME]
+Just as one name can
+resolve to many numeric addresses, multiple names can resolve to the
+same IP address.
+%
+However, one name is usually defined to be the official
+(``canonical'') name.  By setting this flag in \varsys{ai\_flags}, 
+we instruct \fcn{getaddrinfo()} to
+return a pointer to the canonical name (if it exists) in
+the \typesys{ai\_canonname} field of the first \typesys{struct addrinfo} of
+the address linked list.
+
+\item[AI\_NUMERICHOST] 
+This flag causes an error to be returned if
+\param{hostStr} does not point to a string in valid numeric address
+format.  Without this flag,
+if the \param{hostStr} parameter points to something that is not a
+valid string representation of a numeric address,
+an attempt will be made to resolve it via the name system; this can
+waste time and bandwidth on useless queries to the name service.
+If this flag is set, a given valid address string is simply converted and
+returned, a la \fcnsys{inet\_pton()}.
+
+\item[AI\_ADDRCONFIG]
+If set, \fcn{getaddrinfo()} returns addresses of a particular
+family only if the system has an interface configured for that
+family.  So an IPv4 address would be returned only if the system has
+an interface with an IPv4 address, and similarly for IPv6.
+
+\item[AI\_V4MAPPED]
+If the \varsys{ai\_family} field contains \const{af\_inet6}, and
+no matching IPv6 addresses are found,
+then \fcnrefsys{getaddrinfo()} returns IPv4-mapped IPv6 addresses.
+This is a technique that can be used to provide limited interoperation
+between IPv4-only and IPv6 hosts.
+% XXX elaborate
+\end{description}
+
+\section{Writing Address-Generic Code}
+\label{sect:address-independence}
+
+A famous bard once wrote ``To v6 or not to v6, that is the question.''
+Fortunately, the Socket interface allows us to postpone answering that
+question until execution time.  In our earlier TCP client and server
+examples, we specified a particular IP protocol version to both the socket
+creation and address string conversion functions using
+\constsys{af\_inet} or \constsys{af\_inet6}.  However,
+\fcnsys{getaddrinfo()} allows us to write code
+that works with either address family, without having to
+duplicate steps for each version.  In this section we'll use
+its capabilities to modify our version-specific client and server
+code to make them generic.
+
+Before we do that, here's
+a handy little method that prints a socket address
+(of either flavor).
+Given a \type{sockaddr} structure containing an IPv4 or IPv6 address,
+it prints the address to the given output stream, using the proper
+format for its address family.
+Given any other kind of address, it prints an error string.
+This function takes a generic \typesys{struct sockaddr}
+pointer and prints the address to the specified stream.  You can find
+our implementation of \fcnref{PrintSocketAddr()} in \file{AddressUtility.c}
+with the function prototype included in \file{Practical.h}.
+
+\jcode[38]{PrintSocketAddr()}{code/AddressUtility.c}{1}{6}
+
+\subsection{Generic TCP Client}
+
+Using \fcnrefsys{getaddrinfo()}, we can write clients
+and servers that are not specific to one IP version or the other.
+Let's begin by converting our TCP client to make it
+version-independent; we'll drop the version number and
+call it \file{TCPEchoClient.c}.
+The general strategy is to set up arguments to \fcn{getaddrinfo()}
+that make it return both IPv4 and IPv6 addresses and use the
+first address that works.
+% XXXX persistent client
+Since our address search functionality may be useful elsewhere, we factor
+out the code responsible for creating
+and connecting the client socket, placing it in a separate function,
+\fcnref{SetupTCPClientSocket()}, in TCPClientUtility.c.  The setup function
+takes a host and service, specified in a string, and returns a connected
+socket (or -1 on failure).  The host or service may be specified as NULL.
+
+\jcode{TCPClientUtility.c}{code/TCPClientUtility.c}{1}{1}
+
+\begin{topcode}
+
+\tlcitems{Resolve the host and service}{10--20}
+
+The criteria we pass to \fcn{getaddrinfo()}
+specifies that we don't care which protocol is used
+(\constsys{af\_unspec}), but the socket address is for TCP 
+(\constsys{sock\_stream}/\constsys{ipproto\_tcp}).  
+
+\tlcitems{Attempt to create and connect a socket from the list of addresses}{22-40}
+
+\begin{bottomcode}
+
+\blcitems{Create appropriate socket type}{25--27}
+
+\fcnrefsys{getaddrinfo()} returns the matching domain (\constsys{af\_inet}
+or \constsys{af\_inet6}) and socket type/protocol.  We pass this
+information on to \fcnrefsys{socket()} when creating the new socket.
+If the system cannot create a socket of the specified type, we move on
+to the next address.
+
+\blcitems{Connect to specified server}{30--34}
+
+We use the address obtained from \fcnrefsys{getaddrinfo()} to attempt to 
+connect to the server.  If the connection succeeds, we exit the address
+search loop.  If the connection fails, we close the socket and
+try the next address.
+
+\end{bottomcode}
+
+\tlcitem{Free address list}{37}
+
+To avoid a memory leak, we need to free the address linked list created by
+\fcnrefsys{getaddrinfo()}.
+
+\tlcitem{Return resulting socket descriptor}{38}
+
+If we succeed in creating and connecting a socket, return the socket descriptor.
+If no addresses succeeded, return -1.
+
+\end{topcode}
+
+\jcode{TCPEchoClient.c}{code/TCPEchoClient.c}{1}{1}
+
+After socket creation, the remainder of the program is identical to the 
+version-specific clients.
+There is one caveat that must be mentioned with respect to this code.
+In line~25 of \fcnref{SetupTCPClientSocket()}, we pass the 
+\varsys{ai\_family} field of the returned \type{addrinfo} structure 
+as the first  argument to \fcnrefsys{socket()}.
+Strictly speaking, this value identifies an
+\emph{address family} (\constsys{af\_xxx},
+whereas the first argument of \fcn{socket}
+indicates the desired \emph{protocol family\/} of the socket
+(\constsys{pf\_xxx}).
+In all implementations with which we have experience, these two
+families are interchangeable---in particular \constsys{af\_inet}
+and \constsys{pf\_inet} are defined to have the same value, as are
+\constsys{pf\_inet6} and \constsys{af\_inet6}.
+%
+% XXX why doesn't this work??
+\callout{Our generic code depends on this fact.}
+%
+The authors contend that these definitions will not change, but
+\label{page:AFPFassumpt}
+feel that full disclosure of this assumption (which allows more
+concise code) is important.
+Elimination of this assumption is straightforward enough to be left as
+an exercise.
+
+\subsection{Generic TCP Server}
+
+Our protocol-independent TCP echo server uses similar adaptations to
+those in the client.
+%
+Recall that the typical server binds to \emph{any} available local
+address.  To accomplish this, we (1) specify the \constsys{ai\_passive}
+flag and (2) specify \constsys{null} for the hostname.  Effectively,
+this gets an address suitable for passing to \fcnrefsys{bind()},
+including a wildcard for the local IP
+address---\constsys{inaddr\_any} for IPv4 or
+\constsys{in6addr\_any} for IPv6).  For systems that support
+\emph{both\/} IPv4 and IPv6, IPv6 will generally be returned
+first by \fcn{getaddrinfo()}, because it offers more options for
+interoperability.  Note, however, that the problem of
+which options should be selected to maximize connectivity depends on
+the particulars of the environment in which the server operates---from
+its name service to its Internet Service Provider.
+\callout{The approach we present here is essentially
+the simplest possible, and is likely not adequate for production servers
+that need to operate across a wide variety of platforms.}
+See the next section for additional information.
+
+Like in our protocol-independent client, we've factored out establishing a socket
+into a separate function, \fcnref{SetupTCPServerSocket()}, in \file{TCPServerUtility.c}.
+This setup function iterates over the addresses returned from \fcnref{getaddrinfo()},
+stopping when it can successfully bind and listen or when it's out of addresses.
+
+\jcode[51]{SetupTCPServerSocket()}{code/TCPServerUtility.c}{1}{8}
+
+\noindent We also factor out handling accepting client connections into a separate
+function, \fcnref{AcceptTCPConnection()}, in \file{TCPServerUtility.c}.
+
+\jcode[54]{AcceptTCPConnection()}{code/TCPServerUtility.c}{1}{8}
+
+\noindent Note that we use \fcnrefsys{getsockname()} to print the
+local socket address.  When you execute \file{TCPEchoServer.c}, it
+will print the wildcard local network address.  Finally, we use our new 
+functions in our protocol-independent echo server.
+
+\jcode{TCPEchoServer.c}{code/TCPEchoServer.c}{1}{1}
+
+\subsection{IPv4-IPv6 Interoperation}
+%
+Our generic client and server are oblivious to whether they are
+using IPv4 or IPv6 sockets.
+%
+An obvious question is ``What if one is
+using IPv4 and the other IPv6?''  The answer is that if
+(and only if) the program
+using IPv6 is a \emph{dual-stack\/} system---that is, supports
+\emph{both\/} verson 4 and version 6---they should be able to interoperate.
+%
+The existence of the special ``v4-to-v6-mapped'' address class makes
+this possible.  This mechanism allows an IPv6 socket to be connected to
+an IPv4 socket.  A full discussion of how the implications of this and
+how it works is beyond the scope of this book, but the basic idea is
+that the IPv6 implementation in a dual-stack system recognizes that
+communication is desired between an IPv4 address and an IPv6 socket,
+and translates the IPv4 address into a ``v4-to-v6-mapped'' address.
+Thus, each socket deals with an address in its own format.
+
+For example, if the client is a v4 socket and the server is listening
+on a v6 socket in a dual-stack platform, when the connection request
+comes in the server-side implementation
+will automatically do the conversion and tell the server
+that it is connected to a v6 socket with a v4-mapped address.
+(Note that there is a bit more to it than this; in particular the
+server side implementation will first try to match to a socket bound
+to a v4 address, and only do the conversion if it fails to find a
+match; see Chapter~\ref{chap:under} for more details.)
+
+If the server is listening on a v4 socket, the client is trying to
+connect from a v6 socket on a dual-stack platform, \emph{and\/} the
+client has not bound the socket to a particular address before calling
+\fcnrefsys{connet()}, the client-side
+implementation will recognize that it is connecting to an IPv4 address
+and assign a v4-mapped IPv6 address to the socket at \fcn{connect()} time.
+The stack will ``magically'' convert the assigned address to an IPv4
+address when the connection request is sent out.
+%
+Note  that, in both cases, the message that goes over the network is
+actually an IPv4 message.
+
+While the v4-mapped addresses provide a good measure of
+interoperability, the reality is that the space of possible scenarios
+is very large when one considers v4-only hosts, v6-only hosts, hosts
+that support IPv6 but have no configured IPv6 addresses, and hosts
+that support IPv6 and use it on the local network, but have no
+wide-area  IPv6 transport available (i.e., their providers do not
+support IPv6).   Although our example code---a client that
+tries all possibilities returned by \fcn{getaddrinfo()}, and a server
+that sets \constsys{ai\_passive} and
+binds to the first address returned by \fcn{getaddrinf()}---covers the
+most likely possibilities, \callout{production code
+needs to be very carefully designed to maximize the
+likelihood that clients and servers will find each other under all
+conditions}.  The details of achieving this are beyond the scope of
+this book; the reader should 
+refer to RFC~4038~\cite{RFC4038} for more details.
+
+\section{Getting Names from Numbers}
+
+So we can get an Internet address from a host name, but can we perform
+the mapping in the other direction (host name from an Internet
+address)?
+The answer is ``usually''.
+There is an ``inverse'' function called \fcnrefsys{getnameinfo()}, which
+takes a \typesys{sockaddr} address structure (really a \typesys{struct
+sockaddr\_in} for IPv4 and \typesys{struct sockaddr\_in6} for IPv6)
+and the address length. 
+The function returns a corresponding node and service name in the form
+of a null-terminated character string---if the mapping between the
+number and name is stored in the name system.
+%
+Callers 
+of \fcnrefsys{getnameinfo()} must preallocate the space for the node
+and service names and pass in a pointer and length for the space.  The maximum
+length of a node 
+or service name is given by the constants \constsys{NI\_MAXHOST} and
+\constsys{NI\_MAXSERV},  
+respectively.  If the caller specifies a length of 
+0 for node and/or service, \fcnrefsys{getnameinfo()} does not return
+the corresponding value. 
+This function returns 0 if successful and a non-zero value if failure.
+The non-zero failure return code can again be passed to
+\fcnrefsys{gai\_strerror()} to 
+get the corresponding error text string.
+
+\begin{inlinefcn}
+\type{int} \fcnrefsys{getnameinfo}(
+\type{const struct sockaddr *}\param{address},
+\type{socklen\_t} \param{addressLength},\\
+\hspace*{1.1in}\type{char *}\param{node}, \type{socklen\_t} \param{nodeLength},
+\type{char *} \param{service},\\
+\hspace*{1.1in}\type{socklen\_t}
+\param{serviceLength},\type{int} \param{flags})
+\end{inlinefcn}
+%
+As with \fcn{getaddrinfo()},
+several flags control the behavior of 
+\fcnrefsys{getnameinfo()}.  They are described below;
+% XXXX OROP
+as before, some of them can be combined using bit-wise OR (``$\mid$'').
+
+\begin{description}
+\item[NI\_NOFQDN]
+Return only the host name, not FQDN (``Fully Qualified Domain Name''), for
+local hosts.  (The FQDN contains all parts, for example
+``protocols.cs.uky.edu'', while the host name is only the first
+part, for example ``protocols''.)
+\item[NI\_NUMERICHOST]
+Return the numeric form of the address instead of the name.  This
+avoids potentially expensive name service lookups if you just want to use
+this service as a substitute for \fcnrefsys{inet\_ntop()}.
+\item[NI\_NUMERICSERV]
+Return the numeric form of the service instead of the name.
+\item[NI\_NAMEREQD]
+Return an error if a name cannot be found for the given address.
+Without this option, the numeric form of the address is returned.
+\item[NI\_DGRAM]
+Specifies datagram service; the default behavior assumes a stream
+service. In some cases, a service has different
+port numbers for TCP and UDP.
+\end{description}
+
+What if your program needs its own host's name?
+\fcnrefsys{gethostname()} takes a buffer and buffer length
+and copies the name of the host on which the calling program is running into
+the given buffer.
+
+\begin{inlinefcn}
+\type{int} \fcnrefsys{gethostname}(\type{char *}\param{nameBuffer}, 
+\type{size\_t} \param{bufferLength})
+\end{inlinefcn}
+
+\begin{exercises}
+\item
+\file{GetAddrInfo.c} requires two arguments.  How could you get it to
+resolve a service name if you don't know any host name?
+\item
+Modify \file{GetAddrInfo.c} to take an optional third argument,
+containing ``flags'' that are passed to \fcn{getaddrinfo()} in the
+\varsys{ai\_flags} field of the \varsys{addrinfo} argument.
+For example, passing ``-n'' as the third argument should result in the
+\varsys{ai\_numerichost} flag to be set.
+\item
+Does \fcn{getnameinfo()} work for IPv6 addresses as well as IPv4?
+What does it return when given the address ::1?
+\item
+Modify the generic \file{TCPEchoClient} and \file{TCPEchoServer} to
+eliminate the assumption mentioned on page~\pageref{page:AFPFassumpt}.
+\end{exercises}
+
+% XXX DEAD TEXT
+%% So if most network application users expect to use a name, how do we
+%% resolve a host name to a numeric address or a service name to a port number,
+%% as expected by the Sockets interface?  Well, it turns out that
+%% \fcnrefsys{getaddrinfo()} is something of a ``Swiss army knife'' of
+%% resolution functions: it can be used to resolve both host names like
+%% www.mkp.com, and service names, like ``echo''.
+%% So what must we do to make
+%% \file{GetAddrInfo.c}, \file{TCPEchoClient.c}, and
+%% \file{TCPEchoServer.c} take names?  Nothing!  Because we used
+%% \fcnrefsys{getaddrinfo()}, these applications already take either
+%% names or addresses.  executing these applications using names in place
+%% of numeric addresses.
+
+ 
+%% Perhaps because there is less need for the additional level of
+%% indirection, there is no global database that maps names to port
+%% numbers.  In UNIX, the information returned about the mapping between services
+%% and port numbers usually comes from a local database or the
+%% \file{/etc/services} file.  It is important to realize that
+%% this information
+%% may not be valid for a host that is managed by a different
+%% administration; however, it is arguably better than nothing.
+

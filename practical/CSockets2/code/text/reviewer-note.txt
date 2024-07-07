@@ -1,0 +1,32 @@
+Thanks for reviewing our manuscript.
+
+Please be warned that this version is still very drafty in places. In
+particular:
+
+0. The API section is not included.  We will probably include a
+   stripped-down version, since most people have online access to man
+   pages.  The idea is to include only the "value added" information
+   that is not in the man pages.
+
+1. Chapter 6 "Socket Programming" has not been updated at all.  We
+   plan to modify at least some of the code to handle IPv6, but
+   presently it contains many unresolved references.
+
+2. Line numbers are off in all the code commentaries.  Hope you can
+   ignore this.
+
+3. The code has not been extensively tested.  In particular it has not
+   been tested on many platforms.  If you see obvious problems,
+   obviously we'd like to hear about them.  (If you want the code, let
+   us know and we'll send you a tarball.)
+
+4. There are lots of formatting issues, but hopefully you can see
+   through that and get the meaning.
+
+We have extensively revised Chapters 1-5, and are especially
+interested in your comments on the new organization and presentation
+order.  If you have any questions, don't hesitate to ask.
+
+Again, we are grateful for your help!
+
+KLC & MJD

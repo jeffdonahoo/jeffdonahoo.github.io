@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+
+<table width="844" border="0" cellpadding="0" cellspacing="0">
+  <!--DWLayoutDefaultTable-->
+  <tr> 
+    <td width="94" height="50">&nbsp;</td>
+    <td width="125">&nbsp;</td>
+    <td width="85">&nbsp;</td>
+    <td width="91">&nbsp;</td>
+    <td width="141">&nbsp;</td>
+    <td width="95">&nbsp;</td>
+    <td width="82"></td>
+    <td width="131"></td>
+  </tr>
+  <tr> 
+    <td height="37">&nbsp;</td>
+    <td valign="top"><font size="+2" face="Verdana, Arial, Helvetica, sans-serif"><a href="installation.html">&lt;&lt;Prev</a></font></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td valign="top"><div align="center"><font size="+2" face="Verdana, Arial, Helvetica, sans-serif"><a href="tinyos.html">Home</a></font></div></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td valign="top"><div align="right"><font size="+2" face="Georgia, Times New Roman, Times, serif"><a href="tossim.html">Next&gt;&gt;</a></font></div></td>
+  </tr>
+  <tr> 
+    <td height="54">&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td colspan="3" valign="top"><div align="center"><font size="+3" face="Verdana, Arial, Helvetica, sans-serif">Mote 
+        Handling </font></div></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr> 
+    <td height="19">&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr> 
+    <td height="1250">&nbsp;</td>
+    <td colspan="7" valign="top"><font face="Verdana, Arial, Helvetica, sans-serif">Now 
+      that we have TinyOS set up, we can try and upload a few programs into the 
+      motes. This section deals with setting up the basic mote toolkit so that 
+      we can begin uploading programs to the motes and run them. 
+      <p>The basic toolkit comes with 3 mica2 motes, 2 sensor boards and an MIB510 
+        interface board. Notice that you can plug in the sensor boards into the 
+        mica2 motes. We won&#8217;t need the sensor boards for the initial setup 
+        though. </p>
+      <p>For uploading a program into a mote, do the following:<br>
+        - Go into the /opt/tinyos-1.x/apps/Blink folder. You should see a few 
+        .nc files and a Makefile. We use the Blink application to illustrate how 
+        to upload a NesC program to a mote.<br>
+        <br>
+        - Place the mote board into the bay on the MIB510. We recommend powering 
+        the MIB510 with a 3V supply to the connector on it(Batteries caused us 
+        a few problems). You should see the red LED on the MIB510 turned on at 
+        this point.<br>
+        <br>
+        - Plug the MIB510 into the serial port of the computer in which you have 
+        TinyOS installed(We used COM1).Turn the MIB510 on(there is a switch for 
+        doing that on the MIB510).</p>
+      <p>- To the Makerules file in /opt/tinyos-1.x/apps, set the radio frequency 
+        by adding the following line at the end of the file<br>
+        PFLAGS += -DCC1K_DEF_FREQ=916700000 . <br>
+        You might have to set the frequency to the appropriate value based on 
+        the motes you are using. The above value is specific to the configuration 
+        we mentioned above.<br>
+        <br>
+        - Type &#8216;MIB510=/dev/COM1 make mica2 install&#8217; at the command 
+        line. You should see something similar to the following:<br>
+        <br>
+        $ MIB510=/dev/COM1 make mica2 install<br>
+        avr-objcopy --output-target=srec binr <br>
+        uisp -dprog=dapa -dno-poll -dlpt=3 -- <br>
+        Atmel AVR AT90S8535 is found. <br>
+        Erasing device ... <br>
+        Reinitializing device <br>
+        Atmel AVR AT90S8535 is found. <br>
+        sleep 1 <br>
+        uisp -dprog=dapa -dlpt=3 --upload if= <br>
+        Atmel AVR AT90S8535 is found. <br>
+        Uploading: flash <br>
+        sleep 1 <br>
+        uisp -dprog=dapa -dlpt=3 -dno-poll -- <br>
+        Atmel AVR AT90S8535 is found. <br>
+        Verifying: flash <br>
+        make: Nothing to be done for `mica'</p>
+      <p> If you see this, you have just successfully uploaded a program to the 
+        mote. You can now unplug the mote, put in batteries and turn it on. You 
+        should see the red LED blinking periodically.</p>
+      <p>Important note: When the mote is plugged in to an external power supply(during 
+        the upload process), make sure the batteries are not in the motes. This 
+        could cause hardware damage.</p>
+      <p><strong>Troubleshooting</strong></p>
+      <p>There are a few common errors that can show up, especially with the older 
+        MIB500. We cover the following below and offer a few things you can try 
+        out:</p>
+      <p>1. You get flash errors when you run &#8216;make mica2 install&#8217;<br>
+        Suggestions: Make sure you have the TinyOS installation on the c drive. 
+        If you have it installed on another drive, look at the TinyOS documentation 
+        on how to resolve this. Next, try following the instructions given in 
+        <a href="http://www.xbow.com/Support/Support_pdf_files/UISPHELP.pdf">http://www.xbow.com/Support/Support_pdf_files/UISPHELP.pdf</a> 
+        for minimizing flash errors, especially in the last page. If none of this 
+        solves the problem, you could possibly have hardware problems with the 
+        mote or the MIB500.</p>
+      </font> 
+      <p><font face="Verdana, Arial, Helvetica, sans-serif">2. You get 
+        a message &#8216;Probably the wiring is incorrect or the target is damaged&#8217;<br>
+        when you run &#8216;make mica2 install&#8217;.<br>
+        Suggestions: We got this message when the mote was not plugged in correctly. 
+        Check if the mote is plugged in firmly to the MIB500, and the MIB500 is 
+        connected to the parallel port of the PC. <br>
+        <br>
+        Look through <a href="http://webs.cs.berkeley.edu/tos/faq.html">http://webs.cs.berkeley.edu/tos/faq.html</a> 
+        for a more complete troubleshooting list and other FAQs.</font><br>
+      </p></td>
+  </tr>
+</table>
+</body>
+</html>

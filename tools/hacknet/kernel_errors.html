@@ -1,0 +1,54 @@
+<HTML>
+<!--This file created 11/27/00 3:05 PM by Claris Home Page version 3.0-->
+<HEAD>
+   <TITLE>Kernel Errors</TITLE>
+   <META NAME=GENERATOR CONTENT="Claris Home Page 3.0">
+   <X-CLARIS-WINDOW TOP=42 BOTTOM=469 LEFT=4 RIGHT=534>
+   <X-CLARIS-TAGVIEW MODE=minimal>
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><!--This file created 11/10/00 4:57 PM by Claris Home Page version 3.0-->
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<P>&nbsp; <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=560 align=LEFT>
+   <TR>
+      <TD HEIGHT=2>
+         <H1><CENTER><FONT FACE="Arial,Helvetica,Sans-Serif">Compiling
+         a RedHat Linux Kernel</FONT></CENTER></H1>
+         
+         <H2><CENTER>Errors</CENTER></H2>
+         
+         <BLOCKQUOTE>gcc -D__KERNEL__
+            -I/usr/src/linux-2.2.15/linux/<BR>
+            include -E -traditional -DSVGA_MODE=NORMAL_VGA<BR>
+            bootsect.S -o bootsect.s<BR>
+            as86 -0 -a -o bootsect.o bootsect.s<BR>
+            make&#91;1&#93;:as86: command not found.<BR>
+            make&#91;1&#93;: ***&#91;bootsect.o&#93; error 127<BR>
+            make&#91;1&#93;: Leaving directory
+            '/usr/src/linux-2.2.15/<BR>
+            linux/arch/i386/boot'<BR>
+            make: ***&#91;zImage&#93; error 2.'
+            
+            <P>This is a sample error message.&nbsp; In this case,
+            as86 was not installed on the system.&nbsp; We rectified
+            the problem by installing the package that contained the
+            missing file.</P></BLOCKQUOTE>
+         
+         <P>
+         
+         <HR>
+         
+         </P>
+      </TD>
+   </TR>
+   <TR>
+      <TD HEIGHT=2>
+         <P><BR>
+         <FONT SIZE="-1" FACE="Arial, Helvetica, sans-serif">Comments
+         or questions should be sent to </FONT><A HREF="mailto:Cori_Rhodes@baylor.edu"><FONT SIZE="-1" FACE="Arial, Helvetica, sans-serif" COLOR="#187534">Cori_Rhodes@baylor.edu</FONT></A><FONT SIZE="-1" FACE="Arial, Helvetica, sans-serif" COLOR="#187534">,
+         or </FONT><A HREF="mailto:Saifuddin_Suterwala@baylor.edu"><FONT SIZE="-1" FACE="Arial, Helvetica, sans-serif" COLOR="#187534">Saifuddin_Suterwala@baylor.edu</FONT></A></P>
+      </TD>
+   </TR>
+</TABLE>
+</P>
+</BODY>
+</HTML>

@@ -1,0 +1,426 @@
+<html>
+<head>
+<title>Network Address Translation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+<body bgcolor="#FFFFFF" text="#000000">
+<div align="center"> 
+  <pre><font size="4" face="Verdana, Arial, Helvetica, sans-serif"><b><font size="6"><i>NAT: Network Address Translation</i></font></b></font></pre>
+  <div align="left"> 
+    <div align="right">
+      <div align="left">
+        <div align="right">
+          <pre align="left"><font size="3" face="Verdana, Arial, Helvetica, sans-serif">December 2, 2002</font><font face="Verdana, Arial, Helvetica, sans-serif" size="5"><b>
+</b></font></pre>
+        </div>
+      </div>
+    </div>
+    <div align="left"></div>
+    <pre align="left"><font face="Verdana, Arial, Helvetica, sans-serif" size="5"><b>Introduction:</b></font></pre>
+    <p><font face="Verdana, Arial, Helvetica, sans-serif" size="3">NAT is sometimes 
+      referred to as Transparent Proxying, IP Address Overloading, or IP Masquerading. 
+      You'll know why, when you look at the NAT operation.</font></p>
+  </div>
+</div>
+<div align="left"> <font face="Verdana, Arial, Helvetica, sans-serif" size="3"> 
+  The Internet is expanding at an exponential rate. As the amount of information 
+  and resources increases, it is becoming a requirement for even the smallest 
+  businesses and homes to connect to the Internet. NAT is a method of connecting 
+  multiple computers to the Internet (or any other IP network) using one IP address. 
+  This allows home users and small businesses to connect their network to the 
+  Internet cheaply and efficiently. </font> 
+  <p><font face="Verdana, Arial, Helvetica, sans-serif" size="3">In an IP network, 
+    each computer is allocated a unique IP address. In the current version of 
+    IP protocol, IP version 4, an IP address is 4 bytes. Since an address is 4 
+    bytes, the total number of available addresses is 2 to the power of 32 = 4,294,967,296. 
+    This represents the total theoretical number of computers that can be directly 
+    connected to the Internet. In practice, the real limit is much smaller for 
+    several reasons. The actual number of available addresses is smaller (somewhere 
+    between 3.2 and 3.3 billion) because of the way that the addresses are separated 
+    into classes, and because some addresses are set aside for multicasting, testing 
+    or other special uses. </font></p>
+  <p><font face="Verdana, Arial, Helvetica, sans-serif" size="3">While the number 
+    of available addresses seems large, the Internet is growing at such a pace 
+    that it will soon be exhausted. While the next generation IP protocol, IP 
+    version 6, allows for larger addresses, it will take years before the existing 
+    network infrastructure migrates to the new protocol. </font></p>
+  <p><font face="Verdana, Arial, Helvetica, sans-serif" size="3">Because IP addresses 
+    are a scarce resource, most Internet Service Providers (ISPs) will only allocate 
+    one address to a single customer. In majority of cases this address is assigned 
+    dynamically, so every time a client connects to the ISP a different address 
+    will be provided. Big companies can buy more addresses, but for small businesses 
+    and home users the cost of doing so is prohibitive. Because such users are 
+    given only one IP address, they can have only one computer connected to the 
+    Internet at one time. With an NAT gateway running on this single computer, 
+    it is possible to share that single address between multiple local computers 
+    and connect them all at the same time. The outside world is unaware of this 
+    division and thinks that only one computer is connected. </font></p>
+  <p>&nbsp;</p>
+</div>
+<div align="left"> 
+  <pre><font face="Verdana, Arial, Helvetica, sans-serif"><b><font size="5">Forms of NAT:</font></b></font></pre>
+  <p><font face="Verdana, Arial, Helvetica, sans-serif" size="3"><b>Static NAT</b> 
+    - Mapping an unregistered IP address on your internal network to a registered 
+    IP address on a one-to-one basis. Particularly useful when a device needs 
+    to be accessible from outside the network. </font></p>
+  <p></p>
+  <p><font face="Verdana, Arial, Helvetica, sans-serif"><b>Dynamic NAT</b> - Maps 
+    an unregistered IP address on your internal network to a registered IP address 
+    from a group of registered IP addresses.</font></p>
+  <p><font face="Verdana, Arial, Helvetica, sans-serif"><b>Overloading</b> - A 
+    form of dynamic NAT that maps multiple unregistered IP addresses to a single 
+    registered IP address by using different ports. This is known also as PAT 
+    (Port Address Translation), single address NAT or port-level multiplexed NAT. 
+    We discuss this form in the next section.<br>
+    </font></p>
+  <p><font face="Verdana, Arial, Helvetica, sans-serif"><b>Overlapping</b> - When 
+    the IP addresses used on your internal network are registered IP addresses 
+    in use on another network, the router must maintain a lookup table of these 
+    addresses so that it can intercept them and replace them with registered unique 
+    IP addresses. It is important to note that the NAT router must translate the 
+    &quot;internal&quot; addresses to registered unique addresses as well as translate 
+    the &quot;external&quot; registered addresses to addresses that are unique 
+    to the private network. This can be done either through static NAT or by using 
+    DNS and implementing dynamic NAT. <br>
+    </font></p>
+  <p>&nbsp;</p>
+  <div align="left"> 
+    <p><font face="Verdana, Arial, Helvetica, sans-serif" size="5"><b>NAT Operation:</b></font></p>
+    <p></p>
+    <p><font face="Verdana, Arial, Helvetica, sans-serif" size="3">The basic purpose 
+      of NAT is to multiplex traffic from the internal network and present it 
+      to the Internet as if it was coming from a single computer having only one 
+      IP address. </font> </p>
+    <p><font face="Verdana, Arial, Helvetica, sans-serif" size="3">The TCP/IP 
+      protocols include a multiplexing facility so that any computer can maintain 
+      multiple simultaneous connections with a remote computer. It is this multiplexing 
+      facility that is the key to single address NAT. To multiplex several connections 
+      to a single destination, client computers label all packets with unique 
+      &quot;port numbers&quot;. Each IP packet starts with a header containing 
+      the source and destination addresses and port numbers: </font></p>
+    <p><font face="Verdana, Arial, Helvetica, sans-serif" size="3"><i>Source address</i> 
+      <i>- Source port</i> <i>- Destination address - Destination port </i></font></p>
+    <p></p>
+    <p><font face="Verdana, Arial, Helvetica, sans-serif" size="3">This combination 
+      of numbers completely defines a single TCP/IP connection. The addresses 
+      specify the two machines at each end, and the two port numbers ensure that 
+      each connection between this pair of machines can be uniquely identified. 
+      </font></p>
+    <p><font face="Verdana, Arial, Helvetica, sans-serif" size="3">Each separate 
+      connection is originated from a unique source port number in the client, 
+      and all reply packets from the remote server for this connection contain 
+      the same number as their destination port, so that the client can relate 
+      them back to its correct connection. In this way, for example, it is possible 
+      for a web browser to ask a web server for several images at once and to 
+      know how to put all the parts of all the responses back together. </font></p>
+    <p><font face="Verdana, Arial, Helvetica, sans-serif" size="3">A modern NAT 
+      gateway must change the Source address on every outgoing packet to be its 
+      single public address. It therefore also renumbers the Source Ports to be 
+      unique, so that it can keep track of each client connection. The NAT gateway 
+      uses a <i>port mapping table</i> to remember how it renumbered the ports 
+      for each client's outgoing packets. The <i>port mapping table</i> relates 
+      the client's real local IP address and source port plus its translated source 
+      port number to a destination address and port. The NAT gateway can therefore 
+      reverse the process for returning packets and route them back to the correct 
+      clients. </font></p>
+    <p><font face="Verdana, Arial, Helvetica, sans-serif" size="3">When any remote 
+      server responds to an NAT client, incoming packets arriving at the NAT gateway 
+      will all have the same Destination address, but the destination Port number 
+      will be the unique Source Port number that was assigned by the NAT. The 
+      NAT gateway looks in its <i>port mapping table</i> to determine which &quot;real&quot; 
+      client address and port number a packet is destined for, and replaces these 
+      numbers before passing the packet on to the local client. This process is 
+      completely dynamic. When a packet is received from an internal client, NAT 
+      looks for the matching source address and port in the port mapping table. 
+      If the entry is not found, a new one is created, and a new mapping port 
+      allocated to the client:</font></p>
+    <p><font face="Verdana, Arial, Helvetica, sans-serif" size="3"><br>
+      <b>Incoming packet received on non-NAT port:</b><br>
+      </font></p>
+  </div>
+  <ul>
+    <li> 
+      <div align="left"><font face="Verdana, Arial, Helvetica, sans-serif" size="3">Look 
+        for source address, port in the mapping table <br>
+        </font></div>
+    </li>
+    <li> 
+      <div align="left"><font face="Verdana, Arial, Helvetica, sans-serif" size="3">If 
+        found, replace source port with previously allocated mapping port <br>
+        </font></div>
+    </li>
+    <li> 
+      <div align="left"><font face="Verdana, Arial, Helvetica, sans-serif" size="3">If 
+        not found, allocate a new mapping port <br>
+        </font></div>
+    </li>
+    <li> 
+      <div align="left"><font face="Verdana, Arial, Helvetica, sans-serif" size="3">Replace 
+        source address with NAT address, source port with mapping port </font></div>
+    </li>
+  </ul>
+  <div align="left"> 
+    <p><font face="Verdana, Arial, Helvetica, sans-serif" size="3"><b>Packets 
+      received on the NAT port undergo a reverse translation process: </b></font></p>
+  </div>
+  <ul>
+    <li> 
+      <div align="left"><font face="Verdana, Arial, Helvetica, sans-serif" size="3">Incoming 
+        packet received on NAT port <br>
+        </font></div>
+    </li>
+    <li> 
+      <div align="left"><font face="Verdana, Arial, Helvetica, sans-serif" size="3">Look 
+        up destination port number in port mapping table <br>
+        </font></div>
+    </li>
+    <li> 
+      <div align="left"><font face="Verdana, Arial, Helvetica, sans-serif" size="3">If 
+        found, replace destination address and port with entries from the mapping 
+        table <br>
+        </font></div>
+    </li>
+    <li> 
+      <div align="left"><font face="Verdana, Arial, Helvetica, sans-serif" size="3">If 
+        not found, the packet is not for us and should be rejected </font></div>
+    </li>
+  </ul>
+  <div align="left"> 
+    <p><font face="Verdana, Arial, Helvetica, sans-serif" size="3">Each client 
+      has an idle time-out associated with it. Whenever new traffic is received 
+      for a client, its time-out is reset. When the time-out expires, the client 
+      is removed from the table. This ensures that the table is kept to a reasonable 
+      size. The length of the time-out varies, but taking into account traffic 
+      variations on the Internet should not go below 2-3 minutes. Most NAT implementations 
+      can also track TCP clients on a per-connection basis and remove them from 
+      the table as soon as the connection is closed. This is not possible for 
+      UDP traffic since it is not connection based. </font></p>
+    <p><font face="Verdana, Arial, Helvetica, sans-serif" size="3">Many higher-level 
+      TCP/IP protocols embed client addressing information in the packets. For 
+      example, during an &quot;active&quot; FTP transfer the client informs the 
+      server of its IP address &amp; port number, and then waits for the server 
+      to open a connection to that address. NAT has to monitor these packets and 
+      modify them on the fly to replace the client's IP address (which is on the 
+      internal network) with the NAT address. Since this changes the length of 
+      the packet, the TCP sequence/acknowledge numbers must be modified as well. 
+      Most protocols can be supported within the NAT; some protocols, however, 
+      may require that the clients themselves are made aware of the NAT and that 
+      they participate in the address translation process. [Or the NAT must be 
+      protocol-sensitive so that it can monitor or modify the embedded address 
+      or port data] </font></p>
+    <p><font face="Verdana, Arial, Helvetica, sans-serif" size="3">Because the 
+      port mapping table relates complete connection information - source and 
+      destination address and port numbers - it is possible to validate any or 
+      all of this information before passing incoming packets back to the client. 
+      This checking helps to provide effective firewall protection against Internet-launched 
+      attacks on the private LAN. </font></p>
+    <p><font face="Verdana, Arial, Helvetica, sans-serif" size="3">Each IP packet 
+      also contain checksums that are calculated by the originator. They are recalculated 
+      and compared by the recipient to see if the packet has been corrupted in 
+      transit. The checksums depend on the contents of the packet. Since the NAT 
+      must modify the packet addresses and port numbers, it must also recalculate 
+      and replace the checksums. Careful design in the NAT software can ensure 
+      that this extra processing has a minimal effect on the gateway's throughput. 
+      Before doing so it must check for, and discard, any corrupt packets to avoid 
+      converting a bad packet into a good one. </font></p>
+    <p>&nbsp;</p>
+  </div>
+  <p><font face="Verdana, Arial, Helvetica, sans-serif"><font size="3"><b><font size="5">Uses 
+    of NAT:</font></b></font></font></p>
+  <font face="Verdana, Arial, Helvetica, sans-serif" size="3"><b>Security: </b><br>
+  </font> 
+  <p><font face="Verdana, Arial, Helvetica, sans-serif">There are a number of 
+    security issues related to the Internet. Most personal computer operating 
+    systems are not designed with security in mind, leaving them wide open to 
+    attacks from the Internet. For example, it is now possible for an applet 
+    or Active X control to take control of a computer it is running on. Many times 
+    it is not even possible to detect that such applets are running. The security 
+    implications of this are very serious. For home users, this means that sensitive 
+    personal information, such as emails, correspondence or financial details 
+    (such as credit card or cheque numbers) can be stolen. For business users 
+    the consequences can be disastrous.</font></p>
+  <p><font face="Verdana, Arial, Helvetica, sans-serif">To combat the security 
+    problem, a number of firewall products are available. They are placed between 
+    the user and the Internet and verify all traffic before allowing it to pass 
+    through. This means, for example, that no unauthorised user would be allowed 
+    to access the company's file or email server. The problem with firewall solutions 
+    is that they are expensive and difficult to set up and maintain, putting them 
+    out of reach for home and small business users. </font></p>
+  <p><font face="Verdana, Arial, Helvetica, sans-serif">NAT automatically provides 
+    firewall-style protection without any special set-up. That is because it only 
+    allows connections that are originated on the inside network. This means, 
+    for example, that an internal client can connect to an outside FTP server, 
+    but an outside client will not be able to connect to an internal FTP server 
+    because it would have to originate the connection, and NAT will not allow 
+    that. It is still possible to make some internal servers available to the 
+    outside world via inbound mapping, which maps certain well known TCP ports 
+    (e.g.. 21 for FTP) to specific internal addresses, thus making services such 
+    as FTP or Web available in a controlled way. </font></p>
+  <p><font face="Verdana, Arial, Helvetica, sans-serif">Many TCP/IP stacks are 
+    susceptible to low-level protocol attacks such as the recently-publicised 
+    &quot;SYN flood&quot; or &quot;Ping of Death&quot;. These attacks do not compromise 
+    the security of the computer, but can cause the servers to crash, resulting 
+    in potentially damaging &quot;denials of service&quot;. Such attacks can cause 
+    abnormal network events that can be used as a precursor or cloak for further 
+    security breaches. NATs that do not use the host machine protocol stack but 
+    supply their own can provide protection from such attacks: </font></p>
+  <p></p>
+  <font face="Verdana, Arial, Helvetica, sans-serif" size="3"><b>Administration:</b><br>
+  </font> 
+  <p><font face="Verdana, Arial, Helvetica, sans-serif">IP networks are more difficult 
+    to set up than local desktop LANs; each computer requires an IP address, a 
+    subnet mask, DNS address, domain name, and a default router. This information 
+    has to be entered on every computer on the network; if only one piece of information 
+    is wrong, the network connection will not function and there is usually no 
+    indication of what is wrong. In bigger networks the task of co-ordinating 
+    the distribution of addresses and dividing the network into subnets is so 
+    complicated that it requires a dedicated network administrator. </font></p>
+  <p><font face="Verdana, Arial, Helvetica, sans-serif">NAT can help network administration 
+    in several ways: </font></p>
+</div>
+<ul>
+  <li><font face="Verdana, Arial, Helvetica, sans-serif">It can divide a large 
+    network into several smaller ones. The smaller parts expose only one IP address 
+    to the outside, which means that computers can be added or removed, or their 
+    addresses changed, without impacting external networks. With inbound mapping, 
+    it is even possible to move services (such as Web servers) to a different 
+    computer without having to do any changes on external clients.</font></li>
+  <li> 
+    <div align="left"><font face="Verdana, Arial, Helvetica, sans-serif">Some 
+      modern NAT gateways contain a dynamic host configuration protocol (DHCP) 
+      server. DHCP allows client computers to be configured automatically; when 
+      a computer is switched on, it searches for a DHCP server and obtains TCP/IP 
+      setup information. Changes to network configuration are done centrally at 
+      the server and affect all the clients; the administrator does not need to 
+      apply the change to every computer in the network. For example, if the DNS 
+      server address changes, all clients will automatically start using the new 
+      address the next time they contact the DHCP server. </font></div>
+  </li>
+  <li> 
+    <div align="left"><font face="Verdana, Arial, Helvetica, sans-serif">Many 
+      NAT gateways provide for a way to restrict access to the Internet. For example, 
+      Vicomsoft InterGate has built-in CyberPatrol filtering, which allows administrators 
+      to prohibit access to dubious material. </font></div>
+  </li>
+  <li> 
+    <div align="left"><font face="Verdana, Arial, Helvetica, sans-serif">Another 
+      useful feature is traffic logging; since all the traffic to and from the 
+      Internet has to pass through a NAT gateway, it can record all the traffic 
+      to a log file. This file can be used to generate various traffic reports, 
+      such as traffic breakdown by user, by site, by network connection etc. </font></div>
+  </li>
+  <li> 
+    <div align="left"><font face="Verdana, Arial, Helvetica, sans-serif">Since 
+      NAT gateways operate on IP packet-level, most of them have built-in internetwork 
+      routing capability. The internetwork they are serving can be divided into 
+      several separate sub networks (either using different backbones or sharing 
+      the same backbone) which further simplifies network administration and allows 
+      more computers to be connected to the network: </font></div>
+  </li>
+</ul>
+<div align="left"> 
+  <p> </p>
+  <p><font face="Verdana, Arial, Helvetica, sans-serif">To summarise, a NAT gateway 
+    can provide the following benefits:<br>
+    </font></p>
+</div>
+<ul>
+  <li> 
+    <div align="left"><font face="Verdana, Arial, Helvetica, sans-serif">Firewall 
+      protection for the internal network; only servers specifically designated 
+      with &quot;inbound mapping&quot; will be accessible from the Internet.</font></div>
+  </li>
+  <li> 
+    <div align="left"><font face="Verdana, Arial, Helvetica, sans-serif"> Protocol-level 
+      protection </font></div>
+  </li>
+  <li> 
+    <div align="left"><font face="Verdana, Arial, Helvetica, sans-serif">Automatic 
+      client computer configuration control.</font></div>
+  </li>
+  <li><font face="Verdana, Arial, Helvetica, sans-serif">Packet level filtering 
+    and routing </font></li>
+</ul>
+<div align="left"> 
+  <p></p>
+  <font face="Verdana, Arial, Helvetica, sans-serif"><b>Proxies</b>: <br>
+  </font> 
+  <p><font face="Verdana, Arial, Helvetica, sans-serif">A proxy is any device 
+    that acts on behalf of another. The term is most often used to denote Web 
+    proxying. A Web proxy acts as a &quot;half-way&quot; Web server: network clients 
+    make requests to the proxy, which then makes requests on their behalf to the 
+    appropriate Web server. Proxy technology is often seen as an alternative way 
+    to provide shared access to a single Internet connection. </font></p>
+  <p><font face="Verdana, Arial, Helvetica, sans-serif">The main benefits of Web 
+    proxying are: </font></p>
+</div>
+<ul>
+  <li> 
+    <div align="left"><font face="Verdana, Arial, Helvetica, sans-serif">Local 
+      caching: a proxy can store frequently-accessed pages on its local hard disk; 
+      when these pages are requested, it can serve them from its local files instead 
+      of having to download the data from a remote Web server. Proxies that perform 
+      caching are often called caching proxy servers. </font></div>
+  </li>
+  <li> 
+    <div align="left"><font face="Verdana, Arial, Helvetica, sans-serif"> Network 
+      bandwidth conservation: if more than one client requests the same page, 
+      the proxy can make one request only to a remote server and distribute the 
+      received data to all waiting clients. </font></div>
+  </li>
+</ul>
+<div align="left"> 
+  <p><font face="Verdana, Arial, Helvetica, sans-serif">Both these benefits only 
+    become apparent in situations where multiple clients are very likely to access 
+    the same sites and so share the same data. </font></p>
+  <p><font face="Verdana, Arial, Helvetica, sans-serif">Unlike NAT, Web proxying 
+    is not a transparent operation: it must be explicitly supported by its clients. 
+    Due to early adoption of Web proxying, most browsers, including Internet Explorer 
+    and Netscape Communicator, have built-in support for proxies, but this must 
+    normally be configured on each client machine, and may be changed by the naive 
+    or malicious user. </font></p>
+  <p><font face="Verdana, Arial, Helvetica, sans-serif">Web proxying has the following 
+    disadvantages: </font></p>
+</div>
+<ul>
+  <li> 
+    <div align="left"><font face="Verdana, Arial, Helvetica, sans-serif">Web content 
+      is becoming more and more dynamic, with new developments such as streaming 
+      video &amp; audio being widely used. Most of the new data formats are not 
+      cacheable, eliminating one of the main benefits of proxying. </font></div>
+  </li>
+  <li> 
+    <div align="left"><font face="Verdana, Arial, Helvetica, sans-serif">Clients 
+      have to be explicitly set to use Web proxying; whenever there is a change 
+      (e.g. proxy is moved to a new IP address) each and every client has to be 
+      set up again. </font></div>
+  </li>
+  <li> 
+    <div align="left"><font face="Verdana, Arial, Helvetica, sans-serif">A proxy 
+      server operates above the TCP level and uses the machine's built-in protocol 
+      stack. For each Web request from a client, a TCP connection has to be established 
+      between the client and the proxy machine, and another connection between 
+      the proxy machine and the remote Web server. This puts lot of strain on 
+      the proxy server machine; in fact, since Web pages are becoming more and 
+      more complicated the proxy itself may become bottleneck on the network. 
+      This contrasts with a NAT which operates on packet level and requires much 
+      less processing for each connection. <br>
+      </font></div>
+  </li>
+</ul>
+<div align="left"> 
+  <p>&nbsp;</p>
+  <pre><font size="5" face="Verdana, Arial, Helvetica, sans-serif"><b>RFC:</b></font></pre>
+  <p><font face="Verdana, Arial, Helvetica, sans-serif"><a href="rfc1631.txt">The 
+    IP Network Address Translator</a></font></p>
+  <p>&nbsp;</p>
+  <p><font size="5" face="Verdana, Arial, Helvetica, sans-serif"><b>Presentation:</b></font></p>
+  <p><a href="NAT.ppt">NAT</a></p>
+  <p>&nbsp;</p>
+  <pre><font face="Verdana, Arial, Helvetica, sans-serif" size="5"><b>References:</b></font></pre>
+  <p><font face="Verdana, Arial, Helvetica, sans-serif"><a href="http://www.vicomsoft.com/knowledge/reference/nat.html">http://www.vicomsoft.com/knowledge/reference/nat.html</a></font></p>
+  <p><font face="Verdana, Arial, Helvetica, sans-serif"><a href="http://www.howstuffworks.com/nat.htm">http://www.howstuffworks.com/nat.htm</a></font></p>
+  <p><a href="http://www.suse.de/%7Emha/linux-ip-nat/diplom/node4.html#SECTION00044000000000000000"><font face="Verdana, Arial, Helvetica, sans-serif">http://www.suse.de/~mha/linux-ip-nat/diplom/node4.html#SECTION00044000000000000000</font></a></p>
+</div>
+</body>
+</html>

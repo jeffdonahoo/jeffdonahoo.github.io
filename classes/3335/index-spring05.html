@@ -1,0 +1,336 @@
+<HTML>
+<HEAD>
+<TITLE>3335 - Introduction to Database</TITLE>
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<CENTER>
+<B><FONT SIZE=4>Introduction to Database</FONT><BR></B>
+CS3335<BR>
+</CENTER>
+
+If you have any trouble viewing the PDF files in your web browser
+(using the PDF browser plug-in), download the PDF and view it with the
+stand-alone Acrobat Reader.
+
+<UL>
+<li> <a href="../success.html">Success Guide</a>
+<LI> Office Hours: 1-3 MWF, 3:30-4:30 TTh
+<LI> Database </LI>
+<UL>
+<LI> <A HREF="3335Systems.exe">Database System</A> </LI>
+<LI> <A HREF="personnel.zip">New Personnel Application</A> - Delete current
+tomcat\webapps\personnel directory and then extract this new one</LI>
+<LI> <A HREF="patient.sql">Patient Database Script</A> (3/30/2005)</LI>
+<LI> <A HREF="personnel-database-handout-relations.pdf">PERSONNEL DB Schema</A> </LI>
+<!--
+<LI> <A HREF="PERSONNEL-Script.pdf">PERSONNEL DB SQL Script</A> </LI>
+<LI> Play DB <A HREF="play-database.pdf">(SQL creation script)</A></LI>
+<LI> <A HREF="ODBCSetup.pdf">ODBC Data Source Setup</A> </LI>
+<LI> PERSONNEL DB <A HREF="personnel.mdb">(Access)</A> </LI>
+<LI> Free SQL Query Processors:
+<UL>
+<LI> <A HREF="Query.jar">Homegrown:</A>  To run on personnel
+ODBC source, copy JAR file and try <PRE>java -cp Query.jar FSQL personnel</PRE> 
+for the graphical query processor and  
+<PRE>java -cp Query.jar CSQL personnel</PRE> for the command-line
+query processor.
+<LI> <A HREF="http://gpoulose.home.att.net/">Query Tool (using
+ODBC)</A> - Make sure you download the ODBC version.
+<LI> <A HREF="http://www.indus-soft.com/winsql/">WinSQL Lite</A> - Free, but requires registration.
+<LI> <A HREF="PERSONNEL-Script.pdf">PERSONNEL DB SQL Script</A> </LI>
+<LI> Play DB <A HREF="play-database.pdf">(SQL creation script)</A> <A HREF="play.mdb">(Access)</A></LI>
+<LI> <A HREF="http://cs.ecs.baylor.edu/~donahoo/tools/access/">Microsoft Access Tutorial </A></LI>
+</UL>
+-->
+</UL>
+<LI> Mass Storage</LI>
+<UL>
+<LI> <A HREF="CD-ROM.pdf">CD-ROM</A></LI>
+<LI> <A HREF="DVD.pdf">DVD</A></LI>
+<LI> <A HREF="MemoryHierarchy.pdf"> Storage Hierarchy</A></LI>
+</UL> 
+<!--<LI> Algorithms </LI>
+<UL>
+<LI> Control-break Problem <A HREF="control-break.doc">(Word)</A></LI>
+<LI> Balance Line <A HREF="balance-line.doc">(Word)</A></LI>
+<LI> Huffman Encoding <A HREF="Huffman.doc">(Word)</A></LI>
+</UL>-->
+<LI> Java </LI>
+<UL>
+<LI> <A HREF="JavaCodePreparation.pdf">Code Preparation</A></LI>
+<LI> <A HREF="java/JavaCodingConvention.pdf">Coding Convention</A>
+<LI> <A HREF="http://www3.baylor.edu/~Keith_Fraim/">JBuilder X<sup>TM</sup> Tutorial</A>
+</UL>
+<LI> Other </LI>
+<UL>
+<LI> <A HREF="http://cs.baylor.edu/~donahoo/tools/PGP/">PGP</A>
+</UL>
+
+<LI><A HREF="codeexamples.html">Code Examples</A>
+
+<LI> Homework </LI>
+<UL>
+<li>Homework 1
+<ul>
+<li><a href="Homework1-Test.pdf">Homework 1 Test</a>
+</ul>
+<li>Homework 2
+<ul>
+<li><a href="Homework2.pdf">Homework 2</a>
+<li><a href="data">Data file</a>
+<li><a href="Homework2-Solution.pdf">Homework 2 Solution</a>
+</ul>
+<li>Homework 3
+<ul>
+<li>Assignment:  All practice questions and exercises from SQL Chpt. 2
+<li><a href="Homework3-Solution.pdf">Homework 3 Solution</a>
+</ul>
+<li>Homework 4
+<ul>
+<li><a href="Homework4.pdf">Homework 4</a>
+</ul>
+<li><a href="Chapter3-5Solutions.pdf">Chapters 3-5 Solutions</a>
+<li>Homework 5
+<ul>
+<li><a href="Homework5.pdf">Homework 5</a>
+<li><a href="Homework5-Solution.pdf">Homework 5 Solution</a>
+</ul>
+</UL>
+
+<LI> Programming Assignments </LI>
+
+<UL>
+<li>Program 1
+<ul>
+<li><A href="prog1/doc">API</a>
+<li>Stage 1 Testing StringToStringChainLinkedList<p>
+<a href="prog1/Program1Stage1-Test.pdf">Program 1-Stage 1 Test</a>
+
+<p>One of key ways to test code in industry is with Unit Testing.
+Basically, Unit Testing applies a series of tests to each method.  The
+standard Unit Test library in Java is <a
+href="http://junit.org">JUnit</a> (link only provided for the
+curious).  I have written a JUnit Test for you, compiled it, and place
+it in a library (JAR) file.  This is a blind test because you don't
+get to see the actual test code; however, the text of a test failure
+may give you some hints about the problem.  You can execute a text or
+GUI version of the test driver.  Either version will either signal
+success or give you the errors for the tests that failed.<p>
+
+<ul>
+<li>Compile your StringToStringChainLinkedList.java
+<li>Download <a href="prog1/junit.jar">junit.jar</a> and <a
+href="prog1/Test.jar">Test.jar</a> to the same directory as
+StringToStringChainLinkedList.class
+<li>Execute the test using the text or GUI test driver:
+<ol>
+<li> <b>Text: </b> java -cp "junit.jar;Test.jar;." junit.textui.TestRunner TestStringToStringChainLinkedList
+<li> <b>GUI: </b> java -cp "junit.jar;Test.jar;." junit.swingui.TestRunner TestStringToStringChainLinkedList
+</ol>
+<li>Evaluate results.  Look for:
+<ol>
+<li> <b>Text: </b> OK (6 tests)
+<li> <b>GUI: </b> Errors: 0 Failures: 0
+</ol>
+</ul>
+<li>Final Testing<p>
+<a href="prog1/Program1-Test.pdf">Program 1 Test</a>
+
+<p> JBuilder integrates JUnit so we will do our final stage testing
+there.  Note that JBuilder is just a wrapper so this works that same
+as the non-JBuilder test you ran for the first stage.  To test your
+final submission for Program 1, do the following:
+<ol>
+<li>Download the JBuilder project zip <a
+href="prog1/Program1Test.zip">file</a> and unzip it.
+<li>Create and place your StringToStringChainLinkedList.java and
+StringToStringHashTable.java in the src directory.
+<li>Open the JBuilder project.
+<li>Right-click TestStringToStringChainLinkedList.java and select "Run
+Test" to run the first test.  JBuilder will tell you what passed and
+failed.  You can even use "Run Debug" to step through the tests.
+Pretty cool, eh?
+<li>Right-click TestStringToStringHashTable.java and select "Run
+Test" to run the second test.
+</ol>
+</ul>
+<li>Program 2
+<ul>
+<li><a href="prog2/Program2.pdf">Specification</a>
+<li>Reference Application<br>To execute:
+<ol>
+<li>Download <a href="prog2/ContactOracle.jar">ContactOracle.jar</a>
+<li>java -jar "ContactOracle.jar"
+</ol>
+<li><a href="prog2/ContactDB.java">ContactDB.java</a>
+<li><a href="prog2/ContactOracle.java">ContactOracle.java</a>
+<li><a href="prog2/Program2-Test.pdf">Program2 Test</a>
+</ul>
+<li>Program 3
+<ul>
+<li><a href="prog3/Program3.pdf">Specification</a>
+<li><a href="prog3/doc">API</a>
+<li>Interfaces
+<ul>
+<li><a href="prog3/Chain.java">Chain.java</a>
+<li><a href="prog3/ChainFactory.java">ChainFactory.java</a>
+<li><a href="prog3/Hashable.java">Hashable.java</a>
+<li><a href="prog3/HashTableInterface.java">HashTableInterface.java</a>
+<li><a href="prog3/HashInt.java">HashInt.java</a>
+</ul>
+<li><a href="prog3/Program3-Test.pdf">Program 3 Test</a>
+<p> We will use JUnit to test Program 3 as follows:
+<ol>
+<li>Download the JBuilder project zip <a
+href="prog3/Program3Test.zip">file</a> and unzip it.
+<li>Place your ChainLinkedList, HashTable, HashIterator,
+ChainFactoryLinkedList, ChainMap, and ChainFactoryMap in the src
+directory.
+<li>Open the JBuilder project.
+<li>Run the tests described in the test document.
+</ol>
+</ul>
+<li>Program 4
+<ul>
+<li><a href="prog4/Program4.pdf">Specification</a>
+<li><a href="prog4/doc">SimpleMail API</a>
+<li><a href="prog4/card.sql">CardCierge Schema/Data</a>
+<li><a href="prog4/Program4-Test.pdf">Program 4 Test</a>
+<li><a href="prog4/card-test.sql">Program 4 Test Data</a>
+<li>Setup
+<ol>
+<li>Create schema
+<li>Copy tomcat\webapps\personnel to tomcat\webapps\card and delete all unnecessary JSP files.
+<li>Copy tomcat\conf\Catalina\localhost\personnel.xml to
+tomcat\conf\Catalina\localhost\card.xml and modify to suit new application.
+</ol>
+</ul>
+<li>Program 5
+<ul>
+<li><a href="prog5/Program5.pdf">Specification</a>
+<li>Materials
+<ul>
+<li><a href="prog5/ChainGeneric.java">ChainGeneric.java</a>
+<li><a href="prog5/TestChainLinkedListGeneric.java">TestChainLinkedListGeneric.java</a><p>
+<b>Extra Credit Option</b>
+<li><a href="prog5/ChainFactoryGeneric.java">ChainFactoryGeneric.java</a>
+<li><a href="prog5/TestHashTableGeneric.java">TestHashTableGeneric.java</a>
+<li><a href="prog5/doc">HashTableGeneric API</a> - The API is
+unchanged from Program 3 with the exception of adding generics.
+</ul>
+<li>Test
+<ul>
+<li><a href="prog5/Program5-Test.pdf">Program 5 Test</a>
+<li><a href="prog5/Program5Test.zip">Program 5 Test Suite</a>
+</ul>
+</ul>
+<li>Program 6
+<ul>
+<li><a href="prog6/Program6.pdf">Specification</a>
+<li><a href="prog4/doc">SimpleMail API</a>
+<li>Reference Application<br>To execute:
+<ol>
+<li>Download the following:
+<ul>
+<li><a href="prog6/SimpleMail.jar">SimpleMail.jar</a>
+<li><a href="prog6/activation.jar">activation.jar</a>
+<li><a href="prog6/mail.jar">mail.jar</a>
+<li><a href="prog6/jmta.jar">jmta.jar</a>
+<li><a href="prog6/SMC.jar">SMC.jar</a>
+</ul>
+<li>java -cp "SimpleMail.jar;activation.jar;mail.jar;jmta.jar;SMC.jar" SMC
+</ol>
+<li><a href="prog6/Program6-Test.pdf">Program 6 Test</a>
+</ul>
+</ul>
+
+<li> Class Materials </li>
+<ul>
+<li> <A HREF="ascii.html">ASCII Chart</a>
+<li> <A HREF="java/od.exe">Windows Octal Dump</a>
+<li> Java&#8482;</li>
+<UL>
+<li> <A HREF="java/doc/J2SE/api">Standard Edition Class Documentation
+(J2SE 1.5)</A>
+<LI> <A HREF="java/doc/J2SE">Complete Documentation (JDK 1.5)</A>
+<LI> <A HREF="java/doc/J2EE">Enterprise Edition Class Documentation
+(J2EE 1.4)</A>
+<LI> <A HREF="http://java.sun.com">Official Sun Java Site</A>
+<LI> Java Development Environments </LI>
+<UL>
+<LI> <A HREF="http://java.sun.com/j2se">Java Standard Edition JDK</A>
+<LI> <A HREF="http://borland.com/jbuilder">JBuilder</A>
+</UL>
+<LI> JDBC
+<UL>
+<LI><A
+HREF="http://ils.unc.edu/~lindgren/190/mysql-jdbc">MySQL and JDBC Tutorial</A>
+<LI><A
+HREF="http://java.sun.com/docs/books/tutorial/jdbc/basics/index.html">Sun's
+JDBC Tutorial</A>
+</UL>
+<LI> JSP
+<UL>
+<LI><A HREF="http://jsptut.com">JSP Tutorial</A> - Read Sections 1-9
+<li><a
+href="http://www.apl.jhu.edu/~hall/java/Servlet-Tutorial/Servlet-Tutorial-JSP.html">Another
+JSP Tutorial</a> - Read Sections 1-7
+<li><A
+href="http://developer.java.sun.com/developer/onlineTraining/JSPIntro/contents.html">jGuru
+JSP Tutorial</A><br>Read the sections entitled:
+<UL>
+<li>JSP Syntax Basics
+<li>Object Scopes
+<li>JSP Implicit Objects 
+<li>Exception Handling 
+<li>Session Management 
+</UL>
+</UL>
+<LI> Online publications </LI>
+<UL>
+<LI> <A HREF="http://www.javadevelopersjournal.com/java/">Java Developer's Journal</A>
+<LI> <A HREF="http://www.javareport.com/">Java Report</A>
+<LI> <A HREF="http://www.javaworld.com/">JavaWorld</A>
+</UL>
+</UL>
+<LI> HTML/HTTP
+<UL>
+<LI> HTML Tutorials
+<UL>
+<LI> <A HREF="http://www.w3schools.com/html">HTML Tutorial</A>
+<LI> <A
+HREF="http://vzone.virgin.net/sizzling.jalfrezi/iniframe.htm">Another HTML
+Tutorial </A>
+<LI> <A HREF="http://www.bensplanet.com/HowTo/forms.asp">HTML Forms
+Tutorial</A>
+<LI> <A HREF="http://www.w3schools.com/html/html_forms.asp">Another HTML Forms
+Tutorial</A>
+</UL>
+<LI> <A HREF="HTML2.0RFC.txt">HTML 2.0 Specifications</A>
+<LI> <A HREF="HTTP1.1RFC.txt">HTTP 1.1 Specifications</A>
+</UL>
+<LI> SQL </LI>
+<UL>
+<!--
+<LI> <A HREF="3335Systems.exe">Database Systems Archive</A>
+<UL>
+<LI>The archive contains a DBMS, JDBC example, and JSP server.
+<LI>Download and execute the archive, specifying where you want the
+files placed.  You can put it on a Zip disk or USB drive for
+portability if you wish.
+<LI>The README.txt file provides instructions on using the DBMS.
+Notepad should start after the unarchive process completes.
+<LI>The book database is named garden (HINT:  "use garden" in mySQL)
+</UL>
+-->
+<LI> <A HREF="http://w3.one.net/~jhoffman/sqltut.htm">SQL Tutorial</A>
+<LI> <A HREF="http://www.sqlcourse.com/">SQL Tutorial-Part I </A> and
+<A HREF="http://www.sqlcourse2.com/">SQL Tutorial-Part II </A>
+
+</UL>
+</UL>
+</UL>
+
+</BODY>
+</HTML>

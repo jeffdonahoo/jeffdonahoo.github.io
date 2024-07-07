@@ -1,0 +1,85 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2006.11.08.15.50.18;	author donahoo;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2006.11.08.13.44.00;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@<HTML>
+<HEAD>
+<TITLE>SQL:  Practical Guide for Developers</TITLE>
+</HEAD>
+<BODY bgcolor="White" text="Black" vlink="Purple" alink="Red" link="Blue">
+<CENTER><FONT COLOR="#1D2B55" SIZE=+10>SQL:  Practical Guide for Developers
+</FONT> <P>
+<IMG SRC="../images/sql.jpg" HEIGHT=250></CENTER>
+Welcome to the web resource for SQL:  Practical Guide for Developers.<P>
+
+Errata:  <a href="errata-sql.pdf">PDF</a>
+
+<h1>Database Systems</h1>
+There are many DBMS (Database Management System) vendors to choose
+from.  While all of them use SQL, none of them implement it exactly as
+described in the specification.
+
+<table border="1" cellpadding="1" cellspacing="0">
+<tr><th>DBMS<th>Version<th>Restaurant<br>Setup<th>Employee<br>Setup<th>Patient<br>Setup<th>Details<th>DBMS Adapted<br>Book Queries
+<tr><td>ANSI<td>2003<td><a href="restaurant.sql">restaurant.sql</a><td><a href="employees.sql">employees.sql</a><td><a href="patient.sql">patient.sql</a><td>N/A<td>N/A
+<tr><td>MySQL<td>5.0.13<td><a href="restaurant-mysql.sql">restaurant-mysql.sql</a><td><a href="employees-mysql.sql">employees-mysql.sql</a><td><a href="patient-mysql.sql">patient-mysql.sql</a>
+    <td><a href="details-mysql.html">MySQL</a><td><a href="correctedqueries-mysql.html">MySQL</a>
+<!--
+<tr><td>Postgres<td>8.X<td><a href="restaurant-postgres.sql">restaurant-postgres.sql</a><td><a href="employees-postgres.sql">employees-postgres.sql</a><td>
+<tr><td>Oracle<td>10.X<td><a href="restaurant-oracle.sql">restaurant-oracle.sql</a><td><a href="employee-oracle.sql">employees-oracle.sql</a><td>
+<tr><td>DB2<td>8.X<td><a href="restaurant-db2.sql">restaurant-db2.sql</a><td><a href="employee-db2.sql">employees-db2.sql</a><td>
+-->
+</table>
+
+<h1>SQL Query Tools</h1>
+All relational DBMSs come with their own tools for SQL processing,
+from command-line to graphical query constructors.  There are also
+several generic query processors that can connect to a variety of
+DBMSs.  The main advantage of such tools is that they work same for
+all DBMSs so you don't have to learn a tool for each DBMS you use.
+Also, the generic tools are sometimes "better" than the DBMS-specific
+tools.  Below is a list of such tools:
+
+<ul>
+<li><a href="http://www.aquafold.com">Aqua Data Studio</a></li><br>
+</ul>
+</UL>
+</BODY>
+</HTML>
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d19 3
+a21 3
+<tr><th>DBMS<th>Version<th>Restaurant<br>Setup<th>Employee<br>Setup<th>Details<th>DBMS Adapted<br>Book Queries
+<tr><td>ANSI<td>2003<td><a href="restaurant.sql">restaurant.sql</a><td><a href="employees.sql">employees.sql</a><td>N/A<td>N/A
+<tr><td>MySQL<td>5.0.13<td><a href="restaurant-mysql.sql">restaurant-mysql.sql</a><td><a href="employees-mysql.sql">employees-mysql.sql</a>
+@

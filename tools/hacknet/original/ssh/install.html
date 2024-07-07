@@ -1,0 +1,71 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>New Page 1</title>
+</head>
+
+<body>
+
+<p align="center">&nbsp;</p>
+<p align="center">&nbsp;</p>
+<p align="center"><b><font size="5">Installing SSH on Your Linux Machine</font></b></p>
+<blockquote>
+  <p align="left">&nbsp;</p>
+  <p align="left">&nbsp;&nbsp;&nbsp; First, you need to download the tar file
+  (for version 2.0.13) from the <a href="http://www.ssh.fi/">official site</a>.&nbsp;
+  Next, you need to un-tar the file using the command</p>
+  <p align="left">&nbsp;&nbsp; <b> tar -xzvf &lt;name of tar file&gt;</b></p>
+  <p align="left">&nbsp;&nbsp;&nbsp; (The -v option is unnecessary, but it
+  allows you to watch the progression of the uncompression process, thereby
+  allowing you to know that your computer is working.)</p>
+  <p align="left">&nbsp;&nbsp;&nbsp; Once you have uncompressed it, you will
+  need to follow the README instructions included at the top level directory
+  from wherever you un-tarred the file.&nbsp; At the time when this written,
+  this included the following two instructions:</p>
+  <p align="left">&nbsp;&nbsp;&nbsp; <b>make install</b></p>
+  <p align="left">&nbsp;&nbsp; <b> make</b></p>
+  <p align="left">&nbsp;&nbsp; <b> </b>Once you have installed <b>ssh2</b> on
+  your machine, you need to load the <b>ssh2</b> daemon in order to run <b>ssh2</b>.&nbsp;
+  You have two options here.&nbsp; First, you can load it manually each time
+  (which is probably what you want to do if you are comparing <b>telnet</b> and <b>ftp</b>
+  with and without <b>ssh2</b>.)&nbsp; The other option is to make it run <b>sshd2</b>
+  (the secure shell daemon) when the computer starts up.&nbsp; If you decide to
+  go with the first option, then just type:</p>
+  <p align="left">&nbsp;&nbsp;&nbsp; <b>sshd2</b></p>
+  <p align="left">&nbsp;&nbsp;&nbsp; when you want to run the daemon.&nbsp; </p>
+  <p align="left">&nbsp;&nbsp;&nbsp; On the other hand, if you want to run it
+  automatically, you first need to find your <b>rc.local</b> file, which is
+  usually located in your <b>/etc/</b> directory (although sometimes it might be
+  in a sub-directory of <b>/etc/</b>.&nbsp; </p>
+  <p align="left">&nbsp;&nbsp;&nbsp; Once you have found it, you need to
+  determine where your daemon is located.&nbsp; Type</p>
+  <p align="left">&nbsp;&nbsp;&nbsp; <b>whereis sshd2</b></p>
+  <p align="left">&nbsp;&nbsp;&nbsp; The path should be displayed (if it is not,
+  you will need to search your directories for the file.)&nbsp; Now you need to
+  determine if the actual path of the daemon is included in your environmental
+  path.&nbsp; Type</p>
+  <p align="left">&nbsp;&nbsp;&nbsp; <b>echo $PATH</b></p>
+  <p align="left">&nbsp;&nbsp;&nbsp; If one of the paths (each is delineated by
+  a colon) is the same as your path to the daemon, then open your <b>rc.local</b>
+  file and skip the paragraph (and the PATH=*** command).</p>
+  <p align="left">&nbsp;&nbsp;&nbsp; Since we don't have the correct path, we
+  will need to add it to the path at startup.&nbsp; In order to do this, open <b>rc.local</b>
+  and go to the end of the file.&nbsp; Type in</p>
+  <p align="left">&nbsp;&nbsp;&nbsp; <b>PATH=$PATH:&lt;path of the secure shell
+  daemon&gt;</b></p>
+  <p align="left">&nbsp;&nbsp;&nbsp; Now that the environment is set up so that
+  it can find the secure shell daemon, we want it to run at start up, so we
+  type:</p>
+  <p align="left">&nbsp;&nbsp;&nbsp; <b>sshd2</b></p>
+  <p align="left">&nbsp;&nbsp;&nbsp; Now, when the machine is rebooted, the
+  secure shell daemon will be running!</p>
+  <p align="left">&nbsp;&nbsp;&nbsp; </p>
+</blockquote>
+
+</body>
+
+</html>

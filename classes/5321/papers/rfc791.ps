@@ -1,0 +1,6295 @@
+%!PS-Adobe-3.0
+%%BoundingBox: 24 24 588 768
+%%Title: enscript output
+%%For: Jeff Donahoo
+%%Creator: GNU enscript 1.4.0
+%%CreationDate: Thu Aug 17 13:53:20 2000
+%%Orientation: Landscape
+%%Pages: (atend)
+%%DocumentMedia: Letter 612 792 0 () ()
+%%DocumentNeededResources: (atend)
+%%EndComments
+%%BeginProlog
+%%BeginResource: procset Enscript-Prolog 1.4 0
+%
+% Procedures.
+%
+
+/_S {	% save current state
+  /_s save def
+} def
+/_R {	% restore from saved state
+  _s restore
+} def
+
+/S {	% showpage protecting gstate
+  gsave
+  showpage
+  grestore
+} bind def
+
+/MF {	% fontname newfontname -> -	make a new encoded font
+  /newfontname exch def
+  /fontname exch def
+
+  /fontdict fontname findfont def
+  /newfont fontdict maxlength dict def
+
+  fontdict {
+    exch 
+    dup /FID eq {
+      % skip FID pair
+      pop pop
+    } {
+      % copy to the new font dictionary
+      exch newfont 3 1 roll put
+    } ifelse
+  } forall
+  
+  newfont /FontName newfontname put
+
+  % insert only valid encoding vectors
+  encoding_vector length 256 eq {
+    newfont /Encoding encoding_vector put
+  } if
+  
+  newfontname newfont definefont pop
+} def
+
+/M {moveto} bind def
+/s {show} bind def
+
+/Box {	% x y w h -> -			define box path
+  /d_h exch def /d_w exch def /d_y exch def /d_x exch def
+  d_x d_y  moveto 
+  d_w 0 rlineto 
+  0 d_h rlineto 
+  d_w neg 0 rlineto 
+  closepath
+} def
+
+% Highlight bars.
+/highlight_bars {	% nlines lineheight output_y_margin gray -> -
+  gsave
+    setgray
+    /ymarg exch def
+    /lineheight exch def
+    /nlines exch def
+
+    % This 2 is just a magic number to sync highlight lines to text.
+    0 d_header_y ymarg sub 2 sub translate
+    
+    /cw d_output_w cols div def
+    /nrows d_output_h ymarg 2 mul sub lineheight div floor def
+
+    % for each column
+    0 1 cols 1 sub {
+      cw mul /xp exch def
+
+      % for each rows
+      0 1 nrows 1 sub {
+        /rn exch def 
+        rn lineheight mul neg /yp exch def
+        rn nlines idiv 2 mod 0 eq {
+	  % Draw highlight bar.  4 is just a magic indentation.
+	  xp 4 add yp cw 8 sub lineheight neg Box fill	  
+	} if
+      } for
+    } for
+    
+  grestore
+} def
+
+% Line highlight bar.
+/line_highlight {	% x y width height gray -> -
+  gsave
+    /gray exch def
+    Box gray setgray fill
+  grestore
+} def
+
+% Column separator lines.
+/column_lines {
+  gsave
+    .1 setlinewidth
+    0 d_footer_h translate
+    /cw d_output_w cols div def
+    1 1 cols 1 sub {
+      cw mul 0 moveto
+      0 d_output_h rlineto stroke
+    } for
+  grestore
+} def
+
+% Column borders.
+/column_borders {
+  gsave
+    .1 setlinewidth
+    0 d_footer_h moveto 
+    0 d_output_h rlineto
+    d_output_w 0 rlineto
+    0 d_output_h neg rlineto
+    closepath stroke
+  grestore
+} def
+
+% Do the actual underlay drawing
+/draw_underlay {
+  ul_style 0 eq {
+    ul_str true charpath stroke
+  } { 
+    ul_str show
+  } ifelse
+} def
+
+% Underlay
+/underlay {	% - -> -
+  gsave
+    0 d_page_h translate
+    d_page_h neg d_page_w atan rotate
+
+    ul_gray setgray
+    ul_font setfont
+    /dw d_page_h dup mul d_page_w dup mul add sqrt def
+    ul_str stringwidth pop dw exch sub 2 div ul_ptsize -2 div moveto 
+    draw_underlay
+  grestore
+} def
+
+/user_underlay {	% - -> -
+  gsave
+    ul_x ul_y translate
+    ul_angle rotate
+    ul_gray setgray
+    ul_font setfont 
+    0 0 ul_ptsize 2 div sub moveto 
+    draw_underlay
+  grestore
+} def
+
+% Page prefeed
+/page_prefeed {		% bool -> -
+  statusdict /prefeed known {
+    statusdict exch /prefeed exch put
+  } {
+    pop
+  } ifelse
+} def
+
+% EPSF import.
+
+/BeginEPSF {
+  /b4_Inc_state save def    		% Save state for cleanup
+  /dict_count countdictstack def	% Count objects on dict stack
+  /op_count count 1 sub def		% Count objects on operand stack 
+  userdict begin
+  /showpage { } def
+  0 setgray 0 setlinecap
+  1 setlinewidth 0 setlinejoin
+  10 setmiterlimit [ ] 0 setdash newpath
+  /languagelevel where {
+    pop languagelevel
+    1 ne {
+      false setstrokeadjust false setoverprint 
+    } if
+  } if
+} bind def
+
+/EndEPSF {
+  count op_count sub { pos } repeat	% Clean up stacks
+  countdictstack dict_count sub { end } repeat
+  b4_Inc_state restore
+} bind def
+
+% Check PostScript language level.
+/languagelevel where {
+  pop /gs_languagelevel languagelevel def
+} {
+  /gs_languagelevel 1 def
+} ifelse
+%%EndResource
+%%BeginResource: procset Enscript-Encoding-latin1 1.4 0
+/encoding_vector [
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/space        	/exclam       	/quotedbl     	/numbersign   	
+/dollar       	/percent      	/ampersand    	/quoteright   	
+/parenleft    	/parenright   	/asterisk     	/plus         	
+/comma        	/minus        	/period       	/slash        	
+/zero         	/one          	/two          	/three        	
+/four         	/five         	/six          	/seven        	
+/eight        	/nine         	/colon        	/semicolon    	
+/less         	/equal        	/greater      	/question     	
+/at           	/A            	/B            	/C            	
+/D            	/E            	/F            	/G            	
+/H            	/I            	/J            	/K            	
+/L            	/M            	/N            	/O            	
+/P            	/Q            	/R            	/S            	
+/T            	/U            	/V            	/W            	
+/X            	/Y            	/Z            	/bracketleft  	
+/backslash    	/bracketright 	/asciicircum  	/underscore   	
+/quoteleft    	/a            	/b            	/c            	
+/d            	/e            	/f            	/g            	
+/h            	/i            	/j            	/k            	
+/l            	/m            	/n            	/o            	
+/p            	/q            	/r            	/s            	
+/t            	/u            	/v            	/w            	
+/x            	/y            	/z            	/braceleft    	
+/bar          	/braceright   	/tilde        	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/space        	/exclamdown   	/cent         	/sterling     	
+/currency     	/yen          	/brokenbar    	/section      	
+/dieresis     	/copyright    	/ordfeminine  	/guillemotleft	
+/logicalnot   	/hyphen       	/registered   	/macron       	
+/degree       	/plusminus    	/twosuperior  	/threesuperior	
+/acute        	/mu           	/paragraph    	/bullet       	
+/cedilla      	/dotlessi     	/ordmasculine 	/guillemotright	
+/onequarter   	/onehalf      	/threequarters	/questiondown 	
+/Agrave       	/Aacute       	/Acircumflex  	/Atilde       	
+/Adieresis    	/Aring        	/AE           	/Ccedilla     	
+/Egrave       	/Eacute       	/Ecircumflex  	/Edieresis    	
+/Igrave       	/Iacute       	/Icircumflex  	/Idieresis    	
+/Eth          	/Ntilde       	/Ograve       	/Oacute       	
+/Ocircumflex  	/Otilde       	/Odieresis    	/multiply     	
+/Oslash       	/Ugrave       	/Uacute       	/Ucircumflex  	
+/Udieresis    	/Yacute       	/Thorn        	/germandbls   	
+/agrave       	/aacute       	/acircumflex  	/atilde       	
+/adieresis    	/aring        	/ae           	/ccedilla     	
+/egrave       	/eacute       	/ecircumflex  	/edieresis    	
+/igrave       	/iacute       	/icircumflex  	/idieresis    	
+/eth          	/ntilde       	/ograve       	/oacute       	
+/ocircumflex  	/otilde       	/odieresis    	/divide       	
+/oslash       	/ugrave       	/uacute       	/ucircumflex  	
+/udieresis    	/yacute       	/thorn        	/ydieresis    	
+] def
+%%EndResource
+%%EndProlog
+%%BeginSetup
+%%IncludeResource: font Courier-Bold
+%%IncludeResource: font Courier
+/user_header_p false def
+/HFpt 10 def
+/Courier-Bold /HF-gs-font MF
+/HF /HF-gs-font findfont HFpt scalefont def
+/Courier /F-gs-font MF
+/F-gs-font findfont 7 scalefont setfont
+/#copies 1 def
+/d_page_w 744 def
+/d_page_h 564 def
+/d_header_x 0 def
+/d_header_y 564 def
+/d_header_w 744 def
+/d_header_h 0 def
+/d_footer_x 0 def
+/d_footer_y 0 def
+/d_footer_w 744 def
+/d_footer_h 0 def
+/d_output_w 744 def
+/d_output_h 564 def
+/cols 2 def
+%%EndSetup
+%%Page: (1) 1
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 1 def
+/fname (rfc791.txt) def
+/fdir () def
+/ftail (rfc791.txt) def
+%%EndPageSetup
+5 554 M
+(rfc791rfc791) s
+5 546 M
+(Press here to go to the top of the rfc 'tree'.) s
+5 538 M
+( ) s
+5 530 M
+( ) s
+5 522 M
+(RFC:  791) s
+5 514 M
+(                                    ) s
+5 506 M
+(                                    ) s
+5 498 M
+(                                    ) s
+5 490 M
+(                                    ) s
+5 482 M
+(                                    ) s
+5 474 M
+(                                    ) s
+5 466 M
+(                                    ) s
+5 458 M
+(                           INTERNET PROTOCOL) s
+5 450 M
+(                                    ) s
+5 442 M
+(                                    ) s
+5 434 M
+(                         DARPA INTERNET PROGRAM) s
+5 426 M
+(                                    ) s
+5 418 M
+(                         PROTOCOL SPECIFICATION) s
+5 410 M
+(                                    ) s
+5 402 M
+(                                    ) s
+5 394 M
+(                                    ) s
+5 386 M
+(                             September 1981) s
+5 378 M
+( ) s
+5 370 M
+( ) s
+5 362 M
+( ) s
+5 354 M
+( ) s
+5 346 M
+( ) s
+5 338 M
+( ) s
+5 330 M
+( ) s
+5 322 M
+( ) s
+5 314 M
+( ) s
+5 306 M
+( ) s
+5 298 M
+( ) s
+5 290 M
+( ) s
+5 282 M
+( ) s
+5 274 M
+(                              prepared for) s
+5 266 M
+( ) s
+5 258 M
+(               Defense Advanced Research Projects Agency) s
+5 250 M
+(                Information Processing Techniques Office) s
+5 242 M
+(                         1400 Wilson Boulevard) s
+5 234 M
+(                       Arlington, Virginia  22209) s
+5 226 M
+( ) s
+5 218 M
+( ) s
+5 210 M
+( ) s
+5 202 M
+( ) s
+5 194 M
+( ) s
+5 186 M
+( ) s
+5 178 M
+( ) s
+5 170 M
+(                                   by) s
+5 162 M
+( ) s
+5 154 M
+(                     Information Sciences Institute) s
+5 146 M
+(                   University of Southern California) s
+5 138 M
+(                           4676 Admiralty Way) s
+5 130 M
+(                   Marina del Rey, California  90291) s
+_R
+S
+%%Page: (2) 2
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 2 def
+/fname (rfc791.txt) def
+/fdir () def
+/ftail (rfc791.txt) def
+%%EndPageSetup
+5 546 M
+( ) s
+5 538 M
+(September 1981                                                          ) s
+5 530 M
+(                                                       Internet Protocol) s
+5 522 M
+( ) s
+5 514 M
+( ) s
+5 506 M
+( ) s
+5 498 M
+(                           TABLE OF CONTENTS) s
+5 490 M
+( ) s
+5 482 M
+(    PREFACE ........................................................ iii) s
+5 474 M
+( ) s
+5 466 M
+(1.  INTRODUCTION ..................................................... 1) s
+5 458 M
+( ) s
+5 450 M
+(  1.1  Motivation .................................................... 1) s
+5 442 M
+(  1.2  Scope ......................................................... 1) s
+5 434 M
+(  1.3  Interfaces .................................................... 1) s
+5 426 M
+(  1.4  Operation ..................................................... 2) s
+5 418 M
+( ) s
+5 410 M
+(2.  OVERVIEW ......................................................... 5) s
+5 402 M
+( ) s
+5 394 M
+(  2.1  Relation to Other Protocols ................................... 9) s
+5 386 M
+(  2.2  Model of Operation ............................................ 5) s
+5 378 M
+(  2.3  Function Description .......................................... 7) s
+5 370 M
+(  2.4  Gateways ...................................................... 9) s
+5 362 M
+( ) s
+5 354 M
+(3.  SPECIFICATION ................................................... 11) s
+5 346 M
+( ) s
+5 338 M
+(  3.1  Internet Header Format ....................................... 11) s
+5 330 M
+(  3.2  Discussion ................................................... 23) s
+5 322 M
+(  3.3  Interfaces ................................................... 31) s
+5 314 M
+( ) s
+5 306 M
+(APPENDIX A:  Examples & Scenarios ................................... 34) s
+5 298 M
+(APPENDIX B:  Data Transmission Order ................................ 39) s
+5 290 M
+( ) s
+5 282 M
+(GLOSSARY ............................................................ 41) s
+5 274 M
+( ) s
+5 266 M
+(REFERENCES .......................................................... 45) s
+5 258 M
+( ) s
+5 250 M
+( ) s
+5 242 M
+( ) s
+5 234 M
+( ) s
+5 226 M
+( ) s
+5 218 M
+( ) s
+5 210 M
+( ) s
+5 202 M
+( ) s
+5 194 M
+( ) s
+5 186 M
+( ) s
+5 178 M
+( ) s
+5 170 M
+( ) s
+5 162 M
+( ) s
+5 154 M
+( ) s
+5 146 M
+( ) s
+5 138 M
+( ) s
+5 130 M
+( ) s
+5 122 M
+( ) s
+5 114 M
+( ) s
+5 106 M
+( ) s
+5 98 M
+( ) s
+5 90 M
+(                                                                [Page i]) s
+377 546 M
+( ) s
+377 538 M
+(                                                          September 1981) s
+377 530 M
+(Internet Protocol) s
+377 522 M
+( ) s
+377 514 M
+( ) s
+377 506 M
+( ) s
+377 498 M
+( ) s
+377 490 M
+( ) s
+377 482 M
+( ) s
+377 474 M
+( ) s
+377 466 M
+( ) s
+377 458 M
+( ) s
+377 450 M
+( ) s
+377 442 M
+( ) s
+377 434 M
+( ) s
+377 426 M
+( ) s
+377 418 M
+( ) s
+377 410 M
+( ) s
+377 402 M
+( ) s
+377 394 M
+( ) s
+377 386 M
+( ) s
+377 378 M
+( ) s
+377 370 M
+( ) s
+377 362 M
+( ) s
+377 354 M
+( ) s
+377 346 M
+( ) s
+377 338 M
+( ) s
+377 330 M
+( ) s
+377 322 M
+( ) s
+377 314 M
+( ) s
+377 306 M
+( ) s
+377 298 M
+( ) s
+377 290 M
+( ) s
+377 282 M
+( ) s
+377 274 M
+( ) s
+377 266 M
+( ) s
+377 258 M
+( ) s
+377 250 M
+( ) s
+377 242 M
+( ) s
+377 234 M
+( ) s
+377 226 M
+( ) s
+377 218 M
+( ) s
+377 210 M
+( ) s
+377 202 M
+( ) s
+377 194 M
+( ) s
+377 186 M
+( ) s
+377 178 M
+( ) s
+377 170 M
+( ) s
+377 162 M
+( ) s
+377 154 M
+( ) s
+377 146 M
+( ) s
+377 138 M
+( ) s
+377 130 M
+( ) s
+377 122 M
+( ) s
+377 114 M
+( ) s
+377 106 M
+( ) s
+377 98 M
+( ) s
+377 90 M
+([Page ii]                                                               ) s
+_R
+S
+%%Page: (3) 3
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 3 def
+/fname (rfc791.txt) def
+/fdir () def
+/ftail (rfc791.txt) def
+%%EndPageSetup
+5 546 M
+( ) s
+5 538 M
+(September 1981                                                          ) s
+5 530 M
+(                                                       Internet Protocol) s
+5 522 M
+( ) s
+5 514 M
+( ) s
+5 506 M
+( ) s
+5 498 M
+(                                PREFACE) s
+5 490 M
+( ) s
+5 482 M
+( ) s
+5 474 M
+( ) s
+5 466 M
+(This document specifies the DoD Standard Internet Protocol.  This) s
+5 458 M
+(document is based on six earlier editions of the ARPA Internet Protocol) s
+5 450 M
+(Specification, and the present text draws heavily from them.  There have) s
+5 442 M
+(been many contributors to this work both in terms of concepts and in) s
+5 434 M
+(terms of text.  This edition revises aspects of addressing, error) s
+5 426 M
+(handling, option codes, and the security, precedence, compartments, and) s
+5 418 M
+(handling restriction features of the internet protocol.) s
+5 410 M
+( ) s
+5 402 M
+(                                                           Jon Postel) s
+5 394 M
+( ) s
+5 386 M
+(                                                           Editor) s
+5 378 M
+( ) s
+5 370 M
+( ) s
+5 362 M
+( ) s
+5 354 M
+( ) s
+5 346 M
+( ) s
+5 338 M
+( ) s
+5 330 M
+( ) s
+5 322 M
+( ) s
+5 314 M
+( ) s
+5 306 M
+( ) s
+5 298 M
+( ) s
+5 290 M
+( ) s
+5 282 M
+( ) s
+5 274 M
+( ) s
+5 266 M
+( ) s
+5 258 M
+( ) s
+5 250 M
+( ) s
+5 242 M
+( ) s
+5 234 M
+( ) s
+5 226 M
+( ) s
+5 218 M
+( ) s
+5 210 M
+( ) s
+5 202 M
+( ) s
+5 194 M
+( ) s
+5 186 M
+( ) s
+5 178 M
+( ) s
+5 170 M
+( ) s
+5 162 M
+( ) s
+5 154 M
+( ) s
+5 146 M
+( ) s
+5 138 M
+( ) s
+5 130 M
+( ) s
+5 122 M
+( ) s
+5 114 M
+( ) s
+5 106 M
+( ) s
+5 98 M
+( ) s
+5 90 M
+(                                                              [Page iii]) s
+_R
+S
+%%Page: (4) 4
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 4 def
+/fname (rfc791.txt) def
+/fdir () def
+/ftail (rfc791.txt) def
+%%EndPageSetup
+5 546 M
+( ) s
+5 538 M
+(                                                          September 1981) s
+5 530 M
+( ) s
+5 522 M
+( ) s
+5 514 M
+(RFC:  791) s
+5 506 M
+(Replaces:  RFC 760) s
+5 498 M
+(IENs 128, 123, 111,) s
+5 490 M
+(80, 54, 44, 41, 28, 26) s
+5 482 M
+( ) s
+5 474 M
+(                           INTERNET PROTOCOL) s
+5 466 M
+( ) s
+5 458 M
+(                         DARPA INTERNET PROGRAM) s
+5 450 M
+(                         PROTOCOL SPECIFICATION) s
+5 442 M
+( ) s
+5 434 M
+( ) s
+5 426 M
+( ) s
+5 418 M
+(                            1.  INTRODUCTION) s
+5 410 M
+( ) s
+5 402 M
+(1.1.  Motivation) s
+5 394 M
+( ) s
+5 386 M
+(  The Internet Protocol is designed for use in interconnected systems of) s
+5 378 M
+(  packet-switched computer communication networks.  Such a system has) s
+5 370 M
+(  been called a "catenet" [1].  The internet protocol provides for) s
+5 362 M
+(  transmitting blocks of data called datagrams from sources to) s
+5 354 M
+(  destinations, where sources and destinations are hosts identified by) s
+5 346 M
+(  fixed length addresses.  The internet protocol also provides for) s
+5 338 M
+(  fragmentation and reassembly of long datagrams, if necessary, for) s
+5 330 M
+(  transmission through "small packet" networks.) s
+5 322 M
+( ) s
+5 314 M
+(1.2.  Scope) s
+5 306 M
+( ) s
+5 298 M
+(  The internet protocol is specifically limited in scope to provide the) s
+5 290 M
+(  functions necessary to deliver a package of bits \(an internet) s
+5 282 M
+(  datagram\) from a source to a destination over an interconnected system) s
+5 274 M
+(  of networks.  There are no mechanisms to augment end-to-end data) s
+5 266 M
+(  reliability, flow control, sequencing, or other services commonly) s
+5 258 M
+(  found in host-to-host protocols.  The internet protocol can capitalize) s
+5 250 M
+(  on the services of its supporting networks to provide various types) s
+5 242 M
+(  and qualities of service.) s
+5 234 M
+( ) s
+5 226 M
+(1.3.  Interfaces) s
+5 218 M
+( ) s
+5 210 M
+(  This protocol is called on by host-to-host protocols in an internet) s
+5 202 M
+(  environment.  This protocol calls on local network protocols to carry) s
+5 194 M
+(  the internet datagram to the next gateway or destination host.) s
+5 186 M
+( ) s
+5 178 M
+(  For example, a TCP module would call on the internet module to take a) s
+5 170 M
+(  TCP segment \(including the TCP header and user data\) as the data) s
+5 162 M
+(  portion of an internet datagram.  The TCP module would provide the) s
+5 154 M
+(  addresses and other parameters in the internet header to the internet) s
+5 146 M
+(  module as arguments of the call.  The internet module would then) s
+5 138 M
+(  create an internet datagram and call on the local network interface to) s
+5 130 M
+(  transmit the internet datagram.) s
+5 122 M
+( ) s
+5 114 M
+(  In the ARPANET case, for example, the internet module would call on a) s
+5 106 M
+( ) s
+5 98 M
+( ) s
+5 90 M
+(                                                                [Page 1]) s
+377 546 M
+( ) s
+377 538 M
+(                                                          September 1981) s
+377 530 M
+(Internet Protocol) s
+377 522 M
+(Introduction) s
+377 514 M
+( ) s
+377 506 M
+( ) s
+377 498 M
+( ) s
+377 490 M
+(  local net module which would add the 1822 leader [2] to the internet) s
+377 482 M
+(  datagram creating an ARPANET message to transmit to the IMP.  The) s
+377 474 M
+(  ARPANET address would be derived from the internet address by the) s
+377 466 M
+(  local network interface and would be the address of some host in the) s
+377 458 M
+(  ARPANET, that host might be a gateway to other networks.) s
+377 450 M
+( ) s
+377 442 M
+(1.4.  Operation) s
+377 434 M
+( ) s
+377 426 M
+(  The internet protocol implements two basic functions:  addressing and) s
+377 418 M
+(  fragmentation.) s
+377 410 M
+( ) s
+377 402 M
+(  The internet modules use the addresses carried in the internet header) s
+377 394 M
+(  to transmit internet datagrams toward their destinations.  The) s
+377 386 M
+(  selection of a path for transmission is called routing.) s
+377 378 M
+( ) s
+377 370 M
+(  The internet modules use fields in the internet header to fragment and) s
+377 362 M
+(  reassemble internet datagrams when necessary for transmission through) s
+377 354 M
+(  "small packet" networks.) s
+377 346 M
+( ) s
+377 338 M
+(  The model of operation is that an internet module resides in each host) s
+377 330 M
+(  engaged in internet communication and in each gateway that) s
+377 322 M
+(  interconnects networks.  These modules share common rules for) s
+377 314 M
+(  interpreting address fields and for fragmenting and assembling) s
+377 306 M
+(  internet datagrams.  In addition, these modules \(especially in) s
+377 298 M
+(  gateways\) have procedures for making routing decisions and other) s
+377 290 M
+(  functions.) s
+377 282 M
+( ) s
+377 274 M
+(  The internet protocol treats each internet datagram as an independent) s
+377 266 M
+(  entity unrelated to any other internet datagram.  There are no) s
+377 258 M
+(  connections or logical circuits \(virtual or otherwise\).) s
+377 250 M
+( ) s
+377 242 M
+(  The internet protocol uses four key mechanisms in providing its) s
+377 234 M
+(  service:  Type of Service, Time to Live, Options, and Header Checksum.) s
+377 226 M
+( ) s
+377 218 M
+(  The Type of Service is used to indicate the quality of the service) s
+377 210 M
+(  desired.  The type of service is an abstract or generalized set of) s
+377 202 M
+(  parameters which characterize the service choices provided in the) s
+377 194 M
+(  networks that make up the internet.  This type of service indication) s
+377 186 M
+(  is to be used by gateways to select the actual transmission parameters) s
+377 178 M
+(  for a particular network, the network to be used for the next hop, or) s
+377 170 M
+(  the next gateway when routing an internet datagram.) s
+377 162 M
+( ) s
+377 154 M
+(  The Time to Live is an indication of an upper bound on the lifetime of) s
+377 146 M
+(  an internet datagram.  It is set by the sender of the datagram and) s
+377 138 M
+(  reduced at the points along the route where it is processed.  If the) s
+377 130 M
+(  time to live reaches zero before the internet datagram reaches its) s
+377 122 M
+(  destination, the internet datagram is destroyed.  The time to live can) s
+377 114 M
+(  be thought of as a self destruct time limit.) s
+377 106 M
+( ) s
+377 98 M
+( ) s
+377 90 M
+([Page 2]                                                                ) s
+_R
+S
+%%Page: (5) 5
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 5 def
+/fname (rfc791.txt) def
+/fdir () def
+/ftail (rfc791.txt) def
+%%EndPageSetup
+5 546 M
+( ) s
+5 538 M
+(September 1981                                                          ) s
+5 530 M
+(                                                       Internet Protocol) s
+5 522 M
+(                                                            Introduction) s
+5 514 M
+( ) s
+5 506 M
+( ) s
+5 498 M
+( ) s
+5 490 M
+(  The Options provide for control functions needed or useful in some) s
+5 482 M
+(  situations but unnecessary for the most common communications.  The) s
+5 474 M
+(  options include provisions for timestamps, security, and special) s
+5 466 M
+(  routing.) s
+5 458 M
+( ) s
+5 450 M
+(  The Header Checksum provides a verification that the information used) s
+5 442 M
+(  in processing internet datagram has been transmitted correctly.  The) s
+5 434 M
+(  data may contain errors.  If the header checksum fails, the internet) s
+5 426 M
+(  datagram is discarded at once by the entity which detects the error.) s
+5 418 M
+( ) s
+5 410 M
+(  The internet protocol does not provide a reliable communication) s
+5 402 M
+(  facility.  There are no acknowledgments either end-to-end or) s
+5 394 M
+(  hop-by-hop.  There is no error control for data, only a header) s
+5 386 M
+(  checksum.  There are no retransmissions.  There is no flow control.) s
+5 378 M
+( ) s
+5 370 M
+(  Errors detected may be reported via the Internet Control Message) s
+5 362 M
+(  Protocol \(ICMP\) [3] which is implemented in the internet protocol) s
+5 354 M
+(  module.) s
+5 346 M
+( ) s
+5 338 M
+(  ) s
+5 330 M
+( ) s
+5 322 M
+( ) s
+5 314 M
+( ) s
+5 306 M
+( ) s
+5 298 M
+( ) s
+5 290 M
+( ) s
+5 282 M
+( ) s
+5 274 M
+( ) s
+5 266 M
+( ) s
+5 258 M
+( ) s
+5 250 M
+( ) s
+5 242 M
+( ) s
+5 234 M
+( ) s
+5 226 M
+( ) s
+5 218 M
+( ) s
+5 210 M
+( ) s
+5 202 M
+( ) s
+5 194 M
+( ) s
+5 186 M
+( ) s
+5 178 M
+( ) s
+5 170 M
+( ) s
+5 162 M
+( ) s
+5 154 M
+( ) s
+5 146 M
+( ) s
+5 138 M
+( ) s
+5 130 M
+( ) s
+5 122 M
+( ) s
+5 114 M
+( ) s
+5 106 M
+( ) s
+5 98 M
+( ) s
+5 90 M
+(                                                                [Page 3]) s
+377 546 M
+( ) s
+377 538 M
+(                                                          September 1981) s
+377 530 M
+(Internet Protocol) s
+377 522 M
+( ) s
+377 514 M
+( ) s
+377 506 M
+( ) s
+377 498 M
+( ) s
+377 490 M
+( ) s
+377 482 M
+( ) s
+377 474 M
+( ) s
+377 466 M
+( ) s
+377 458 M
+( ) s
+377 450 M
+( ) s
+377 442 M
+( ) s
+377 434 M
+( ) s
+377 426 M
+( ) s
+377 418 M
+( ) s
+377 410 M
+( ) s
+377 402 M
+( ) s
+377 394 M
+( ) s
+377 386 M
+( ) s
+377 378 M
+( ) s
+377 370 M
+( ) s
+377 362 M
+( ) s
+377 354 M
+( ) s
+377 346 M
+( ) s
+377 338 M
+( ) s
+377 330 M
+( ) s
+377 322 M
+( ) s
+377 314 M
+( ) s
+377 306 M
+( ) s
+377 298 M
+( ) s
+377 290 M
+( ) s
+377 282 M
+( ) s
+377 274 M
+( ) s
+377 266 M
+( ) s
+377 258 M
+( ) s
+377 250 M
+( ) s
+377 242 M
+( ) s
+377 234 M
+( ) s
+377 226 M
+( ) s
+377 218 M
+( ) s
+377 210 M
+( ) s
+377 202 M
+( ) s
+377 194 M
+( ) s
+377 186 M
+( ) s
+377 178 M
+( ) s
+377 170 M
+( ) s
+377 162 M
+( ) s
+377 154 M
+( ) s
+377 146 M
+( ) s
+377 138 M
+( ) s
+377 130 M
+( ) s
+377 122 M
+( ) s
+377 114 M
+( ) s
+377 106 M
+( ) s
+377 98 M
+( ) s
+377 90 M
+([Page 4]                                                                ) s
+_R
+S
+%%Page: (6) 6
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 6 def
+/fname (rfc791.txt) def
+/fdir () def
+/ftail (rfc791.txt) def
+%%EndPageSetup
+5 546 M
+( ) s
+5 538 M
+(September 1981                                                          ) s
+5 530 M
+(                                                       Internet Protocol) s
+5 522 M
+( ) s
+5 514 M
+( ) s
+5 506 M
+( ) s
+5 498 M
+(                              2.  OVERVIEW) s
+5 490 M
+( ) s
+5 482 M
+(2.1.  Relation to Other Protocols) s
+5 474 M
+( ) s
+5 466 M
+(  The following diagram illustrates the place of the internet protocol) s
+5 458 M
+(  in the protocol hierarchy:) s
+5 450 M
+( ) s
+5 442 M
+(                                    ) s
+5 434 M
+(                 +------+ +-----+ +-----+     +-----+  ) s
+5 426 M
+(                 |Telnet| | FTP | | TFTP| ... | ... |  ) s
+5 418 M
+(                 +------+ +-----+ +-----+     +-----+  ) s
+5 410 M
+(                       |   |         |           |     ) s
+5 402 M
+(                      +-----+     +-----+     +-----+  ) s
+5 394 M
+(                      | TCP |     | UDP | ... | ... |  ) s
+5 386 M
+(                      +-----+     +-----+     +-----+  ) s
+5 378 M
+(                         |           |           |     ) s
+5 370 M
+(                      +--------------------------+----+) s
+5 362 M
+(                      |    Internet Protocol & ICMP   |) s
+5 354 M
+(                      +--------------------------+----+) s
+5 346 M
+(                                     |                 ) s
+5 338 M
+(                        +---------------------------+  ) s
+5 330 M
+(                        |   Local Network Protocol  |  ) s
+5 322 M
+(                        +---------------------------+  ) s
+5 314 M
+( ) s
+5 306 M
+(                         Protocol Relationships) s
+5 298 M
+( ) s
+5 290 M
+(                               Figure 1.) s
+5 282 M
+( ) s
+5 274 M
+(  Internet protocol interfaces on one side to the higher level) s
+5 266 M
+(  host-to-host protocols and on the other side to the local network) s
+5 258 M
+(  protocol.  In this context a "local network" may be a small network in) s
+5 250 M
+(  a building or a large network such as the ARPANET.) s
+5 242 M
+( ) s
+5 234 M
+(2.2.  Model of Operation) s
+5 226 M
+( ) s
+5 218 M
+(  The  model of operation for transmitting a datagram from one) s
+5 210 M
+(  application program to another is illustrated by the following) s
+5 202 M
+(  scenario:) s
+5 194 M
+( ) s
+5 186 M
+(    We suppose that this transmission will involve one intermediate) s
+5 178 M
+(    gateway.) s
+5 170 M
+( ) s
+5 162 M
+(    The sending application program prepares its data and calls on its) s
+5 154 M
+(    local internet module to send that data as a datagram and passes the) s
+5 146 M
+(    destination address and other parameters as arguments of the call.) s
+5 138 M
+( ) s
+5 130 M
+(    The internet module prepares a datagram header and attaches the data) s
+5 122 M
+(    to it.  The internet module determines a local network address for) s
+5 114 M
+(    this internet address, in this case it is the address of a gateway.) s
+5 106 M
+( ) s
+5 98 M
+( ) s
+5 90 M
+(                                                                [Page 5]) s
+377 546 M
+( ) s
+377 538 M
+(                                                          September 1981) s
+377 530 M
+(Internet Protocol) s
+377 522 M
+(Overview) s
+377 514 M
+( ) s
+377 506 M
+( ) s
+377 498 M
+( ) s
+377 490 M
+(    It sends this datagram and the local network address to the local) s
+377 482 M
+(    network interface.) s
+377 474 M
+( ) s
+377 466 M
+(    The local network interface creates a local network header, and) s
+377 458 M
+(    attaches the datagram to it, then sends the result via the local) s
+377 450 M
+(    network.) s
+377 442 M
+( ) s
+377 434 M
+(    The datagram arrives at a gateway host wrapped in the local network) s
+377 426 M
+(    header, the local network interface strips off this header, and) s
+377 418 M
+(    turns the datagram over to the internet module.  The internet module) s
+377 410 M
+(    determines from the internet address that the datagram is to be) s
+377 402 M
+(    forwarded to another host in a second network.  The internet module) s
+377 394 M
+(    determines a local net address for the destination host.  It calls) s
+377 386 M
+(    on the local network interface for that network to send the) s
+377 378 M
+(    datagram.) s
+377 370 M
+( ) s
+377 362 M
+(    This local network interface creates a local network header and) s
+377 354 M
+(    attaches the datagram sending the result to the destination host.) s
+377 346 M
+( ) s
+377 338 M
+(    At this destination host the datagram is stripped of the local net) s
+377 330 M
+(    header by the local network interface and handed to the internet) s
+377 322 M
+(    module.) s
+377 314 M
+( ) s
+377 306 M
+(    The internet module determines that the datagram is for an) s
+377 298 M
+(    application program in this host.  It passes the data to the) s
+377 290 M
+(    application program in response to a system call, passing the source) s
+377 282 M
+(    address and other parameters as results of the call.) s
+377 274 M
+( ) s
+377 266 M
+(                                    ) s
+377 258 M
+(   Application                                           Application) s
+377 250 M
+(   Program                                                   Program) s
+377 242 M
+(         \\                                                   /      ) s
+377 234 M
+(       Internet Module      Internet Module      Internet Module    ) s
+377 226 M
+(             \\                 /       \\                /           ) s
+377 218 M
+(             LNI-1          LNI-1      LNI-2         LNI-2          ) s
+377 210 M
+(                \\           /             \\          /              ) s
+377 202 M
+(               Local Network 1           Local Network 2            ) s
+377 194 M
+( ) s
+377 186 M
+( ) s
+377 178 M
+( ) s
+377 170 M
+(                            Transmission Path) s
+377 162 M
+( ) s
+377 154 M
+(                                Figure 2) s
+377 146 M
+( ) s
+377 138 M
+( ) s
+377 130 M
+( ) s
+377 122 M
+( ) s
+377 114 M
+( ) s
+377 106 M
+( ) s
+377 98 M
+( ) s
+377 90 M
+([Page 6]                                                                ) s
+_R
+S
+%%Page: (7) 7
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 7 def
+/fname (rfc791.txt) def
+/fdir () def
+/ftail (rfc791.txt) def
+%%EndPageSetup
+5 546 M
+( ) s
+5 538 M
+(September 1981                                                          ) s
+5 530 M
+(                                                       Internet Protocol) s
+5 522 M
+(                                                                Overview) s
+5 514 M
+( ) s
+5 506 M
+( ) s
+5 498 M
+( ) s
+5 490 M
+(2.3.  Function Description) s
+5 482 M
+( ) s
+5 474 M
+(  The function or purpose of Internet Protocol is to move datagrams) s
+5 466 M
+(  through an interconnected set of networks.  This is done by passing) s
+5 458 M
+(  the datagrams from one internet module to another until the) s
+5 450 M
+(  destination is reached.  The internet modules reside in hosts and) s
+5 442 M
+(  gateways in the internet system.  The datagrams are routed from one) s
+5 434 M
+(  internet module to another through individual networks based on the) s
+5 426 M
+(  interpretation of an internet address.  Thus, one important mechanism) s
+5 418 M
+(  of the internet protocol is the internet address.) s
+5 410 M
+( ) s
+5 402 M
+(  In the routing of messages from one internet module to another,) s
+5 394 M
+(  datagrams may need to traverse a network whose maximum packet size is) s
+5 386 M
+(  smaller than the size of the datagram.  To overcome this difficulty, a) s
+5 378 M
+(  fragmentation mechanism is provided in the internet protocol.) s
+5 370 M
+( ) s
+5 362 M
+(  Addressing) s
+5 354 M
+( ) s
+5 346 M
+(    A distinction is made between names, addresses, and routes [4].   A) s
+5 338 M
+(    name indicates what we seek.  An address indicates where it is.  A) s
+5 330 M
+(    route indicates how to get there.  The internet protocol deals) s
+5 322 M
+(    primarily with addresses.  It is the task of higher level \(i.e.,) s
+5 314 M
+(    host-to-host or application\) protocols to make the mapping from) s
+5 306 M
+(    names to addresses.   The internet module maps internet addresses to) s
+5 298 M
+(    local net addresses.  It is the task of lower level \(i.e., local net) s
+5 290 M
+(    or gateways\) procedures to make the mapping from local net addresses) s
+5 282 M
+(    to routes.) s
+5 274 M
+( ) s
+5 266 M
+(    Addresses are fixed length of four octets \(32 bits\).  An address) s
+5 258 M
+(    begins with a network number, followed by local address \(called the) s
+5 250 M
+(    "rest" field\).  There are three formats or classes of internet) s
+5 242 M
+(    addresses:  in class a, the high order bit is zero, the next 7 bits) s
+5 234 M
+(    are the network, and the last 24 bits are the local address; in) s
+5 226 M
+(    class b, the high order two bits are one-zero, the next 14 bits are) s
+5 218 M
+(    the network and the last 16 bits are the local address; in class c,) s
+5 210 M
+(    the high order three bits are one-one-zero, the next 21 bits are the) s
+5 202 M
+(    network and the last 8 bits are the local address.) s
+5 194 M
+( ) s
+5 186 M
+(    Care must be taken in mapping internet addresses to local net) s
+5 178 M
+(    addresses; a single physical host must be able to act as if it were) s
+5 170 M
+(    several distinct hosts to the extent of using several distinct) s
+5 162 M
+(    internet addresses.  Some hosts will also have several physical) s
+5 154 M
+(    interfaces \(multi-homing\).) s
+5 146 M
+( ) s
+5 138 M
+(    That is, provision must be made for a host to have several physical) s
+5 130 M
+(    interfaces to the network with each having several logical internet) s
+5 122 M
+(    addresses.) s
+5 114 M
+( ) s
+5 106 M
+( ) s
+5 98 M
+( ) s
+5 90 M
+(                                                                [Page 7]) s
+377 546 M
+( ) s
+377 538 M
+(                                                          September 1981) s
+377 530 M
+(Internet Protocol) s
+377 522 M
+(Overview) s
+377 514 M
+( ) s
+377 506 M
+( ) s
+377 498 M
+( ) s
+377 490 M
+(    Examples of address mappings may be found in "Address Mappings" [5].) s
+377 482 M
+( ) s
+377 474 M
+(  Fragmentation) s
+377 466 M
+( ) s
+377 458 M
+(    Fragmentation of an internet datagram is necessary when it) s
+377 450 M
+(    originates in a local net that allows a large packet size and must) s
+377 442 M
+(    traverse a local net that limits packets to a smaller size to reach) s
+377 434 M
+(    its destination.) s
+377 426 M
+( ) s
+377 418 M
+(    An internet datagram can be marked "don't fragment."  Any internet) s
+377 410 M
+(    datagram so marked is not to be internet fragmented under any) s
+377 402 M
+(    circumstances.  If internet datagram marked don't fragment cannot be) s
+377 394 M
+(    delivered to its destination without fragmenting it, it is to be) s
+377 386 M
+(    discarded instead.) s
+377 378 M
+( ) s
+377 370 M
+(    Fragmentation, transmission and reassembly across a local network) s
+377 362 M
+(    which is invisible to the internet protocol module is called) s
+377 354 M
+(    intranet fragmentation and may be used [6].) s
+377 346 M
+( ) s
+377 338 M
+(    The internet fragmentation and reassembly procedure needs to be able) s
+377 330 M
+(    to break a datagram into an almost arbitrary number of pieces that) s
+377 322 M
+(    can be later reassembled.  The receiver of the fragments uses the) s
+377 314 M
+(    identification field to ensure that fragments of different datagrams) s
+377 306 M
+(    are not mixed.  The fragment offset field tells the receiver the) s
+377 298 M
+(    position of a fragment in the original datagram.  The fragment) s
+377 290 M
+(    offset and length determine the portion of the original datagram) s
+377 282 M
+(    covered by this fragment.  The more-fragments flag indicates \(by) s
+377 274 M
+(    being reset\) the last fragment.  These fields provide sufficient) s
+377 266 M
+(    information to reassemble datagrams.) s
+377 258 M
+( ) s
+377 250 M
+(    The identification field is used to distinguish the fragments of one) s
+377 242 M
+(    datagram from those of another.  The originating protocol module of) s
+377 234 M
+(    an internet datagram sets the identification field to a value that) s
+377 226 M
+(    must be unique for that source-destination pair and protocol for the) s
+377 218 M
+(    time the datagram will be active in the internet system.  The) s
+377 210 M
+(    originating protocol module of a complete datagram sets the) s
+377 202 M
+(    more-fragments flag to zero and the fragment offset to zero.) s
+377 194 M
+( ) s
+377 186 M
+(    To fragment a long internet datagram, an internet protocol module) s
+377 178 M
+(    \(for example, in a gateway\), creates two new internet datagrams and) s
+377 170 M
+(    copies the contents of the internet header fields from the long) s
+377 162 M
+(    datagram into both new internet headers.  The data of the long) s
+377 154 M
+(    datagram is divided into two portions on a 8 octet \(64 bit\) boundary) s
+377 146 M
+(    \(the second portion might not be an integral multiple of 8 octets,) s
+377 138 M
+(    but the first must be\).  Call the number of 8 octet blocks in the) s
+377 130 M
+(    first portion NFB \(for Number of Fragment Blocks\).  The first) s
+377 122 M
+(    portion of the data is placed in the first new internet datagram,) s
+377 114 M
+(    and the total length field is set to the length of the first) s
+377 106 M
+( ) s
+377 98 M
+( ) s
+377 90 M
+([Page 8] ) s
+_R
+S
+%%Page: (8) 8
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 8 def
+/fname (rfc791.txt) def
+/fdir () def
+/ftail (rfc791.txt) def
+%%EndPageSetup
+5 546 M
+( ) s
+5 538 M
+(September 1981 ) s
+5 530 M
+(                                                       Internet Protocol) s
+5 522 M
+(                                                                Overview) s
+5 514 M
+( ) s
+5 506 M
+( ) s
+5 498 M
+( ) s
+5 490 M
+(    datagram.  The more-fragments flag is set to one.  The second) s
+5 482 M
+(    portion of the data is placed in the second new internet datagram,) s
+5 474 M
+(    and the total length field is set to the length of the second) s
+5 466 M
+(    datagram.  The more-fragments flag carries the same value as the) s
+5 458 M
+(    long datagram.  The fragment offset field of the second new internet) s
+5 450 M
+(    datagram is set to the value of that field in the long datagram plus) s
+5 442 M
+(    NFB.) s
+5 434 M
+( ) s
+5 426 M
+(    This procedure can be generalized for an n-way split, rather than) s
+5 418 M
+(    the two-way split described.) s
+5 410 M
+( ) s
+5 402 M
+(    To assemble the fragments of an internet datagram, an internet) s
+5 394 M
+(    protocol module \(for example at a destination host\) combines) s
+5 386 M
+(    internet datagrams that all have the same value for the four fields:) s
+5 378 M
+(    identification, source, destination, and protocol.  The combination) s
+5 370 M
+(    is done by placing the data portion of each fragment in the relative) s
+5 362 M
+(    position indicated by the fragment offset in that fragment's) s
+5 354 M
+(    internet header.  The first fragment will have the fragment offset) s
+5 346 M
+(    zero, and the last fragment will have the more-fragments flag reset) s
+5 338 M
+(    to zero.) s
+5 330 M
+( ) s
+5 322 M
+(2.4.  Gateways) s
+5 314 M
+( ) s
+5 306 M
+(  Gateways implement internet protocol to forward datagrams between) s
+5 298 M
+(  networks.  Gateways also implement the Gateway to Gateway Protocol) s
+5 290 M
+(  \(GGP\) [7] to coordinate routing and other internet control) s
+5 282 M
+(  information.) s
+5 274 M
+( ) s
+5 266 M
+(  In a gateway the higher level protocols need not be implemented and) s
+5 258 M
+(  the GGP functions are added to the IP module.) s
+5 250 M
+( ) s
+5 242 M
+(                                    ) s
+5 234 M
+(                   +-------------------------------+   ) s
+5 226 M
+(                   | Internet Protocol & ICMP & GGP|   ) s
+5 218 M
+(                   +-------------------------------+   ) s
+5 210 M
+(                           |                 |         ) s
+5 202 M
+(                 +---------------+   +---------------+ ) s
+5 194 M
+(                 |   Local Net   |   |   Local Net   | ) s
+5 186 M
+(                 +---------------+   +---------------+ ) s
+5 178 M
+( ) s
+5 170 M
+(                           Gateway Protocols) s
+5 162 M
+( ) s
+5 154 M
+(                               Figure 3.) s
+5 146 M
+( ) s
+5 138 M
+(  ) s
+5 130 M
+( ) s
+5 122 M
+( ) s
+5 114 M
+( ) s
+5 106 M
+( ) s
+5 98 M
+( ) s
+5 90 M
+(                                                                [Page 9]) s
+377 546 M
+( ) s
+377 538 M
+(                                                          September 1981) s
+377 530 M
+(Internet Protocol) s
+377 522 M
+( ) s
+377 514 M
+( ) s
+377 506 M
+( ) s
+377 498 M
+( ) s
+377 490 M
+( ) s
+377 482 M
+( ) s
+377 474 M
+( ) s
+377 466 M
+( ) s
+377 458 M
+( ) s
+377 450 M
+( ) s
+377 442 M
+( ) s
+377 434 M
+( ) s
+377 426 M
+( ) s
+377 418 M
+( ) s
+377 410 M
+( ) s
+377 402 M
+( ) s
+377 394 M
+( ) s
+377 386 M
+( ) s
+377 378 M
+( ) s
+377 370 M
+( ) s
+377 362 M
+( ) s
+377 354 M
+( ) s
+377 346 M
+( ) s
+377 338 M
+( ) s
+377 330 M
+( ) s
+377 322 M
+( ) s
+377 314 M
+( ) s
+377 306 M
+( ) s
+377 298 M
+( ) s
+377 290 M
+( ) s
+377 282 M
+( ) s
+377 274 M
+( ) s
+377 266 M
+( ) s
+377 258 M
+( ) s
+377 250 M
+( ) s
+377 242 M
+( ) s
+377 234 M
+( ) s
+377 226 M
+( ) s
+377 218 M
+( ) s
+377 210 M
+( ) s
+377 202 M
+( ) s
+377 194 M
+( ) s
+377 186 M
+( ) s
+377 178 M
+( ) s
+377 170 M
+( ) s
+377 162 M
+( ) s
+377 154 M
+( ) s
+377 146 M
+( ) s
+377 138 M
+( ) s
+377 130 M
+( ) s
+377 122 M
+( ) s
+377 114 M
+( ) s
+377 106 M
+( ) s
+377 98 M
+( ) s
+377 90 M
+([Page 10]                                                               ) s
+_R
+S
+%%Page: (9) 9
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 9 def
+/fname (rfc791.txt) def
+/fdir () def
+/ftail (rfc791.txt) def
+%%EndPageSetup
+5 546 M
+( ) s
+5 538 M
+(September 1981                                                          ) s
+5 530 M
+(                                                       Internet Protocol) s
+5 522 M
+( ) s
+5 514 M
+( ) s
+5 506 M
+( ) s
+5 498 M
+(                           3.  SPECIFICATION) s
+5 490 M
+( ) s
+5 482 M
+(3.1.  Internet Header Format) s
+5 474 M
+( ) s
+5 466 M
+(  A summary of the contents of the internet header follows:) s
+5 458 M
+( ) s
+5 450 M
+(                                    ) s
+5 442 M
+(    0                   1                   2                   3   ) s
+5 434 M
+(    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 ) s
+5 426 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 418 M
+(   |Version|  IHL  |Type of Service|          Total Length         |) s
+5 410 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 402 M
+(   |         Identification        |Flags|      Fragment Offset    |) s
+5 394 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 386 M
+(   |  Time to Live |    Protocol   |         Header Checksum       |) s
+5 378 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 370 M
+(   |                       Source Address                          |) s
+5 362 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 354 M
+(   |                    Destination Address                        |) s
+5 346 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 338 M
+(   |                    Options                    |    Padding    |) s
+5 330 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 322 M
+( ) s
+5 314 M
+(                    Example Internet Datagram Header) s
+5 306 M
+( ) s
+5 298 M
+(                               Figure 4.) s
+5 290 M
+( ) s
+5 282 M
+(  Note that each tick mark represents one bit position.) s
+5 274 M
+( ) s
+5 266 M
+(  Version:  4 bits) s
+5 258 M
+( ) s
+5 250 M
+(    The Version field indicates the format of the internet header.  This) s
+5 242 M
+(    document describes version 4.) s
+5 234 M
+( ) s
+5 226 M
+(  IHL:  4 bits) s
+5 218 M
+( ) s
+5 210 M
+(    Internet Header Length is the length of the internet header in 32) s
+5 202 M
+(    bit words, and thus points to the beginning of the data.  Note that) s
+5 194 M
+(    the minimum value for a correct header is 5.) s
+5 186 M
+( ) s
+5 178 M
+( ) s
+5 170 M
+( ) s
+5 162 M
+( ) s
+5 154 M
+( ) s
+5 146 M
+( ) s
+5 138 M
+( ) s
+5 130 M
+( ) s
+5 122 M
+( ) s
+5 114 M
+( ) s
+5 106 M
+( ) s
+5 98 M
+( ) s
+5 90 M
+(                                                               [Page 11]) s
+377 546 M
+( ) s
+377 538 M
+(                                                          September 1981) s
+377 530 M
+(Internet Protocol) s
+377 522 M
+(Specification) s
+377 514 M
+( ) s
+377 506 M
+( ) s
+377 498 M
+( ) s
+377 490 M
+(  Type of Service:  8 bits) s
+377 482 M
+( ) s
+377 474 M
+(    The Type of Service provides an indication of the abstract) s
+377 466 M
+(    parameters of the quality of service desired.  These parameters are) s
+377 458 M
+(    to be used to guide the selection of the actual service parameters) s
+377 450 M
+(    when transmitting a datagram through a particular network.  Several) s
+377 442 M
+(    networks offer service precedence, which somehow treats high) s
+377 434 M
+(    precedence traffic as more important than other traffic \(generally) s
+377 426 M
+(    by accepting only traffic above a certain precedence at time of high) s
+377 418 M
+(    load\).  The major choice is a three way tradeoff between low-delay,) s
+377 410 M
+(    high-reliability, and high-throughput.) s
+377 402 M
+( ) s
+377 394 M
+(      Bits 0-2:  Precedence.) s
+377 386 M
+(      Bit    3:  0 = Normal Delay,      1 = Low Delay.) s
+377 378 M
+(      Bits   4:  0 = Normal Throughput, 1 = High Throughput.) s
+377 370 M
+(      Bits   5:  0 = Normal Relibility, 1 = High Relibility.) s
+377 362 M
+(      Bit  6-7:  Reserved for Future Use.) s
+377 354 M
+( ) s
+377 346 M
+(         0     1     2     3     4     5     6     7) s
+377 338 M
+(      +-----+-----+-----+-----+-----+-----+-----+-----+) s
+377 330 M
+(      |                 |     |     |     |     |     |) s
+377 322 M
+(      |   PRECEDENCE    |  D  |  T  |  R  |  0  |  0  |) s
+377 314 M
+(      |                 |     |     |     |     |     |) s
+377 306 M
+(      +-----+-----+-----+-----+-----+-----+-----+-----+) s
+377 298 M
+( ) s
+377 290 M
+(        Precedence) s
+377 282 M
+( ) s
+377 274 M
+(          111 - Network Control) s
+377 266 M
+(          110 - Internetwork Control) s
+377 258 M
+(          101 - CRITIC/ECP) s
+377 250 M
+(          100 - Flash Override) s
+377 242 M
+(          011 - Flash) s
+377 234 M
+(          010 - Immediate) s
+377 226 M
+(          001 - Priority) s
+377 218 M
+(          000 - Routine) s
+377 210 M
+( ) s
+377 202 M
+(    The use of the Delay, Throughput, and Reliability indications may) s
+377 194 M
+(    increase the cost \(in some sense\) of the service.  In many networks) s
+377 186 M
+(    better performance for one of these parameters is coupled with worse) s
+377 178 M
+(    performance on another.  Except for very unusual cases at most two) s
+377 170 M
+(    of these three indications should be set.) s
+377 162 M
+( ) s
+377 154 M
+(    The type of service is used to specify the treatment of the datagram) s
+377 146 M
+(    during its transmission through the internet system.  Example) s
+377 138 M
+(    mappings of the internet type of service to the actual service) s
+377 130 M
+(    provided on networks such as AUTODIN II, ARPANET, SATNET, and PRNET) s
+377 122 M
+(    is given in "Service Mappings" [8].) s
+377 114 M
+( ) s
+377 106 M
+( ) s
+377 98 M
+( ) s
+377 90 M
+([Page 12]                                                               ) s
+_R
+S
+%%Page: (10) 10
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 10 def
+/fname (rfc791.txt) def
+/fdir () def
+/ftail (rfc791.txt) def
+%%EndPageSetup
+5 546 M
+( ) s
+5 538 M
+(September 1981                                                          ) s
+5 530 M
+(                                                       Internet Protocol) s
+5 522 M
+(                                                           Specification) s
+5 514 M
+( ) s
+5 506 M
+( ) s
+5 498 M
+( ) s
+5 490 M
+(    The Network Control precedence designation is intended to be used) s
+5 482 M
+(    within a network only.  The actual use and control of that) s
+5 474 M
+(    designation is up to each network. The Internetwork Control) s
+5 466 M
+(    designation is intended for use by gateway control originators only.) s
+5 458 M
+(    If the actual use of these precedence designations is of concern to) s
+5 450 M
+(    a particular network, it is the responsibility of that network to) s
+5 442 M
+(    control the access to, and use of, those precedence designations.) s
+5 434 M
+( ) s
+5 426 M
+(  Total Length:  16 bits) s
+5 418 M
+( ) s
+5 410 M
+(    Total Length is the length of the datagram, measured in octets,) s
+5 402 M
+(    including internet header and data.  This field allows the length of) s
+5 394 M
+(    a datagram to be up to 65,535 octets.  Such long datagrams are) s
+5 386 M
+(    impractical for most hosts and networks.  All hosts must be prepared) s
+5 378 M
+(    to accept datagrams of up to 576 octets \(whether they arrive whole) s
+5 370 M
+(    or in fragments\).  It is recommended that hosts only send datagrams) s
+5 362 M
+(    larger than 576 octets if they have assurance that the destination) s
+5 354 M
+(    is prepared to accept the larger datagrams.) s
+5 346 M
+( ) s
+5 338 M
+(    The number 576 is selected to allow a reasonable sized data block to) s
+5 330 M
+(    be transmitted in addition to the required header information.  For) s
+5 322 M
+(    example, this size allows a data block of 512 octets plus 64 header) s
+5 314 M
+(    octets to fit in a datagram.  The maximal internet header is 60) s
+5 306 M
+(    octets, and a typical internet header is 20 octets, allowing a) s
+5 298 M
+(    margin for headers of higher level protocols.) s
+5 290 M
+( ) s
+5 282 M
+(  Identification:  16 bits) s
+5 274 M
+( ) s
+5 266 M
+(    An identifying value assigned by the sender to aid in assembling the) s
+5 258 M
+(    fragments of a datagram.) s
+5 250 M
+( ) s
+5 242 M
+(  Flags:  3 bits) s
+5 234 M
+( ) s
+5 226 M
+(    Various Control Flags.) s
+5 218 M
+( ) s
+5 210 M
+(      Bit 0: reserved, must be zero) s
+5 202 M
+(      Bit 1: \(DF\) 0 = May Fragment,  1 = Don't Fragment.) s
+5 194 M
+(      Bit 2: \(MF\) 0 = Last Fragment, 1 = More Fragments.) s
+5 186 M
+( ) s
+5 178 M
+(          0   1   2) s
+5 170 M
+(        +---+---+---+) s
+5 162 M
+(        |   | D | M |) s
+5 154 M
+(        | 0 | F | F |) s
+5 146 M
+(        +---+---+---+) s
+5 138 M
+( ) s
+5 130 M
+(  Fragment Offset:  13 bits) s
+5 122 M
+( ) s
+5 114 M
+(    This field indicates where in the datagram this fragment belongs.) s
+5 106 M
+( ) s
+5 98 M
+( ) s
+5 90 M
+(                                                               [Page 13]) s
+377 546 M
+( ) s
+377 538 M
+(                                                          September 1981) s
+377 530 M
+(Internet Protocol) s
+377 522 M
+(Specification) s
+377 514 M
+( ) s
+377 506 M
+( ) s
+377 498 M
+( ) s
+377 490 M
+(    The fragment offset is measured in units of 8 octets \(64 bits\).  The) s
+377 482 M
+(    first fragment has offset zero.) s
+377 474 M
+( ) s
+377 466 M
+(  Time to Live:  8 bits) s
+377 458 M
+( ) s
+377 450 M
+(    This field indicates the maximum time the datagram is allowed to) s
+377 442 M
+(    remain in the internet system.  If this field contains the value) s
+377 434 M
+(    zero, then the datagram must be destroyed.  This field is modified) s
+377 426 M
+(    in internet header processing.  The time is measured in units of) s
+377 418 M
+(    seconds, but since every module that processes a datagram must) s
+377 410 M
+(    decrease the TTL by at least one even if it process the datagram in) s
+377 402 M
+(    less than a second, the TTL must be thought of only as an upper) s
+377 394 M
+(    bound on the time a datagram may exist.  The intention is to cause) s
+377 386 M
+(    undeliverable datagrams to be discarded, and to bound the maximum) s
+377 378 M
+(    datagram lifetime.) s
+377 370 M
+( ) s
+377 362 M
+(  Protocol:  8 bits) s
+377 354 M
+( ) s
+377 346 M
+(    This field indicates the next level protocol used in the data) s
+377 338 M
+(    portion of the internet datagram.  The values for various protocols) s
+377 330 M
+(    are specified in "Assigned Numbers" [9].) s
+377 322 M
+( ) s
+377 314 M
+(  Header Checksum:  16 bits) s
+377 306 M
+( ) s
+377 298 M
+(    A checksum on the header only.  Since some header fields change) s
+377 290 M
+(    \(e.g., time to live\), this is recomputed and verified at each point) s
+377 282 M
+(    that the internet header is processed.) s
+377 274 M
+( ) s
+377 266 M
+(    The checksum algorithm is:) s
+377 258 M
+( ) s
+377 250 M
+(      The checksum field is the 16 bit one's complement of the one's) s
+377 242 M
+(      complement sum of all 16 bit words in the header.  For purposes of) s
+377 234 M
+(      computing the checksum, the value of the checksum field is zero.) s
+377 226 M
+( ) s
+377 218 M
+(    This is a simple to compute checksum and experimental evidence) s
+377 210 M
+(    indicates it is adequate, but it is provisional and may be replaced) s
+377 202 M
+(    by a CRC procedure, depending on further experience.) s
+377 194 M
+( ) s
+377 186 M
+(  Source Address:  32 bits) s
+377 178 M
+( ) s
+377 170 M
+(    The source address.  See section 3.2.) s
+377 162 M
+( ) s
+377 154 M
+(  Destination Address:  32 bits) s
+377 146 M
+( ) s
+377 138 M
+(    The destination address.  See section 3.2.) s
+377 130 M
+( ) s
+377 122 M
+( ) s
+377 114 M
+( ) s
+377 106 M
+( ) s
+377 98 M
+( ) s
+377 90 M
+([Page 14]                                                               ) s
+_R
+S
+%%Page: (11) 11
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 11 def
+/fname (rfc791.txt) def
+/fdir () def
+/ftail (rfc791.txt) def
+%%EndPageSetup
+5 546 M
+( ) s
+5 538 M
+(September 1981                                                          ) s
+5 530 M
+(                                                       Internet Protocol) s
+5 522 M
+(                                                           Specification) s
+5 514 M
+( ) s
+5 506 M
+( ) s
+5 498 M
+( ) s
+5 490 M
+(  Options:  variable) s
+5 482 M
+( ) s
+5 474 M
+(    The options may appear or not in datagrams.  They must be) s
+5 466 M
+(    implemented by all IP modules \(host and gateways\).  What is optional) s
+5 458 M
+(    is their transmission in any particular datagram, not their) s
+5 450 M
+(    implementation.) s
+5 442 M
+( ) s
+5 434 M
+(    In some environments the security option may be required in all) s
+5 426 M
+(    datagrams.) s
+5 418 M
+( ) s
+5 410 M
+(    The option field is variable in length.  There may be zero or more) s
+5 402 M
+(    options.  There are two cases for the format of an option:) s
+5 394 M
+( ) s
+5 386 M
+(      Case 1:  A single octet of option-type.) s
+5 378 M
+( ) s
+5 370 M
+(      Case 2:  An option-type octet, an option-length octet, and the) s
+5 362 M
+(               actual option-data octets.) s
+5 354 M
+( ) s
+5 346 M
+(    The option-length octet counts the option-type octet and the) s
+5 338 M
+(    option-length octet as well as the option-data octets.) s
+5 330 M
+( ) s
+5 322 M
+(    The option-type octet is viewed as having 3 fields:) s
+5 314 M
+( ) s
+5 306 M
+(      1 bit   copied flag,) s
+5 298 M
+(      2 bits  option class,) s
+5 290 M
+(      5 bits  option number.) s
+5 282 M
+( ) s
+5 274 M
+(    The copied flag indicates that this option is copied into all) s
+5 266 M
+(    fragments on fragmentation.) s
+5 258 M
+( ) s
+5 250 M
+(      0 = not copied) s
+5 242 M
+(      1 = copied) s
+5 234 M
+( ) s
+5 226 M
+(    The option classes are:) s
+5 218 M
+( ) s
+5 210 M
+(      0 = control) s
+5 202 M
+(      1 = reserved for future use) s
+5 194 M
+(      2 = debugging and measurement) s
+5 186 M
+(      3 = reserved for future use) s
+5 178 M
+( ) s
+5 170 M
+( ) s
+5 162 M
+( ) s
+5 154 M
+( ) s
+5 146 M
+( ) s
+5 138 M
+( ) s
+5 130 M
+( ) s
+5 122 M
+( ) s
+5 114 M
+( ) s
+5 106 M
+( ) s
+5 98 M
+( ) s
+5 90 M
+(                                                               [Page 15]) s
+377 546 M
+( ) s
+377 538 M
+(                                                          September 1981) s
+377 530 M
+(Internet Protocol) s
+377 522 M
+(Specification) s
+377 514 M
+( ) s
+377 506 M
+( ) s
+377 498 M
+( ) s
+377 490 M
+(    The following internet options are defined:) s
+377 482 M
+( ) s
+377 474 M
+(      CLASS NUMBER LENGTH DESCRIPTION) s
+377 466 M
+(      ----- ------ ------ -----------) s
+377 458 M
+(        0     0      -    End of Option list.  This option occupies only) s
+377 450 M
+(                          1 octet; it has no length octet.) s
+377 442 M
+(        0     1      -    No Operation.  This option occupies only 1) s
+377 434 M
+(                          octet; it has no length octet.) s
+377 426 M
+(        0     2     11    Security.  Used to carry Security,) s
+377 418 M
+(                          Compartmentation, User Group \(TCC\), and) s
+377 410 M
+(                          Handling Restriction Codes compatible with DOD) s
+377 402 M
+(                          requirements.) s
+377 394 M
+(        0     3     var.  Loose Source Routing.  Used to route the) s
+377 386 M
+(                          internet datagram based on information) s
+377 378 M
+(                          supplied by the source.) s
+377 370 M
+(        0     9     var.  Strict Source Routing.  Used to route the) s
+377 362 M
+(                          internet datagram based on information) s
+377 354 M
+(                          supplied by the source.) s
+377 346 M
+(        0     7     var.  Record Route.  Used to trace the route an) s
+377 338 M
+(                          internet datagram takes.) s
+377 330 M
+(        0     8      4    Stream ID.  Used to carry the stream) s
+377 322 M
+(                          identifier.) s
+377 314 M
+(        2     4     var.  Internet Timestamp.) s
+377 306 M
+( ) s
+377 298 M
+(      ) s
+377 290 M
+( ) s
+377 282 M
+(    Specific Option Definitions) s
+377 274 M
+( ) s
+377 266 M
+(      End of Option List) s
+377 258 M
+( ) s
+377 250 M
+(        +--------+) s
+377 242 M
+(        |00000000|) s
+377 234 M
+(        +--------+) s
+377 226 M
+(          Type=0) s
+377 218 M
+( ) s
+377 210 M
+(        This option indicates the end of the option list.  This might) s
+377 202 M
+(        not coincide with the end of the internet header according to) s
+377 194 M
+(        the internet header length.  This is used at the end of all) s
+377 186 M
+(        options, not the end of each option, and need only be used if) s
+377 178 M
+(        the end of the options would not otherwise coincide with the end) s
+377 170 M
+(        of the internet header.) s
+377 162 M
+( ) s
+377 154 M
+(        May be copied, introduced, or deleted on fragmentation, or for) s
+377 146 M
+(        any other reason.) s
+377 138 M
+( ) s
+377 130 M
+( ) s
+377 122 M
+( ) s
+377 114 M
+( ) s
+377 106 M
+( ) s
+377 98 M
+( ) s
+377 90 M
+([Page 16]                                                               ) s
+_R
+S
+%%Page: (12) 12
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 12 def
+/fname (rfc791.txt) def
+/fdir () def
+/ftail (rfc791.txt) def
+%%EndPageSetup
+5 546 M
+( ) s
+5 538 M
+(September 1981                                                          ) s
+5 530 M
+(                                                       Internet Protocol) s
+5 522 M
+(                                                           Specification) s
+5 514 M
+( ) s
+5 506 M
+( ) s
+5 498 M
+( ) s
+5 490 M
+(      No Operation) s
+5 482 M
+( ) s
+5 474 M
+(        +--------+) s
+5 466 M
+(        |00000001|) s
+5 458 M
+(        +--------+) s
+5 450 M
+(          Type=1) s
+5 442 M
+( ) s
+5 434 M
+(        This option may be used between options, for example, to align) s
+5 426 M
+(        the beginning of a subsequent option on a 32 bit boundary.) s
+5 418 M
+( ) s
+5 410 M
+(        May be copied, introduced, or deleted on fragmentation, or for) s
+5 402 M
+(        any other reason.) s
+5 394 M
+( ) s
+5 386 M
+(      Security) s
+5 378 M
+( ) s
+5 370 M
+(        This option provides a way for hosts to send security,) s
+5 362 M
+(        compartmentation, handling restrictions, and TCC \(closed user) s
+5 354 M
+(        group\) parameters.  The format for this option is as follows:) s
+5 346 M
+( ) s
+5 338 M
+(          +--------+--------+---//---+---//---+---//---+---//---+) s
+5 330 M
+(          |10000010|00001011|SSS  SSS|CCC  CCC|HHH  HHH|  TCC   |) s
+5 322 M
+(          +--------+--------+---//---+---//---+---//---+---//---+) s
+5 314 M
+(           Type=130 Length=11) s
+5 306 M
+( ) s
+5 298 M
+(        Security \(S field\):  16 bits) s
+5 290 M
+( ) s
+5 282 M
+(          Specifies one of 16 levels of security \(eight of which are) s
+5 274 M
+(          reserved for future use\).) s
+5 266 M
+( ) s
+5 258 M
+(            00000000 00000000 - Unclassified) s
+5 250 M
+(            11110001 00110101 - Confidential) s
+5 242 M
+(            01111000 10011010 - EFTO) s
+5 234 M
+(            10111100 01001101 - MMMM) s
+5 226 M
+(            01011110 00100110 - PROG) s
+5 218 M
+(            10101111 00010011 - Restricted) s
+5 210 M
+(            11010111 10001000 - Secret) s
+5 202 M
+(            01101011 11000101 - Top Secret) s
+5 194 M
+(            00110101 11100010 - \(Reserved for future use\)) s
+5 186 M
+(            10011010 11110001 - \(Reserved for future use\)) s
+5 178 M
+(            01001101 01111000 - \(Reserved for future use\)) s
+5 170 M
+(            00100100 10111101 - \(Reserved for future use\)) s
+5 162 M
+(            00010011 01011110 - \(Reserved for future use\)) s
+5 154 M
+(            10001001 10101111 - \(Reserved for future use\)) s
+5 146 M
+(            11000100 11010110 - \(Reserved for future use\)) s
+5 138 M
+(            11100010 01101011 - \(Reserved for future use\)) s
+5 130 M
+( ) s
+5 122 M
+( ) s
+5 114 M
+( ) s
+5 106 M
+( ) s
+5 98 M
+( ) s
+5 90 M
+(                                                               [Page 17]) s
+377 546 M
+( ) s
+377 538 M
+(                                                          September 1981) s
+377 530 M
+(Internet Protocol) s
+377 522 M
+(Specification) s
+377 514 M
+( ) s
+377 506 M
+( ) s
+377 498 M
+( ) s
+377 490 M
+(        Compartments \(C field\):  16 bits) s
+377 482 M
+( ) s
+377 474 M
+(          An all zero value is used when the information transmitted is) s
+377 466 M
+(          not compartmented.  Other values for the compartments field) s
+377 458 M
+(          may be obtained from the Defense Intelligence Agency.) s
+377 450 M
+( ) s
+377 442 M
+(        Handling Restrictions \(H field\):  16 bits) s
+377 434 M
+( ) s
+377 426 M
+(          The values for the control and release markings are) s
+377 418 M
+(          alphanumeric digraphs and are defined in the Defense) s
+377 410 M
+(          Intelligence Agency Manual DIAM 65-19, "Standard Security) s
+377 402 M
+(          Markings".) s
+377 394 M
+( ) s
+377 386 M
+(        Transmission Control Code \(TCC field\):  24 bits) s
+377 378 M
+( ) s
+377 370 M
+(          Provides a means to segregate traffic and define controlled) s
+377 362 M
+(          communities of interest among subscribers. The TCC values are) s
+377 354 M
+(          trigraphs, and are available from HQ DCA Code 530.) s
+377 346 M
+( ) s
+377 338 M
+(        Must be copied on fragmentation.  This option appears at most) s
+377 330 M
+(        once in a datagram.) s
+377 322 M
+( ) s
+377 314 M
+(      Loose Source and Record Route) s
+377 306 M
+( ) s
+377 298 M
+(        +--------+--------+--------+---------//--------+) s
+377 290 M
+(        |10000011| length | pointer|     route data    |) s
+377 282 M
+(        +--------+--------+--------+---------//--------+) s
+377 274 M
+(         Type=131) s
+377 266 M
+( ) s
+377 258 M
+(        The loose source and record route \(LSRR\) option provides a means) s
+377 250 M
+(        for the source of an internet datagram to supply routing) s
+377 242 M
+(        information to be used by the gateways in forwarding the) s
+377 234 M
+(        datagram to the destination, and to record the route) s
+377 226 M
+(        information.) s
+377 218 M
+( ) s
+377 210 M
+(        The option begins with the option type code.  The second octet) s
+377 202 M
+(        is the option length which includes the option type code and the) s
+377 194 M
+(        length octet, the pointer octet, and length-3 octets of route) s
+377 186 M
+(        data.  The third octet is the pointer into the route data) s
+377 178 M
+(        indicating the octet which begins the next source address to be) s
+377 170 M
+(        processed.  The pointer is relative to this option, and the) s
+377 162 M
+(        smallest legal value for the pointer is 4.) s
+377 154 M
+( ) s
+377 146 M
+(        A route data is composed of a series of internet addresses.) s
+377 138 M
+(        Each internet address is 32 bits or 4 octets.  If the pointer is) s
+377 130 M
+(        greater than the length, the source route is empty \(and the) s
+377 122 M
+(        recorded route full\) and the routing is to be based on the) s
+377 114 M
+(        destination address field.) s
+377 106 M
+( ) s
+377 98 M
+( ) s
+377 90 M
+([Page 18]                                                               ) s
+_R
+S
+%%Page: (13) 13
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 13 def
+/fname (rfc791.txt) def
+/fdir () def
+/ftail (rfc791.txt) def
+%%EndPageSetup
+5 546 M
+( ) s
+5 538 M
+(September 1981                                                          ) s
+5 530 M
+(                                                       Internet Protocol) s
+5 522 M
+(                                                           Specification) s
+5 514 M
+( ) s
+5 506 M
+( ) s
+5 498 M
+( ) s
+5 490 M
+(        If the address in destination address field has been reached and) s
+5 482 M
+(        the pointer is not greater than the length, the next address in) s
+5 474 M
+(        the source route replaces the address in the destination address) s
+5 466 M
+(        field, and the recorded route address replaces the source) s
+5 458 M
+(        address just used, and pointer is increased by four.) s
+5 450 M
+( ) s
+5 442 M
+(        The recorded route address is the internet module's own internet) s
+5 434 M
+(        address as known in the environment into which this datagram is) s
+5 426 M
+(        being forwarded.) s
+5 418 M
+( ) s
+5 410 M
+(        This procedure of replacing the source route with the recorded) s
+5 402 M
+(        route \(though it is in the reverse of the order it must be in to) s
+5 394 M
+(        be used as a source route\) means the option \(and the IP header) s
+5 386 M
+(        as a whole\) remains a constant length as the datagram progresses) s
+5 378 M
+(        through the internet.) s
+5 370 M
+( ) s
+5 362 M
+(        This option is a loose source route because the gateway or host) s
+5 354 M
+(        IP is allowed to use any route of any number of other) s
+5 346 M
+(        intermediate gateways to reach the next address in the route.) s
+5 338 M
+( ) s
+5 330 M
+(        Must be copied on fragmentation.  Appears at most once in a) s
+5 322 M
+(        datagram.) s
+5 314 M
+( ) s
+5 306 M
+(      Strict Source and Record Route) s
+5 298 M
+( ) s
+5 290 M
+(        +--------+--------+--------+---------//--------+) s
+5 282 M
+(        |10001001| length | pointer|     route data    |) s
+5 274 M
+(        +--------+--------+--------+---------//--------+) s
+5 266 M
+(         Type=137) s
+5 258 M
+( ) s
+5 250 M
+(        The strict source and record route \(SSRR\) option provides a) s
+5 242 M
+(        means for the source of an internet datagram to supply routing) s
+5 234 M
+(        information to be used by the gateways in forwarding the) s
+5 226 M
+(        datagram to the destination, and to record the route) s
+5 218 M
+(        information.) s
+5 210 M
+( ) s
+5 202 M
+(        The option begins with the option type code.  The second octet) s
+5 194 M
+(        is the option length which includes the option type code and the) s
+5 186 M
+(        length octet, the pointer octet, and length-3 octets of route) s
+5 178 M
+(        data.  The third octet is the pointer into the route data) s
+5 170 M
+(        indicating the octet which begins the next source address to be) s
+5 162 M
+(        processed.  The pointer is relative to this option, and the) s
+5 154 M
+(        smallest legal value for the pointer is 4.) s
+5 146 M
+( ) s
+5 138 M
+(        A route data is composed of a series of internet addresses.) s
+5 130 M
+(        Each internet address is 32 bits or 4 octets.  If the pointer is) s
+5 122 M
+(        greater than the length, the source route is empty \(and the) s
+5 114 M
+( ) s
+5 106 M
+( ) s
+5 98 M
+( ) s
+5 90 M
+(                                                               [Page 19]) s
+377 546 M
+( ) s
+377 538 M
+(                                                          September 1981) s
+377 530 M
+(Internet Protocol) s
+377 522 M
+(Specification) s
+377 514 M
+( ) s
+377 506 M
+( ) s
+377 498 M
+( ) s
+377 490 M
+(        recorded route full\) and the routing is to be based on the) s
+377 482 M
+(        destination address field.) s
+377 474 M
+( ) s
+377 466 M
+(        If the address in destination address field has been reached and) s
+377 458 M
+(        the pointer is not greater than the length, the next address in) s
+377 450 M
+(        the source route replaces the address in the destination address) s
+377 442 M
+(        field, and the recorded route address replaces the source) s
+377 434 M
+(        address just used, and pointer is increased by four.) s
+377 426 M
+( ) s
+377 418 M
+(        The recorded route address is the internet module's own internet) s
+377 410 M
+(        address as known in the environment into which this datagram is) s
+377 402 M
+(        being forwarded.) s
+377 394 M
+( ) s
+377 386 M
+(        This procedure of replacing the source route with the recorded) s
+377 378 M
+(        route \(though it is in the reverse of the order it must be in to) s
+377 370 M
+(        be used as a source route\) means the option \(and the IP header) s
+377 362 M
+(        as a whole\) remains a constant length as the datagram progresses) s
+377 354 M
+(        through the internet.) s
+377 346 M
+( ) s
+377 338 M
+(        This option is a strict source route because the gateway or host) s
+377 330 M
+(        IP must send the datagram directly to the next address in the) s
+377 322 M
+(        source route through only the directly connected network) s
+377 314 M
+(        indicated in the next address to reach the next gateway or host) s
+377 306 M
+(        specified in the route.) s
+377 298 M
+( ) s
+377 290 M
+(        Must be copied on fragmentation.  Appears at most once in a) s
+377 282 M
+(        datagram.) s
+377 274 M
+( ) s
+377 266 M
+(      Record Route) s
+377 258 M
+( ) s
+377 250 M
+(        +--------+--------+--------+---------//--------+) s
+377 242 M
+(        |00000111| length | pointer|     route data    |) s
+377 234 M
+(        +--------+--------+--------+---------//--------+) s
+377 226 M
+(          Type=7) s
+377 218 M
+( ) s
+377 210 M
+(        The record route option provides a means to record the route of) s
+377 202 M
+(        an internet datagram.) s
+377 194 M
+( ) s
+377 186 M
+(        The option begins with the option type code.  The second octet) s
+377 178 M
+(        is the option length which includes the option type code and the) s
+377 170 M
+(        length octet, the pointer octet, and length-3 octets of route) s
+377 162 M
+(        data.  The third octet is the pointer into the route data) s
+377 154 M
+(        indicating the octet which begins the next area to store a route) s
+377 146 M
+(        address.  The pointer is relative to this option, and the) s
+377 138 M
+(        smallest legal value for the pointer is 4.) s
+377 130 M
+( ) s
+377 122 M
+(        A recorded route is composed of a series of internet addresses.) s
+377 114 M
+(        Each internet address is 32 bits or 4 octets.  If the pointer is) s
+377 106 M
+( ) s
+377 98 M
+( ) s
+377 90 M
+([Page 20]                                                               ) s
+_R
+S
+%%Page: (14) 14
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 14 def
+/fname (rfc791.txt) def
+/fdir () def
+/ftail (rfc791.txt) def
+%%EndPageSetup
+5 546 M
+( ) s
+5 538 M
+(September 1981                                                          ) s
+5 530 M
+(                                                       Internet Protocol) s
+5 522 M
+(                                                           Specification) s
+5 514 M
+( ) s
+5 506 M
+( ) s
+5 498 M
+( ) s
+5 490 M
+(        greater than the length, the recorded route data area is full.) s
+5 482 M
+(        The originating host must compose this option with a large) s
+5 474 M
+(        enough route data area to hold all the address expected.  The) s
+5 466 M
+(        size of the option does not change due to adding addresses.  The) s
+5 458 M
+(        intitial contents of the route data area must be zero.) s
+5 450 M
+( ) s
+5 442 M
+(        When an internet module routes a datagram it checks to see if) s
+5 434 M
+(        the record route option is present.  If it is, it inserts its) s
+5 426 M
+(        own internet address as known in the environment into which this) s
+5 418 M
+(        datagram is being forwarded into the recorded route begining at) s
+5 410 M
+(        the octet indicated by the pointer, and increments the pointer) s
+5 402 M
+(        by four.) s
+5 394 M
+( ) s
+5 386 M
+(        If the route data area is already full \(the pointer exceeds the) s
+5 378 M
+(        length\) the datagram is forwarded without inserting the address) s
+5 370 M
+(        into the recorded route.  If there is some room but not enough) s
+5 362 M
+(        room for a full address to be inserted, the original datagram is) s
+5 354 M
+(        considered to be in error and is discarded.  In either case an) s
+5 346 M
+(        ICMP parameter problem message may be sent to the source) s
+5 338 M
+(        host [3].) s
+5 330 M
+( ) s
+5 322 M
+(        Not copied on fragmentation, goes in first fragment only.) s
+5 314 M
+(        Appears at most once in a datagram.) s
+5 306 M
+( ) s
+5 298 M
+(      Stream Identifier) s
+5 290 M
+( ) s
+5 282 M
+(        +--------+--------+--------+--------+) s
+5 274 M
+(        |10001000|00000010|    Stream ID    |) s
+5 266 M
+(        +--------+--------+--------+--------+) s
+5 258 M
+(         Type=136 Length=4) s
+5 250 M
+( ) s
+5 242 M
+(        This option provides a way for the 16-bit SATNET stream) s
+5 234 M
+(        identifier to be carried through networks that do not support) s
+5 226 M
+(        the stream concept.) s
+5 218 M
+( ) s
+5 210 M
+(        Must be copied on fragmentation.  Appears at most once in a) s
+5 202 M
+(        datagram.) s
+5 194 M
+( ) s
+5 186 M
+( ) s
+5 178 M
+( ) s
+5 170 M
+( ) s
+5 162 M
+( ) s
+5 154 M
+( ) s
+5 146 M
+( ) s
+5 138 M
+( ) s
+5 130 M
+( ) s
+5 122 M
+( ) s
+5 114 M
+( ) s
+5 106 M
+( ) s
+5 98 M
+( ) s
+5 90 M
+(                                                               [Page 21]) s
+377 546 M
+( ) s
+377 538 M
+(                                                          September 1981) s
+377 530 M
+(Internet Protocol) s
+377 522 M
+(Specification) s
+377 514 M
+( ) s
+377 506 M
+( ) s
+377 498 M
+( ) s
+377 490 M
+(      Internet Timestamp) s
+377 482 M
+( ) s
+377 474 M
+(        +--------+--------+--------+--------+) s
+377 466 M
+(        |01000100| length | pointer|oflw|flg|) s
+377 458 M
+(        +--------+--------+--------+--------+) s
+377 450 M
+(        |         internet address          |) s
+377 442 M
+(        +--------+--------+--------+--------+) s
+377 434 M
+(        |             timestamp             |) s
+377 426 M
+(        +--------+--------+--------+--------+) s
+377 418 M
+(        |                 .                 |) s
+377 410 M
+(                          .) s
+377 402 M
+(                          .) s
+377 394 M
+(        Type = 68) s
+377 386 M
+( ) s
+377 378 M
+(        The Option Length is the number of octets in the option counting) s
+377 370 M
+(        the type, length, pointer, and overflow/flag octets \(maximum) s
+377 362 M
+(        length 40\).) s
+377 354 M
+( ) s
+377 346 M
+(        The Pointer is the number of octets from the beginning of this) s
+377 338 M
+(        option to the end of timestamps plus one \(i.e., it points to the) s
+377 330 M
+(        octet beginning the space for next timestamp\).  The smallest) s
+377 322 M
+(        legal value is 5.  The timestamp area is full when the pointer) s
+377 314 M
+(        is greater than the length.) s
+377 306 M
+( ) s
+377 298 M
+(        The Overflow \(oflw\) [4 bits] is the number of IP modules that) s
+377 290 M
+(        cannot register timestamps due to lack of space.) s
+377 282 M
+( ) s
+377 274 M
+(        The Flag \(flg\) [4 bits] values are) s
+377 266 M
+( ) s
+377 258 M
+(          0 -- time stamps only, stored in consecutive 32-bit words,) s
+377 250 M
+( ) s
+377 242 M
+(          1 -- each timestamp is preceded with internet address of the) s
+377 234 M
+(               registering entity,) s
+377 226 M
+( ) s
+377 218 M
+(          3 -- the internet address fields are prespecified.  An IP) s
+377 210 M
+(               module only registers its timestamp if it matches its own) s
+377 202 M
+(               address with the next specified internet address.) s
+377 194 M
+( ) s
+377 186 M
+(        The Timestamp is a right-justified, 32-bit timestamp in) s
+377 178 M
+(        milliseconds since midnight UT.  If the time is not available in) s
+377 170 M
+(        milliseconds or cannot be provided with respect to midnight UT) s
+377 162 M
+(        then any time may be inserted as a timestamp provided the high) s
+377 154 M
+(        order bit of the timestamp field is set to one to indicate the) s
+377 146 M
+(        use of a non-standard value.) s
+377 138 M
+( ) s
+377 130 M
+(        The originating host must compose this option with a large) s
+377 122 M
+(        enough timestamp data area to hold all the timestamp information) s
+377 114 M
+(        expected.  The size of the option does not change due to adding) s
+377 106 M
+( ) s
+377 98 M
+( ) s
+377 90 M
+([Page 22]                                                               ) s
+_R
+S
+%%Page: (15) 15
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 15 def
+/fname (rfc791.txt) def
+/fdir () def
+/ftail (rfc791.txt) def
+%%EndPageSetup
+5 546 M
+( ) s
+5 538 M
+(September 1981                                                          ) s
+5 530 M
+(                                                       Internet Protocol) s
+5 522 M
+(                                                           Specification) s
+5 514 M
+( ) s
+5 506 M
+( ) s
+5 498 M
+( ) s
+5 490 M
+(        timestamps.  The intitial contents of the timestamp data area) s
+5 482 M
+(        must be zero or internet address/zero pairs.) s
+5 474 M
+( ) s
+5 466 M
+(        If the timestamp data area is already full \(the pointer exceeds) s
+5 458 M
+(        the length\) the datagram is forwarded without inserting the) s
+5 450 M
+(        timestamp, but the overflow count is incremented by one.) s
+5 442 M
+( ) s
+5 434 M
+(        If there is some room but not enough room for a full timestamp) s
+5 426 M
+(        to be inserted, or the overflow count itself overflows, the) s
+5 418 M
+(        original datagram is considered to be in error and is discarded.) s
+5 410 M
+(        In either case an ICMP parameter problem message may be sent to) s
+5 402 M
+(        the source host [3].) s
+5 394 M
+( ) s
+5 386 M
+(        The timestamp option is not copied upon fragmentation.  It is) s
+5 378 M
+(        carried in the first fragment.  Appears at most once in a) s
+5 370 M
+(        datagram.) s
+5 362 M
+( ) s
+5 354 M
+(  Padding:  variable) s
+5 346 M
+( ) s
+5 338 M
+(    The internet header padding is used to ensure that the internet) s
+5 330 M
+(    header ends on a 32 bit boundary.  The padding is zero.) s
+5 322 M
+( ) s
+5 314 M
+(3.2.  Discussion) s
+5 306 M
+( ) s
+5 298 M
+(  The implementation of a protocol must be robust.  Each implementation) s
+5 290 M
+(  must expect to interoperate with others created by different) s
+5 282 M
+(  individuals.  While the goal of this specification is to be explicit) s
+5 274 M
+(  about the protocol there is the possibility of differing) s
+5 266 M
+(  interpretations.  In general, an implementation must be conservative) s
+5 258 M
+(  in its sending behavior, and liberal in its receiving behavior.  That) s
+5 250 M
+(  is, it must be careful to send well-formed datagrams, but must accept) s
+5 242 M
+(  any datagram that it can interpret \(e.g., not object to technical) s
+5 234 M
+(  errors where the meaning is still clear\).) s
+5 226 M
+( ) s
+5 218 M
+(  The basic internet service is datagram oriented and provides for the) s
+5 210 M
+(  fragmentation of datagrams at gateways, with reassembly taking place) s
+5 202 M
+(  at the destination internet protocol module in the destination host.) s
+5 194 M
+(  Of course, fragmentation and reassembly of datagrams within a network) s
+5 186 M
+(  or by private agreement between the gateways of a network is also) s
+5 178 M
+(  allowed since this is transparent to the internet protocols and the) s
+5 170 M
+(  higher-level protocols.  This transparent type of fragmentation and) s
+5 162 M
+(  reassembly is termed "network-dependent" \(or intranet\) fragmentation) s
+5 154 M
+(  and is not discussed further here.) s
+5 146 M
+( ) s
+5 138 M
+(  Internet addresses distinguish sources and destinations to the host) s
+5 130 M
+(  level and provide a protocol field as well.  It is assumed that each) s
+5 122 M
+(  protocol will provide for whatever multiplexing is necessary within a) s
+5 114 M
+(  host.) s
+5 106 M
+( ) s
+5 98 M
+( ) s
+5 90 M
+(                                                               [Page 23]) s
+377 546 M
+( ) s
+377 538 M
+(                                                          September 1981) s
+377 530 M
+(Internet Protocol) s
+377 522 M
+(Specification) s
+377 514 M
+( ) s
+377 506 M
+( ) s
+377 498 M
+( ) s
+377 490 M
+(  Addressing) s
+377 482 M
+( ) s
+377 474 M
+(    To provide for flexibility in assigning address to networks and) s
+377 466 M
+(    allow for the  large number of small to intermediate sized networks) s
+377 458 M
+(    the interpretation of the address field is coded to specify a small) s
+377 450 M
+(    number of networks with a large number of host, a moderate number of) s
+377 442 M
+(    networks with a moderate number of hosts, and a large number of) s
+377 434 M
+(    networks with a small number of hosts.  In addition there is an) s
+377 426 M
+(    escape code for extended addressing mode.) s
+377 418 M
+( ) s
+377 410 M
+(    Address Formats:) s
+377 402 M
+( ) s
+377 394 M
+(      High Order Bits   Format                           Class) s
+377 386 M
+(      ---------------   -------------------------------  -----) s
+377 378 M
+(            0            7 bits of net, 24 bits of host    a) s
+377 370 M
+(            10          14 bits of net, 16 bits of host    b) s
+377 362 M
+(            110         21 bits of net,  8 bits of host    c) s
+377 354 M
+(            111         escape to extended addressing mode) s
+377 346 M
+( ) s
+377 338 M
+(      A value of zero in the network field means this network.  This is) s
+377 330 M
+(      only used in certain ICMP messages.  The extended addressing mode) s
+377 322 M
+(      is undefined.  Both of these features are reserved for future use.) s
+377 314 M
+( ) s
+377 306 M
+(    The actual values assigned for network addresses is given in) s
+377 298 M
+(    "Assigned Numbers" [9].) s
+377 290 M
+( ) s
+377 282 M
+(    The local address, assigned by the local network, must allow for a) s
+377 274 M
+(    single physical host to act as several distinct internet hosts.) s
+377 266 M
+(    That is, there must be a mapping between internet host addresses and) s
+377 258 M
+(    network/host interfaces that allows several internet addresses to) s
+377 250 M
+(    correspond to one interface.  It must also be allowed for a host to) s
+377 242 M
+(    have several physical interfaces and to treat the datagrams from) s
+377 234 M
+(    several of them as if they were all addressed to a single host.) s
+377 226 M
+( ) s
+377 218 M
+(    Address mappings between internet addresses and addresses for) s
+377 210 M
+(    ARPANET, SATNET, PRNET, and other networks are described in "Address) s
+377 202 M
+(    Mappings" [5].) s
+377 194 M
+( ) s
+377 186 M
+(  Fragmentation and Reassembly.) s
+377 178 M
+( ) s
+377 170 M
+(    The internet identification field \(ID\) is used together with the) s
+377 162 M
+(    source and destination address, and the protocol fields, to identify) s
+377 154 M
+(    datagram fragments for reassembly.) s
+377 146 M
+( ) s
+377 138 M
+(    The More Fragments flag bit \(MF\) is set if the datagram is not the) s
+377 130 M
+(    last fragment.  The Fragment Offset field identifies the fragment) s
+377 122 M
+(    location, relative to the beginning of the original unfragmented) s
+377 114 M
+(    datagram.  Fragments are counted in units of 8 octets.  The) s
+377 106 M
+( ) s
+377 98 M
+( ) s
+377 90 M
+([Page 24]                                                               ) s
+_R
+S
+%%Page: (16) 16
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 16 def
+/fname (rfc791.txt) def
+/fdir () def
+/ftail (rfc791.txt) def
+%%EndPageSetup
+5 546 M
+( ) s
+5 538 M
+(September 1981                                                          ) s
+5 530 M
+(                                                       Internet Protocol) s
+5 522 M
+(                                                           Specification) s
+5 514 M
+( ) s
+5 506 M
+( ) s
+5 498 M
+( ) s
+5 490 M
+(    fragmentation strategy is designed so than an unfragmented datagram) s
+5 482 M
+(    has all zero fragmentation information \(MF = 0, fragment offset =) s
+5 474 M
+(    0\).  If an internet datagram is fragmented, its data portion must be) s
+5 466 M
+(    broken on 8 octet boundaries.) s
+5 458 M
+( ) s
+5 450 M
+(    This format allows 2**13 = 8192 fragments of 8 octets each for a) s
+5 442 M
+(    total of 65,536 octets.  Note that this is consistent with the the) s
+5 434 M
+(    datagram total length field \(of course, the header is counted in the) s
+5 426 M
+(    total length and not in the fragments\).) s
+5 418 M
+( ) s
+5 410 M
+(    When fragmentation occurs, some options are copied, but others) s
+5 402 M
+(    remain with the first fragment only.) s
+5 394 M
+( ) s
+5 386 M
+(    Every internet module must be able to forward a datagram of 68) s
+5 378 M
+(    octets without further fragmentation.  This is because an internet) s
+5 370 M
+(    header may be up to 60 octets, and the minimum fragment is 8 octets.) s
+5 362 M
+( ) s
+5 354 M
+(    Every internet destination must be able to receive a datagram of 576) s
+5 346 M
+(    octets either in one piece or in fragments to be reassembled.) s
+5 338 M
+( ) s
+5 330 M
+(    The fields which may be affected by fragmentation include:) s
+5 322 M
+( ) s
+5 314 M
+(      \(1\) options field) s
+5 306 M
+(      \(2\) more fragments flag) s
+5 298 M
+(      \(3\) fragment offset) s
+5 290 M
+(      \(4\) internet header length field) s
+5 282 M
+(      \(5\) total length field) s
+5 274 M
+(      \(6\) header checksum) s
+5 266 M
+( ) s
+5 258 M
+(    If the Don't Fragment flag \(DF\) bit is set, then internet) s
+5 250 M
+(    fragmentation of this datagram is NOT permitted, although it may be) s
+5 242 M
+(    discarded.  This can be used to prohibit fragmentation in cases) s
+5 234 M
+(    where the receiving host does not have sufficient resources to) s
+5 226 M
+(    reassemble internet fragments.) s
+5 218 M
+( ) s
+5 210 M
+(    One example of use of the Don't Fragment feature is to down line) s
+5 202 M
+(    load a small host.  A small host could have a boot strap program) s
+5 194 M
+(    that accepts a datagram stores it in memory and then executes it.) s
+5 186 M
+( ) s
+5 178 M
+(    The fragmentation and reassembly procedures are most easily) s
+5 170 M
+(    described by examples.  The following procedures are example) s
+5 162 M
+(    implementations.) s
+5 154 M
+( ) s
+5 146 M
+(    General notation in the following pseudo programs: "=<" means "less) s
+5 138 M
+(    than or equal", "#" means "not equal", "=" means "equal", "<-" means) s
+5 130 M
+(    "is set to".  Also, "x to y" includes x and excludes y; for example,) s
+5 122 M
+(    "4 to 7" would include 4, 5, and 6 \(but not 7\).) s
+5 114 M
+( ) s
+5 106 M
+( ) s
+5 98 M
+( ) s
+5 90 M
+(                                                               [Page 25]) s
+377 546 M
+( ) s
+377 538 M
+(                                                          September 1981) s
+377 530 M
+(Internet Protocol) s
+377 522 M
+(Specification) s
+377 514 M
+( ) s
+377 506 M
+( ) s
+377 498 M
+( ) s
+377 490 M
+(    An Example Fragmentation Procedure) s
+377 482 M
+( ) s
+377 474 M
+(      The maximum sized datagram that can be transmitted through the) s
+377 466 M
+(      next network is called the maximum transmission unit \(MTU\).) s
+377 458 M
+( ) s
+377 450 M
+(      If the total length is less than or equal the maximum transmission) s
+377 442 M
+(      unit then submit this datagram to the next step in datagram) s
+377 434 M
+(      processing; otherwise cut the datagram into two fragments, the) s
+377 426 M
+(      first fragment being the maximum size, and the second fragment) s
+377 418 M
+(      being the rest of the datagram.  The first fragment is submitted) s
+377 410 M
+(      to the next step in datagram processing, while the second fragment) s
+377 402 M
+(      is submitted to this procedure in case it is still too large.) s
+377 394 M
+( ) s
+377 386 M
+(      Notation:) s
+377 378 M
+( ) s
+377 370 M
+(        FO    -  Fragment Offset) s
+377 362 M
+(        IHL   -  Internet Header Length) s
+377 354 M
+(        DF    -  Don't Fragment flag) s
+377 346 M
+(        MF    -  More Fragments flag) s
+377 338 M
+(        TL    -  Total Length) s
+377 330 M
+(        OFO   -  Old Fragment Offset) s
+377 322 M
+(        OIHL  -  Old Internet Header Length) s
+377 314 M
+(        OMF   -  Old More Fragments flag) s
+377 306 M
+(        OTL   -  Old Total Length) s
+377 298 M
+(        NFB   -  Number of Fragment Blocks) s
+377 290 M
+(        MTU   -  Maximum Transmission Unit) s
+377 282 M
+( ) s
+377 274 M
+(      Procedure:) s
+377 266 M
+( ) s
+377 258 M
+(        IF TL =< MTU THEN Submit this datagram to the next step) s
+377 250 M
+(             in datagram processing ELSE IF DF = 1 THEN discard the) s
+377 242 M
+(        datagram ELSE) s
+377 234 M
+(        To produce the first fragment:) s
+377 226 M
+(        \(1\)  Copy the original internet header;) s
+377 218 M
+(        \(2\)  OIHL <- IHL; OTL <- TL; OFO <- FO; OMF <- MF;) s
+377 210 M
+(        \(3\)  NFB <- \(MTU-IHL*4\)/8;) s
+377 202 M
+(        \(4\)  Attach the first NFB*8 data octets;) s
+377 194 M
+(        \(5\)  Correct the header:) s
+377 186 M
+(             MF <- 1;  TL <- \(IHL*4\)+\(NFB*8\);) s
+377 178 M
+(             Recompute Checksum;) s
+377 170 M
+(        \(6\)  Submit this fragment to the next step in) s
+377 162 M
+(             datagram processing;) s
+377 154 M
+(        To produce the second fragment:) s
+377 146 M
+(        \(7\)  Selectively copy the internet header \(some options) s
+377 138 M
+(             are not copied, see option definitions\);) s
+377 130 M
+(        \(8\)  Append the remaining data;) s
+377 122 M
+(        \(9\)  Correct the header:) s
+377 114 M
+(             IHL <- \(\(\(OIHL*4\)-\(length of options not copied\)\)+3\)/4;) s
+377 106 M
+( ) s
+377 98 M
+( ) s
+377 90 M
+([Page 26]                                                               ) s
+_R
+S
+%%Page: (17) 17
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 17 def
+/fname (rfc791.txt) def
+/fdir () def
+/ftail (rfc791.txt) def
+%%EndPageSetup
+5 546 M
+( ) s
+5 538 M
+(September 1981                                                          ) s
+5 530 M
+(                                                       Internet Protocol) s
+5 522 M
+(                                                           Specification) s
+5 514 M
+( ) s
+5 506 M
+( ) s
+5 498 M
+( ) s
+5 490 M
+(             TL <- OTL - NFB*8 - \(OIHL-IHL\)*4\);) s
+5 482 M
+(             FO <- OFO + NFB;  MF <- OMF;  Recompute Checksum;) s
+5 474 M
+(        \(10\) Submit this fragment to the fragmentation test; DONE.) s
+5 466 M
+( ) s
+5 458 M
+(      In the above procedure each fragment \(except the last\) was made) s
+5 450 M
+(      the maximum allowable size.  An alternative might produce less) s
+5 442 M
+(      than the maximum size datagrams.  For example, one could implement) s
+5 434 M
+(      a fragmentation procedure that repeatly divided large datagrams in) s
+5 426 M
+(      half until the resulting fragments were less than the maximum) s
+5 418 M
+(      transmission unit size.) s
+5 410 M
+( ) s
+5 402 M
+(    An Example Reassembly Procedure) s
+5 394 M
+( ) s
+5 386 M
+(      For each datagram the buffer identifier is computed as the) s
+5 378 M
+(      concatenation of the source, destination, protocol, and) s
+5 370 M
+(      identification fields.  If this is a whole datagram \(that is both) s
+5 362 M
+(      the fragment offset and the more fragments  fields are zero\), then) s
+5 354 M
+(      any reassembly resources associated with this buffer identifier) s
+5 346 M
+(      are released and the datagram is forwarded to the next step in) s
+5 338 M
+(      datagram processing.) s
+5 330 M
+( ) s
+5 322 M
+(      If no other fragment with this buffer identifier is on hand then) s
+5 314 M
+(      reassembly resources are allocated.  The reassembly resources) s
+5 306 M
+(      consist of a data buffer, a header buffer, a fragment block bit) s
+5 298 M
+(      table, a total data length field, and a timer.  The data from the) s
+5 290 M
+(      fragment is placed in the data buffer according to its fragment) s
+5 282 M
+(      offset and length, and bits are set in the fragment block bit) s
+5 274 M
+(      table corresponding to the fragment blocks received.) s
+5 266 M
+( ) s
+5 258 M
+(      If this is the first fragment \(that is the fragment offset is) s
+5 250 M
+(      zero\)  this header is placed in the header buffer.  If this is the) s
+5 242 M
+(      last fragment \( that is the more fragments field is zero\) the) s
+5 234 M
+(      total data length is computed.  If this fragment completes the) s
+5 226 M
+(      datagram \(tested by checking the bits set in the fragment block) s
+5 218 M
+(      table\), then the datagram is sent to the next step in datagram) s
+5 210 M
+(      processing; otherwise the timer is set to the maximum of the) s
+5 202 M
+(      current timer value and the value of the time to live field from) s
+5 194 M
+(      this fragment; and the reassembly routine gives up control.) s
+5 186 M
+( ) s
+5 178 M
+(      If the timer runs out, the all reassembly resources for this) s
+5 170 M
+(      buffer identifier are released.  The initial setting of the timer) s
+5 162 M
+(      is a lower bound on the reassembly waiting time.  This is because) s
+5 154 M
+(      the waiting time will be increased if the Time to Live in the) s
+5 146 M
+(      arriving fragment is greater than the current timer value but will) s
+5 138 M
+(      not be decreased if it is less.  The maximum this timer value) s
+5 130 M
+(      could reach is the maximum time to live \(approximately 4.25) s
+5 122 M
+(      minutes\).  The current recommendation for the initial timer) s
+5 114 M
+(      setting is 15 seconds.  This may be changed as experience with) s
+5 106 M
+( ) s
+5 98 M
+( ) s
+5 90 M
+(                                                               [Page 27]) s
+377 546 M
+( ) s
+377 538 M
+(                                                          September 1981) s
+377 530 M
+(Internet Protocol) s
+377 522 M
+(Specification) s
+377 514 M
+( ) s
+377 506 M
+( ) s
+377 498 M
+( ) s
+377 490 M
+(      this protocol accumulates.  Note that the choice of this parameter) s
+377 482 M
+(      value is related to the buffer capacity available and the data) s
+377 474 M
+(      rate of the transmission medium; that is, data rate times timer) s
+377 466 M
+(      value equals buffer size \(e.g., 10Kb/s X 15s = 150Kb\).) s
+377 458 M
+( ) s
+377 450 M
+(      Notation:) s
+377 442 M
+( ) s
+377 434 M
+(        FO    -  Fragment Offset) s
+377 426 M
+(        IHL   -  Internet Header Length) s
+377 418 M
+(        MF    -  More Fragments flag) s
+377 410 M
+(        TTL   -  Time To Live) s
+377 402 M
+(        NFB   -  Number of Fragment Blocks) s
+377 394 M
+(        TL    -  Total Length) s
+377 386 M
+(        TDL   -  Total Data Length) s
+377 378 M
+(        BUFID -  Buffer Identifier) s
+377 370 M
+(        RCVBT -  Fragment Received Bit Table) s
+377 362 M
+(        TLB   -  Timer Lower Bound) s
+377 354 M
+( ) s
+377 346 M
+(      Procedure:) s
+377 338 M
+( ) s
+377 330 M
+(        \(1\)  BUFID <- source|destination|protocol|identification;) s
+377 322 M
+(        \(2\)  IF FO = 0 AND MF = 0) s
+377 314 M
+(        \(3\)     THEN IF buffer with BUFID is allocated) s
+377 306 M
+(        \(4\)             THEN flush all reassembly for this BUFID;) s
+377 298 M
+(        \(5\)          Submit datagram to next step; DONE.) s
+377 290 M
+(        \(6\)     ELSE IF no buffer with BUFID is allocated) s
+377 282 M
+(        \(7\)             THEN allocate reassembly resources) s
+377 274 M
+(                             with BUFID;) s
+377 266 M
+(                             TIMER <- TLB; TDL <- 0;) s
+377 258 M
+(        \(8\)          put data from fragment into data buffer with) s
+377 250 M
+(                     BUFID from octet FO*8 to) s
+377 242 M
+(                                         octet \(TL-\(IHL*4\)\)+FO*8;) s
+377 234 M
+(        \(9\)          set RCVBT bits from FO) s
+377 226 M
+(                                        to FO+\(\(TL-\(IHL*4\)+7\)/8\);) s
+377 218 M
+(        \(10\)         IF MF = 0 THEN TDL <- TL-\(IHL*4\)+\(FO*8\)) s
+377 210 M
+(        \(11\)         IF FO = 0 THEN put header in header buffer) s
+377 202 M
+(        \(12\)         IF TDL # 0) s
+377 194 M
+(        \(13\)          AND all RCVBT bits from 0) s
+377 186 M
+(                                             to \(TDL+7\)/8 are set) s
+377 178 M
+(        \(14\)            THEN TL <- TDL+\(IHL*4\)) s
+377 170 M
+(        \(15\)                 Submit datagram to next step;) s
+377 162 M
+(        \(16\)                 free all reassembly resources) s
+377 154 M
+(                             for this BUFID; DONE.) s
+377 146 M
+(        \(17\)         TIMER <- MAX\(TIMER,TTL\);) s
+377 138 M
+(        \(18\)         give up until next fragment or timer expires;) s
+377 130 M
+(        \(19\) timer expires: flush all reassembly with this BUFID; DONE.) s
+377 122 M
+( ) s
+377 114 M
+(      In the case that two or more fragments contain the same data) s
+377 106 M
+( ) s
+377 98 M
+( ) s
+377 90 M
+([Page 28]                                                               ) s
+_R
+S
+%%Page: (18) 18
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 18 def
+/fname (rfc791.txt) def
+/fdir () def
+/ftail (rfc791.txt) def
+%%EndPageSetup
+5 546 M
+( ) s
+5 538 M
+(September 1981                                                          ) s
+5 530 M
+(                                                       Internet Protocol) s
+5 522 M
+(                                                           Specification) s
+5 514 M
+( ) s
+5 506 M
+( ) s
+5 498 M
+( ) s
+5 490 M
+(      either identically or through a partial overlap, this procedure) s
+5 482 M
+(      will use the more recently arrived copy in the data buffer and) s
+5 474 M
+(      datagram delivered.) s
+5 466 M
+( ) s
+5 458 M
+(  Identification) s
+5 450 M
+( ) s
+5 442 M
+(    The choice of the Identifier for a datagram is based on the need to) s
+5 434 M
+(    provide a way to uniquely identify the fragments of a particular) s
+5 426 M
+(    datagram.  The protocol module assembling fragments judges fragments) s
+5 418 M
+(    to belong to the same datagram if they have the same source,) s
+5 410 M
+(    destination, protocol, and Identifier.  Thus, the sender must choose) s
+5 402 M
+(    the Identifier to be unique for this source, destination pair and) s
+5 394 M
+(    protocol for the time the datagram \(or any fragment of it\) could be) s
+5 386 M
+(    alive in the internet.) s
+5 378 M
+( ) s
+5 370 M
+(    It seems then that a sending protocol module needs to keep a table) s
+5 362 M
+(    of Identifiers, one entry for each destination it has communicated) s
+5 354 M
+(    with in the last maximum packet lifetime for the internet.) s
+5 346 M
+( ) s
+5 338 M
+(    However, since the Identifier field allows 65,536 different values,) s
+5 330 M
+(    some host may be able to simply use unique identifiers independent) s
+5 322 M
+(    of destination.) s
+5 314 M
+( ) s
+5 306 M
+(    It is appropriate for some higher level protocols to choose the) s
+5 298 M
+(    identifier. For example, TCP protocol modules may retransmit an) s
+5 290 M
+(    identical TCP segment, and the probability for correct reception) s
+5 282 M
+(    would be enhanced if the retransmission carried the same identifier) s
+5 274 M
+(    as the original transmission since fragments of either datagram) s
+5 266 M
+(    could be used to construct a correct TCP segment.) s
+5 258 M
+( ) s
+5 250 M
+(  Type of Service) s
+5 242 M
+( ) s
+5 234 M
+(    The type of service \(TOS\) is for internet service quality selection.) s
+5 226 M
+(    The type of service is specified along the abstract parameters) s
+5 218 M
+(    precedence, delay, throughput, and reliability.  These abstract) s
+5 210 M
+(    parameters are to be mapped into the actual service parameters of) s
+5 202 M
+(    the particular networks the datagram traverses.) s
+5 194 M
+( ) s
+5 186 M
+(    Precedence.  An independent measure of the importance of this) s
+5 178 M
+(    datagram.) s
+5 170 M
+( ) s
+5 162 M
+(    Delay.  Prompt delivery is important for datagrams with this) s
+5 154 M
+(    indication.) s
+5 146 M
+( ) s
+5 138 M
+(    Throughput.  High data rate is important for datagrams with this) s
+5 130 M
+(    indication.) s
+5 122 M
+( ) s
+5 114 M
+( ) s
+5 106 M
+( ) s
+5 98 M
+( ) s
+5 90 M
+(                                                               [Page 29]) s
+377 546 M
+( ) s
+377 538 M
+(                                                          September 1981) s
+377 530 M
+(Internet Protocol) s
+377 522 M
+(Specification) s
+377 514 M
+( ) s
+377 506 M
+( ) s
+377 498 M
+( ) s
+377 490 M
+(    Reliability.  A higher level of effort to ensure delivery is) s
+377 482 M
+(    important for datagrams with this indication.) s
+377 474 M
+( ) s
+377 466 M
+(    For example, the ARPANET has a priority bit, and a choice between) s
+377 458 M
+(    "standard" messages \(type 0\) and "uncontrolled" messages \(type 3\),) s
+377 450 M
+(    \(the choice between single packet and multipacket messages can also) s
+377 442 M
+(    be considered a service parameter\). The uncontrolled messages tend) s
+377 434 M
+(    to be less reliably delivered and suffer less delay.  Suppose an) s
+377 426 M
+(    internet datagram is to be sent through the ARPANET.  Let the) s
+377 418 M
+(    internet type of service be given as:) s
+377 410 M
+( ) s
+377 402 M
+(      Precedence:    5) s
+377 394 M
+(      Delay:         0) s
+377 386 M
+(      Throughput:    1) s
+377 378 M
+(      Reliability:   1) s
+377 370 M
+( ) s
+377 362 M
+(    In this example, the mapping of these parameters to those available) s
+377 354 M
+(    for the ARPANET would be  to set the ARPANET priority bit on since) s
+377 346 M
+(    the Internet precedence is in the upper half of its range, to select) s
+377 338 M
+(    standard messages since the throughput and reliability requirements) s
+377 330 M
+(    are indicated and delay is not.  More details are given on service) s
+377 322 M
+(    mappings in "Service Mappings" [8].) s
+377 314 M
+( ) s
+377 306 M
+(  Time to Live) s
+377 298 M
+( ) s
+377 290 M
+(    The time to live is set by the sender to the maximum time the) s
+377 282 M
+(    datagram is allowed to be in the internet system.  If the datagram) s
+377 274 M
+(    is in the internet system longer than the time to live, then the) s
+377 266 M
+(    datagram must be destroyed.) s
+377 258 M
+( ) s
+377 250 M
+(    This field must be decreased at each point that the internet header) s
+377 242 M
+(    is processed to reflect the time spent processing the datagram.) s
+377 234 M
+(    Even if no local information is available on the time actually) s
+377 226 M
+(    spent, the field must be decremented by 1.  The time is measured in) s
+377 218 M
+(    units of seconds \(i.e. the value 1 means one second\).  Thus, the) s
+377 210 M
+(    maximum time to live is 255 seconds or 4.25 minutes.  Since every) s
+377 202 M
+(    module that processes a datagram must decrease the TTL by at least) s
+377 194 M
+(    one even if it process the datagram in less than a second, the TTL) s
+377 186 M
+(    must be thought of only as an upper bound on the time a datagram may) s
+377 178 M
+(    exist.  The intention is to cause undeliverable datagrams to be) s
+377 170 M
+(    discarded, and to bound the maximum datagram lifetime.) s
+377 162 M
+( ) s
+377 154 M
+(    Some higher level reliable connection protocols are based on) s
+377 146 M
+(    assumptions that old duplicate datagrams will not arrive after a) s
+377 138 M
+(    certain time elapses.  The TTL is a way for such protocols to have) s
+377 130 M
+(    an assurance that their assumption is met.) s
+377 122 M
+( ) s
+377 114 M
+( ) s
+377 106 M
+( ) s
+377 98 M
+( ) s
+377 90 M
+([Page 30]                                                               ) s
+_R
+S
+%%Page: (19) 19
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 19 def
+/fname (rfc791.txt) def
+/fdir () def
+/ftail (rfc791.txt) def
+%%EndPageSetup
+5 546 M
+( ) s
+5 538 M
+(September 1981                                                          ) s
+5 530 M
+(                                                       Internet Protocol) s
+5 522 M
+(                                                           Specification) s
+5 514 M
+( ) s
+5 506 M
+( ) s
+5 498 M
+( ) s
+5 490 M
+(  Options) s
+5 482 M
+( ) s
+5 474 M
+(    The options are optional in each datagram, but required in) s
+5 466 M
+(    implementations.  That is, the presence or absence of an option is) s
+5 458 M
+(    the choice of the sender, but each internet module must be able to) s
+5 450 M
+(    parse every option.  There can be several options present in the) s
+5 442 M
+(    option field.) s
+5 434 M
+( ) s
+5 426 M
+(    The options might not end on a 32-bit boundary.  The internet header) s
+5 418 M
+(    must be filled out with octets of zeros.  The first of these would) s
+5 410 M
+(    be interpreted as the end-of-options option, and the remainder as) s
+5 402 M
+(    internet header padding.) s
+5 394 M
+( ) s
+5 386 M
+(    Every internet module must be able to act on every option.  The) s
+5 378 M
+(    Security Option is required if classified, restricted, or) s
+5 370 M
+(    compartmented traffic is to be passed.) s
+5 362 M
+( ) s
+5 354 M
+(  Checksum) s
+5 346 M
+( ) s
+5 338 M
+(    The internet header checksum is recomputed if the internet header is) s
+5 330 M
+(    changed.  For example, a reduction of the time to live, additions or) s
+5 322 M
+(    changes to internet options, or due to fragmentation.  This checksum) s
+5 314 M
+(    at the internet level is intended to protect the internet header) s
+5 306 M
+(    fields from transmission errors.) s
+5 298 M
+( ) s
+5 290 M
+(    There are some applications where a few data bit errors are) s
+5 282 M
+(    acceptable while retransmission delays are not.  If the internet) s
+5 274 M
+(    protocol enforced data correctness such applications could not be) s
+5 266 M
+(    supported.) s
+5 258 M
+( ) s
+5 250 M
+(  Errors) s
+5 242 M
+( ) s
+5 234 M
+(    Internet protocol errors may be reported via the ICMP messages [3].) s
+5 226 M
+( ) s
+5 218 M
+(3.3.  Interfaces) s
+5 210 M
+( ) s
+5 202 M
+(  The functional description of user interfaces to the IP is, at best,) s
+5 194 M
+(  fictional, since every operating system will have different) s
+5 186 M
+(  facilities.  Consequently, we must warn readers that different IP) s
+5 178 M
+(  implementations may have different user interfaces.  However, all IPs) s
+5 170 M
+(  must provide a certain minimum  set of services to guarantee that all) s
+5 162 M
+(  IP implementations can support the same protocol hierarchy.  This) s
+5 154 M
+(  section specifies the functional interfaces required of all IP) s
+5 146 M
+(  implementations.) s
+5 138 M
+( ) s
+5 130 M
+(  Internet protocol interfaces on one side to the local network and on) s
+5 122 M
+(  the other side to either a higher level protocol or an application) s
+5 114 M
+(  program.  In the following, the higher level protocol or application) s
+5 106 M
+( ) s
+5 98 M
+( ) s
+5 90 M
+(                                                               [Page 31]) s
+377 546 M
+( ) s
+377 538 M
+(                                                          September 1981) s
+377 530 M
+(Internet Protocol) s
+377 522 M
+(Specification) s
+377 514 M
+( ) s
+377 506 M
+( ) s
+377 498 M
+( ) s
+377 490 M
+(  program \(or even a gateway program\) will be called the "user" since it) s
+377 482 M
+(  is using the internet module.  Since internet protocol is a datagram) s
+377 474 M
+(  protocol, there is minimal memory or state maintained between datagram) s
+377 466 M
+(  transmissions, and each call on the internet protocol module by the) s
+377 458 M
+(  user supplies all information necessary for the IP to perform the) s
+377 450 M
+(  service requested.) s
+377 442 M
+( ) s
+377 434 M
+(  An Example Upper Level Interface) s
+377 426 M
+( ) s
+377 418 M
+(  The following two example calls satisfy the requirements for the user) s
+377 410 M
+(  to internet protocol module communication \("=>" means returns\):) s
+377 402 M
+( ) s
+377 394 M
+(  SEND \(src, dst, prot, TOS, TTL, BufPTR, len, Id, DF, opt => result\)) s
+377 386 M
+( ) s
+377 378 M
+(    where:) s
+377 370 M
+( ) s
+377 362 M
+(      src = source address) s
+377 354 M
+(      dst = destination address) s
+377 346 M
+(      prot = protocol) s
+377 338 M
+(      TOS = type of service) s
+377 330 M
+(      TTL = time to live) s
+377 322 M
+(      BufPTR = buffer pointer) s
+377 314 M
+(      len = length of buffer) s
+377 306 M
+(      Id  = Identifier) s
+377 298 M
+(      DF = Don't Fragment) s
+377 290 M
+(      opt = option data) s
+377 282 M
+(      result = response) s
+377 274 M
+(        OK = datagram sent ok) s
+377 266 M
+(        Error = error in arguments or local network error) s
+377 258 M
+( ) s
+377 250 M
+(    Note that the precedence is included in the TOS and the) s
+377 242 M
+(    security/compartment is passed as an option.) s
+377 234 M
+( ) s
+377 226 M
+(  RECV \(BufPTR, prot, => result, src, dst, TOS, len, opt\)) s
+377 218 M
+( ) s
+377 210 M
+(    where:) s
+377 202 M
+( ) s
+377 194 M
+(      BufPTR = buffer pointer) s
+377 186 M
+(      prot = protocol) s
+377 178 M
+(      result = response) s
+377 170 M
+(        OK = datagram received ok) s
+377 162 M
+(        Error = error in arguments) s
+377 154 M
+(      len = length of buffer) s
+377 146 M
+(      src = source address) s
+377 138 M
+(      dst = destination address) s
+377 130 M
+(      TOS = type of service) s
+377 122 M
+(      opt = option data) s
+377 114 M
+( ) s
+377 106 M
+( ) s
+377 98 M
+( ) s
+377 90 M
+([Page 32]                                                               ) s
+_R
+S
+%%Page: (20) 20
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 20 def
+/fname (rfc791.txt) def
+/fdir () def
+/ftail (rfc791.txt) def
+%%EndPageSetup
+5 546 M
+( ) s
+5 538 M
+(September 1981                                                          ) s
+5 530 M
+(                                                       Internet Protocol) s
+5 522 M
+(                                                           Specification) s
+5 514 M
+( ) s
+5 506 M
+( ) s
+5 498 M
+( ) s
+5 490 M
+(  When the user sends a datagram, it executes the SEND call supplying) s
+5 482 M
+(  all the arguments.  The internet protocol module, on receiving this) s
+5 474 M
+(  call, checks the arguments and prepares and sends the message.  If the) s
+5 466 M
+(  arguments are good and the datagram is accepted by the local network,) s
+5 458 M
+(  the call returns successfully.  If either the arguments are bad, or) s
+5 450 M
+(  the datagram is not accepted by the local network, the call returns) s
+5 442 M
+(  unsuccessfully.  On unsuccessful returns, a reasonable report must be) s
+5 434 M
+(  made as to the cause of the problem, but the details of such reports) s
+5 426 M
+(  are up to individual implementations.) s
+5 418 M
+( ) s
+5 410 M
+(  When a datagram arrives at the internet protocol module from the local) s
+5 402 M
+(  network, either there is a pending RECV call from the user addressed) s
+5 394 M
+(  or there is not.  In the first case, the pending call is satisfied by) s
+5 386 M
+(  passing the information from the datagram to the user.  In the second) s
+5 378 M
+(  case, the user addressed is notified of a pending datagram.  If the) s
+5 370 M
+(  user addressed does not exist, an ICMP error message is returned to) s
+5 362 M
+(  the sender, and the data is discarded.) s
+5 354 M
+( ) s
+5 346 M
+(  The notification of a user may be via a pseudo interrupt or similar) s
+5 338 M
+(  mechanism, as appropriate in the particular operating system) s
+5 330 M
+(  environment of the implementation.) s
+5 322 M
+( ) s
+5 314 M
+(  A user's RECV call may then either be immediately satisfied by a) s
+5 306 M
+(  pending datagram, or the call may be pending until a datagram arrives.) s
+5 298 M
+( ) s
+5 290 M
+(  The source address is included in the send call in case the sending) s
+5 282 M
+(  host has several addresses \(multiple physical connections or logical) s
+5 274 M
+(  addresses\).  The internet module must check to see that the source) s
+5 266 M
+(  address is one of the legal address for this host.) s
+5 258 M
+( ) s
+5 250 M
+(  An implementation may also allow or require a call to the internet) s
+5 242 M
+(  module to indicate interest in or reserve exclusive use of a class of) s
+5 234 M
+(  datagrams \(e.g., all those with a certain value in the protocol) s
+5 226 M
+(  field\).) s
+5 218 M
+( ) s
+5 210 M
+(  This section functionally characterizes a USER/IP interface.  The) s
+5 202 M
+(  notation used is similar to most procedure of function calls in high) s
+5 194 M
+(  level languages, but this usage is not meant to rule out trap type) s
+5 186 M
+(  service calls \(e.g., SVCs, UUOs, EMTs\), or any other form of) s
+5 178 M
+(  interprocess communication.) s
+5 170 M
+( ) s
+5 162 M
+(  ) s
+5 154 M
+( ) s
+5 146 M
+( ) s
+5 138 M
+( ) s
+5 130 M
+( ) s
+5 122 M
+( ) s
+5 114 M
+( ) s
+5 106 M
+( ) s
+5 98 M
+( ) s
+5 90 M
+(                                                               [Page 33]) s
+377 546 M
+( ) s
+377 538 M
+(                                                          September 1981) s
+377 530 M
+(Internet Protocol) s
+377 522 M
+( ) s
+377 514 M
+( ) s
+377 506 M
+( ) s
+377 498 M
+(APPENDIX A:  Examples & Scenarios) s
+377 490 M
+( ) s
+377 482 M
+(Example 1:) s
+377 474 M
+( ) s
+377 466 M
+(  This is an example of the minimal data carrying internet datagram:) s
+377 458 M
+( ) s
+377 450 M
+(                                    ) s
+377 442 M
+(    0                   1                   2                   3   ) s
+377 434 M
+(    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 ) s
+377 426 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+377 418 M
+(   |Ver= 4 |IHL= 5 |Type of Service|        Total Length = 21      |) s
+377 410 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+377 402 M
+(   |      Identification = 111     |Flg=0|   Fragment Offset = 0   |) s
+377 394 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+377 386 M
+(   |   Time = 123  |  Protocol = 1 |        header checksum        |) s
+377 378 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+377 370 M
+(   |                         source address                        |) s
+377 362 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+377 354 M
+(   |                      destination address                      |) s
+377 346 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+377 338 M
+(   |     data      |                                                ) s
+377 330 M
+(   +-+-+-+-+-+-+-+-+                                                ) s
+377 322 M
+( ) s
+377 314 M
+(                       Example Internet Datagram) s
+377 306 M
+( ) s
+377 298 M
+(                               Figure 5.) s
+377 290 M
+( ) s
+377 282 M
+(  Note that each tick mark represents one bit position.) s
+377 274 M
+( ) s
+377 266 M
+(  This is a internet datagram in version 4 of internet protocol; the) s
+377 258 M
+(  internet header consists of five 32 bit words, and the total length of) s
+377 250 M
+(  the datagram is 21 octets.  This datagram is a complete datagram \(not) s
+377 242 M
+(  a fragment\).) s
+377 234 M
+( ) s
+377 226 M
+( ) s
+377 218 M
+( ) s
+377 210 M
+( ) s
+377 202 M
+( ) s
+377 194 M
+( ) s
+377 186 M
+( ) s
+377 178 M
+( ) s
+377 170 M
+( ) s
+377 162 M
+( ) s
+377 154 M
+( ) s
+377 146 M
+( ) s
+377 138 M
+( ) s
+377 130 M
+( ) s
+377 122 M
+( ) s
+377 114 M
+( ) s
+377 106 M
+( ) s
+377 98 M
+( ) s
+377 90 M
+([Page 34]                                                               ) s
+_R
+S
+%%Page: (21) 21
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 21 def
+/fname (rfc791.txt) def
+/fdir () def
+/ftail (rfc791.txt) def
+%%EndPageSetup
+5 546 M
+( ) s
+5 538 M
+(September 1981                                                          ) s
+5 530 M
+(                                                       Internet Protocol) s
+5 522 M
+( ) s
+5 514 M
+( ) s
+5 506 M
+( ) s
+5 498 M
+(Example 2:) s
+5 490 M
+( ) s
+5 482 M
+(  In this example, we show first a moderate size internet datagram \(452) s
+5 474 M
+(  data octets\), then two internet fragments that might result from the) s
+5 466 M
+(  fragmentation of this datagram if the maximum sized transmission) s
+5 458 M
+(  allowed were 280 octets.) s
+5 450 M
+( ) s
+5 442 M
+(                                    ) s
+5 434 M
+(    0                   1                   2                   3   ) s
+5 426 M
+(    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 ) s
+5 418 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 410 M
+(   |Ver= 4 |IHL= 5 |Type of Service|       Total Length = 472      |) s
+5 402 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 394 M
+(   |     Identification = 111      |Flg=0|     Fragment Offset = 0 |) s
+5 386 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 378 M
+(   |   Time = 123  | Protocol = 6  |        header checksum        |) s
+5 370 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 362 M
+(   |                         source address                        |) s
+5 354 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 346 M
+(   |                      destination address                      |) s
+5 338 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 330 M
+(   |                             data                              |) s
+5 322 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 314 M
+(   |                             data                              |) s
+5 306 M
+(   \\                                                               \\) s
+5 298 M
+(   \\                                                               \\) s
+5 290 M
+(   |                             data                              |) s
+5 282 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 274 M
+(   |             data              |                                ) s
+5 266 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                                ) s
+5 258 M
+( ) s
+5 250 M
+(                       Example Internet Datagram) s
+5 242 M
+( ) s
+5 234 M
+(                               Figure 6.) s
+5 226 M
+( ) s
+5 218 M
+( ) s
+5 210 M
+( ) s
+5 202 M
+( ) s
+5 194 M
+( ) s
+5 186 M
+( ) s
+5 178 M
+( ) s
+5 170 M
+( ) s
+5 162 M
+( ) s
+5 154 M
+( ) s
+5 146 M
+( ) s
+5 138 M
+( ) s
+5 130 M
+( ) s
+5 122 M
+( ) s
+5 114 M
+( ) s
+5 106 M
+( ) s
+5 98 M
+( ) s
+5 90 M
+(                                                               [Page 35]) s
+377 546 M
+( ) s
+377 538 M
+(                                                          September 1981) s
+377 530 M
+(Internet Protocol) s
+377 522 M
+( ) s
+377 514 M
+( ) s
+377 506 M
+( ) s
+377 498 M
+(  Now the first fragment that results from splitting the datagram after) s
+377 490 M
+(  256 data octets.) s
+377 482 M
+( ) s
+377 474 M
+(                                    ) s
+377 466 M
+(    0                   1                   2                   3   ) s
+377 458 M
+(    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 ) s
+377 450 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+377 442 M
+(   |Ver= 4 |IHL= 5 |Type of Service|       Total Length = 276      |) s
+377 434 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+377 426 M
+(   |     Identification = 111      |Flg=1|     Fragment Offset = 0 |) s
+377 418 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+377 410 M
+(   |   Time = 119  | Protocol = 6  |        Header Checksum        |) s
+377 402 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+377 394 M
+(   |                         source address                        |) s
+377 386 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+377 378 M
+(   |                      destination address                      |) s
+377 370 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+377 362 M
+(   |                             data                              |) s
+377 354 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+377 346 M
+(   |                             data                              |) s
+377 338 M
+(   \\                                                               \\) s
+377 330 M
+(   \\                                                               \\) s
+377 322 M
+(   |                             data                              |) s
+377 314 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+377 306 M
+(   |                             data                              |) s
+377 298 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+377 290 M
+( ) s
+377 282 M
+(                       Example Internet Fragment) s
+377 274 M
+( ) s
+377 266 M
+(                               Figure 7.) s
+377 258 M
+( ) s
+377 250 M
+( ) s
+377 242 M
+( ) s
+377 234 M
+( ) s
+377 226 M
+( ) s
+377 218 M
+( ) s
+377 210 M
+( ) s
+377 202 M
+( ) s
+377 194 M
+( ) s
+377 186 M
+( ) s
+377 178 M
+( ) s
+377 170 M
+( ) s
+377 162 M
+( ) s
+377 154 M
+( ) s
+377 146 M
+( ) s
+377 138 M
+( ) s
+377 130 M
+( ) s
+377 122 M
+( ) s
+377 114 M
+( ) s
+377 106 M
+( ) s
+377 98 M
+( ) s
+377 90 M
+([Page 36]                                                               ) s
+_R
+S
+%%Page: (22) 22
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 22 def
+/fname (rfc791.txt) def
+/fdir () def
+/ftail (rfc791.txt) def
+%%EndPageSetup
+5 546 M
+( ) s
+5 538 M
+(September 1981                                                          ) s
+5 530 M
+(                                                       Internet Protocol) s
+5 522 M
+( ) s
+5 514 M
+( ) s
+5 506 M
+( ) s
+5 498 M
+(  And the second fragment.) s
+5 490 M
+( ) s
+5 482 M
+(                                    ) s
+5 474 M
+(    0                   1                   2                   3   ) s
+5 466 M
+(    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 ) s
+5 458 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 450 M
+(   |Ver= 4 |IHL= 5 |Type of Service|       Total Length = 216      |) s
+5 442 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 434 M
+(   |     Identification = 111      |Flg=0|  Fragment Offset  =  32 |) s
+5 426 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 418 M
+(   |   Time = 119  | Protocol = 6  |        Header Checksum        |) s
+5 410 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 402 M
+(   |                         source address                        |) s
+5 394 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 386 M
+(   |                      destination address                      |) s
+5 378 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 370 M
+(   |                             data                              |) s
+5 362 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 354 M
+(   |                             data                              |) s
+5 346 M
+(   \\                                                               \\) s
+5 338 M
+(   \\                                                               \\) s
+5 330 M
+(   |                             data                              |) s
+5 322 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 314 M
+(   |            data               |                                ) s
+5 306 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                                ) s
+5 298 M
+( ) s
+5 290 M
+(                       Example Internet Fragment) s
+5 282 M
+( ) s
+5 274 M
+(                               Figure 8.) s
+5 266 M
+( ) s
+5 258 M
+( ) s
+5 250 M
+( ) s
+5 242 M
+( ) s
+5 234 M
+( ) s
+5 226 M
+( ) s
+5 218 M
+( ) s
+5 210 M
+( ) s
+5 202 M
+( ) s
+5 194 M
+( ) s
+5 186 M
+( ) s
+5 178 M
+( ) s
+5 170 M
+( ) s
+5 162 M
+( ) s
+5 154 M
+( ) s
+5 146 M
+( ) s
+5 138 M
+( ) s
+5 130 M
+( ) s
+5 122 M
+( ) s
+5 114 M
+( ) s
+5 106 M
+( ) s
+5 98 M
+( ) s
+5 90 M
+(                                                               [Page 37]) s
+377 546 M
+( ) s
+377 538 M
+(                                                          September 1981) s
+377 530 M
+(Internet Protocol) s
+377 522 M
+( ) s
+377 514 M
+( ) s
+377 506 M
+( ) s
+377 498 M
+(Example 3:) s
+377 490 M
+( ) s
+377 482 M
+(  Here, we show an example of a datagram containing options:) s
+377 474 M
+( ) s
+377 466 M
+(                                    ) s
+377 458 M
+(    0                   1                   2                   3   ) s
+377 450 M
+(    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 ) s
+377 442 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+377 434 M
+(   |Ver= 4 |IHL= 8 |Type of Service|       Total Length = 576      |) s
+377 426 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+377 418 M
+(   |       Identification = 111    |Flg=0|     Fragment Offset = 0 |) s
+377 410 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+377 402 M
+(   |   Time = 123  |  Protocol = 6 |       Header Checksum         |) s
+377 394 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+377 386 M
+(   |                        source address                         |) s
+377 378 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+377 370 M
+(   |                      destination address                      |) s
+377 362 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+377 354 M
+(   | Opt. Code = x | Opt.  Len.= 3 | option value  | Opt. Code = x |) s
+377 346 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+377 338 M
+(   | Opt. Len. = 4 |           option value        | Opt. Code = 1 |) s
+377 330 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+377 322 M
+(   | Opt. Code = y | Opt. Len. = 3 |  option value | Opt. Code = 0 |) s
+377 314 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+377 306 M
+(   |                             data                              |) s
+377 298 M
+(   \\                                                               \\) s
+377 290 M
+(   \\                                                               \\) s
+377 282 M
+(   |                             data                              |) s
+377 274 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+377 266 M
+(   |                             data                              |) s
+377 258 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+377 250 M
+( ) s
+377 242 M
+(                       Example Internet Datagram) s
+377 234 M
+( ) s
+377 226 M
+(                               Figure 9.) s
+377 218 M
+( ) s
+377 210 M
+( ) s
+377 202 M
+( ) s
+377 194 M
+( ) s
+377 186 M
+( ) s
+377 178 M
+( ) s
+377 170 M
+( ) s
+377 162 M
+( ) s
+377 154 M
+( ) s
+377 146 M
+( ) s
+377 138 M
+( ) s
+377 130 M
+( ) s
+377 122 M
+( ) s
+377 114 M
+( ) s
+377 106 M
+( ) s
+377 98 M
+( ) s
+377 90 M
+([Page 38]                                                               ) s
+_R
+S
+%%Page: (23) 23
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 23 def
+/fname (rfc791.txt) def
+/fdir () def
+/ftail (rfc791.txt) def
+%%EndPageSetup
+5 546 M
+( ) s
+5 538 M
+(September 1981                                                          ) s
+5 530 M
+(                                                       Internet Protocol) s
+5 522 M
+( ) s
+5 514 M
+( ) s
+5 506 M
+( ) s
+5 498 M
+(APPENDIX B:  Data Transmission Order) s
+5 490 M
+( ) s
+5 482 M
+(The order of transmission of the header and data described in this) s
+5 474 M
+(document is resolved to the octet level.  Whenever a diagram shows a) s
+5 466 M
+(group of octets, the order of transmission of those octets is the normal) s
+5 458 M
+(order in which they are read in English.  For example, in the following) s
+5 450 M
+(diagram the octets are transmitted in the order they are numbered.) s
+5 442 M
+( ) s
+5 434 M
+(                                    ) s
+5 426 M
+(    0                   1                   2                   3   ) s
+5 418 M
+(    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 ) s
+5 410 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 402 M
+(   |       1       |       2       |       3       |       4       |) s
+5 394 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 386 M
+(   |       5       |       6       |       7       |       8       |) s
+5 378 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 370 M
+(   |       9       |      10       |      11       |      12       |) s
+5 362 M
+(   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+) s
+5 354 M
+( ) s
+5 346 M
+(                      Transmission Order of Bytes) s
+5 338 M
+( ) s
+5 330 M
+(                               Figure 10.) s
+5 322 M
+( ) s
+5 314 M
+(Whenever an octet represents a numeric quantity the left most bit in the) s
+5 306 M
+(diagram is the high order or most significant bit.  That is, the bit) s
+5 298 M
+(labeled 0 is the most significant bit.  For example, the following) s
+5 290 M
+(diagram represents the value 170 \(decimal\).) s
+5 282 M
+( ) s
+5 274 M
+(                                    ) s
+5 266 M
+(                            0 1 2 3 4 5 6 7 ) s
+5 258 M
+(                           +-+-+-+-+-+-+-+-+) s
+5 250 M
+(                           |1 0 1 0 1 0 1 0|) s
+5 242 M
+(                           +-+-+-+-+-+-+-+-+) s
+5 234 M
+( ) s
+5 226 M
+(                          Significance of Bits) s
+5 218 M
+( ) s
+5 210 M
+(                               Figure 11.) s
+5 202 M
+( ) s
+5 194 M
+(Similarly, whenever a multi-octet field represents a numeric quantity) s
+5 186 M
+(the left most bit of the whole field is the most significant bit.  When) s
+5 178 M
+(a multi-octet quantity is transmitted the most significant octet is) s
+5 170 M
+(transmitted first.) s
+5 162 M
+( ) s
+5 154 M
+( ) s
+5 146 M
+( ) s
+5 138 M
+( ) s
+5 130 M
+( ) s
+5 122 M
+( ) s
+5 114 M
+( ) s
+5 106 M
+( ) s
+5 98 M
+( ) s
+5 90 M
+(                                                               [Page 39]) s
+377 546 M
+( ) s
+377 538 M
+(                                                          September 1981) s
+377 530 M
+(Internet Protocol) s
+377 522 M
+( ) s
+377 514 M
+( ) s
+377 506 M
+( ) s
+377 498 M
+( ) s
+377 490 M
+( ) s
+377 482 M
+( ) s
+377 474 M
+( ) s
+377 466 M
+( ) s
+377 458 M
+( ) s
+377 450 M
+( ) s
+377 442 M
+( ) s
+377 434 M
+( ) s
+377 426 M
+( ) s
+377 418 M
+( ) s
+377 410 M
+( ) s
+377 402 M
+( ) s
+377 394 M
+( ) s
+377 386 M
+( ) s
+377 378 M
+( ) s
+377 370 M
+( ) s
+377 362 M
+( ) s
+377 354 M
+( ) s
+377 346 M
+( ) s
+377 338 M
+( ) s
+377 330 M
+( ) s
+377 322 M
+( ) s
+377 314 M
+( ) s
+377 306 M
+( ) s
+377 298 M
+( ) s
+377 290 M
+( ) s
+377 282 M
+( ) s
+377 274 M
+( ) s
+377 266 M
+( ) s
+377 258 M
+( ) s
+377 250 M
+( ) s
+377 242 M
+( ) s
+377 234 M
+( ) s
+377 226 M
+( ) s
+377 218 M
+( ) s
+377 210 M
+( ) s
+377 202 M
+( ) s
+377 194 M
+( ) s
+377 186 M
+( ) s
+377 178 M
+( ) s
+377 170 M
+( ) s
+377 162 M
+( ) s
+377 154 M
+( ) s
+377 146 M
+( ) s
+377 138 M
+( ) s
+377 130 M
+( ) s
+377 122 M
+( ) s
+377 114 M
+( ) s
+377 106 M
+( ) s
+377 98 M
+( ) s
+377 90 M
+([Page 40]                                                               ) s
+_R
+S
+%%Page: (24) 24
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 24 def
+/fname (rfc791.txt) def
+/fdir () def
+/ftail (rfc791.txt) def
+%%EndPageSetup
+5 546 M
+( ) s
+5 538 M
+(September 1981                                                          ) s
+5 530 M
+(                                                       Internet Protocol) s
+5 522 M
+( ) s
+5 514 M
+( ) s
+5 506 M
+( ) s
+5 498 M
+(                                GLOSSARY) s
+5 490 M
+( ) s
+5 482 M
+( ) s
+5 474 M
+( ) s
+5 466 M
+(1822) s
+5 458 M
+(          BBN Report 1822, "The Specification of the Interconnection of) s
+5 450 M
+(          a Host and an IMP".  The specification of interface between a) s
+5 442 M
+(          host and the ARPANET.) s
+5 434 M
+( ) s
+5 426 M
+(ARPANET leader) s
+5 418 M
+(          The control information on an ARPANET message at the host-IMP) s
+5 410 M
+(          interface.) s
+5 402 M
+( ) s
+5 394 M
+(ARPANET message) s
+5 386 M
+(          The unit of transmission between a host and an IMP in the) s
+5 378 M
+(          ARPANET.  The maximum size is about 1012 octets \(8096 bits\).) s
+5 370 M
+( ) s
+5 362 M
+(ARPANET packet) s
+5 354 M
+(          A unit of transmission used internally in the ARPANET between) s
+5 346 M
+(          IMPs. The maximum size is about 126 octets \(1008 bits\).) s
+5 338 M
+( ) s
+5 330 M
+(Destination) s
+5 322 M
+(          The destination address, an internet header field.) s
+5 314 M
+( ) s
+5 306 M
+(DF) s
+5 298 M
+(          The Don't Fragment bit carried in the flags field.) s
+5 290 M
+( ) s
+5 282 M
+(Flags) s
+5 274 M
+(          An internet header field carrying various control flags.) s
+5 266 M
+( ) s
+5 258 M
+(Fragment Offset) s
+5 250 M
+(          This internet header field indicates where in the internet) s
+5 242 M
+(          datagram a fragment belongs.) s
+5 234 M
+( ) s
+5 226 M
+(GGP) s
+5 218 M
+(          Gateway to Gateway Protocol, the protocol used primarily) s
+5 210 M
+(          between gateways to control routing and other gateway) s
+5 202 M
+(          functions.) s
+5 194 M
+( ) s
+5 186 M
+(header) s
+5 178 M
+(          Control information at the beginning of a message, segment,) s
+5 170 M
+(          datagram, packet or block of data.) s
+5 162 M
+( ) s
+5 154 M
+(ICMP) s
+5 146 M
+(          Internet Control Message Protocol, implemented in the internet) s
+5 138 M
+(          module, the ICMP is used from gateways to hosts and between) s
+5 130 M
+(          hosts to report errors and make routing suggestions.) s
+5 122 M
+( ) s
+5 114 M
+( ) s
+5 106 M
+( ) s
+5 98 M
+( ) s
+5 90 M
+(                                                               [Page 41]) s
+377 546 M
+( ) s
+377 538 M
+(                                                          September 1981) s
+377 530 M
+(Internet Protocol) s
+377 522 M
+(Glossary) s
+377 514 M
+( ) s
+377 506 M
+( ) s
+377 498 M
+( ) s
+377 490 M
+(Identification) s
+377 482 M
+(          An internet header field carrying the identifying value) s
+377 474 M
+(          assigned by the sender to aid in assembling the fragments of a) s
+377 466 M
+(          datagram.) s
+377 458 M
+( ) s
+377 450 M
+(IHL) s
+377 442 M
+(          The internet header field Internet Header Length is the length) s
+377 434 M
+(          of the internet header measured in 32 bit words.) s
+377 426 M
+( ) s
+377 418 M
+(IMP) s
+377 410 M
+(          The Interface Message Processor, the packet switch of the) s
+377 402 M
+(          ARPANET.) s
+377 394 M
+( ) s
+377 386 M
+(Internet Address) s
+377 378 M
+(          A four octet \(32 bit\) source or destination address consisting) s
+377 370 M
+(          of a Network field and a Local Address field.) s
+377 362 M
+( ) s
+377 354 M
+(internet datagram) s
+377 346 M
+(          The unit of data exchanged between a pair of internet modules) s
+377 338 M
+(          \(includes the internet header\).) s
+377 330 M
+( ) s
+377 322 M
+(internet fragment) s
+377 314 M
+(          A portion of the data of an internet datagram with an internet) s
+377 306 M
+(          header.) s
+377 298 M
+( ) s
+377 290 M
+(Local Address) s
+377 282 M
+(          The address of a host within a network.  The actual mapping of) s
+377 274 M
+(          an internet local address on to the host addresses in a) s
+377 266 M
+(          network is quite general, allowing for many to one mappings.) s
+377 258 M
+( ) s
+377 250 M
+(MF) s
+377 242 M
+(          The More-Fragments Flag carried in the internet header flags) s
+377 234 M
+(          field.) s
+377 226 M
+( ) s
+377 218 M
+(module) s
+377 210 M
+(          An implementation, usually in software, of a protocol or other) s
+377 202 M
+(          procedure.) s
+377 194 M
+( ) s
+377 186 M
+(more-fragments flag) s
+377 178 M
+(          A flag indicating whether or not this internet datagram) s
+377 170 M
+(          contains the end of an internet datagram, carried in the) s
+377 162 M
+(          internet header Flags field.) s
+377 154 M
+( ) s
+377 146 M
+(NFB) s
+377 138 M
+(          The Number of Fragment Blocks in a the data portion of an) s
+377 130 M
+(          internet fragment.  That is, the length of a portion of data) s
+377 122 M
+(          measured in 8 octet units.) s
+377 114 M
+( ) s
+377 106 M
+( ) s
+377 98 M
+( ) s
+377 90 M
+([Page 42]                                                               ) s
+_R
+S
+%%Page: (25) 25
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 25 def
+/fname (rfc791.txt) def
+/fdir () def
+/ftail (rfc791.txt) def
+%%EndPageSetup
+5 546 M
+( ) s
+5 538 M
+(September 1981                                                          ) s
+5 530 M
+(                                                       Internet Protocol) s
+5 522 M
+(                                                                Glossary) s
+5 514 M
+( ) s
+5 506 M
+( ) s
+5 498 M
+( ) s
+5 490 M
+(octet) s
+5 482 M
+(          An eight bit byte.) s
+5 474 M
+( ) s
+5 466 M
+(Options) s
+5 458 M
+(          The internet header Options field may contain several options,) s
+5 450 M
+(          and each option may be several octets in length.) s
+5 442 M
+( ) s
+5 434 M
+(Padding) s
+5 426 M
+(          The internet header Padding field is used to ensure that the) s
+5 418 M
+(          data begins on 32 bit word boundary.  The padding is zero.) s
+5 410 M
+( ) s
+5 402 M
+(Protocol) s
+5 394 M
+(          In this document, the next higher level protocol identifier,) s
+5 386 M
+(          an internet header field.) s
+5 378 M
+( ) s
+5 370 M
+(Rest) s
+5 362 M
+(          The local address portion of an Internet Address.) s
+5 354 M
+( ) s
+5 346 M
+(Source) s
+5 338 M
+(          The source address, an internet header field.) s
+5 330 M
+( ) s
+5 322 M
+(TCP) s
+5 314 M
+(          Transmission Control Protocol:  A host-to-host protocol for) s
+5 306 M
+(          reliable communication in internet environments.) s
+5 298 M
+( ) s
+5 290 M
+(TCP Segment) s
+5 282 M
+(          The unit of data exchanged between TCP modules \(including the) s
+5 274 M
+(          TCP header\).) s
+5 266 M
+( ) s
+5 258 M
+(TFTP) s
+5 250 M
+(          Trivial File Transfer Protocol:  A simple file transfer) s
+5 242 M
+(          protocol built on UDP.) s
+5 234 M
+( ) s
+5 226 M
+(Time to Live) s
+5 218 M
+(          An internet header field which indicates the upper bound on) s
+5 210 M
+(          how long this internet datagram may exist.) s
+5 202 M
+( ) s
+5 194 M
+(TOS) s
+5 186 M
+(          Type of Service) s
+5 178 M
+( ) s
+5 170 M
+(Total Length) s
+5 162 M
+(          The internet header field Total Length is the length of the) s
+5 154 M
+(          datagram in octets including internet header and data.) s
+5 146 M
+( ) s
+5 138 M
+(TTL) s
+5 130 M
+(          Time to Live) s
+5 122 M
+( ) s
+5 114 M
+( ) s
+5 106 M
+( ) s
+5 98 M
+( ) s
+5 90 M
+(                                                               [Page 43]) s
+377 546 M
+( ) s
+377 538 M
+(                                                          September 1981) s
+377 530 M
+(Internet Protocol) s
+377 522 M
+(Glossary) s
+377 514 M
+( ) s
+377 506 M
+( ) s
+377 498 M
+( ) s
+377 490 M
+(Type of Service) s
+377 482 M
+(          An internet header field which indicates the type \(or quality\)) s
+377 474 M
+(          of service for this internet datagram.) s
+377 466 M
+( ) s
+377 458 M
+(UDP) s
+377 450 M
+(          User Datagram Protocol:  A user level protocol for transaction) s
+377 442 M
+(          oriented applications.) s
+377 434 M
+( ) s
+377 426 M
+(User) s
+377 418 M
+(          The user of the internet protocol.  This may be a higher level) s
+377 410 M
+(          protocol module, an application program, or a gateway program.) s
+377 402 M
+( ) s
+377 394 M
+(Version) s
+377 386 M
+(          The Version field indicates the format of the internet header.) s
+377 378 M
+( ) s
+377 370 M
+( ) s
+377 362 M
+( ) s
+377 354 M
+( ) s
+377 346 M
+( ) s
+377 338 M
+( ) s
+377 330 M
+( ) s
+377 322 M
+( ) s
+377 314 M
+( ) s
+377 306 M
+( ) s
+377 298 M
+( ) s
+377 290 M
+( ) s
+377 282 M
+( ) s
+377 274 M
+( ) s
+377 266 M
+( ) s
+377 258 M
+( ) s
+377 250 M
+( ) s
+377 242 M
+( ) s
+377 234 M
+( ) s
+377 226 M
+( ) s
+377 218 M
+( ) s
+377 210 M
+( ) s
+377 202 M
+( ) s
+377 194 M
+( ) s
+377 186 M
+( ) s
+377 178 M
+( ) s
+377 170 M
+( ) s
+377 162 M
+( ) s
+377 154 M
+( ) s
+377 146 M
+( ) s
+377 138 M
+( ) s
+377 130 M
+( ) s
+377 122 M
+( ) s
+377 114 M
+( ) s
+377 106 M
+( ) s
+377 98 M
+( ) s
+377 90 M
+([Page 44]                                                               ) s
+_R
+S
+%%Page: (26) 26
+%%BeginPageSetup
+_S
+90 rotate
+24 -588 translate
+/pagenum 26 def
+/fname (rfc791.txt) def
+/fdir () def
+/ftail (rfc791.txt) def
+%%EndPageSetup
+5 546 M
+( ) s
+5 538 M
+(September 1981                                                          ) s
+5 530 M
+(                                                       Internet Protocol) s
+5 522 M
+( ) s
+5 514 M
+( ) s
+5 506 M
+( ) s
+5 498 M
+(                               REFERENCES) s
+5 490 M
+( ) s
+5 482 M
+( ) s
+5 474 M
+( ) s
+5 466 M
+([1]  Cerf, V., "The Catenet Model for Internetworking," Information) s
+5 458 M
+(     Processing Techniques Office, Defense Advanced Research Projects) s
+5 450 M
+(     Agency, IEN 48, July 1978.) s
+5 442 M
+( ) s
+5 434 M
+([2]  Bolt Beranek and Newman, "Specification for the Interconnection of) s
+5 426 M
+(     a Host and an IMP," BBN Technical Report 1822, Revised May 1978.) s
+5 418 M
+( ) s
+5 410 M
+([3]  Postel, J., "Internet Control Message Protocol - DARPA Internet) s
+5 402 M
+(     Program Protocol Specification," RFC 792, USC/Information Sciences) s
+5 394 M
+(     Institute, September 1981.) s
+5 386 M
+( ) s
+5 378 M
+([4]  Shoch, J., "Inter-Network Naming, Addressing, and Routing,") s
+5 370 M
+(     COMPCON, IEEE Computer Society, Fall 1978.) s
+5 362 M
+( ) s
+5 354 M
+([5]  Postel, J., "Address Mappings," RFC 796, USC/Information Sciences) s
+5 346 M
+(     Institute, September 1981.) s
+5 338 M
+( ) s
+5 330 M
+([6]  Shoch, J., "Packet Fragmentation in Inter-Network Protocols,") s
+5 322 M
+(     Computer Networks, v. 3, n. 1, February 1979.) s
+5 314 M
+( ) s
+5 306 M
+([7]  Strazisar, V., "How to Build a Gateway", IEN 109, Bolt Beranek and) s
+5 298 M
+(     Newman, August 1979.) s
+5 290 M
+( ) s
+5 282 M
+([8]  Postel, J., "Service Mappings," RFC 795, USC/Information Sciences) s
+5 274 M
+(     Institute, September 1981.) s
+5 266 M
+( ) s
+5 258 M
+([9]  Postel, J., "Assigned Numbers," RFC 790, USC/Information Sciences) s
+5 250 M
+(     Institute, September 1981.) s
+5 242 M
+( ) s
+5 234 M
+( ) s
+5 226 M
+( ) s
+5 218 M
+( ) s
+5 210 M
+( ) s
+5 202 M
+( ) s
+5 194 M
+( ) s
+5 186 M
+( ) s
+5 178 M
+( ) s
+5 170 M
+( ) s
+5 162 M
+( ) s
+5 154 M
+( ) s
+5 146 M
+( ) s
+5 138 M
+( ) s
+5 130 M
+( ) s
+5 122 M
+( ) s
+5 114 M
+( ) s
+5 106 M
+( ) s
+5 98 M
+( ) s
+5 90 M
+(                                                               [Page 45]) s
+_R
+S
+%%Trailer
+%%Pages: 26
+%%DocumentNeededResources: font Courier-Bold Courier 
+%%EOF

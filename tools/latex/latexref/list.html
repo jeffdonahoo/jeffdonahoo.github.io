@@ -1,0 +1,42 @@
+<HTML>
+<!-- created Thu Apr 9 23:20:43 MET DST 1998
+ from ../latex2e.texi line 1424 via texi2www -->
+<HEAD>
+<TITLE>list</TITLE>
+<LINK REL="Precedes" HREF="minipage.html">
+<LINK REV="Precedes" HREF="letter.html">
+<LINK REV="Subdocument" HREF="Environments.html">
+</HEAD><BODY><P>
+<A HREF="letter.html"><IMG ALIGN=MIDDLE SRC="prev-arrow.gif" ALT="PREV"></A>
+<A HREF="Environments.html"> <IMG ALIGN=MIDDLE SRC="up-arrow.gif" ALT="UP"></A>
+<A HREF="minipage.html"><IMG ALIGN=MIDDLE SRC="next-arrow.gif" ALT="NEXT"></A>
+<CITE>LaTeX2e help 1.6</CITE></P>
+<H3>2.6.12: list</H3>
+<P>
+The <CODE>list</CODE> environment is a generic environment which is used for
+defining many of the more specific environments. It is seldom used in
+documents, but often in macros.
+</P>
+<DL><DT><DD>
+<PRE>
+ \begin{list}{label}{spacing}
+ \item First item
+ \item Second item
+ .
+ .
+ .
+ \end{list}
+</PRE>
+</DL>
+<P>
+The <CODE>{label}</CODE> argument specifies how items should be labelled.
+This argument is a piece of text that is inserted in a box to form the
+label.  This argument can and usually does contain other LaTeX commands.
+</P>
+<P>
+The <CODE>{spacing}</CODE> argument contains commands to change the spacing
+parameters for the list.  This argument will most often be null, i.e.,
+<CODE>{}</CODE>.  This will select all default spacing which should suffice
+for most cases.
+</P>
+</BODY></HTML>

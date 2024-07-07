@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+
+<table width="891" border="0" cellpadding="0" cellspacing="0">
+  <!--DWLayoutDefaultTable-->
+  <tr> 
+    <td width="102" height="28">&nbsp;</td>
+    <td width="105">&nbsp;</td>
+    <td width="115">&nbsp;</td>
+    <td width="74">&nbsp;</td>
+    <td width="138">&nbsp;</td>
+    <td width="70">&nbsp;</td>
+    <td width="183">&nbsp;</td>
+    <td width="104">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td height="29">&nbsp;</td>
+    <td valign="top"><font size="+2" face="Verdana, Arial, Helvetica, sans-serif"><a href="vminstalling.html">&lt;&lt;Prev</a></font></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td valign="top"><div align="center"><font size="+2" face="Verdana, Arial, Helvetica, sans-serif"><a href="vmware.html">Home</a></font></div></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td valign="top"><div align="right"><font size="+2" face="Verdana, Arial, Helvetica, sans-serif"><a href="vmfirewall.html">Next&gt;&gt;</a></font></div></td>
+  </tr>
+  <tr> 
+    <td height="20">&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td height="38">&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td colspan="3" valign="top"><div align="center"><font size="+2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Networking 
+        Options</strong></font></div></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td height="665">&nbsp;</td>
+    <td colspan="7" valign="top"><br> <font face="Verdana, Arial, Helvetica, sans-serif">You 
+      will have the option of selecting the type of networking you want for your 
+      virtual machine when you use the <strong>New Virtual Machine Wizard</strong>. 
+      You can later edit this option by going to <strong>Edit&gt;Virtual Machine 
+      Setting</strong>s for that particular virtual machine. 
+      <p>The standard networking options that VMWare Workstation currently provides 
+        are<br>
+        - Bridged networking<br>
+        - Network Address Translation(NAT)<br>
+        - Host-Only Networking</p>
+      </font> <p><font face="Verdana, Arial, Helvetica, sans-serif">The following 
+        is a brief explanation of these options and how you can set them, but 
+        it is strongly recommended that you read the Networking section of your 
+        VMWare product documentation before you use any of these options.<br>
+        <br>
+        <strong>Bridged networking</strong><br>
+        Bridged Networking is the default option that VMWare sets up for your 
+        new virtual machine. If you use bridged networking, your virtual machine 
+        needs to have its own identity on the network. For example, on a TCP/IP 
+        network, the virtual machine needs its own IP address. The virtual machine 
+        is a full participant in the network. It has access to other machines 
+        on the network and can be contacted by other machines on the network as 
+        if it were a physical computer on the network. <br>
+        <strong><br>
+        Network Address Translation</strong><br>
+        NAT gives a virtual machine access to network resources using the host 
+        computer's IP address. A network address translation connection is set 
+        up automatically if you follow the Custom path in the New Virtual Machine 
+        Wizard and select Use network address translation. <br>
+        <br>
+        If you use NAT, your virtual machine does not have its own IP address 
+        on the external network. Instead, a separate private network is set up 
+        on the host computer. Your virtual machine gets an address on that network 
+        from the VMware virtual DHCP server. The VMware NAT device passes network 
+        data between one or more virtual machines and the external network. It 
+        identifies incoming data packets intended for each virtual machine and 
+        sends them to the correct destination. <br>
+        <br>
+        <strong>Host-Only Networking</strong><br>
+        Host-only networking creates a network that is completely contained within 
+        the host computer.A host-only network is set up automatically if you select 
+        <strong>Use Host-Only Networking</strong> in the <strong>New Virtual Machine 
+        Wizard</strong>.<br>
+        <br>
+        Host-only networking provides a network connection between the virtual 
+        machine and the host computer, using a virtual Ethernet adapter that is 
+        visible to the host operating system. This approach can be useful if you 
+        need to set up an isolated virtual network. If you use host-only networking, 
+        your virtual machine and the host virtual adapter are connected to a private 
+        TCP/IP network. Addresses on this network are provided by the VMware DHCP 
+        server. </font><br>
+      </p></td>
+  </tr>
+</table>
+</body>
+</html>

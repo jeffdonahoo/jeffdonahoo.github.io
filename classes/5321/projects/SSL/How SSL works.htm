@@ -1,0 +1,328 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 10">
+<meta name=Originator content="Microsoft Word 10">
+<link rel=File-List href="How%20SSL%20works_files/filelist.xml">
+<link rel=Edit-Time-Data href="How%20SSL%20works_files/editdata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>How SSL works</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>saggi</o:Author>
+  <o:LastAuthor>saggi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>45</o:TotalTime>
+  <o:Created>2002-12-05T02:28:00Z</o:Created>
+  <o:LastSaved>2002-12-05T03:13:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>569</o:Words>
+  <o:Characters>3246</o:Characters>
+  <o:Company>ECS</o:Company>
+  <o:Lines>27</o:Lines>
+  <o:Paragraphs>7</o:Paragraphs>
+  <o:CharactersWithSpaces>3808</o:CharactersWithSpaces>
+  <o:Version>10.3311</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:SpellingState>Clean</w:SpellingState>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
+span.GramE
+	{mso-style-name:"";
+	mso-gram-e:yes;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:382172917;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-318492574 235844208 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l0:level1
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:.75in;
+	mso-level-number-position:left;
+	margin-left:.75in;
+	text-indent:-.25in;}
+@list l1
+	{mso-list-id:731662685;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-392025216 67698703 331881536 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l1:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";}
+</style>
+<![endif]--><!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="2050"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal>How SSL works?</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>The Secure Socket Layer sits in between the application
+layer (such as HTTP or RMI) and the transport <span class=GramE>layer(</span>usually
+TCP). It provides </p>
+
+<p class=MsoNormal>Encryption, authentication and session management services
+to the application layer.</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='margin-left:1.5in;text-indent:.5in'><!--[if gte vml 1]><v:shapetype
+ id="_x0000_t75" coordsize="21600,21600" o:spt="75" o:preferrelative="t"
+ path="m@4@5l@4@11@9@11@9@5xe" filled="f" stroked="f">
+ <v:stroke joinstyle="miter"/>
+ <v:formulas>
+  <v:f eqn="if lineDrawn pixelLineWidth 0"/>
+  <v:f eqn="sum @0 1 0"/>
+  <v:f eqn="sum 0 0 @1"/>
+  <v:f eqn="prod @2 1 2"/>
+  <v:f eqn="prod @3 21600 pixelWidth"/>
+  <v:f eqn="prod @3 21600 pixelHeight"/>
+  <v:f eqn="sum @0 0 1"/>
+  <v:f eqn="prod @6 1 2"/>
+  <v:f eqn="prod @7 21600 pixelWidth"/>
+  <v:f eqn="sum @8 21600 0"/>
+  <v:f eqn="prod @7 21600 pixelHeight"/>
+  <v:f eqn="sum @10 21600 0"/>
+ </v:formulas>
+ <v:path o:extrusionok="f" gradientshapeok="t" o:connecttype="rect"/>
+ <o:lock v:ext="edit" aspectratio="t"/>
+</v:shapetype><v:shape id="_x0000_i1025" type="#_x0000_t75" style='width:221.25pt;
+ height:221.25pt'>
+ <v:imagedata src="How%20SSL%20works_files/image001.jpg" o:title="stack"/>
+</v:shape><![endif]--><![if !vml]><img width=295 height=295
+src="How%20SSL%20works_files/image001.jpg" v:shapes="_x0000_i1025"><![endif]></p>
+
+<p class=MsoNormal>The figure above shows its position in the TCP/IP four layer
+model. SSL is most often associated with <span class=GramE>HTTP(</span> the ubiquitous
+HTTPS protocol)</p>
+
+<p class=MsoNormal><span class=GramE>But by no means limited to this.</span>
+Virtually all common Internet protocols – Telnet, SMTP, NNTP, FTP, <span
+class=GramE>LDAP</span> etc can be used with secure sockets.</p>
+
+<p class=MsoNormal>SSL is an Internet standard first developed by Netscape in
+1994. IETF has more recently taken over SSL development and renamed it
+Transport</p>
+
+<p class=MsoNormal><span class=GramE>Layer Security (TLS).</span> TLS version
+1.0 is a minor development of SSL 3.0 (the protocol in fact identifies itself
+as SSL 3.1 during the negotiation phase).</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>SSL Handshaking</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>Setting up secure communication between client and server
+takes quite a bit of setting up. The encryption and authentication parts of SSL
+are optional</p>
+
+<p class=MsoNormal><span class=GramE>and</span> a number of ciphers can be used
+for each. This cipher suite needs to be negotiated and then key information and
+(optionally) digital certificates</p>
+
+<p class=MsoNormal><span class=GramE>exchanged</span>. SSL handshaking takes
+care of all this when the SSL connection is first established.</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<ol style='margin-top:0in' start=1 type=1>
+ <li class=MsoNormal style='mso-list:l1 level1 lfo1;tab-stops:list .5in'>The
+     client sends a hello message to the server. This incorporates information
+     about the highest SSL version the client supports and a list of supported </li>
+</ol>
+
+<p class=MsoNormal style='margin-left:.25in;text-indent:.25in'><span
+class=GramE>cipher</span> suites.</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<ol style='margin-top:0in' start=2 type=1>
+ <li class=MsoNormal style='mso-list:l1 level1 lfo1;tab-stops:list .5in'>The
+     server sends its response back to the client:</li>
+</ol>
+
+<p class=MsoNormal style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<ol style='margin-top:0in' start=2 type=1>
+ <ol style='margin-top:0in' start=1 type=a>
+  <li class=MsoNormal style='mso-list:l1 level2 lfo1;tab-stops:list 1.0in'>A
+      hello message incorporating information about the highest version of SSL
+      and the best cipher suite supported by both client and server.</li>
+  <li class=MsoNormal style='mso-list:l1 level2 lfo1;tab-stops:list 1.0in'>Optionally
+      a certificate chain if the server wishes to authenticate itself to the
+      client.</li>
+  <li class=MsoNormal style='mso-list:l1 level2 lfo1;tab-stops:list 1.0in'>Optionally
+      a certificate request if the server wants to authenticate the client. This
+      is more often used in special applications and intranets than</li>
+ </ol>
+</ol>
+
+<p class=MsoNormal style='margin-left:1.0in'><span class=GramE>in</span> the
+Internet.</p>
+
+<ol style='margin-top:0in' start=2 type=1>
+ <ol style='margin-top:0in' start=4 type=a>
+  <li class=MsoNormal style='mso-list:l1 level2 lfo1;tab-stops:list 1.0in'>The
+      server public key is sent unless a certificate with a suitable public key
+      has already been transmitted.</li>
+  <li class=MsoNormal style='mso-list:l1 level2 lfo1;tab-stops:list 1.0in'>A hello
+      finished message to indicate that the response is finished.</li>
+ </ol>
+</ol>
+
+<p class=MsoNormal style='margin-left:.75in'><o:p>&nbsp;</o:p></p>
+
+<ol style='margin-top:0in' start=3 type=1>
+ <li class=MsoNormal style='mso-list:l1 level1 lfo1;tab-stops:list .5in'>The
+     client then checks the certificate chain sent by the server. If the client
+     is a web browser and it cannot trace the certificate chain to a known </li>
+</ol>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=GramE>trusted</span> Certificate
+Authority a security warning message pops up.</p>
+
+<p class=MsoNormal style='margin-left:.5in'>If the browser accepts the
+certificate chain the client will respond with:</p>
+
+<p class=MsoNormal style='margin-left:.75in;text-indent:-.25in;mso-list:l0 level1 lfo2;
+tab-stops:list .75in'><![if !supportLists]><span style='mso-list:Ignore'>a.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>A
+certificate chain if the server requested it.</p>
+
+<p class=MsoNormal style='margin-left:.75in;text-indent:-.25in;mso-list:l0 level1 lfo2;
+tab-stops:list .75in'><![if !supportLists]><span style='mso-list:Ignore'>b.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>A
+session key encrypted with the server’s public key. The session key is randomly
+generated for each SSL session and used for symmetric</p>
+
+<p class=MsoNormal style='margin-left:.75in'><span class=GramE>encryption</span>
+of data. If no RSA public key cipher is available, <span class=SpellE>Diffie</span>
+<span class=SpellE>Hellman</span> may be used for key agreement instead.</p>
+
+<p class=MsoNormal style='margin-left:.75in;text-indent:-.25in;mso-list:l0 level1 lfo2;
+tab-stops:list .75in'><![if !supportLists]><span style='mso-list:Ignore'>c.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>Optionally,
+a certificate verify message. The client sends the server some signed
+information, the server can then use the client certificate to verify that</p>
+
+<p class=MsoNormal style='margin-left:.75in'><span class=GramE>the</span> client
+is in the possession of the private key corresponding to the certificate’s
+public key. This option is rarely used.</p>
+
+<p class=MsoNormal style='margin-left:.75in;text-indent:-.25in;mso-list:l0 level1 lfo2;
+tab-stops:list .75in'><![if !supportLists]><span style='mso-list:Ignore'>d.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>A
+change cipher spec message indicating that the server should switch to encrypted
+mode. The client selects the strongest cipher supported by both parties.</p>
+
+<p class=MsoNormal style='margin-left:.75in;text-indent:-.25in;mso-list:l0 level1 lfo2;
+tab-stops:list .75in'><![if !supportLists]><span style='mso-list:Ignore'>e.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]>A
+finished messaged to indicate that the response is finished.</p>
+
+<p class=MsoNormal style='margin-left:.5in'><o:p>&nbsp;</o:p></p>
+
+<ol style='margin-top:0in' start=4 type=1>
+ <li class=MsoNormal style='mso-list:l1 level1 lfo1;tab-stops:list .5in'>The
+     server checks the client’s certificate chain(if any), decrypts the session
+     key and finally responds to the information sent by the client with:</li>
+ <ol style='margin-top:0in' start=1 type=a>
+  <li class=MsoNormal style='mso-list:l1 level2 lfo1;tab-stops:list 1.0in'>A
+      change cipher spec message indicating that the client should switch to
+      encrypted mode.</li>
+  <li class=MsoNormal style='mso-list:l1 level2 lfo1;tab-stops:list 1.0in'>A finished
+      message to indicate that the SSL handshaking process is finished.</li>
+ </ol>
+</ol>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><span style='mso-spacerun:yes'>       </span>At this point
+the SSL session is established and encrypted data can be exchanged between the
+client and the server. For all data a HMAC message authentication code is
+calculated to guarantee data authenticity and integrity. If the client is a
+browser, it will indicate that the connection is secure by displaying</p>
+
+<p class=MsoNormal><span class=GramE>a</span> key symbol (Netscape) or a lock
+symbol (IE) in its status line.</p>
+
+</div>
+
+</body>
+
+</html>

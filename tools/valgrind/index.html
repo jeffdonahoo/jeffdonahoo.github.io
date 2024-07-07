@@ -1,0 +1,88 @@
+<html>
+<head>
+   <title>Basic Valgrind Tutorial</title>
+</head>
+<body>
+
+<center><b><font size=+3>Valgrind</font></b></center>
+
+<A HREF="http://valgrind.kde.org/">Valgrind</A> is a memory
+mismanagement detector.  It shows you memory leaks, deallocation
+errors, etc.  Actually, Valgrind is a wrapper around a collection of
+tools that do many other things (e.g., cache profiling); however, here
+we focus on the default tool, memcheck.  Memcheck can detect:
+
+<ul>
+<li> Use of uninitialised memory
+<li> Reading/writing memory after it has been free'd
+<li> Reading/writing off the end of malloc'd blocks
+<li> Reading/writing inappropriate areas on the stack
+<li> Memory leaks -- where pointers to malloc'd blocks are lost forever
+<li> Mismatched use of malloc/new/new [] vs free/delete/delete []
+<li> Overlapping src and dst pointers in memcpy() and related functions
+<li> Some misuses of the POSIX pthreads API
+</ul>
+
+To use this on our example program, <A HREF="test.c">test.c</A>, try
+
+<PRE>
+gcc -o test -g test.c
+</PRE>
+
+This creates an executable named test.  To check for memory leaks
+during the execution of test, try
+
+<PRE>
+valgrind --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=20 --track-fds=yes ./test
+</PRE>
+
+This outputs a report to the terminal like
+
+<PRE>
+==9704== Memcheck, a memory error detector for x86-linux.
+==9704== Copyright (C) 2002-2004, and GNU GPL'd, by Julian Seward et al.
+==9704== Using valgrind-2.2.0, a program supervision framework for x86-linux.
+==9704== Copyright (C) 2000-2004, and GNU GPL'd, by Julian Seward et al.
+==9704== For more details, rerun with: -v
+==9704== 
+==9704== 
+==9704== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 11 from 1)
+==9704== malloc/free: in use at exit: 35 bytes in 2 blocks.
+==9704== malloc/free: 3 allocs, 1 frees, 47 bytes allocated.
+==9704== For counts of detected errors, rerun with: -v
+==9704== searching for pointers to 2 not-freed blocks.
+==9704== checked 1420940 bytes.
+==9704== 
+==9704== 16 bytes in 1 blocks are definitely lost in loss record 1 of 2
+==9704==    at 0x1B903D38: malloc (vg_replace_malloc.c:131)
+==9704==    by 0x80483BF: main (test.c:15)
+==9704== 
+==9704== 
+==9704== 19 bytes in 1 blocks are definitely lost in loss record 2 of 2
+==9704==    at 0x1B903D38: malloc (vg_replace_malloc.c:131)
+==9704==    by 0x8048391: main (test.c:8)
+==9704== 
+==9704== LEAK SUMMARY:
+==9704==    definitely lost: 35 bytes in 2 blocks.
+==9704==    possibly lost:   0 bytes in 0 blocks.
+==9704==    still reachable: 0 bytes in 0 blocks.
+==9704==         suppressed: 0 bytes in 0 blocks.
+</PRE>
+
+Let's look at the code to see what happened.  Allocation #1 (19 byte
+leak) is lost because p is pointed elsewhere before the memory from
+Allocation #1 is free'd.  To help us track it down, Valgrind gives us
+a stack trace showing where the bytes were allocated.  In the 19 byte
+leak entry, the bytes were allocate in test.c, line 8.  Allocation #2
+(12 byte leak) doesn't show up in the list because it is free'd.
+Allocation #3 shows up in the list even though there is still a
+reference to it (p) at program termination.  This is still a memory
+leak!  Again, Valgrind tells us where to look for the allocation
+(test.c line 15).<p>
+
+Valgrind can detect many kinds of errors.  <a
+href="messages.html">Here's</a> an explanation of the various error
+messages.
+
+</body>
+</html>

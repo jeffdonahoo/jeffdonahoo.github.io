@@ -1,0 +1,202 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Wei Cheng">
+   <meta name="GENERATOR" content="Mozilla/4.61 [en] (WinNT; I) [Netscape]">
+   <title>Capture of telnet login with tcpdump</title>
+</head>
+<body>
+&nbsp;&nbsp;&nbsp; In this version
+the first, third, fifth, seventh, ninth and eleventh packets are the ones
+which contain the symbols from the password sent from Moe to Larry, and
+the second, fourth, sixth, eightth, tenth and twelveth packets are the
+responces, respectively.&nbsp; That is why we have only annotated the packets
+containing the symbols from the password (the request packets from Moe
+to Larry.)
+<p>&nbsp;&nbsp;&nbsp; The packets shown by tcpdump contain the following
+data: IP headers and IP data portion.&nbsp; The IP data contains a TCP
+packet, that is, it contains a TCP header and a TCP data portion.&nbsp;
+We have used the following typographical notation:
+<ul>
+<li>
+<u>underlined</u> for IP headers,</li>
+
+<li>
+<b>bold</b> for TCP headers, and</li>
+
+<li>
+<i>italic</i> for TCP data.</li>
+</ul>
+&nbsp;&nbsp;&nbsp; We have chosen to annotate only the first packet sent
+from Moe to Curly and the first acknowledgement packet, but you can easily
+extract the data from the rest of the packets.&nbsp; If you choose to do
+so, you might want to take a look at the <a href="file:////ada/www/stu/Lakov/tcp_format.html">TCP</a>
+and <a href="file:////ada/www/stu/Lakov/ip_format.html">IP</a> packet formats,
+as well as the <a href="file:////ada/www/stu/Lakov/ascii.html">ASCII</a>
+table.&nbsp; Here is the printout of the dumped packets:
+<p>Packet 1:
+<br><tt><font color="#000000">23:54:22.940104 moe.baylor.edu.1048 > larry.baylor.edu.telnet:
+P 219469296:219469297(1) ack 438978963 win 32120 &lt;nop,nop,timestamp
+71657873 71751057> (DF)</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; </font><u><font color="#FF0000">4</font><font color="#0000FF">5</font><font color="#FF0000">00</font><font color="#0000FF">0035</font><font color="#000000">
+051f 4000
+</font><font color="#FF0000">40</font><font color="#0000FF">06</font><font color="#000000">
+0b6c </font><font color="#FF0000">813e 93dd</font></u></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; </font><u><font color="#0000FF">813e
+93de</font></u><font color="#000000"> <b>0418 0017 0d14 d5f0 1a2a 4993</b></font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; <b>8018 7d78 0c64 0000
+0101 080a 0445 6991</b></font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; <b>0446 d591</b> <i>30</i></font></tt>
+<p><font color="#000000"><i>&nbsp;&nbsp;&nbsp; </i>As you can see, the
+data of the TCP packet contains a single byte, 30 hexadecimal, or 48 decimal,
+which is the numerical value of the character '0' (zero.)&nbsp; Likewise,
+in the following packets from Moe to Larry (packets 3, 5, 7, and 11) you
+can see the characters 31, 32, 33, 34, and 2e, which are the numerical
+representations for the characters '1', '2', '3', '4', and '.' which is
+the password we tried to capture.&nbsp; This example shows that if a person
+has root (admin) access rights on a router machine on the Internet, he/she
+could easily capture the user names and passwords of people who use telnet
+sessions to connect to remote site, provided their packets pass accross
+this machine (Larry in our case.)</font>
+<p><font color="#000000">&nbsp;&nbsp;&nbsp; Additional information that
+is readily available from the IP header:</font>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#FF0000">4</font>&nbsp;&nbsp;
+Version 4</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#0000FF">5</font>&nbsp;&nbsp;
+Internet Header Length - 5 32-bit words.</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#FF0000">00</font>&nbsp;&nbsp;
+Type of Service - Normel Delay, Normal Throughput, Normal Reliability</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp; <font color="#0000FF">0035</font>&nbsp;&nbsp;
+Total Length - the whole packet is 35 hex (51 decimal) bytes long</tt>
+<br><tt><font color="#FF0000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <u>40</u></font><font color="#000000">&nbsp;&nbsp;
+Time To Live - 64 hops</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font><u><font color="#0000FF">06</font></u><font color="#000000">&nbsp;&nbsp;
+Protocol - TCP</font></tt>
+<br><tt><u><font color="#FF0000">813e 93dd</font></u><font color="#000000">&nbsp;&nbsp;
+Source Address - 129.62.147.221 - 81 hex is 129 dec, 3e is 62, 93 is 147
+and dd is 221.</font></tt>
+<br><tt><u><font color="#0000FF">813e 93de</font></u><font color="#000000">&nbsp;&nbsp;
+Destination Address - 129.62.147.222</font></tt>
+<p>Packet 2:
+<br><tt><font color="#000000">23:54:22.959976 larry.baylor.edu.telnet >
+moe.baylor.edu.1048: . ack 1 win 32120 &lt;nop,nop,timestamp 71751392 71657873>
+(DF)</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; <u>4500 0034 bff8 4000
+4006 5093 813e 93de</u></font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; <u>813e 93dd</u> <b>0017
+0418 1a2a 4993 0d14 d5f1</b></font></tt>
+<br><b><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 8010 7d78 3b1d 0000
+0101 080a 0446 d6e0</font></tt></b>
+<br><b><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 0445 6991</font></tt></b><b><tt><font color="#000000"></font></tt></b>
+<p><font color="#000000">&nbsp;&nbsp;&nbsp; This is the acknowledgement
+packet sent in response to the key '0'.&nbsp; It only contains an IP header
+a TCP header, but no TCP data.</font><font color="#000000"></font>
+<p>Packet 3:
+<br><tt><font color="#000000">23:54:23.281805 moe.baylor.edu.1048 > larry.baylor.edu.telnet:
+P 1:2(1) ack 1 win 32120 &lt;nop,nop,timestamp 71657908 71751392> (DF)</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; <u>4500 0035 0520 4000
+4006 0b6b 813e 93dd</u></font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; <u>813e 93de</u> <b>0418
+0017 0d14 d5f1 1a2a 4993</b></font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; <b>8018 7d78 09f1 0000
+0101 080a 0445 69b4</b></font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; <b>0446 d6e0</b> <i>31</i></font></tt><i><tt><font color="#000000"></font></tt></i>
+<p>Packet 4:
+<br><tt><font color="#000000">23:54:23.299964 larry.baylor.edu.telnet >
+moe.baylor.edu.1048: . ack 2 win 32120 &lt;nop,nop,timestamp 71751426 71657908>
+(DF)</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 4500 0034 bff9 4000 4006
+5092 813e 93de</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 813e 93dd 0017 0418 1a2a
+4993 0d14 d5f2</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 8010 7d78 3ad7 0000 0101
+080a 0446 d702</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 0445 69b4</font></tt><tt><font color="#000000"></font></tt>
+<p>Packet 5:
+<br><tt><font color="#000000">23:54:23.634633 moe.baylor.edu.1048 > larry.baylor.edu.telnet:
+P 2:3(1) ack 1 win 32120 &lt;nop,nop,timestamp 71657943 71751426> (DF)</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; <u>4500 0035 0521 4000
+4006 0b6a 813e 93dd</u></font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; <u>813e 93de</u> <b>0418
+0017 0d14 d5f2 1a2a 4993</b></font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; <b>8018 7d78 08ab 0000
+0101 080a 0445 69d7</b></font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; <b>0446 d702</b> <i>32</i></font></tt><i><tt><font color="#000000"></font></tt></i>
+<p>Packet 6:
+<br><tt><font color="#000000">23:54:23.649963 larry.baylor.edu.telnet >
+moe.baylor.edu.1048: . ack 3 win 32120 &lt;nop,nop,timestamp 71751461 71657943>
+(DF)</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 4500 0034 bffa 4000 4006
+5091 813e 93de</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 813e 93dd 0017 0418 1a2a
+4993 0d14 d5f3</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 8010 7d78 3a90 0000 0101
+080a 0446 d725</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 0445 69d7</font></tt><tt><font color="#000000"></font></tt>
+<p>Packet 7:
+<br><tt><font color="#000000">23:54:23.915691 moe.baylor.edu.1048 > larry.baylor.edu.telnet:
+P 3:4(1) ack 1 win 32120 &lt;nop,nop,timestamp 71657971 71751461> (DF)</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; <u>4500 0035 0522 4000
+4006 0b69 813e 93dd</u></font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; <u>813e 93de</u> <b>0418
+0017 0d14 d5f3 1a2a 4993</b></font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; <b>8018 7d78 076b 0000
+0101 080a 0445 69f3</b></font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; <b>0446 d725</b> <i>33</i></font></tt><i><tt><font color="#000000"></font></tt></i>
+<p>Packet 8:
+<br><tt><font color="#000000">23:54:23.929964 larry.baylor.edu.telnet >
+moe.baylor.edu.1048: . ack 4 win 32120 &lt;nop,nop,timestamp 71751489 71657971>
+(DF)</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 4500 0034 bffb 4000 4006
+5090 813e 93de</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 813e 93dd 0017 0418 1a2a
+4993 0d14 d5f4</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 8010 7d78 3a57 0000 0101
+080a 0446 d741</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 0445 69f3</font></tt><tt><font color="#000000"></font></tt>
+<p>Packet 9:
+<br><tt><font color="#000000">23:54:24.131806 moe.baylor.edu.1048 > larry.baylor.edu.telnet:
+P 4:5(1) ack 1 win 32120 &lt;nop,nop,timestamp 71657993 71751489> (DF)</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; <u>4500 0035 0523 4000
+4006 0b68 813e 93dd</u></font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; <u>813e 93de</u> <b>0418
+0017 0d14 d5f4 1a2a 4993</b></font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; <b>8018 7d78 0638 0000
+0101 080a 0445 6a09</b></font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; <b>0446 d741</b> <i>34</i></font></tt><i><tt><font color="#000000"></font></tt></i>
+<p>Packet 10:
+<br><tt><font color="#000000">23:54:24.149963 larry.baylor.edu.telnet >
+moe.baylor.edu.1048: . ack 5 win 32120 &lt;nop,nop,timestamp 71751511 71657993>
+(DF)</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 4500 0034 bffc 4000 4006
+508f 813e 93de</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 813e 93dd 0017 0418 1a2a
+4993 0d14 d5f5</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 8010 7d78 3a2a 0000 0101
+080a 0446 d757</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 0445 6a09</font></tt><tt><font color="#000000"></font></tt>
+<p>Packet 11:
+<br><tt><font color="#000000">23:54:24.626419 moe.baylor.edu.1048 > larry.baylor.edu.telnet:
+P 5:6(1) ack 1 win 32120 &lt;nop,nop,timestamp 71658042 71751511> (DF)</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; <u>4500 0035 0524 4000
+4006 0b67 813e 93dd</u></font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; <u>813e 93de</u> <b>0418
+0017 0d14 d5f5 1a2a 4993</b></font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; <b>8018 7d78 0bf0 0000
+0101 080a 0445 6a3a</b></font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; <b>0446 d757</b> <i>2e</i></font></tt><i><tt><font color="#000000"></font></tt></i>
+<p>Packet 12:
+<br><tt><font color="#000000">23:54:24.639970 larry.baylor.edu.telnet >
+moe.baylor.edu.1048: . ack 6 win 32120 &lt;nop,nop,timestamp 71751560 71658042>
+(DF)</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 4500 0034 bffd 4000 4006
+508e 813e 93de</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 813e 93dd 0017 0418 1a2a
+4993 0d14 d5f6</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 8010 7d78 39c7 0000 0101
+080a 0446 d788</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 0445 6a3a</font></tt>
+<br>&nbsp;
+</body>
+</html>

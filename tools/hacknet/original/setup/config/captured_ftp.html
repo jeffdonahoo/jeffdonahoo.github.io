@@ -1,0 +1,218 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.61 [en] (WinNT; I) [Netscape]">
+   <title>Captured FTP Without SSH</title>
+</head>
+<body>
+Again, we have the following setup as for the telnet
+from Moe to Larry, that is why we just show the annotated output of captured.ftp
+, or rather, that part of the file, which shows how exposed the user name
+and the password are.&nbsp; The FTP protocol does not require (or allow,
+for that matter) that the user name and the password are encoded when transmitted.&nbsp;
+They are just transmitted as line of ascii characters, terminated by a
+CRNL (carriage-return, new-line) pair, just like the rest of the FTP commands.&nbsp;
+That is why, at the end of each command, you will see the CRNL pair.
+<p>Packet 1:
+<br><tt>14:54:59.097818 larry.baylor.edu.ftp > moe.baylor.edu.1072: P 1:97(96)
+ack 1 win 32120 &lt;nop,nop,timestamp 77155005 77061563> (DF) [tos 0x10]</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; <u>4510 0094 f6e8 4000 4006 1933 813e 93de</u></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; <u>813e 93dd</u> <b>0015 0430 647c 7b96 5742
+1ed8</b></tt>
+<br><b><tt>&nbsp;&nbsp;&nbsp; 8018 7d78 2f2a 0000 0101 080a 0499 4abd</tt></b>
+<br><tt><b>&nbsp;&nbsp;&nbsp; 0497 ddbb</b> <i>3232 3020 6c61 7272 792e
+6261</i></tt>
+<br><tt><font color="#FF0000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+2 2&nbsp; 0&nbsp;&nbsp;&nbsp; l a&nbsp; r r&nbsp; y .&nbsp; b a</font></tt>
+<br><i><tt>&nbsp;&nbsp;&nbsp; 796c 6f72 2e65 6475 2046 5450 2073 6572</tt></i>
+<br><tt><font color="#FF0000">&nbsp;&nbsp;&nbsp;&nbsp; y l&nbsp; o r&nbsp;
+. e&nbsp; d u&nbsp;&nbsp;&nbsp; F&nbsp; T P&nbsp;&nbsp;&nbsp; s&nbsp; e
+r</font></tt>
+<br><i><tt>&nbsp;&nbsp;&nbsp; 7665 7220 2856 6572 7369 6f6e 2077 752d</tt></i>
+<br><tt><font color="#FF0000">&nbsp;&nbsp;&nbsp;&nbsp; v e&nbsp; r&nbsp;&nbsp;&nbsp;
+( V&nbsp; e r&nbsp; s i&nbsp; o n&nbsp;&nbsp;&nbsp; w&nbsp; u -</font></tt>
+<br><i><tt>&nbsp;&nbsp;&nbsp; 322e 342e 322d 5652 3137 2831 2920 4d6f</tt></i>
+<br><tt><font color="#FF0000">&nbsp;&nbsp;&nbsp;&nbsp; 2 .&nbsp; 4 .&nbsp;
+2 -&nbsp; V R&nbsp; 1 7&nbsp; ( 1&nbsp; )&nbsp;&nbsp;&nbsp; M o</font></tt>
+<br><i><tt>&nbsp;&nbsp;&nbsp; 6e20 4170 7220 3139 2030 393a 3231 3a35</tt></i>
+<br><tt><font color="#FF0000">&nbsp;&nbsp;&nbsp;&nbsp; n&nbsp;&nbsp;&nbsp;
+A p&nbsp; r&nbsp;&nbsp;&nbsp; 1 9&nbsp;&nbsp;&nbsp; 0&nbsp; 9 :&nbsp; 2
+1&nbsp; : 5</font></tt>
+<br><i><tt>&nbsp;&nbsp;&nbsp; 3320 4544 5420 3139 3939 2920 7265 6164</tt></i>
+<br><tt><font color="#FF0000">&nbsp;&nbsp;&nbsp;&nbsp; 3&nbsp;&nbsp;&nbsp;
+E D&nbsp; T&nbsp;&nbsp;&nbsp; 1 9&nbsp; 9 9&nbsp; )&nbsp;&nbsp;&nbsp; r
+e&nbsp; a d</font></tt>
+<br><i><tt>&nbsp;&nbsp;&nbsp; 792e 0d0a</tt></i>
+<br><tt><font color="#FF0000">&nbsp;&nbsp;&nbsp;&nbsp; y . CRNL</font></tt><tt><font color="#FF0000"></font></tt>
+<p><font color="#FF0000">&nbsp;&nbsp;&nbsp; Standard greeting command with
+number 220.&nbsp; For a list of the FTP commands, please refer to the RFC
+for FTP.</font>
+<p>Packet 2:
+<br><tt>14:54:59.098380 moe.baylor.edu.1072 > larry.baylor.edu.ftp: . ack
+97 win 32120 &lt;nop,nop,timestamp 77061569 77155005> (DF) [tos 0x10]</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 4510 0034 0cfa 4000 4006 0382 813e 93dd</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 813e 93de 0430 0015 5742 1ed8 647c 7bf6</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 8010 7d78 428b 0000 0101 080a 0497 ddc1</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 0499 4abd</tt><tt></tt>
+<p>Packet 3:
+<br><tt>14:54:59.951742 moe.baylor.edu.1072 > larry.baylor.edu.ftp: P 1:13(12)
+ack 97 win 32120 &lt;nop,nop,timestamp 77061654 77155005> (DF) [tos 0x10]</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; <u>4510 0040 0cfb 4000 4006 0375 813e 93dd</u></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; <u>813e 93de</u> <b>0430 0015 5742 1ed8 647c
+7bf6</b></tt>
+<br><b><tt>&nbsp;&nbsp;&nbsp; 8018 7d78 a924 0000 0101 080a 0497 de16</tt></b>
+<br><tt><font color="#000000"><b>&nbsp;&nbsp;&nbsp; 0499 4abd</b> <i>5553
+4552 206c 616b 6f76 0d0a</i></font></tt>
+<br><tt><font color="#FF0000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+U S&nbsp; E R&nbsp;&nbsp;&nbsp; l&nbsp; a k&nbsp; o v CRNL</font></tt><tt><font color="#FF0000"></font></tt>
+<p>Packet 4:
+<br><tt>14:54:59.951823 larry.baylor.edu.ftp > moe.baylor.edu.1072: . ack
+13 win 32120 &lt;nop,nop,timestamp 77155091 77061654> (DF) [tos 0x10]</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 4510 0034 f6e9 4000 4006 1992 813e 93de</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 813e 93dd 0015 0430 647c 7bf6 5742 1ee4</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 8010 7d78 41d4 0000 0101 080a 0499 4b13</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 0497 de16</tt><tt></tt>
+<p>Packet 5:
+<br><tt>14:54:59.967635 larry.baylor.edu.ftp > moe.baylor.edu.1072: P 97:131(34)
+ack 13 win 32120 &lt;nop,nop,timestamp 77155092 77061654> (DF) [tos 0x10]</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; <u>4510 0056 f6ea 4000 4006 196f 813e 93de</u></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; <u>813e 93dd</u> <b>0015 0430 647c 7bf6 5742
+1ee4</b></tt>
+<br><b><tt>&nbsp;&nbsp;&nbsp; 8018 7d78 2a41 0000 0101 080a 0499 4b14</tt></b>
+<br><tt><b>&nbsp;&nbsp;&nbsp; 0497 de16</b> <i>3333 3120 5061 7373 776f
+7264</i></tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font color="#FF0000">3 3&nbsp; 1&nbsp;&nbsp;&nbsp; P a&nbsp; s s&nbsp;
+w o&nbsp; r d</font></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; <i>2072 6571 7569 7265 6420 666f 7220 6c61</i></tt>
+<br><tt><font color="#FF0000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; r&nbsp;
+e q&nbsp; u i&nbsp; r e&nbsp; d&nbsp;&nbsp;&nbsp; f o&nbsp; r&nbsp;&nbsp;&nbsp;
+l a</font></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; <i>6b6f 762e 0d0a</i></tt>
+<br><tt><font color="#FF0000">&nbsp;&nbsp;&nbsp;&nbsp; k o&nbsp; v . CRNL</font></tt>
+<p>Packet 6:
+<br><tt>14:54:59.982146 moe.baylor.edu.1072 > larry.baylor.edu.ftp: . ack
+131 win 32120 &lt;nop,nop,timestamp 77061658 77155092> (DF) [tos 0x10]</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 4510 0034 0cfc 4000 4006 0380 813e 93dd</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 813e 93de 0430 0015 5742 1ee4 647c 7c18</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 8010 7d78 41ad 0000 0101 080a 0497 de1a</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 0499 4b14</tt><tt></tt>
+<p>Packet 7:
+<br><tt>14:55:03.807869 moe.baylor.edu.1072 > larry.baylor.edu.ftp: P 13:25(12)
+ack 131 win 32120 &lt;nop,nop,timestamp 77062040 77155092> (DF) [tos 0x10]</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; <u>4510 0040 0cfd 4000 4006 0373 813e 93dd</u></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; <u>813e 93de</u> <b>0430 0015 5742 1ee4 647c
+7c18</b></tt>
+<br><b><tt>&nbsp;&nbsp;&nbsp; 8018 7d78 aa55 0000 0101 080a 0497 df98</tt></b>
+<br><tt><b>&nbsp;&nbsp;&nbsp; 0499 4b14</b> <i>5041 5353 2062 6262 6262
+0d0a</i></tt>
+<br><tt><font color="#FF0000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+P A&nbsp; S S&nbsp;&nbsp;&nbsp; A&nbsp; A A&nbsp; A A CRNL</font></tt><tt><font color="#FF0000"></font></tt>
+<p><tt><font color="#FF0000">&nbsp;&nbsp;&nbsp; Oups, I was just too lazy
+to type in my real password, which was just 01234. and as a result, in
+the next message from the server, my request for access will be denied.</font></tt>
+<p>Packet 8:
+<br><tt>14:55:03.818989 larry.baylor.edu.ftp > moe.baylor.edu.1072: . ack
+25 win 32120 &lt;nop,nop,timestamp 77155478 77062040> (DF) [tos 0x10]</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 4510 0034 f6eb 4000 4006 1990 813e 93de</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 813e 93dd 0015 0430 647c 7c18 5742 1ef0</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 8010 7d78 3ea1 0000 0101 080a 0499 4c96</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 0497 df98</tt><tt></tt>
+<p>Packet 9:
+<br><tt>14:55:04.841232 larry.baylor.edu.ftp > moe.baylor.edu.1072: P 131:153(22)
+ack 25 win 32120 &lt;nop,nop,timestamp 77155580 77062040> (DF) [tos 0x10]</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; <u>4510 004a f6ec 4000 4006 1979 813e 93de</u></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; <u>813e 93dd</u> <b>0015 0430 647c 7c18 5742
+1ef0</b></tt>
+<br><b><tt>&nbsp;&nbsp;&nbsp; 8018 7d78 90e4 0000 0101 080a 0499 4cfc</tt></b>
+<br><tt><b>&nbsp;&nbsp;&nbsp; 0497 df98</b> <i>3533 3020 4c6f 6769 6e20
+696e</i></tt>
+<br><tt><font color="#FF0000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+5 3&nbsp; 0&nbsp;&nbsp;&nbsp; L o&nbsp; g i&nbsp; n&nbsp;&nbsp;&nbsp; i
+n</font></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 636f 7272 6563 742e 0d0a</tt>
+<br><tt><font color="#FF0000">&nbsp;&nbsp;&nbsp;&nbsp; c o&nbsp; r r&nbsp;
+e c&nbsp; t . CRNL</font></tt>
+<p>Packet 10:
+<br><tt>14:55:04.848632 moe.baylor.edu.1072 > larry.baylor.edu.ftp: P 25:31(6)
+ack 153 win 32120 &lt;nop,nop,timestamp 77062144 77155580> (DF) [tos 0x10]</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; <u>4510 003a 0cfe 4000 4006 0378 813e 93dd</u></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; <u>813e 93de</u> <b>0430 0015 5742 1ef0 647c
+7c2e</b></tt>
+<br><b><tt>&nbsp;&nbsp;&nbsp; 8018 7d78 89f7 0000 0101 080a 0497 e000</tt></b>
+<br><tt><b>&nbsp;&nbsp;&nbsp; 0499 4cfc</b> <i>5359 5354 0d0a</i></tt>
+<br><tt><font color="#FF0000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+S Y&nbsp; S T CRNL</font></tt><tt><font color="#FF0000"></font></tt>
+<p>Packet 11:
+<br><tt>14:55:04.849455 larry.baylor.edu.ftp > moe.baylor.edu.1072: P 153:191(38)
+ack 31 win 32120 &lt;nop,nop,timestamp 77155581 77062144> (DF) [tos 0x10]</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; <u>4510 005a f6ed 4000 4006 1968 813e 93de</u></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; <u>813e 93dd</u> <b>0015 0430 647c 7c2e 5742
+1ef6</b></tt>
+<br><b><tt>&nbsp;&nbsp;&nbsp; 8018 7d78 d86c 0000 0101 080a 0499 4cfd</tt></b>
+<br><tt><b>&nbsp;&nbsp;&nbsp; 0497 e000</b> <i>3533 3020 506c 6561 7365
+206c</i></tt>
+<br><tt><font color="#FF0000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+5 3&nbsp; 0&nbsp;&nbsp;&nbsp; P l&nbsp; e a&nbsp; s e&nbsp;&nbsp;&nbsp;
+l</font></tt>
+<br><i><tt>&nbsp;&nbsp;&nbsp; 6f67 696e 2077 6974 6820 5553 4552 2061</tt></i>
+<br><tt><font color="#FF0000">&nbsp;&nbsp;&nbsp;&nbsp; o g&nbsp; i n&nbsp;&nbsp;&nbsp;
+w&nbsp; i t&nbsp; h&nbsp;&nbsp;&nbsp; U S&nbsp; E R&nbsp;&nbsp;&nbsp; a</font></tt>
+<br><i><tt>&nbsp;&nbsp;&nbsp; 6e64 2050 4153 532e 0d0a</tt></i>
+<br><tt><font color="#FF0000">&nbsp;&nbsp;&nbsp;&nbsp; n d&nbsp;&nbsp;&nbsp;
+P&nbsp; A S&nbsp; S . CRNL</font></tt><tt><font color="#FF0000"></font></tt>
+<p>Packet 12:
+<br><tt>14:55:04.862051 moe.baylor.edu.1072 > larry.baylor.edu.ftp: . ack
+191 win 32120 &lt;nop,nop,timestamp 77062146 77155581> (DF) [tos 0x10]</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 4510 0034 0cff 4000 4006 037d 813e 93dd</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 813e 93de 0430 0015 5742 1ef6 647c 7c54</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 8010 7d78 3d8e 0000 0101 080a 0497 e002</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 0499 4cfd</tt><tt></tt>
+<p>Packet 13:
+<br><tt>14:55:06.101464 moe.baylor.edu.1072 > larry.baylor.edu.ftp: P 31:37(6)
+ack 191 win 32120 &lt;nop,nop,timestamp 77062269 77155581> (DF) [tos 0x10]</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; <u>4510 003a 0d00 4000 4006 0376 813e 93dd</u></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; <u>813e 93de</u> <b>0430 0015 5742 1ef6 647c
+7c54</b></tt>
+<br><b><tt>&nbsp;&nbsp;&nbsp; 8018 7d78 9551 0000 0101 080a 0497 e07d</tt></b>
+<br><tt><b>&nbsp;&nbsp;&nbsp; 0499 4cfd</b> <i>5155 4954 0d0a</i></tt>
+<br><tt><font color="#FF0000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Q U&nbsp; I T CRNL</font></tt><tt><font color="#FF0000"></font></tt>
+<p><tt><font color="#FF0000">Obviously I was a bit grouchy that morning.</font></tt><tt><font color="#FF0000"></font></tt>
+<p>Packet 14:
+<br><tt>14:55:06.102172 larry.baylor.edu.ftp > moe.baylor.edu.1072: P 191:205(14)
+ack 37 win 32120 &lt;nop,nop,timestamp 77155706 77062269> (DF) [tos 0x10]</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; <u>4510 0042 f6ee 4000 4006 197f 813e 93de</u></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; <u>813e 93dd</u> <b>0015 0430 647c 7c54 5742
+1efc</b></tt>
+<br><b><tt>&nbsp;&nbsp;&nbsp; 8018 7d78 4da2 0000 0101 080a 0499 4d7a</tt></b>
+<br><tt><b>&nbsp;&nbsp;&nbsp; 0497 e07d</b> <i>3232 3120 476f 6f64 6279
+652e</i></tt>
+<br><i><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font color="#FF0000">2 2&nbsp; 1&nbsp;&nbsp;&nbsp; G o&nbsp; o d&nbsp;
+b y&nbsp; e .</font></tt></i>
+<br><i><tt>&nbsp;&nbsp;&nbsp; 0d0a</tt></i>
+<br><tt><i>&nbsp;&nbsp;&nbsp; </i><font color="#FF0000">CRNL</font></tt><i><tt></tt></i>
+<p>Packet 15:
+<br><tt>14:55:06.106074 moe.baylor.edu.1072 > larry.baylor.edu.ftp: F 37:37(0)
+ack 205 win 32120 &lt;nop,nop,timestamp 77062270 77155706> (DF) [tos 0x10]</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 4510 0034 0d01 4000 4006 037b 813e 93dd</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 813e 93de 0430 0015 5742 1efc 647c 7c62</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 8011 7d78 3c80 0000 0101 080a 0497 e07e</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 0499 4d7a</tt><tt></tt>
+<p>Packet 17:
+<br><tt>14:55:06.106189 larry.baylor.edu.ftp > moe.baylor.edu.1072: . ack
+38 win 32120 &lt;nop,nop,timestamp 77155706 77062270> (DF) [tos 0x10]</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 4510 0034 f6ef 4000 4006 198c 813e 93de</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 813e 93dd 0015 0430 647c 7c62 5742 1efd</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 8010 7d78 3c80 0000 0101 080a 0499 4d7a</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 0497 e07e</tt><tt></tt>
+<p>Packet 18:
+<br><tt>14:55:06.106251 larry.baylor.edu.ftp > moe.baylor.edu.1072: F 205:205(0)
+ack 38 win 32120 &lt;nop,nop,timestamp 77155706 77062270> (DF) [tos 0x10]</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 4510 0034 f6f0 4000 4006 198b 813e 93de</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 813e 93dd 0015 0430 647c 7c62 5742 1efd</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 8011 7d78 3c7f 0000 0101 0</tt>
+</body>
+</html>

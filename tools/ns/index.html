@@ -1,0 +1,76 @@
+<html>
+<head>
+   <title>Network Simulator (NS)</title>
+</head>
+<body>
+
+<center><b><font size=+3>NS (Network Simulator)</font></b></center>
+
+<p>NS is a great tool for simulating network agents.  It allows a
+user to easily specify an arbitrary network with assigned attributes to
+network elements (e.g., link speed).  The main NS site is <a
+href="http://www-mash.CS.Berkeley.EDU/ns/">here</a>.
+
+<UL>
+<LI>
+<p>Steps for using NS:
+<ol>
+<li>
+Download the "allinone" copy from the main <A
+HREF="http://www.isi.edu/nsnam/ns/ns-build.html#allinone"> site</A>.
+This contains a tarred/compressed version of everything (TCL, NS, TK,
+...). </LI>
+
+<li> Decompress/untar it in your home directory.  I suggest changing the
+directory name from ns-allionone... to ns.  </LI>
+
+<li> Change to the ns directory and run "./install".  This should
+compile everything for you. </LI>
+
+<li> Make sure you set your LD_LIBRARY_PATH variable to point to the otcl shared
+library.  If your ns installation is at /home/bob/ns, you need to
+set the variable to /home/bob/ns/otcl.  Also make sure that /home/bob/ns/bin
+is in your path.  This directory will hold links to all of the vital
+binaries.</li>
+
+<li> The ns directory contains everything (NS, TCL, ...).  Change to
+the ns distribution directory (e.g., ns-2.26) and run "./validate" to
+confirm your version works. </LI>
+
+</ol>
+
+<li>
+There is a good NS <a
+href="http://www.isi.edu/nsnam/ns/tutorial/index.html">tutorial</a>.
+
+<li>
+Another good way to learn NS is to play with the example TCL files in /home/bob/ns/ns-2/tcl/ex. 
+Try the simple.tcl file in that directory by typing "ns simple.tcl" in
+the "ex" directory.  These TCL files show how to create a network,
+use existing NS agents to perform a simulation, and create a nam (Network
+Animator) animation of the simulation.  Note that tcl is interpreted
+so you do not need to compile the scripts.  Just write the script
+in a file (e.g., foo.tcl) and type "ns foo.tcl" to execute it.</li>
+
+<li>
+The main site also contains a <a href="http://www.isi.edu/nsnam/ns/ns-documentation.html">manual</a>
+on using NS.
+
+<li> I have created an FEC agent.  You can download the code
+and installation instruction from <A HREF="ns-example.html">here</A>.
+
+<li> You can now <A
+HREF="http://www-mash.cs.berkeley.edu/htdig/search.html">search</A>
+the NS mailing list archives. 
+
+<li> I maintain a <A HREF="BUFAQ.html">BU FAQ</A> where I try to log
+answers that I found to various questions.
+
+<li> A good way to learn about using existing agents to build
+simulations is looking over the example files (e.g., simple.tcl) in the
+ns/ns-<i>version</i>/tcl/ex directory.  You can interpret these files by using the
+man page for ns (command: man ns).
+</ul>
+
+</body>
+</html>

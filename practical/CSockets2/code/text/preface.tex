@@ -1,0 +1,332 @@
+\newpage
+\thispagestyle{empty}
+%\vspace{1in}
+\vfill
+\begin{center}
+{\Huge\textbf{TCP/IP Sockets in C}} \\
+{\Large\textbf{Practical Guide for Programmers, Second Edition}  \\[.2in]}
+{\bf Michael J. Donahoo \\
+Kenneth L. Calvert \\[.2in]}
+\end{center}
+
+\section*{Preface to the Second Edition}
+
+When we wrote the first edition of this book, it was not very common
+for college courses on networking to include programming components.
+That seems difficult to believe now, when the Internet has become so
+important to our world, and the pedagogical benefits of hands-on programming
+and real-world protocol examples are so widely accepted.
+%
+Although there are now other languages that provide access
+to the Internet, interest in the
+original C-based \emph{Berkeley Sockets} remains high.
+The Sockets  API (application programming interface) for
+networking was developed at UC Berkeley in the 1980's
+for the BSD flavor of Unix---one of the very first
+examples of what would now be called an ``open source'' project.
+
+The Sockets API and the Internet both grew up in a world of many
+competing protocol families---IPX, Appletalk, DECNet, OSI, and SNA in
+addition to TCP/IP---and Sockets was designed to support them all.
+Fewer protocol families were in common use by the time we wrote the
+first edition of this book, and the number today is even smaller.
+Nevertheless,  as we predicted in the first edition, the sockets API remains
+important for those who want to design and build distributed
+applications that use the Internet---i.e., which use TCP/IP.
+And the interface has proven robust enough
+to support the new version of the Internet Protocol (IPv6), which is
+now supported on virtually all common computing platforms.
+
+Two main considerations motivated this second edition.
+First, based on our own experience and feedback from others,
+we found that some topics needed to be presented in more
+depth and that others needed to be expanded.
+%
+The second consideration is the increasing acceptance and use of IP
+version~6, which is now supported by essentially all current end
+system platforms.  At this writing, it is not possible to use IPv6 to
+exchange messages with a large fraction of hosts on the Internet, but
+it \emph{is\/} possible to assign an IPv6 address to many of them.
+While it is still too early to tell whether IPv6 will take over the
+world, it is not too early to start writing applications to be
+prepared.
+
+\subsection*{Changes from the First Edition}
+
+We have updated and considerably expanded most of the material, having
+added two chapters.  Major changes from the first edition include:
+\begin{itemize}
+\item
+IP version 6 coverage.  We now include three kinds of code:
+IPv4-specific, IPv6-specific, and generic.  The code in the
+later chapters is designed to work with either protocol version on
+dual-stack machines.
+\item
+An additional chapter on socket programming in C++
+(contributed by David B.\ Sturgill).
+% XXXXXXXX CHECK IT
+The PracticalSocket library provides wrappers for basic socket functionality.
+These allow an instructor to teach socket programming to
+students without C programming background by giving them a library and
+then gradually peeling back the layers.  Students can start
+developing immediately after understanding addresses/ports and
+client/server.  Later they can be shown the details of socket programming by
+peeking inside the wrapper code.
+Those teaching a subject that uses networking (e.g., OS) can
+use the library and only selectively peel back the cover.
+\item
+Enhanced coverage of data representation issues and strategies for
+organizing code that sends and receives messages.  In our
+instructional experience we find that students have less and less
+understanding of how data is actually stored in memory,\footnote{We
+speculate that this is due to the widespread use of C++ and Java,
+which hide such details from the programmer, 
+in undergraduate curricula.} so we have
+attempted to compensate with more discussion of this important
+issue.  At the same time, internationalization will only increase in
+importance, and thus we have included basic coverage of
+wide characters and encodings.
+\item
+Omission of the reference section.  The descriptions of
+most of the functions that make up the Sockets API have been collected
+into two chapters.  However, with so many on-line sources of reference
+information---including ``man pages''---available,
+we chose to leave out the complete listing of the API in favor of
+more code illustrations.
+\item
+Highlighting important but subtle facts and caveats.  Typographical devices
+call out important concepts and information that might otherwise
+be missed on first reading.
+\end{itemize}
+
+Although the scope of the book has expanded, we have not included
+everything that we might have (or even that we were asked to include);
+examples of topics left for more comprehensive texts (or the
+next edition): raw sockets and programming with Winsock.
+
+%% Excellent reference books on TCP/IP socket programming
+%% exist, but they are too large and comprehensive to be considered as a
+%% supplement to a networking text.  UNIX ``man pages'' are great for
+%% reference but do not make a very good tutorial.
+
+%% Enabling students to get their hands on real network services via the
+%% sockets interface has several benefits.  First, for a surprising
+%% number of people, socket programming is the first exposure to concrete
+%% realizations of concepts previously seen only in the abstract.
+%% Dealing with the very real consequences of messy details, such as the
+%% layout of data structures in memory, seems to trigger a kind of
+%% epiphany in some students, and this experience has consequences far
+%% beyond the networking course.  Second, we find that students who
+%% understand how application programs \emph{use} the services of TCP/IP
+%% generally have an easier time grasping the principles of the
+%% underlying protocols that \emph{implement} those services. Finally,
+%% basic socket programming skills are a springboard to more advanced
+%% assignments, which support learning about routing algorithms,
+%% multimedia protocols, medium access control, and so on.
+
+\subsection*{Intended Audience}
+
+We originally wrote this book so we'd have something to hand our students
+when we wanted them to learn socket programming, so we wouldn't have
+to take up valuable class time teaching it.  In the years since
+the first edition, we have learned a good deal
+about the topics that students need lots of help on, and those where
+they do not need as much handholding.  We also found that
+our book was appreciated at least as much by practitioners who were
+looking for a gentle introduction to the subject.
+%
+Therefore this book is aimed simultaneously at two general audiences:
+students in introductory courses in computer networks (graduate or
+undergraduate) with a programming component, and
+practitioners who want write their own programs that
+communicate over the Internet.
+For students, it is intended as a supplement, not as a primary text
+about networks.
+Although this second edition is significantly bigger in size and scope than
+the first, we hope the book will still be considered a good value in
+that role.
+%
+For practitioners who just want to write some useful code, it should
+serve as a standalone \emph{introduction}---but readers in that
+category should be warned that this book will not make them
+experts. 
+%
+Our philosophy of learning by 
+doing has not changed, nor has our approach of providing a concise
+tutorial sufficient to get one started learning on one's own, and
+leaving the comprehensive details to other authors.
+For both audiences our goal is to
+take you far enough so that you can start experimenting and
+learning on your own.
+
+\subsection*{Assumed Background}
+
+We assume basic programming skills and experience with C and UNIX.
+You are expected to be conversant with C concepts such as pointers
+and type casting, and should have a basic understanding of
+the binary representation of data.  Some of our examples are factored
+into files that should be compiled separately; we assume that you can deal with
+that.
+
+Here is a little test: If you can puzzle out what the following code
+fragment does, you should have no problem with the code in this book:
+
+\begin{inlinecode}
+  typedef struct {
+    int a;
+    short s[2];
+  } MSG;
+
+  MSG *mp, m = {4, 1, 0};
+  char  *fp, *tp;
+  mp = (MSG *) malloc(sizeof(MSG));
+  for (fp = (char *)m.s, tp = (char *)mp->s; tp < (char *)(mp+1);)
+     *tp++ = *fp++;
+\end{inlinecode}
+
+If you do not understand this fragment, do not despair (there is
+nothing quite so convoluted in our code), but you might want to refer
+to your favorite C programming book to find out what is going on here.
+
+You should also be familiar with the UNIX notions of process/address
+space, command-line arguments, program termination, and regular file
+input and output. The material in Chapters 4 and 5 assumes a somewhat
+more advanced grasp of UNIX.  Some prior exposure to networking concepts
+such as protocols, addresses, clients, and servers will be helpful.
+
+\subsection*{Platform Requirements and Portability}
+
+Our presentation is UNIX-based.  When we were developing this
+book, several people urged us to include code for Windows as well as
+UNIX.  It was not possible to do so for various reasons including the
+target length (and price) we set for the book.
+
+For those who only have access to Windows platforms, please note that
+the examples in the early chapters require minimal modifications to work
+with WinSock.  (You have to change the include files and add a setup
+call at the beginning of the program and a cleanup call at the end.)
+Most of the other examples also require very slight additional
+modifications.  However, some are so dependent on the UNIX
+programming model that it does not make sense to port them to WinSock.
+%
+WinSock-ready versions of the other examples, as well as detailed
+descriptions of the code modifications required, are available from
+the book's Website at \emph{www.mkp.com/socket} [XXX URL].  Note also that
+almost all of our example code works with minimal modifications under
+the \textbf{Cygwin} Unix library package for Windows, which is
+available online.
+
+For this second edition, we have adopted the C99 language standard.
+This version of the language is supported by most compilers and offers
+so many readability-improving advantages---including line-delimited
+comments, fixed-size integer types,
+and declarations anywhere in a block---that we could not
+justify not using it.
+
+Our code makes use of the ``Basic Socket Interface Extensions for
+IPv6''~\cite{RFC3493}.
+Among these extensions is a new and different interface to the name system.
+Because we rely completely on this new interface
+(\fcn{getaddrinfo()}), our generic code may not run on some older
+platforms.  However, we expect that most modern systems will run our
+code just fine.
+
+The example programs included here have all been tested (and
+should compile and run without modification) on both Linux and
+MacOS.
+% XXXXXXX
+Header (\texttt{.h}) file locations and dependencies are, alas, not quite
+standard and may require some fiddling on your system. Socket option
+support also varies widely across systems; we have tried to focus on
+those that are most universally supported.  Consult your API
+documentation for system specifics.  (By ``API documentation'' we mean
+the ``man pages'' for your system.  To learn about this, type ``man man''.)
+
+Please be aware that although we strive for a basic level of
+robustness, the primary goal of our
+code examples is pedagogy, and the code is \textbf{not production
+quality.}  We have sacrificed some robustness for brevity and clarity,
+especially in the generic server code.  (It turns out to be rather
+nontrivial to write a server that works under all combinations
+of IPv4 and IPv6 protocol configurations and also maximizes the
+likelihood of successful client connection under all circumstances.)
+
+\subsection*{This Book Will Not Make You an Expert!}
+
+We hope this
+second edition will be useful as a resource, even to those who already
+know quite a bit about sockets.
+As with the first edition, we learned some things in writing it.
+But becoming an expert
+takes years of experience, as well as other, more comprehensive
+sources~[\cite{ComerV3}, \cite{StevensUNP}]. 
+
+%% The first part of the book is a tutorial, which begins with ``just
+%% enough'' of the big picture, then quickly gets into code basics via
+%% some example programs.  The first four chapters aim to get you quickly
+%% to the point of constructing simple clients and servers, such as might
+%% be needed to complete introductory assignments.  After that we branch
+%% out in Chapter~5, introducing some of the many different ways to use
+%% sockets.  Chapter~6 returns to basic socket operation to provide more
+%% in-depth coverage of some of the underlying mechanisms and some
+%% pitfalls to watch out for.  Chapter~7 describes domain names and how
+%% they can be used to obtain Internet addresses.
+
+The first chapter is intended to give ``just enough'' of the big
+picture to get you ready to write code.  Chapter~\ref{chap:tcp}
+shows you how to write TCP clients and servers using either IPv4 or IPv6.
+Chapter~\ref{chap:addrindep} shows how to make your clients and
+servers use the network's name service, and also shows how to make
+them IP-version-independent.  Chapter~\ref{chap:udp} covers UDP.
+Chapters~\ref{chap:encoding} and~\ref{chap:advanced} provide
+background needed to write more programs, while
+Chapter~\ref{chap:under} gives relates some of what is going on in the
+Sockets implementation to the API calls; these three are essentially
+independent and may be presented in any order.
+Finally, Chapter~\ref{chap:cpp} presents a C++ class library that
+provides simplified access to socket functionality.
+
+Throughout the book, certain statements are highlighted like this:
+\callout{This book will not make you an expert!}  Our goal is to bring
+to your attention those subtle but important facts and ideas that one
+might miss on first reading.  The marks tell you to ``\textbf{note
+well} whatever is in bold.
+
+
+\subsection*{Acknowledgments}
+
+Many people contributed to making this
+book a reality.  In addition to all those who helped us with the first
+edition (Michel Barbeau, Steve Bernier,
+Arian Durresi,
+Gary Harkin, Ted Herman,
+Lee Hollaar, David Hutchison, Shunge Li, Paul Linton,
+Ivan Marsic, Willis Marti,
+Kihong Park, Dan Schmitt, Michael Scott,  Robert Strader, 
+Ben Wah,
+and Ellen Zegura), we especially thank David B.\ Sturgill, who
+contributed code and text for Chapter~\ref{chap:cpp}, 
+%
+Bobby Krupczak for
+his help reviewing the draft of this second edition.
+Finally, to the folks at Morgan Kaufmann/Elsevier---Rick Adams, our
+editor, Maria Alonso, and our production editor [N.N.]---thank you for
+your patience, help, and caring about the quality of our book.
+
+\subsection*{Feedback}
+
+We are very interested in weeding out
+errors and otherwise
+improving future editions/printings, so if you find one, please send
+email to either of us.  We will maintain an errata list on the book's
+Web page.
+
+\vspace{1.4ex}
+\noindent
+\textsl{
+M.J.D. \texttt{jeff\_donahoo@baylor.edu}\\
+K.L.C \texttt{calvert@netlab.uky.edu}
+}
+
+%\copyrightnotice
+

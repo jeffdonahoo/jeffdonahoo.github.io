@@ -1,0 +1,56 @@
+<HTML>
+<!-- created Thu Apr 9 23:20:43 MET DST 1998
+ from ../latex2e.texi line 1222 via texi2www -->
+<HEAD>
+<TITLE>figure</TITLE>
+<LINK REL="Precedes" HREF="flushleft.html">
+<LINK REV="Precedes" HREF="equation.html">
+<LINK REV="Subdocument" HREF="Environments.html">
+</HEAD><BODY><P>
+<A HREF="equation.html"><IMG ALIGN=MIDDLE SRC="prev-arrow.gif" ALT="PREV"></A>
+<A HREF="Environments.html"> <IMG ALIGN=MIDDLE SRC="up-arrow.gif" ALT="UP"></A>
+<A HREF="flushleft.html"><IMG ALIGN=MIDDLE SRC="next-arrow.gif" ALT="NEXT"></A>
+<CITE>LaTeX2e help 1.6</CITE></P>
+<H3>2.6.7: figure</H3>
+<DL><DT><DD>
+<PRE>
+ \begin{figure}[placement]
+
+  body of the figure
+
+ \caption{figure title}
+ \end{figure}
+</PRE>
+</DL>
+<P>
+Figures are objects that are not part of the normal text, and are
+usually ``floated'' to a convenient place, like the top of a page.
+Figures will not be split between two pages.
+</P>
+<P>
+The optional argument <CODE>[placement]</CODE> determines where LaTeX will try
+to place your figure.  There are four places where LaTeX can possibly
+put a float:
+</P>
+<OL>
+<LI>
+<CODE>h</CODE> (Here) - at the position in the text where the figure
+environment appears.
+<LI>
+<CODE>t</CODE> (Top) - at the top of a text page.
+<LI>
+<CODE>b</CODE> (Bottom) - at the bottom of a text page.
+<LI>
+<CODE>p</CODE> (Page of floats) - on a separate float page, which is a page
+containing no text, only floats.
+</OL>
+
+<P>
+The standard report and article classes use the default placement
+<CODE>tbp</CODE>.
+</P>
+<P>
+The body of the figure is made up of whatever text, LaTeX commands, etc.
+you wish.  The <CODE>\caption</CODE> command allows you to title your figure.
+</P>
+</BODY></HTML>

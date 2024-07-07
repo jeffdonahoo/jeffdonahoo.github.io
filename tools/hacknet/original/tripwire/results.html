@@ -1,0 +1,144 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>New Page 1</title>
+</head>
+
+<body>
+
+<p align="center"><font size="5" color="#008000">Tripwire Results</font></p>
+<p>&nbsp;</p>
+<p><font size="4">I.&nbsp; Downloading and Compiling</font></p>
+<p>In order to run our simulation with tripwire, we first had to download
+it.&nbsp; Downloadable versions are available at <a href="http://www.tripwiresecurity.com/">http://www.tripwiresecurity.com/</a>.&nbsp;&nbsp;
+Once downloaded, we read the README file that accompanied the download.&nbsp;
+The README file gave rather good instructions on how to compile the Tripwire
+program to run on our Linux machine, although we did run into problems when it
+required yacc and lex.&nbsp; We solved the problem by downloading the
+aforementioned files from our real server for the Computer Science Department
+here at Baylor.&nbsp; We ran into compilation errors with symbols redefined, but
+we used the precompiler command <b>#ifdef</b> to comment out the tripwire's
+redefinitions.</p>
+<p><font size="4">II. Tailoring, Initializing, and Testing</font></p>
+<p>The README file explained how to tailor the program to keep a database on any
+file (i.e., make sure that these files have not been tampered with.)&nbsp; We
+used a dummy file, trip_test, to test the tripwire system.&nbsp; The file had
+the following set of simple lines:</p>
+<font FACE="Courier New" SIZE="2">
+<p><i>hello</i></p>
+<p><i>how</i></p>
+<p><i>are</i></p>
+<p><i>you</i></p>
+<p><i>?</i></p>
+</font>
+<p>We ran the tripwire diagnostics and received the status that nothing had
+changed.&nbsp; Everything seemed set to go for our &quot;hacking&quot; test.</p>
+<p>We decided now to proceed and &quot;hack&quot; into the system using a
+&quot;stolen&quot; password using telnet to gain access.&nbsp; We changed the
+file by adding a single x to the beginning of the file, so that it now looked
+like:</p>
+<font FACE="Courier New" SIZE="2">
+<p><i>xhello</i></p>
+<p><i>how</i></p>
+<p><i>are</i></p>
+<p><i>you</i></p>
+<p><i>?</i></p>
+</font>
+<p><font size="4">III. Our Setup</font></p>
+<p>We ran tripwire using only MD5 as a cryptographic signature for each file to
+be watched.&nbsp; We also did not implement many of the safety features since we
+are the hackers and we decided not test those aspects of security (for example,
+the good people that brought us tripwire highly recommended that the tripwire
+files be placed in a read-only disk or other read-only NFS mounted server.&nbsp;
+Since we did not want to test this (since it deals with another issue entirely),
+we did not implement this.)</p>
+<p><font size="4">IV. Results</font></p>
+<p>Now that the tripwire system had been installed and initialized, then
+followed by the file tripwire is watching &quot;hacked&quot; into, we ran the
+tripwire diagnostics.</p>
+<p>The following message appeared:</p>
+<div align="left">
+  <table border="0" width="533" height="120">
+    <tr>
+      <td width="523" height="15" colspan="3"><font FACE="Courier New" SIZE="2"><i>changed:
+        -rw-rw-r-- root 22 Nov 15 11:16:09 1999 /trip_test</i></font></td>
+    </tr>
+    <tr>
+      <td width="100" height="15"><font FACE="Courier New" SIZE="2"><i>### Attr</i></font></td>
+      <td width="200" height="15"><font FACE="Courier New" SIZE="2"><i>Observed
+        (what it is)</i></font></td>
+      <td width="233" height="15"><font FACE="Courier New" SIZE="2"><i>Expected
+        (what it should be)</i></font></td>
+    </tr>
+    <tr>
+      <td width="100" height="15"><font FACE="Courier New" SIZE="2"><i>### ====</i></font></td>
+      <td width="200" height="15"><font FACE="Courier New" SIZE="2"><i>=======================</i></font></td>
+      <td width="233" height="15"><font FACE="Courier New" SIZE="2"><i>===========================</i></font></td>
+    </tr>
+    <tr>
+      <td width="100" height="15"><font FACE="Courier New" SIZE="2"><i>/trip_test</i></font></td>
+      <td width="200" height="15"></td>
+      <td width="233" height="15"></td>
+    </tr>
+    <tr>
+      <td width="100" height="15"><font FACE="Courier New" SIZE="2"><i>st_size:</i></font></td>
+      <td width="200" height="15">22</td>
+      <td width="233" height="15">21</td>
+    </tr>
+    <tr>
+      <td width="100" height="15"><font FACE="Courier New" SIZE="2"><i>st_mtime:</i></font></td>
+      <td width="200" height="15"><font FACE="Courier New" SIZE="2"><i>Mon Nov
+        15 11:16:09 1999</i></font></td>
+      <td width="233" height="15"><font FACE="Courier New" SIZE="2"><i>Mon Nov
+        15 03:27:45 1999</i></font></td>
+    </tr>
+    <tr>
+      <td width="100" height="15"><font FACE="Courier New" SIZE="2"><i>st_ctime:</i></font></td>
+      <td width="200" height="15"><font FACE="Courier New" SIZE="2"><i>Mon Nov
+        15 11:16:09 1999</i></font></td>
+      <td width="233" height="15"><font FACE="Courier New" SIZE="2"><i>Mon Nov
+        15 03:27:45 1999</i></font></td>
+    </tr>
+    <tr>
+      <td width="100" height="15"><font FACE="Courier New" SIZE="2"><i>md5
+        (sig1):</i></font></td>
+      <td width="200" height="15"><font FACE="Courier New" SIZE="2"><i>33SU6xEuBJcTnGY4MYGHeZ</i></font></td>
+      <td width="233" height="15"><font FACE="Courier New" SIZE="2"><i>2zvi:5iU8wrpC5xlrxtimk</i></font></td>
+    </tr>
+  </table>
+</div>
+<p>This automatically lets me know that the &quot;system&quot; file has been
+changed, by whom, when, the change in size, and the cryptographic signatures of
+the two versions of the file.&nbsp; Notice that a single character changed the
+signature completely.&nbsp; This makes it incredibly hard for a hacker to hack
+the system without tripwire catching it.</p>
+<p><font size="4">IV.&nbsp; Other Words</font></p>
+<p>Several questions might be raised in the back of your mind.&nbsp; This
+section will attempt to answer the most common.</p>
+<p><b>1) How does one prevent a hacker from messing with the tripwire system?</b></p>
+<p>The tripwire system should be moved to a read-only disk and only updated (the
+disk must be switched to Read/Write) when the system is in single-user mode.</p>
+<p><b>2) Using MD5 as the only cryptographic signature is rather safe, but I
+need to be more safe.&nbsp; Can I do that?</b></p>
+<p>The tripwire system can be configured to use a number of different
+cryptographic methods, and in fact multiple methods can be used in order to have
+a higher amount of confidence that your file(s) have not been hacked.&nbsp;
+There is a cost, though, since each method requires a lot of time to derive the
+signature.</p>
+<p><b>3) How do I prevent hackers from changing files?</b></p>
+<p>Tripwire does not prevent hackers from changing files, but instead alerts the
+system administrator to files that <i>have</i> been hacked.&nbsp; </p>
+<p>&nbsp;</p>
+<p><font size="4">V. Conclusions</font></p>
+
+<p>Tripwire does an excellent job of keeping track of the natural state of the
+system's files.&nbsp; Tripwire seems to be very portable, very useful, and
+incredibly helpful in registering attacks. It should be </p>
+
+</body>
+
+</html>

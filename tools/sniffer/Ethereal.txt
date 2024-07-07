@@ -1,0 +1,174 @@
+Ethereal is a free network protocol analyzer for Unix and Windows. It allows you to examine data from a live network or from a capture file on disk. You can interactively browse the capture data, viewing summary and detail information for each packet. Ethereal has several powerful features, including a rich display filter language and the ability to view the reconstructed stream of a TCP session.
+
+
+1.
+
+This image shows Ethereal in the middle of a capture. As you can see, you can inspect the captured data in great detail, all while the capture is still in progress
+
+2.This shows a DNS lookup from the server's perspective. It's interesting to note that the server issued four queries to resolve the name, and the client re-sent its query before the server could respond. 
+
+3.
+The "Follow TCP Stream" item under the "Tools" menu allows you to inspect the ASCII contents of a TCP data stream in a separate window. This can be invaluable for tracking down HTTP, SMTP, and POP server problems
+
+
+What protocols/media are currently supported?
+
+A: Ethereal can read live data from ethernet, token ring, and serial (PPP and SLIP) connections. It can also read a variety of capture file formats, including libpcap/tcpdump, snoop (including Shomiti), LanAlyzer, Sniffer (compressed and uncompressed), MS Network Monitor, AIX iptrace, NetXray, Sniffer Pro, RADCOM, Lucent/Ascend debug output, output from Toshiba's ISDN router, HPUX nettl, and the ISDN4BSD "i4btrace" utility.
+
+Below is a list of supported protocols and media. A complete list can be found in the ethereal(1) man page.
+
+
+            802.1q Virtual LAN
+            ATM
+            ATM LANE
+            Address Resolution Protocol
+            Andrew File System (AFS)
+            Appletalk Address Resolution Protocol
+            Async data over ISDN (V.120)
+            Authentication Header
+            Banyan Vines
+            Blocks eXtensible eXchange Protocol
+            Boot Parameters
+            Bootstrap Protocol
+            Border Gateway Protocol
+            Cisco Auto-RP
+            Cisco Discovery Protocol
+            Cisco Group Management Protocol
+            Cisco Hot Standby Router Protocol
+            Cisco ISL
+            Common Open Policy Service
+            Data
+            Datagram Delivery Protocol
+            Diameter Protocol
+            Domain Name Service
+            Dynamic DNS Tools Protocol
+            Encapsulated Security Payload
+            Enhanced Interior Gateway Routing Protocol
+            Ethernet
+            Extended X.25 (modulo 128)
+            Fiber Distributed Data Interface
+            File Transfer Protocol
+            Frame
+            General Inter-ORB Protocol
+            Generic Routing Encapsulation
+            Hypertext Transfer Protocol
+            ICQ Protocol
+            ILMI
+            IP Payload Compression
+            IPX Message
+            IPX Routing Information Protocol
+            ISIS HELLO
+            ISO 10589 ISIS Complete Sequence Numbers Protocol Data Unit
+            ISO 10589 ISIS InTRA Domain Routeing Information Exchange Protocol
+            ISO 10589 ISIS Link State Protocol Data Unit
+            ISO 10589 ISIS Partial Sequence Numbers Protocol Data Unit
+            ISO 8073 COTP Connection-Oriented Transport Protocol
+            ISO 8473 CLNP ConnectionLess Network Protocol
+            ISO 8602 CLTP ConnectionLess Transport Protocol
+            ISO 9542 ESIS Routeing Information Exchange Protocol
+            Internet Cache Protocol
+            Internet Control Message Protocol
+            Internet Control Message Protocol v6
+            Internet Group Management Protocol
+            Internet Message Access Protocol
+            Internet Printing Protocol
+            Internet Protocol
+            Internet Protocol Version 6
+            Internet Relay Chat
+            Internet Security Association and Key Management Protocol
+            Internetwork Packet eXchange
+            Kerberos
+            Layer 2 Tunneling Protocol
+            Lightweight Directory Access Protocol
+            Line Printer Daemon Protocol
+            Link Access Procedure Balanced (LAPB)
+            Link Access Procedure, Channel D (LAPD)
+            Logical-Link Control
+            Lucent/Ascend debug output
+            MAPI
+            MSProxy Protocol
+            Malformed Frame
+            Microsoft Windows Browser Protocol
+            Microsoft Windows Lanman Protocol
+            Microsoft Windows Logon Protocol
+            Mobile IP
+            Mount Service
+            MultiProtocol Label Switching Header
+            Name Binding Protocol
+            NetBIOS
+            NetBIOS Datagram Service
+            NetBIOS Name Service
+            NetBIOS Session Service
+            NetBIOS over IPX
+            NetWare Core Protocol
+            Network File System
+            Network Lock Manager Protocol
+            Network News Transfer Protocol
+            Network Time Protocol
+            Null/Loopback
+            Open Shortest Path First
+            PPP Multilink Protocol
+            Point-to-Point Protocol
+            Point-to-Point Tunnelling Protocol
+            Portmap
+            Post Office Protocol
+            Protocol Independent Multicast
+            Q.2931
+            Q.931
+            Quake Network Protocol
+            RIPng
+            RTP Control Protocol
+            RX Protocol
+            Radius Protocol
+            Real Time Streaming Protocol
+            Realtime Transport Protocol
+            Remote Procedure Call
+            Remote Shell
+            Resource ReserVation Protocol (RSVP)
+            Rlogin Protocol
+            Routing Information Protocol
+            Routing Table
+            SMB (Server Message Block Protocol)
+            SMB MailSlot Protocol
+            SNMP Multiplex Protocol
+            SSCOP
+            Sequenced Packet eXchange
+            Service Advertisement Protocol
+            Service Location Protocol
+            Session Announcement Protocol
+            Session Description Protocol
+            Short Frame
+            Simple Mail Transfer Protocol
+            Simple Network Management Protocol
+            Sinec H1 Protocol
+            Socks Protocol
+            Spanning Tree Protocol
+            Status Service
+            Stream Control Transmission Protcol
+            Syslog message
+            Systems Network Architecture
+            TACACS
+            Telnet
+            Text
+            Time Protocol
+            Token-Ring
+            Token-Ring Media Access Control
+            Transmission Control Protocol
+            Transparent Network Substrate Protocol
+            Trivial File Transfer Protocol
+            User Datagram Protocol
+            Virtual Router Redundancy Protocol
+            Virtual Trunking Protocol
+            Web Cache Coordination Protocol
+            Who
+            X.25
+            X11
+            Yahoo Messenger Protocol
+            Yellow Pages Bind
+            Yellow Pages Service
+            Yellow Pages Transfer
+            Zebra Protocol
+
+
+http://www.ethereal.com
+http://www.ethereal.com/faq.html

@@ -1,0 +1,98 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.6 [en] (Win95; I) [Netscape]">
+   <title> Unix Applications </title>
+</head>
+<body background="blue_lines.jpg">
+
+<center>
+<h1>
+Unix Applications</h1></center>
+
+<center>
+<hr WIDTH="100%"></center>
+
+<h3>
+In this section there is a general information about some of the most popular
+implementations of RIP for the UNIX operating system.</h3>
+
+<h1>
+<img SRC="greenbal.gif" height=14 width=14> Routed</h1>
+A Unix daemon for updating routing tables.
+<p>Routed is invoked at boot time and uses (mainly) the RIP protocol to
+maintain the kernel routing tables up to date.
+<p>The well known port for the Routed daemon to wait for routing information
+<a href="diction.htm#packet">packet</a>s
+is <a href="diction.htm#udp">UDP</a><a href="diction.htm#Sockets">socket</a>
+520.
+<p>When Routed is started, it finds its directly connected interfaces using
+some system mechanism. In case there's more then one interface, it is assumed
+the <a href="diction.htm#host">host</a> will forward <a href="diction.htm#packet">packet</a>s
+between networks, namely, <a href="diction.htm#host">host</a> is an inter-work
+<a href="diction.htm#router">router</a>.
+<p>In case the <a href="diction.htm#host">host</a> that is running Routed
+is an internetwork <a href="diction.htm#router">router</a>, it should send
+periodically (usually every 30 seconds and each time an update is applied)
+copies of its routing tables to its <a href="diction.htm#router">router</a>
+neighbors. These are known as <a href="request.htm#respond" target="_blank">'response'</a><a href="diction.htm#packet">packet</a>s.
+<p>Routed transmits a <a href="request.htm">request</a> <a href="diction.htm#packet">packet</a>
+on each interface and starts an endless loop in which it listens on its
+well known port for RIP <a href="diction.htm#packet">packet</a>s.
+<p>When a <a href="request.htm">'request'</a> <a href="diction.htm#packet">packet</a>
+is received, Routed responds with a <a href="request.htm#respond" target="_blank">'response'</a><a href="diction.htm#packet">packet</a>(s)
+which contain routes and metric (based on 'hop count') based on its internal
+tables.
+<p>When a <a href="request.htm#respond" target="_blank">'response'</a>
+<a href="diction.htm#packet">packet</a> is received, Routed updates its
+tables according to the RIP principles.
+<p>In case there is an innovation about the sender in a <a href="request.htm">'request'</a><a href="diction.htm#packet">packet</a>
+- (e.g. a better metric than known so far) the receiver of the <a href="diction.htm#packet">packet</a>
+should update its tables accordingly.
+<p>Routed periodically checks the routing table entries and an entry which
+has not been updated for some period is first set to infinity and after
+another delay - deleted.
+<p>In order to gather more information, Routed should use other interfaces
+such as IMP and <a href="diction.htm#ICMp">ICMP</a>.
+<p>Another facility supported by Routed is the notion of 'passive' and
+'active' <a href="diction.htm#router">router</a>s. The main characteristic
+of 'passive' <a href="diction.htm#router">router</a>s is that Routed does
+not expect to change the routing information about them dynamically, and
+hence it remains unchanged until Routed terminates. Routed learns about
+the 'passive' <a href="diction.htm#router">router</a>s when started, from
+a standard file.
+<h1>
+<img SRC="greenbal.gif" height=14 width=14> Gated</h1>
+A Unix <a href="diction.htm#gate">gateway</a> daemon - handles multiple
+routing protocols. Gated supports the following routing protocols: RIP,
+<a href="diction.htm#bgp">BGP</a>,
+<a href="diction.htm#egp">EGP</a>,
+and HELLO. Thus, it replaces Routed,
+<a href="diction.htm#egp">EGP</a>up,
+and any routing daemon that speaks the HELLO routing protocol. Its facilities
+regarding the RIP protocol are the same as those of Routed.
+<h1>
+<img SRC="greenbal.gif" height=14 width=14> Ripquery</h1>
+A Unix command. Used to request known routes from a <a href="diction.htm#router">router</a>,
+supporting RIP. Ripquery sends a RIP POLL and/or RIP <a href="request.htm">REQUEST</a>
+command to a remote <a href="diction.htm#router">router</a>, specified
+either by symbolic name or by its <a href="tcpip2.html">IP address</a>.
+The response is received by means of RIP <a href="request.htm#respond" target="_blank">response</a><a href="diction.htm#packet">packet</a>s
+and is presented in separated lines. Each line contains the following data
+for a specific route: 'symbolic mask name' <a href="tcpip2.html">'IP address
+mask' </a>'metric'.
+<p>The RIP POLL command is the default RIP command used by Ripquery and
+is prefered on the RIP <a href="request.htm">REQUEST</a> because unlike
+the latter it is not subject to <a href="algorith.htm#Split_Horizon">Split
+Horizon and Poisoned Reverse</a>. Either the default value is used or the
+other is chosen, if Ripquery fails to get a response after a defined timeout
+- it tries the other option. The RIP POLL command is an undocumented extension
+of the RIP specification, supported both by Routed and by Gated.
+<p>The recommended use for Ripquery is only debugging <a href="diction.htm#gate">gateway</a>s
+since the data it supplies is very limited (e.g. the next hope is not supplied).
+More powerful protocols are recommended for network management e.g. <a href="diction.htm#snmp">SNMP</a>.
+<br>&nbsp;
+<br>&nbsp;
+</body>
+</html>

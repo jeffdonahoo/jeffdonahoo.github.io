@@ -1,0 +1,33 @@
+\newcommand{\noopsort}[1]{} \newcommand{\printfirst}[2]{#1}
+  \newcommand{\singleletter}[1]{#1} \newcommand{\switchargs}[2]{#2#1}
+\begin{thebibliography}{}
+
+\bibitem[\protect\citeauthoryear{Aamport}{Aamport}{1986}]{article-full}
+Aamport, L.~A. (1986, July).
+\newblock The gnats and gnus document preparation system.
+\newblock {\em \mbox{G-Animal's} Journal\/}~{\em 41\/}(7), 73+.
+\newblock This is a full ARTICLE entry.
+
+\bibitem[\protect\citeauthoryear{Knuth}{Knuth}{1968}]{whole-set}
+Knuth, D.~E. ({\noopsort{1973a}}{\switchargs{--90}{1968}}).
+\newblock {\em The Art of Computer Programming}.
+\newblock Four volumes. Addison-Wesley.
+\newblock Seven volumes planned (this is a cross-referenced set of BOOKs).
+
+\bibitem[\protect\citeauthoryear{Knvth}{Knvth}{1988}]{booklet-full}
+Knvth, J.~C. (1988, February).
+\newblock The programming of computer art.
+\newblock Vernier Art Center, Stanford, California.
+\newblock This is a full BOOKLET entry.
+
+\bibitem[\protect\citeauthoryear{Oaho, Ullman, and Yannakakis}{Oaho {\it
+  et~al.}}{1983}]{inproceedings-full}
+Oaho, A.~V., J.~D. Ullman, and M.~Yannakakis (1983, March).
+\newblock On notions of information transfer in {VLSI} circuits.
+\newblock In W.~V. Oz and M.~Yannakakis (Eds.), {\em Proc. Fifteenth Annual ACM
+  Symposium on the Theory of Computing}, Number~17 in All ACM Conferences,
+  Boston, pp.\  133--139. The OX Association for Computing Machinery: Academic
+  Press.
+\newblock This is a full INPROCEDINGS entry.
+
+\end{thebibliography}

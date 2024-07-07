@@ -1,0 +1,50 @@
+<HTML>
+<!-- created Thu Apr 9 23:20:43 MET DST 1998
+ from ../latex2e.texi line 4614 via texi2www -->
+<HEAD>
+<TITLE>Special Characters</TITLE>
+<LINK REL="Precedes" HREF="Splitting_the_Input.html">
+<LINK REV="Precedes" HREF="Spaces_$26amp$3b_Boxes.html">
+<LINK REV="Subdocument" HREF="Commands.html">
+</HEAD><BODY><P>
+<A HREF="Spaces_$26amp$3b_Boxes.html"><IMG ALIGN=MIDDLE SRC="prev-arrow.gif" ALT="PREV"></A>
+<A HREF="Commands.html"> <IMG ALIGN=MIDDLE SRC="up-arrow.gif" ALT="UP"></A>
+<A HREF="Splitting_the_Input.html"><IMG ALIGN=MIDDLE SRC="next-arrow.gif" ALT="NEXT"></A>
+<CITE>LaTeX2e help 1.6</CITE></P>
+<H2>2.18: Special Characters</H2>
+<P>
+The following characters play a special role in LaTeX and are called
+``special printing characters'', or simply ``special characters''.
+</P>
+<DL><DT><DD>
+<PRE>
+                       # $ % &amp; ~ _ ^ \ { }
+</PRE>
+</DL>
+<P>
+Whenever you put one of these special characters into your file, you are
+doing something special.  If you simply want the character to be printed
+just as any other letter, include a <CODE>\</CODE> in front of the character.
+For example, <CODE>\$</CODE> will produce <CODE>$</CODE> in your output.
+</P>
+<P>
+One exception to this rule is the <CODE>\</CODE> itself because <CODE>\\</CODE> has
+its own special meaning.  A <CODE>\</CODE> is produced by typing
+<CODE>$\backslash$</CODE> in your file.
+</P>
+<P>
+Also, <CODE>\~</CODE> means `place a tilde accent over the following letter',
+so you will probably want to use <CODE>\verb</CODE> instead.
+</P>
+<P>
+In addition, you can access any character of a font once you know its
+number by using the <CODE>\symbol</CODE> command. For example, the character
+used for displaying spaces in the <CODE>\verb*</CODE> command has the code
+decimal 32, so it can be typed as <CODE>\symbol{32}</CODE>.
+</P>
+<P>
+You can also specify octal numbers with <CODE>'</CODE> or hexadecimal numbers
+with <CODE>&quot;</CODE>, so the previous example could also be written as
+<CODE>\symbol{'40}</CODE> or <CODE>\symbol{&quot;20}</CODE>.
+</P>
+</BODY></HTML>

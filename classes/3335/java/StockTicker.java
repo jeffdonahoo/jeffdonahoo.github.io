@@ -1,0 +1,128 @@
+import java.util.List;
+import java.util.ArrayList;
+
+public class StockTicker {
+
+    private List<Double> stockVals = new ArrayList<>(); // List of stock values
+
+    // Create StockTicker instance with initial stock value
+    public StockTicker(double initialValue) {
+        stockVals.add(initialValue);
+    }
+
+    // Report new stock value
+    public void reportValue(double value) {
+        stockVals.add(value);
+    }
+
+    // Compute sum of stock values from startIndex to end of stock value list
+    private double intervalSum(int startIndex) {
+        double sum = 0;
+        for (int i = startIndex; i < stockVals.size(); i++) {
+            sum += stockVals.get(i);
+        }
+        return sum;
+    }
+
+    // Member class
+    /**
+     * Maintains the average stock price from instance creation
+     */
+    private class Average implements Averager {
+        private int nextVI = stockVals.size() - 1; // Next Value Index
+        private double sum = 0; // Sum of stock values from creation to nextVI-1
+        private int numValues = 0;// Number of values in summation
+
+        public double getAverage() {
+            // Add additional items to summation
+            for (; nextVI < stockVals.size(); nextVI++, numValues++) {
+                sum += stockVals.get(nextVI);
+            }
+            return sum / numValues;
+        }
+    }
+
+    public Averager getAverager() {
+        return new Average();
+    }
+
+    // Local Class
+    /**
+     * Maintains the average stock price over a specified interval, starting with instantiation
+     */
+    public Averager getIntervalAverager(int intervalLen) {
+        class Average implements Averager {
+            private int firstCI; // Index of first value in summation interval
+            private int nextVI; // Index of next value to be added to summation interval
+            private int intervalLen;// Length of averaging interval
+            private double sum = 0; // Sum of stock values from firstCI to nextVI-1
+
+            public Average(int intervalLen) {
+                firstCI = nextVI = stockVals.size() - 1;
+                this.intervalLen = intervalLen;
+            }
+
+            public double getAverage() {
+                if (nextVI <= (stockVals.size() - intervalLen)) {
+                    // None of the summation is within the interval so reset
+                    firstCI = nextVI = stockVals.size() - intervalLen;
+                    sum = 0;
+                } else {
+                    // Subtract values from summation that are no longer in the interval
+                    for (; firstCI < stockVals.size() - intervalLen; firstCI++) {
+                        sum -= stockVals.get(firstCI);
+                    }
+                }
+                // Add additional items to summation
+                sum += intervalSum(nextVI); // You can call private methods of outer class
+                nextVI = stockVals.size();
+
+                return sum / (nextVI - firstCI);
+            }
+        }
+        return new Average(intervalLen);
+    }
+
+    // Anonymous Class
+    /**
+     * Maintains the average stock value appreciation from the purchase price
+     */
+    public Averager getAppreciationAverager(final double purchasePrice) {
+        return new Averager() {
+            private int nextVI; // Next Value Index
+            private double sum = 0; // Sum of stock values from creation to nextVI-1
+            private int numValues = 0; // Number of values in summation
+
+            { // Initializer (Cannot define constructor for anonymous class)
+                nextVI = stockVals.size() - 1; // Could be assigned with declaration
+            }
+
+            public double getAverage() {
+                for (; nextVI < stockVals.size(); nextVI++, numValues++) {
+                    sum += stockVals.get(nextVI) - purchasePrice;
+                }
+                return sum / numValues;
+            }
+        };
+    }
+
+    public static void main(String args[]) {
+        StockTicker s = new StockTicker(1);
+
+        s.reportValue(2);
+        Averager initPurchInterval = s.getIntervalAverager(5);
+        Averager initPurchAppr = s.getAppreciationAverager(2);
+        Averager initPurch = s.getAverager();
+        s.reportValue(3);
+        s.reportValue(4);
+        System.out.println(initPurchInterval.getAverage());
+        System.out.println(initPurchAppr.getAverage());
+        s.reportValue(5);
+        Averager nextPurch = s.getIntervalAverager(3);
+        s.reportValue(6);
+        s.reportValue(7);
+        System.out.println(initPurchInterval.getAverage());
+        System.out.println(initPurch.getAverage());
+        System.out.println(nextPurch.getAverage());
+    }
+}

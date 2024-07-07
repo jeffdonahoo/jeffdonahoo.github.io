@@ -1,0 +1,94 @@
+<html>
+<head>
+   <title>BU NS FAQ</title>
+</head>
+<body>
+
+<H1> BU NS FAQ </H1>
+
+We believe these answers to be correct; however, since they are not official answers from the NS developers, treat them with the appropriate level of distrust.
+
+<ol>
+
+<li> How are colors assigned to packets? <P>
+
+The colors are associated with the fid_ values in each packet header.
+The default fid_ for each packet can be set on a per agent basis. You
+should set fid_ in the agent creating the packet.  For example,
+consider the following code snippets from <A HREF="mfec.tcl">
+mfec.tcl</A>
+
+<pre>
+...
+# Associate green with packet fid_ = 1 (sender)
+$ns color 1 green 
+...
+# Create FEC Sender agent
+set FECSnd [new Agent/FEC/Snd]
+...
+# Set packet ID of packets from sender
+$FECSnd set fid_ 1
+...
+</pre>
+
+This conclusion is based on the following message to the mailing list: 
+
+<pre>
+
+Haobo Yu (haoboy@isi.edu)
+Mon, 23 Feb 1998 10:56:50 -0800 (PST) 
+
+> I wounder how commands like:
+> $ns set color 0 blue 
+> $ns set color 1 red 
+> $ns set color 2 yellow
+> $ns set color 3 green ....
+> affects the colors of the datapackets in the nam visualization? I
+> noticed that changing the flowid_ to 3 makes the packages green in my example.
+> In my sense of thinking there must be other reasons when you want to
+> color packages in diffrent colors, than when they belong to diffrent
+> flows according to ipv6, I've run most of the testcripts and
+> noticed they are very colorfull. 
+
+In nam trace file, every packet have an 'attribute' field, which is
+produced by 'fid_' of data sources in your simulation scripts. The colors
+defined by above commands builds a 1-1 mapping between colors to the
+'fid's. Therefore, you may change the fid_ of your packets as a means to
+label them with different colors.
+
+You may find the details of nam trace file format in nam's man page.
+Please let me know if you have further questions.
+
+Regards,
+Haobo
+
+</pre>
+
+(Lingering question:  How do the default fid_ values get set
+(e.g. 30/31 for prune/graft messages)?) <P>
+
+<li>  How do I make losses occur on specific links? <P>
+
+Here is a TCL <A HREF="loss.tcl">script</A> showing one way to use the
+loss model. <P>
+
+<LI>
+
+It appears that in NAM the first person that opens up NAM on a particular gets all of the NAM windows, even if they are created by other users.  That is, if I am on AIM, I am running NAM, and Sunila tries to run NAM on AIM, her NAM windows will actually pop up on MY console.  Spooky.  <P>
+<BR>
+One possible solution<BR>
+by expert TCL programmer, Sunila:<BR>
+<BR>
+1.  Go to the file anim-ctrl.tcl in the nam-1.0a7/tcl directory.<BR>
+2.  Jump to function remote-create-animator<BR>
+3.  Comment out the whole if/else statement<BR>
+4.  Insert the following before the commented if/else statement:<BR>
+<BR>
+        puts -nonewline "Cannot connect to existing nam instance. "<BR>
+        puts "Starting a new one..."<BR>
+        $self local-create-animator $trace_file [join $args]<BR>
+<BR>
+You may notice that these are the lines in the "if" part of the if/else statement.<BR>
+5.  In directory nam-1.0a7, type make.  This should recompile NAM so that every time you run it a NEW NAM console is created.<BR>
+<BR>
+</ol>

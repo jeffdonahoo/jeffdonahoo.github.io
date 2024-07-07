@@ -1,0 +1,131 @@
+<HTML>
+<!-- created Thu Apr 9 23:20:43 MET DST 1998
+ from ../latex2e.texi line 1494 via texi2www -->
+<HEAD>
+<TITLE>picture</TITLE>
+<LINK REL="Precedes" HREF="quotation.html">
+<LINK REV="Precedes" HREF="minipage.html">
+<LINK REV="Subdocument" HREF="Environments.html">
+</HEAD><BODY><P>
+<A HREF="minipage.html"><IMG ALIGN=MIDDLE SRC="prev-arrow.gif" ALT="PREV"></A>
+<A HREF="Environments.html"> <IMG ALIGN=MIDDLE SRC="up-arrow.gif" ALT="UP"></A>
+<A HREF="quotation.html"><IMG ALIGN=MIDDLE SRC="next-arrow.gif" ALT="NEXT"></A>
+<CITE>LaTeX2e help 1.6</CITE></P>
+<H3>2.6.14: picture</H3>
+<DL><DT><DD>
+<PRE>
+ \begin{picture}(width,height)(x offset,y offset)
+  .
+  .
+  picture commands
+  .
+  .
+ \end{picture}
+</PRE>
+</DL>
+<P>
+The <CODE>picture</CODE> environment allows you to create just about any kind
+of picture you want containing text, lines, arrows and circles.  You
+tell LaTeX where to put things in the picture by specifying their
+coordinates.  A coordinate is a number that may have a decimal point and
+a minus sign --- a number like <CODE>5</CODE>, <CODE>2.3</CODE> or <CODE>-3.1416</CODE>.  A
+coordinate specifies a length in multiples of the unit length
+<CODE>\unitlength</CODE>, so if <CODE>\unitlength</CODE> has been set to <CODE>1cm</CODE>,
+then the coordinate 2.54 specifies a length of 2.54 centimetres.  You
+can change the value of <CODE>\unitlength</CODE> anywhere you want, using the
+<CODE>\setlength</CODE> command, but strange things will happen if you try
+changing it inside the picture environment.
+</P>
+<P>
+A position is a pair of coordinates, such as <CODE>(2.4,-5)</CODE>, specifying
+the point with x-coordinate <CODE>2.4</CODE> and y-coordinate <CODE>-5</CODE>.
+Coordinates are specified in the usual way with respect to an origin,
+which is normally at the lower-left corner of the picture.  Note that
+when a position appears as an argument, it is not enclosed in braces;
+the parentheses serve to delimit the argument.
+</P>
+<P>
+The <CODE>picture</CODE> environment has one mandatory argument, which is a
+<CODE>position</CODE>.  It specifies the size of the picture.  The environment
+produces a rectangular box with width and height determined by this
+argument's x- and y-coordinates.
+</P>
+<P>
+The <CODE>picture</CODE> environment also has an optional <CODE>position</CODE>
+argument, following the <CODE>size</CODE> argument, that can change the
+origin.  (Unlike ordinary optional arguments, this argument is not
+contained in square brackets.) The optional argument gives the
+coordinates of the point at the lower-left corner of the picture
+(thereby determining the origin).  For example, if <CODE>\unitlength</CODE>
+has been set to <CODE>1mm</CODE>, the command
+</P>
+<DL><DT><DD>
+<PRE>
+   \begin{picture}(100,200)(10,20)
+</PRE>
+</DL>
+<P>
+produces a picture of width 100 millimetres and height 200
+millimetres, whose lower-left corner is the point (10,20) and whose
+upper-right corner is therefore the point (110,220).  When you first
+draw a picture, you will omit the optional argument, leaving the origin
+at the lower-left corner.  If you then want to modify your picture by
+shifting everything, you just add the appropriate optional argument.
+</P>
+<P>
+The environment's mandatory argument determines the nominal size of the
+picture.  This need bear no relation to how large the picture really is;
+LaTeX will happily allow you to put things outside the picture, or even
+off the page.  The picture's nominal size is used by LaTeX in determining
+how much room to leave for it.
+</P>
+<P>
+Everything that appears in a picture is drawn by the <CODE>\put</CODE>
+command. The command
+</P>
+<DL><DT><DD>
+<PRE>
+   \put (11.3,-.3){...}
+</PRE>
+</DL>
+<P>
+puts the object specified by <CODE>...</CODE> in the picture, with its
+reference point at coordinates (11.3,-.3).  The reference points for
+various objects will be described below.
+</P>
+<P>
+The <CODE>\put</CODE> command creates an <EM>LR box</EM>.  You can put anything
+in the text argument of the <CODE>\put</CODE> command that you'd put into the
+argument of an <CODE>\mbox</CODE> and related commands.  When you do this, the
+reference point will be the lower left corner of the box.
+</P>
+<P>
+Picture commands:
+</P>
+<MENU>
+<LI><A HREF="$5ccircle.html">\circle</A>
+Draw a circle.
+<LI><A HREF="$5cdashbox.html">\dashbox</A>
+Draw a dashed box.
+<LI><A HREF="$5cframe.html">\frame</A>
+Draw a frame around an object.
+<LI><A HREF="$5cframebox_$28picture$29.html">\framebox (picture)</A>
+Draw a box with a frame around it.
+<LI><A HREF="$5cline.html">\line</A>
+Draw a straight line.
+<LI><A HREF="$5clinethickness.html">\linethickness</A>
+Set the line thickness.
+<LI><A HREF="$5cmakebox_$28picture$29.html">\makebox (picture)</A>
+Draw a box of the specified size.
+<LI><A HREF="$5cmultiput.html">\multiput</A>
+Draw multiple instances of an object.
+<LI><A HREF="$5coval.html">\oval</A>
+Draw an ellipse.
+<LI><A HREF="$5cput.html">\put</A>
+Place an object at a specified place.
+<LI><A HREF="$5cshortstack.html">\shortstack</A>
+Make a pile of objects.
+<LI><A HREF="$5cvector.html">\vector</A>
+Draw a line with an arrow.
+</MENU>
+</BODY></HTML>

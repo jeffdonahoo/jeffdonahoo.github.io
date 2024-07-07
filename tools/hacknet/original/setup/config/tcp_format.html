@@ -1,0 +1,260 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Peter Lakov">
+   <meta name="GENERATOR" content="Mozilla/4.61 [en] (WinNT; I) [Netscape]">
+   <title>TCP Packet Format</title>
+</head>
+<body>
+
+<h1>
+TCP Header Format</h1>
+This description is taken <a href="http://www.ietf.org/rfc/rfc0793.txt">RFC
+793</a>, pages 15 to 18.
+<br>&nbsp;
+<p><tt>&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+3</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+2 3 4 5 6 7 8 9 0 1</tt>
+<br><tt>&nbsp;&nbsp; +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</tt>
+<br><tt>&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Source Port&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Destination Port&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |</tt>
+<br><tt>&nbsp;&nbsp; +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</tt>
+<br><tt>&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Sequence Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt>
+<br><tt>&nbsp;&nbsp; +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</tt>
+<br><tt>&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Acknowledgment Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt>
+<br><tt>&nbsp;&nbsp; +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</tt>
+<br><tt>&nbsp;&nbsp; |&nbsp; Data |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|U|A|P|R|S|F|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt>
+<br><tt>&nbsp;&nbsp; | Offset| Reserved&nbsp; |R|C|S|S|Y|I|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Window&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt>
+<br><tt>&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|G|K|H|T|N|N|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt>
+<br><tt>&nbsp;&nbsp; +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</tt>
+<br><tt>&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Checksum&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Urgent Pointer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt>
+<br><tt>&nbsp;&nbsp; +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</tt>
+<br><tt>&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Options&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|&nbsp;&nbsp;&nbsp; Padding&nbsp;&nbsp;&nbsp; |</tt>
+<br><tt>&nbsp;&nbsp; +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</tt>
+<br><tt>&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+data&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt>
+<br><tt>&nbsp;&nbsp; +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+TCP Header Format</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Note that
+one tick mark represents one bit position.</tt>
+<br>&nbsp;
+<br>&nbsp;
+<p><tt>&nbsp; Source Port:&nbsp; 16 bits</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; The source port number.</tt>
+<p><tt>&nbsp; Destination Port:&nbsp; 16 bits</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; The destination port number.</tt>
+<p><tt>&nbsp; Sequence Number:&nbsp; 32 bits</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; The sequence number of the first data octet in
+this segment (except</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; when SYN is present). If SYN is present the
+sequence number is the</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; initial sequence number (ISN) and the first
+data octet is ISN+1.</tt>
+<p><tt>&nbsp; Acknowledgment Number:&nbsp; 32 bits</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; If the ACK control bit is set this field contains
+the value of the</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; next sequence number the sender of the segment
+is expecting to</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; receive.&nbsp; Once a connection is established
+this is always sent.</tt>
+<p><tt>&nbsp; Data Offset:&nbsp; 4 bits</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; The number of 32 bit words in the TCP Header.&nbsp;
+This indicates where</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; the data begins.&nbsp; The TCP header (even
+one including options) is an</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; integral number of 32 bits long.</tt>
+<p><tt>&nbsp; Reserved:&nbsp; 6 bits</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; Reserved for future use.&nbsp; Must be zero.</tt>
+<p><tt>&nbsp; Control Bits:&nbsp; 6 bits (from left to right):</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; URG:&nbsp; Urgent Pointer field significant</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ACK:&nbsp; Acknowledgment field significant</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; PSH:&nbsp; Push Function</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; RST:&nbsp; Reset the connection</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; SYN:&nbsp; Synchronize sequence numbers</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; FIN:&nbsp; No more data from sender</tt>
+<p><tt>&nbsp; Window:&nbsp; 16 bits</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; The number of data octets beginning with the
+one indicated in the</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; acknowledgment field which the sender of this
+segment is willing to</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; accept.</tt>
+<p><tt>&nbsp; Checksum:&nbsp; 16 bits</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; The checksum field is the 16 bit one's complement
+of the one's</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; complement sum of all 16 bit words in the header
+and text.&nbsp; If a</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; segment contains an odd number of header and
+text octets to be</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; checksummed, the last octet is padded on the
+right with zeros to</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; form a 16 bit word for checksum purposes.&nbsp;
+The pad is not</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; transmitted as part of the segment.&nbsp; While
+computing the checksum,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; the checksum field itself is replaced with zeros.</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; The checksum also covers a 96 bit pseudo header
+conceptually</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; prefixed to the TCP header.&nbsp; This pseudo
+header contains the Source</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; Address, the Destination Address, the Protocol,
+and TCP length.</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; This gives the TCP protection against misrouted
+segments.&nbsp; This</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; information is carried in the Internet Protocol
+and is transferred</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; across the TCP/Network interface in the arguments
+or results of</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; calls by the TCP on the IP.</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
++--------+--------+--------+--------+</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Source Address&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
++--------+--------+--------+--------+</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Destination Address&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
++--------+--------+--------+--------+</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|&nbsp; zero&nbsp; |&nbsp; PTCL&nbsp; |&nbsp;&nbsp;&nbsp; TCP Length&nbsp;&nbsp;
+|</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
++--------+--------+--------+--------+</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The TCP Length is the TCP header
+length plus the data length in</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; octets (this is not an explicitly
+transmitted quantity, but is</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; computed), and it does not count
+the 12 octets of the pseudo</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; header.</tt>
+<p><tt>&nbsp; Urgent Pointer:&nbsp; 16 bits</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; This field communicates the current value of
+the urgent pointer as a</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; positive offset from the sequence number in
+this segment.&nbsp; The</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; urgent pointer points to the sequence number
+of the octet following</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; the urgent data.&nbsp; This field is only be
+interpreted in segments with</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; the URG control bit set.</tt>
+<p><tt>&nbsp; Options:&nbsp; variable</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; Options may occupy space at the end of the TCP
+header and are a</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; multiple of 8 bits in length.&nbsp; All options
+are included in the</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; checksum.&nbsp; An option may begin on any octet
+boundary.&nbsp; There are two</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; cases for the format of an option:</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Case 1:&nbsp; A single octet of option-kind.</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Case 2:&nbsp; An octet of option-kind,
+an octet of option-length, and</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+the actual option-data octets.</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; The option-length counts the two octets of option-kind
+and</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; option-length as well as the option-data octets.</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; Note that the list of options may be shorter
+than the data offset</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; field might imply.&nbsp; The content of the
+header beyond the</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; End-of-Option option must be header padding
+(i.e., zero).</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; A TCP must implement all options.</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; Currently defined options include (kind indicated
+in octal):</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Kind&nbsp;&nbsp;&nbsp;&nbsp; Length&nbsp;&nbsp;&nbsp;
+Meaning</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ----&nbsp;&nbsp;&nbsp;&nbsp; ------&nbsp;&nbsp;&nbsp;
+-------</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End of option list.</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No-Operation.</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Maximum Segment Size.</tt>
+<br>&nbsp;
+<p><tt>&nbsp;&nbsp;&nbsp; Specific Option Definitions</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End of Option List</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +--------+</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |00000000|</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +--------+</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Kind=0</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This option code indicates
+the end of the option list.&nbsp; This</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; might not coincide with
+the end of the TCP header according to</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; the Data Offset field.&nbsp;
+This is used at the end of all options,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; not the end of each
+option, and need only be used if the end of</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; the options would not
+otherwise coincide with the end of the TCP</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; header.</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No-Operation</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +--------+</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |00000001|</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +--------+</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Kind=1</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This option code may
+be used between options, for example, to</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; align the beginning
+of a subsequent option on a word boundary.</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; There is no guarantee
+that senders will use this option, so</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; receivers must be prepared
+to process options even if they do</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; not begin on a word
+boundary.</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Maximum Segment Size</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +--------+--------+---------+--------+</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |00000010|00000100|&nbsp;&nbsp;
+max seg size&nbsp;&nbsp; |</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +--------+--------+---------+--------+</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Kind=2&nbsp;&nbsp;
+Length=4</tt>
+<br>&nbsp;
+<br>&nbsp;
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Maximum Segment Size
+Option Data:&nbsp; 16 bits</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If this option
+is present, then it communicates the maximum</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; receive
+segment size at the TCP which sends this segment.</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This field
+must only be sent in the initial connection request</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (i.e., in
+segments with the SYN control bit set).&nbsp; If this</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; option is
+not used, any segment size is allowed.</tt>
+<p><tt>&nbsp; Padding:&nbsp; variable</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; The TCP header padding is used to ensure that
+the TCP header ends</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; and data begins on a 32 bit boundary.&nbsp;
+The padding is composed of</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; zeros.</tt>
+</body>
+</html>

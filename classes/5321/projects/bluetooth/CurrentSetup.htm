@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="foo.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<table width="100%"><tr><td align="center"><img src="logo.png" width="432" height="144"></td></tr></table>
+<p class="Topic">Using Nuggets</p>
+<p class="Text"> &nbsp;&nbsp;&nbsp;&nbsp;<span class="Text">Nuggets as
+currently implemented is fairly easy to use.  Simply run at least one
+client-server pair on 2 different hosts.  Currently, only Moe and
+Curly have the necessary configuration to support bluetooth.  For this
+example Nuggets session we will assume that Moe runs the client and
+Curly runs the server.  Firstly, on Curly, change the directory to
+/root/nuggets and then run ./runBrowser.sh.  Then, on Moe, change the
+directory to /root/nuggets.  Next, change the contents of the file
+called 'nugget' to whatever you wish the nugget to be and run
+./runClient.sh.</span></p>
+<p class="Topic">Troubleshooting Q & A</p>
+<p class="Text"> &nbsp;&nbsp;&nbsp;&nbsp;<b>Q. Nuggets
+doesn't work!</b><br>
+<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;<b>A. </b>That's not really a question you
+ know.  There could be a couple of reasons that nuggets is failing to
+ work, though.  First, make certain that the hci and sdp daemons are
+ running (see <a href="Setup.htm">System Setup</a>)  Finally, make
+ certain that the bluetooth dongles are actually up.  To do this, type
+ hciconfig and look in the output for "...UP RUNNING...".  If instead
+ you see something like "...DOWN...", then the bluetooth dongle on
+ that computer is not up.  To bring it up, type hciconfig hci0 up.  Be
+ sure to check that the dongle is now up by typing hciconfig.</p>
+
+<script language="JavaScript" type="text/javascript" src="wz_tooltip.js"></script>
+</body>
+</html>

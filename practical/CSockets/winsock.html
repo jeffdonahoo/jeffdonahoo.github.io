@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+<TITLE>TCP/IP Sockets in C:  Practical Guide for Programmers</TITLE>
+</HEAD>
+<BODY>
+
+<H1>Winsock Adaptations of Example Code</H1>
+
+<TABLE>
+<TR>
+<TD>
+<IMG SRC="../images/cpractical.gif"></TD>
+<TD>Below is the example source code from "TCP/IP Sockets in C:
+Practical Guide for Programmers" by Michael J. Donahoo and Kenneth
+L. Calvert modified for use with WinSock.  This book can be ordered at
+your favorite local bookstore or online.  <P> <a
+href="http://www.mkp.com/books_catalog/catalog.asp?ISBN=1-55860-826-5">Official
+Book Website</A>
+</table>
+<P>
+
+The code below demonstrates the minimal number of changes required to
+make the examples from the text execute under Winsock.  Further
+changes can be made to make this code more Winsock complaint (e.g.,
+test socket() failure return value as SOCKET_ERROR rather than < 0).
+If you want some details/justifications for the
+adaptations of the examples to Winsock, see <A
+HREF="WindowsSockets.pdf">Transitioning from UNIX to Windows Socket
+Programming by Paul O'Steen</A> <P>
+
+WinSock Example code: 
+<UL>
+<LI><A HREF="code/TCPEchoClientWS.c">TCPEchoClientWS.c</A>
+<LI><A HREF="code/DieWithErrorWS.c">DieWithErrorWS.c</A>
+<LI><A HREF="code/TCPEchoServerWS.c">TCPEchoServerWS.c</A>
+<LI><A HREF="code/HandleTCPClientWS.c">HandleTCPClientWS.c</A>
+<LI><A HREF="code/UDPEchoClientWS.c">UDPEchoClientWS.c</A>
+<LI><A HREF="code/UDPEchoServerWS.c">UDPEchoServerWS.c</A>
+<LI>SigAction.c - Not Available (Signals are not available under Windows)</A>
+<LI>UDPEchoServer-SIGIO.c - Not Available (Signals are not available under Windows)</A>
+<LI>UDPEchoClient-Timeout.c - Not Available (Signals are not available under Windows)</A>
+<LI>TCPEchoServer-Fork.c - Not Available (Win32 CreateProcess requires a separate executable)</A>
+<LI><A HREF="code/TCPEchoServerWS.h">TCPEchoServerWS.h</A>
+<LI><A HREF="code/CreateTCPServerSocketWS.c">CreateTCPServerSocketWS.c</A>
+<LI><A HREF="code/AcceptTCPConnectionWS.c">AcceptTCPConnectionWS.c</A>
+<LI><A
+HREF="code/TCPEchoServer-ThreadWS.c">TCPEchoServer-ThreadWS.c</A> (You
+can use the original TCPEchoServer-Thread.c under Windows if you also
+download a PThreads library for Windows.  See http://sources.redhat.com/pthreads-win32.)
+<LI>TCPEchoServer-ForkN.c - Not Available (Win32 CreateProcess requires a separate executable)</A>
+<LI><A HREF="code/TCPEchoServer-SelectWS.c">TCPEchoServer-SelectWS.c</A>
+<LI><A HREF="code/BroadcastSenderWS.c">BroadcastSenderWS.c</A>
+<LI><A HREF="code/BroadcastReceiverWS.c">BroadcastReceiverWS.c</A>
+<LI><A HREF="code/BroadcastReceiverNonblockingWS.c">BroadcastReceiverNonblockingWS.c</A> (Added to show nonblocking WinSock socket since SIGIO example does not work)
+<LI><A HREF="code/MulticastSenderWS.c">MulticastSenderWS.c</A>
+<LI><A HREF="code/MulticastReceiverWS.c">MulticastReceiverWS.c</A>
+<LI><A HREF="code/ResolveNameWS.c">ResolveNameWS.c</A>
+<LI><A HREF="code/ResolveServiceWS.c">ResolveServiceWS.c</A>
+</UL>
+<LI>To compile:
+<UL>
+  <LI> Make sure you add wsock32.lib to library module list </LI>
+</UL>
+<LI>Warning for users of older variants of Windows (NT and 98 or before):<BR>
+Some older versions of Windows require that you call bind( ) before any call to setsockopt( ).  If setsockopt( ) fails, try adding a bind to address INADDR_ANY and to port 0 before the call to setsockopt( ).  This should only apply to MulticastSenderWS.c and BroadcastSenderWS.c.
+</UL>
+
+<P>
+<H2>Other Resources</H2>
+<UL>
+<LI> <A HREF="http://www.cs.tamu.edu/course-info/cpsc463/tutorial/index.html">Winsock Tutorial from Willis Marti (Texas A&M)</A>
+<LI> <A HREF="WindowsSockets.pdf">Transitioning from UNIX to Windows Socket Programming by Paul O'Steen</A>
+</UL>
+
+<p align="right">
+<a href="http://www.mkp.com/books_catalog/catalog.asp?ISBN=1-55860-686-6">
+<img src="images/MK_blue.gif" border=0></a>
+
+</BODY>
+</HTML>

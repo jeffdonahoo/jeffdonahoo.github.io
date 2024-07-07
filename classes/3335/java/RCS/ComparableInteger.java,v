@@ -1,0 +1,44 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2013.09.09.17.58.08;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@public class ComparableInteger implements Comparable {
+  private int number;
+
+  public ComparableInteger(int number) {
+    this.number = number;
+  }
+
+  public int getNumber() {
+    return number;
+  }
+
+  public boolean greaterThan(Object x) {
+    if (number > ((ComparableInteger) x).getNumber()) {
+      return true;
+    }
+    return false;
+  }
+
+  public static void main(String args[]) {
+    System.out.println(new ComparableInteger(5).greaterThan(new ComparableInteger(10)));
+  }
+}@

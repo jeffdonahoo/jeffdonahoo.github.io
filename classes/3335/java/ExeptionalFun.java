@@ -1,0 +1,62 @@
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
+
+public class ExeptionalFun {
+  public static void main(String[] args) {
+    try (Scanner in = new Scanner(new FileInputStream("test") {
+      @Override
+      public void close() throws IOException {
+        System.out.println("close()");
+        super.close();
+      }
+    })) {
+      in.next();
+    } catch (NoSuchElementException | FileNotFoundException e) {
+      System.err.println("File problem: " + e.getMessage());
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println("Bad stuff: " + e.getMessage());
+    }
+  }
+}
+
+/*
+Start with 
+Scanner in = new Scanner(new FileInputStream("test"));
+in.useRadix(5/0);
+in.next();
+in.close();
+
+.  Catch FileNotFoundException and handle with error message
+  - Include exception error message
+  - Just put try/catch around Scanner constructor.
+  - Why compiler complaining about Scanner declaration?
+  - Fix?  1) Null assignment or 2) move all into try.
+  - Go with second option (all into try).
+  - Run program.  Great exceptions handled.
+.  Wait.  Why didn't the compiler complain about division by 0 (ArithmeticException).
+  - Exceptions can be broken into checked and unchecked.
+  - Exceptions derived from Error and RuntimeExceptions are "unchecked exceptions"
+    so no compile error.  ArithmeticException is a RuntimeException.
+.  What about these other exceptions?
+  - Show catch of Exception.
+  - Print more general message as well as exception message.
+  - Show exception keeps other information like stack (use e.printStackTrace());
+  - Inheritance and flow.  Can we switch catch statements?
+.  Always want to close file.  Add finally.  Breaks Scanner declaration. Run.
+.  NullPointerException?  Another unchecked exception!  Why thrown?  File not opened.
+.  Show try with resources (kill finally and close()).
+.  You can have multiple files open in try()
+.  Only classes implementing AutoClosable work in try with resources.
+.  Did close() really get called?
+.  Try to make an anonymous subclass of Scanner.  Fails since Scanner final.
+.  Make anonymous subclass of FileInputStream.
+.  Run.  close() not called.  Why?  Because "test" does not exist so never opened.
+.  Add "test" and run.  Now close() called.
+.  Still have division by 0.  Kill useRadix().  Run program.
+.  What?!?!?!  Another unchecked exception?
+.  Add handling of NoSuchElementException with | to FileNotFound catch.
+*/

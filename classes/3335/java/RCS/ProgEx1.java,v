@@ -1,0 +1,48 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2013.09.09.17.58.08;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@public class ProgEx1 {
+
+  public static void main(String args[]) {
+
+    int N = 10;
+    if (args.length == 1) {
+      N = Integer.parseInt(args[0]);
+    } else if (args.length > 1) {
+      System.out.println("Parameter(s): [N]");
+      System.exit(1);
+    }
+
+    int MIDPOINT = N/2;
+
+    for (int i = 0; i <= N; i++) {
+      int mid;
+      if (i < MIDPOINT) {
+        mid = MIDPOINT - i;
+      } else {
+        mid = i - MIDPOINT;
+      }
+      String output = "i = " + i + ":\t" + (i * i) + "\t" + mid + "\t" + Math.sqrt(i);
+      System.out.println(output);
+    }
+  }
+}@

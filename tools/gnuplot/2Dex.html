@@ -1,0 +1,43 @@
+<html>
+<head>
+   <title>Two-Dimensional GNUPlot Example</title>
+</head>
+<body>
+
+<center><b><font size=+3>Two-Dimensional GNUPlot Example</font></b></center><P><P>
+
+Consider the following example <A HREF="2D.data">data file</A> ("data") where the first, second,
+third, and fourth columns hold the x, y, min x, and max x values,
+respectively: <P><P>
+
+<pre>
+1 5 3 7 4
+2 8 5 9 6
+3 10 8 13 11
+4 16 12 19 18
+</pre>
+
+You can plot this with following gnuplot command <A HREF="2D.gp">script</A>: <P>
+
+<pre>
+set title "Graph Title"
+set xlabel "X Axis Label"
+set ylabel "Y Axis Label"
+set term gif
+set output "2D.gif"
+# To make postscript do
+# set term postscript eps
+# set output "2D.eps"
+set data style lp
+plot [.8:4.2] "2D.data" using 1:2 t "Curve Title", "2D.data" using
+1:2:3:4 notitle with errorbars lt 1 ps 0, "2D.data" using 1:5 t "Other
+Curve", "2D.data" using 1:5:6:7 notitle with errorbars lt 1 ps 0
+</pre>
+
+This generates a gif file called "2D.gif" which looks like: <P><P>
+
+<CENTER>
+<IMG SRC="2D.gif"></IMG>
+</CENTER> <P><P>
+
+Note your could set the term to other types such as "postscript eps".

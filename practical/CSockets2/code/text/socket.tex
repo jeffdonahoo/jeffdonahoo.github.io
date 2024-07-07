@@ -1,0 +1,62 @@
+\documentclass[notitlepage]{dochead}
+\usepackage{psfig}
+\usepackage{makeidx}
+\usepackage{fancyvrb}
+\usepackage{graphicx}
+
+%% Settings for typesetting text as it will be in the book
+\setlength{\textheight}{45pc}
+\setlength{\textwidth}{34pc}
+\setlength{\topmargin}{0in}
+\setlength{\oddsidemargin}{-0.25in}
+\setlength{\evensidemargin}{\oddsidemargin}
+
+%% Settings for typesetting text for 8.5x11
+%\setlength{\textheight}{9.25in}
+%\setlength{\textwidth}{6.75in}
+%\setlength{\topmargin}{0in}
+%\setlength{\oddsidemargin}{-0.25in}
+%\setlength{\evensidemargin}{\oddsidemargin}
+
+\setcounter{topnumber}{5}
+\setcounter{bottomnumber}{5}
+\setcounter{totalnumber}{5}
+\renewcommand{\topfraction}{.98}
+\renewcommand{\bottomfraction}{.98}
+\renewcommand{\textfraction}{0.01}
+
+\raggedbottom
+
+\input{input}  % Get all user-defined commands
+
+%\makeindex
+
+\begin{document}
+
+\newpage \tableofcontents \newpage
+
+\input{preface}
+\input{intro}
+\input{tcp}
+\input{addresses}
+\input{udp}
+\input{encoding}
+\input{advanced}
+\input{under}
+\input{cpp}
+% \division{chap07}
+% \division{part2}
+% \division{api}
+
+%\printindex
+\input{bib}
+
+\newpage
+
+\thispagestyle{empty}
+
+\vspace*{\fill}
+
+%\copyrightnotice
+
+\end{document}

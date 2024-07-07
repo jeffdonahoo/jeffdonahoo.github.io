@@ -1,0 +1,589 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+
+
+<HTML>
+
+
+<HEAD>
+
+
+   <TITLE> INTRODUCTION  </TITLE>
+
+
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+
+
+</HEAD>
+
+
+<BODY BACKGROUND="images/blue_lines.jpg">
+
+
+
+
+
+<H1 ALIGN=CENTER>INTRODUCTION </H1>
+
+
+
+
+
+<CENTER><P><IMG SRC="images/rainbow.gif" HEIGHT=5 WIDTH=600> </P></CENTER>
+
+
+
+
+
+<H2>The DARPA Internet Architecture. </H2>
+
+
+
+
+
+<P><IMG SRC="images/greenbal.gif" HEIGHT=14 WIDTH=14> Internet Protocols
+
+
+</P>
+
+
+
+
+
+<P>The Internet system consists of a number of interconnected <A HREF="diction.htm#packet">packet</A>
+
+
+networks supporting communication among <A HREF="diction.htm#host">host</A>
+
+
+computers using the Internet protocols. These protocols include the Internet
+
+
+Protocol (IP), the Internet Control Message Protocol (<A HREF="diction.htm#ICMp">ICMP</A>),
+
+
+the Transmission Control Protocol (TCP), and application protocols depending
+
+
+upon them . </P>
+
+
+
+
+
+<P>All Internet protocols use IP as the basic data transport mechanism.
+
+
+IP is a <A HREF="diction.htm#datagram">datagram</A>, or connectionless,
+
+
+internetwork service and includes provision for addressing, type-of-service
+
+
+specification, fragmentation and reassembly, and security information.
+
+
+<A HREF="diction.htm#ICMp">ICMP</A> is considered an integral part of
+
+
+IP, although it is architecturally layered upon IP. <A HREF="diction.htm#ICMp">ICMP</A>
+
+
+provides error reporting, flow control and first-hop <A HREF="diction.htm#gate">gateway</A>
+
+
+redirection. </P>
+
+
+
+
+
+<P>Reliable data delivery is provided in the Internet protocol suite by
+
+
+transport-level protocols such as the Transmission Control Protocol (TCP),
+
+
+which provides end-end retransmission, resequencing and connection control.
+
+
+Transport-level connectionless service is provided by the User <A HREF="diction.htm#datagram">datagram</A>
+
+
+Protocol (<A HREF="diction.htm#udp">UDP</A>). </P>
+
+
+
+
+
+<P><IMG SRC="images/greenbal.gif" HEIGHT=14 WIDTH=14> Networks and <A HREF="diction.htm#gate">gateway</A>s
+
+
+</P>
+
+
+
+
+
+<P>Constituent networks may generally be divided into two classes. </P>
+
+
+
+
+
+<OL>
+
+
+<LI>Local-Area Networks (<A HREF="/networks/1994/networks/mz_lan.html">LAN</A>s)
+
+
+</LI>
+
+
+
+
+
+<LI>Wide-Area Networks (<A HREF="/networks/1994/networks/wan.html">WAN</A>s)
+
+
+</LI>
+
+
+</OL>
+
+
+
+
+
+<P>In the Internet model, constituent networks are connected together by
+
+
+IP <A HREF="diction.htm#datagram">datagram</A> forwarders which are called
+
+
+&quot;<A HREF="diction.htm#gate">gateway</A>s&quot; or &quot;IP <A HREF="diction.htm#router">router</A>s&quot;.
+
+
+</P>
+
+
+
+
+
+<P>A <A HREF="diction.htm#gate">gateway</A> is connected to two or more
+
+
+networks, appearing to each of these networks as a connected <A HREF="diction.htm#host">host</A>.
+
+
+Thus, it has a physical interface and an IP address on each of the connected
+
+
+networks. Forwarding an IP <A HREF="diction.htm#datagram">datagram</A>
+
+
+generally requires the <A HREF="diction.htm#gate">gateway</A> to choose
+
+
+the address of the next-hop <A HREF="diction.htm#gate">gateway</A> or
+
+
+(for the final hop) the destination <A HREF="diction.htm#host">host</A>.
+
+
+This choice, called &quot;routing&quot;, depends upon a routing data-base
+
+
+within the <A HREF="diction.htm#gate">gateway</A>. This routing data-base
+
+
+should be maintained dynamically to reflect the current topology of the
+
+
+Internet system; a <A HREF="diction.htm#gate">gateway</A> normally accomplishes
+
+
+this by participating in distributed routing and reachability algorithms
+
+
+with other <A HREF="diction.htm#gate">gateway</A>s. <A HREF="diction.htm#gate">gateway</A>s
+
+
+provide <A HREF="diction.htm#datagram">datagram</A> transport only, and
+
+
+they seek to minimize the state information necessary to sustain this service
+
+
+in the interest of routing flexibility and robustness. </P>
+
+
+
+
+
+<P><A NAME="as"></A><IMG SRC="images/greenbal.gif" HEIGHT=14 WIDTH=14>
+
+
+Autonomous Systems </P>
+
+
+
+
+
+<P>For technical, managerial, and sometimes political reasons, the <A HREF="diction.htm#gate">gateway</A>s
+
+
+of the Internet system are grouped into collections called &quot;autonomous
+
+
+systems&quot; . The <A HREF="diction.htm#gate">gateway</A>s included in
+
+
+a single autonomous system (AS) are expected to </P>
+
+
+
+
+
+<UL>
+
+
+<LI>Be under the control of a single operations and maintenance (O&amp;M)
+
+
+organization; </LI>
+
+
+
+
+
+<LI>Employ common routing protocols among themselves, to maintain their
+
+
+routing data-bases dynamically. </LI>
+
+
+</UL>
+
+
+
+
+
+<P>A number of different dynamic routing protocols have been developed;
+
+
+the particular choice of routing protocol within a single autonomous system
+
+
+is generically called an interior <A HREF="diction.htm#gate">gateway</A>
+
+
+protocol or <A HREF="diction.htm#igp">IGP</A>. </P>
+
+
+
+
+
+<P>An IP <A HREF="diction.htm#datagram">datagram</A> may have to traverse
+
+
+the <A HREF="diction.htm#gate">gateway</A>s of two or more autonomous
+
+
+systems to reach its destination, and the autonomous systems must provide
+
+
+each other with topology information to allow such forwarding. The Border
+
+
+Gateway Protocol (<A HREF="diction.htm#bgp">BGP</A>) is used for this
+
+
+purpose, between <A HREF="diction.htm#gate">gateway</A>s of different
+
+
+autonomous systems. </P>
+
+
+
+
+
+<P><IMG SRC="images/greenbal.gif" HEIGHT=14 WIDTH=14> Routing Information
+
+
+Protocol (RIP) </P>
+
+
+
+
+
+<P>RIP is one protocol in a series of routing protocols based on the Bellman-Ford
+
+
+(or distance vector) algorithm. This algorithm has been used for routing
+
+
+computations in computer networks since the early days of the ARPANET.
+
+
+The particular <A HREF="diction.htm#packet">packet</A> formats and protocol
+
+
+described here are based on the program &quot;routed&quot;, which is included
+
+
+with the Berkeley distribution of Unix. It has become a de facto standard
+
+
+for exchange of routing information among <A HREF="diction.htm#gate">gateway</A>s
+
+
+and <A HREF="diction.htm#host">host</A>s. It is implemented for this purpose
+
+
+by most commercial vendors of IP <A HREF="diction.htm#gate">gateway</A>s.
+
+
+Note, however, that many of these vendors have their own protocols which
+
+
+are used among their own <A HREF="diction.htm#gate">gateway</A>s. </P>
+
+
+
+
+
+<P>This protocol is most useful as an &quot;interior <A HREF="diction.htm#gate">gateway</A>
+
+
+protocol&quot;. In a nationwide network such as the current Internet, it
+
+
+is very unlikely that a single routing protocol will used for the whole
+
+
+network. Rather, the network will be organized as a collection of &quot;autonomous
+
+
+systems&quot;. An autonomous system will in general be administered by
+
+
+a single entity, or at least will have some reasonable degree of technical
+
+
+and administrative control. Each autonomous system will have its own routing
+
+
+technology. This may well be different for different autonomous systems.
+
+
+The routing protocol used within an autonomous system is referred to as
+
+
+an interior <A HREF="diction.htm#gate">gateway</A> protocol, or &quot;<A HREF="diction.htm#igp">IGP</A>&quot;.
+
+
+A separate protocol is used to interface among the autonomous systems.
+
+
+The earliest such protocol, still used in the Internet, is &quot;<A HREF="diction.htm#egp">EGP</A>&quot;
+
+
+(exterior <A HREF="diction.htm#gate">gateway</A> protocol). Such protocols
+
+
+are now usually referred to as inter-AS routing protocols. RIP was designed
+
+
+to work with moderate-size networks using reasonably homogeneous technology.
+
+
+Thus it is suitable as an <A HREF="diction.htm#igp">IGP</A> for many campuses
+
+
+and for regional networks using serial lines whose speeds do not vary widely.
+
+
+</P>
+
+
+
+
+
+<P>RIP is intended for use within the IP-based Internet. The Internet is
+
+
+organized into a number of networks connected by <A HREF="diction.htm#gate">gateway</A>s.
+
+
+The networks may be either point-to-point links or more complex networks
+
+
+such as Ethernet or the ARPANET. <A HREF="diction.htm#host">host</A>s
+
+
+and <A HREF="diction.htm#gate">gateway</A>s are presented with IP <A HREF="diction.htm#datagram">datagram</A>s
+
+
+addressed to some <A HREF="diction.htm#host">host</A>. Routing is the
+
+
+method by which the <A HREF="diction.htm#host">host</A> or <A HREF="diction.htm#gate">gateway</A>
+
+
+decides where to send the <A HREF="diction.htm#datagram">datagram</A>.
+
+
+It may be able to send the <A HREF="diction.htm#datagram">datagram</A>
+
+
+directly to the destination, if that destination is on one of the networks
+
+
+that are directly connected to the <A HREF="diction.htm#host">host</A>
+
+
+or <A HREF="diction.htm#gate">gateway</A>. However, the interesting case
+
+
+is when the destination is not directly reachable. In this case, the <A HREF="diction.htm#host">host</A>
+
+
+or <A HREF="diction.htm#gate">gateway </A>attempts to send the <A HREF="diction.htm#datagram">datagram</A>
+
+
+to a <A HREF="diction.htm#gate">gateway</A> that is nearer the destination.
+
+
+The goal of a routing protocol is very simple. It is to supply the information
+
+
+that is needed to do routing. </P>
+
+
+
+
+
+<P>This protocol does not solve every possible routing problem. As mentioned
+
+
+above, it is primary intended for use as an <A HREF="diction.htm#igp">IGP</A>,
+
+
+in reasonably homogeneous networks of moderate size. In addition, the following
+
+
+specific limitations should be mentioned </P>
+
+
+
+
+
+<UL>
+
+
+<LI>The protocol is limited to networks whose longest path involves 15
+
+
+hops. Note that this statement of the limit assumes that a cost of 1 is
+
+
+used for each network. </LI>
+
+
+
+
+
+<LI>The protocol depends upon &quot;counting to infinity&quot; to resolve
+
+
+certain unusual situations. </LI>
+
+
+
+
+
+<LI>This protocol uses fixed &quot;metrics&quot; to compare alternative
+
+
+routes. </LI>
+
+
+</UL>
+
+
+
+
+
+<P><A HREF="content.htm"><IMG SRC="images/contents.gif" HEIGHT=57 WIDTH=57></A><A HREF="content.htm">
+
+
+Table of contents. </A></P>
+
+
+
+
+
+<P><A HREF="intro.htm"><IMG SRC="images/note.gif" HEIGHT=35 WIDTH=58></A><A HREF="intro.htm">
+
+
+Introduction. </A></P>
+
+
+
+
+
+<P><A HREF="algorith.htm"><IMG SRC="images/math.gif" HEIGHT=35 WIDTH=94></A><A HREF="algorith.htm">
+
+
+The algorithm. </A></P>
+
+
+
+
+
+<P><A HREF="techni.htm"><IMG SRC="images/techni.gif" HEIGHT=49 WIDTH=49></A><A HREF="techni.htm">
+
+
+Technical report. </A></P>
+
+
+
+
+
+<P><A HREF="apps.htm"><IMG SRC="images/daemon.gif" HEIGHT=51 WIDTH=51></A><A HREF="apps.htm">
+
+
+Unix applications. </A></P>
+
+
+
+
+
+<P><A HREF="RIP2.htm"><IMG SRC="images/bignew.gif" HEIGHT=43 WIDTH=57></A><A HREF="RIP2.htm">
+
+
+The new RIP 2. </A></P>
+
+
+
+
+
+<ADDRESS><IMG SRC="images/eyesrit.gif" HEIGHT=9 WIDTH=582><BR>
+
+
+Written by <A HREF="http://www.math.tau.ac.il/~livnat/">Livnat Dror, </A><A HREF="http://www.math.tau.ac.il/~matza/">Matza
+
+
+Oren, </A>Shaul Hayim, Shouster Alon. </ADDRESS>
+
+
+
+
+
+</BODY>
+
+
+</HTML>
+
+
+

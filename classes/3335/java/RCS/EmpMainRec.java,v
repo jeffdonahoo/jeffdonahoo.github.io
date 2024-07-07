@@ -1,0 +1,57 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2023.10.15.16.26.07;	author donahoo;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2023.10.15.16.24.22;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+record EmployeeRecord(String name, int age, List<String> emailList) {}
+
+public class EmpMainRec {
+  public static void main(String[] args) {
+    // Generated Constructor
+    EmployeeRecord emps = new EmployeeRecord("Bob", 35, List.of());
+    // Generated Accessors
+    System.out.println("Employee: %s %d %s".formatted(emps.name(), emps.age(), emps.emailList().stream().collect(Collectors.joining(", "))));
+    // Generated toString
+    System.out.println(emps);
+    // Generated hashCode
+    System.out.println("Set size " + Set.of(new EmployeeRecord("A", 21, List.of()), new EmployeeRecord("A", 20, List.of()), new EmployeeRecord("A", 20, List.of())).size());
+  }
+}
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d16 1
+a16 1
+    System.out.println("Set size " + Set.of(new EmployeeClass("A", 21, List.of()), new EmployeeClass("A", 20, List.of()), new EmployeeClass("A", 20, List.of())).size());
+@

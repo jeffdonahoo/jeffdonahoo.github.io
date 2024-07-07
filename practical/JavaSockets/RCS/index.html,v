@@ -1,0 +1,128 @@
+head	1.5;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.5
+date	2004.09.14.16.41.15;	author donahoo;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2004.08.28.01.21.39;	author donahoo;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2002.09.11.12.20.28;	author donahoo;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2001.08.16.20.52.53;	author donahoo;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2001.01.23.21.07.51;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@<HTML>
+<HEAD>
+<TITLE>Practical TCP/IP Sockets in Java</TITLE>
+</HEAD>
+<BODY bgcolor="White" text="Black" vlink="Purple" alink="Red" link="Blue">
+<CENTER><FONT COLOR="#1D2B55" SIZE=+10>Practical TCP/IP Sockets in Java<sup>TM</sup>
+</FONT> <P>
+<IMG SRC="../images/javasocket.gif" HEIGHT=250></CENTER>
+Welcome to the web resource for TCP/IP Sockets in Java:  Practical
+Guide for Programmers.
+<UL>
+<LI><A HREF="textcode.html">Example code from text</A>
+<LI><A HREF="../CSockets/progexer.html">Sample programming exercises</A>
+<LI><A HREF="PracticalSocketJava.ppt">Powerpoint Slides - DRAFT!!!!!</A> (Currently only
+covers Chpts. 1-2)
+<LI><A HREF="../CSockets">TCP/IP Sockets in C:  Practical Guide for Programmers</A>
+<LI><A HREF="../">Practical Series</A>
+</UL>
+<p align="right">
+<A HREF="http://www.mkp.com"><img src="images/MK_blue.gif" border=0></A>
+</BODY>
+</HTML>
+@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@d6 1
+a6 1
+<CENTER><FONT COLOR="#1D2B55" SIZE=+10>Practical TCP/IP Sockets in Java
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d10 1
+a10 2
+Guide for Programmers.  If you have any suggestions for this site, please send
+email to <A HREF="mailto:Jeff_Donahoo@@Baylor.edu">Jeff Donahoo</A>.
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d8 1
+a8 1
+<IMG SRC="images/pocket-stack.gif"></CENTER>
+d14 1
+a14 1
+<LI><A HREF="progexer.html">Sample programming exercises</A>
+d18 1
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d3 1
+a3 1
+<TITLE>Pocket Socket Web Site</TITLE>
+d6 1
+a6 1
+<CENTER><FONT COLOR="#1D2B55" SIZE=+10>Pocket Socket Guide: Java
+d9 2
+a10 3
+Welcome to the Pocket Socket Web site for Java.  We hope to use this site to
+enhance your experience with the "The Pocket Guide to TCP/IP Sockets:
+Java Version".  If you have suggestions for this site, please send
+d15 3
+a17 1
+<LI><A HREF="../PocketSocket">C Version</A>
+d20 1
+a20 1
+<img src="images/MK_blue.gif" border=0>
+@

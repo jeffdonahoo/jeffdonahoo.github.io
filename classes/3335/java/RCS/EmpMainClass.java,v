@@ -1,0 +1,98 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2023.10.15.16.54.27;	author donahoo;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2023.10.15.16.24.15;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+class EmployeeClass {
+  private final String name;
+  private final int age;
+  private final List<String> emailList;
+}
+
+public class EmpMainClass {
+  public static void main(String[] args) {
+    EmployeeClass emps = new EmployeeClass("Bob", 35, List.of());
+    System.out.println("Employee: %s %d %s".formatted(emps.getName(), emps.getAge(), emps.getEmailList().stream().collect(Collectors.joining(", "))));
+    System.out.println(emps);
+    System.out.println("Set size " + Set.of(new EmployeeClass("A", 21, List.of()), new EmployeeClass("A", 20, List.of()), new EmployeeClass("A", 20, List.of())).size());
+  }
+}
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@a6 1
+  
+a9 40
+  
+  public EmployeeClass(String name, int age, List<String> emailList) {
+    this.name = name;
+    this.age = age;
+    this.emailList = emailList;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public int getAge() {
+    return age;
+  }
+
+  public List<String> getEmailList() {
+    return emailList;
+  }
+
+  @@Override
+  public String toString() {
+    return "EmployeeClass [name=" + name + ", age=" + age + ", emailList=" + emailList + "]";
+  }
+
+  @@Override
+  public int hashCode() {
+    return Objects.hash(age, emailList, emailList);
+  }
+
+  @@Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    EmployeeClass other = (EmployeeClass) obj;
+    return age == other.age && Objects.equals(emailList, other.emailList) && Objects.equals(name, other.name);
+  }
+@

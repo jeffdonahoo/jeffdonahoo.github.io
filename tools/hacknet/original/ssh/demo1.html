@@ -1,0 +1,52 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>New Page 1</title>
+</head>
+
+<body>
+
+<p align="center"><font size="5"><b>DEMONSTRATION OF UNWISE USE OF SSH</b></font></p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;&nbsp;&nbsp; If my machine was running the secure shell
+daemon as well as the machine I wanted to connect to, I could connect securely
+from my machine to the host machine.&nbsp; However, this is not assured, since
+not all programs are routed through the daemon (only Secure Shell commands
+are.)&nbsp; For example, below are three machines.&nbsp; I am on A, and want to
+send a file to C securely.&nbsp; I have many options, but I choose to use <b>ftp
+</b>(the same could be said of <b>telnet</b> as well), thinking that since I
+have Secure Shell, I am safe (how foolish of me!!)</p>
+<p align="left">&nbsp;</p>
+<p align="left"><img border="0" src="demo1.1.gif" width="320" height="100"></p>
+<p align="left">&nbsp;</p>
+<p align="left">Thus, the packets that A (as root) sends to C through B may look
+like:</p>
+<p align="left"><tt><u>4500 0035 051f 4000 4006 0b6c 813e 93dd</u>&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; Where:</tt><br>
+<tt><u>813e 93de</u> <font color="#ff0000">0418 0017 0d14 d5f0 1a2a
+4993&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font><u>xxxx</u>
+is the IP header</tt><br>
+<tt><font color="#ff0000">8018 7d78 0c64 0000 0101 080a 0445 6991&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; yyyy </font>is the TCP header</tt><br>
+<tt><font color="#ff0000">0446 d591 </font>30&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+zzzz is the packet data</tt><br>
+</p>
+<p align="left">Each time you sent the packet with the data &quot;0&quot;, you
+would get a similar packet (the only differences would be in the IP and TCP
+headers.)&nbsp; The hexadecimal number &quot;30&quot; would appear every time,
+no matter the user or time or machine or whether the ssh2 daemon is
+running.&nbsp; Therefore, machine B could &quot;sniff&quot; the packets going
+across his router to learn any information that he/she wanted, even though both
+A and C have security measures in force.</p>
+<p align="left">Clearly, there is no security in this method - any schmoe can
+figure out passwords this way.&nbsp; Therefore, it is imperative to use ssh2 and
+sftp for all network needs.</p>
+
+</body>
+
+</html>

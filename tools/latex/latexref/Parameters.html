@@ -1,0 +1,33 @@
+<HTML>
+<!-- created Thu Apr 9 23:20:43 MET DST 1998
+ from ../latex2e.texi line 5214 via texi2www -->
+<HEAD>
+<TITLE>Parameters</TITLE>
+<LINK REL="Precedes" HREF="Concept_Index.html">
+<LINK REV="Precedes" HREF="Commands.html">
+<LINK REV="Subdocument" HREF="Top.html">
+</HEAD><BODY><P>
+<A HREF="Commands.html"><IMG ALIGN=MIDDLE SRC="prev-arrow.gif" ALT="PREV"></A>
+<A HREF="Top.html"> <IMG ALIGN=MIDDLE SRC="up-arrow.gif" ALT="UP"></A>
+<A HREF="Concept_Index.html"><IMG ALIGN=MIDDLE SRC="next-arrow.gif" ALT="NEXT"></A>
+<CITE>LaTeX2e help 1.6</CITE></P>
+<H1>Chapter 3: Parameters</H1>
+<P>
+The input file specification indicates the file to be formatted; TeX
+uses `<CODE>.tex</CODE>' as a default file extension.  If you omit the input file
+entirely, TeX accepts input from the terminal.  You specify command
+options by supplying a string as a parameter to the command; e.g.
+</P>
+<P>
+<CODE>latex ``\scrollmode\input foo.tex''</CODE>
+</P>
+<P>
+will process `<CODE>foo.tex</CODE>' without pausing after every error.
+</P>
+<P>
+Output files are always created in the current directory. When you fail
+to specify an input file name, TeX bases the output names on the file
+specification associated with the logical name TEX_OUTPUT, typically
+<CODE>texput.log</CODE>.
+</P>
+</BODY></HTML>

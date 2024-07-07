@@ -1,0 +1,88 @@
+<HTML>
+<!-- created Thu Apr 9 23:20:43 MET DST 1998
+ from ../latex2e.texi line 2776 via texi2www -->
+<HEAD>
+<TITLE>Letters</TITLE>
+<LINK REL="Precedes" HREF="Line_$26amp$3b_Page_Breaking.html">
+<LINK REV="Precedes" HREF="Lengths.html">
+<LINK REV="Subdocument" HREF="Commands.html">
+</HEAD><BODY><P>
+<A HREF="Lengths.html"><IMG ALIGN=MIDDLE SRC="prev-arrow.gif" ALT="PREV"></A>
+<A HREF="Commands.html"> <IMG ALIGN=MIDDLE SRC="up-arrow.gif" ALT="UP"></A>
+<A HREF="Line_$26amp$3b_Page_Breaking.html"><IMG ALIGN=MIDDLE SRC="next-arrow.gif" ALT="NEXT"></A>
+<CITE>LaTeX2e help 1.6</CITE></P>
+<H2>2.9: Letters</H2>
+<P>
+You can use LaTeX to typeset letters, both personal and business.  The
+<CODE>letter</CODE> document class is designed to make a number of letters at
+once, although you can make just one if you so desire.
+</P>
+<P>
+Your `<CODE>.tex</CODE>' source file has the same minimum commands as the other
+document classes, i.e., you must have the following commands as a
+minimum:
+</P>
+<DL><DT><DD>
+<PRE>
+ \documentclass{letter}
+ \begin{document}
+  ... letters ...
+ \end{document}
+</PRE>
+</DL>
+<P>
+Each letter is a <CODE>letter</CODE> environment, whose argument is the name
+and address of the recipient.  For example, you might have:
+</P>
+<DL><DT><DD>
+<PRE>
+ \begin{letter}{Mr. Joe Smith\\ 2345 Princess St. 
+      \\ Edinburgh, EH1 1AA}
+   ...
+ \end{letter}
+</PRE>
+</DL>
+<P>
+The letter itself begins with the <CODE>\opening</CODE> command.  The text of
+the letter follows.  It is typed as ordinary LaTeX input.  Commands that
+make no sense in a letter, like <CODE>\chapter</CODE>, do not work.  The letter
+closes with a <CODE>\closing</CODE> command.
+</P>
+<P>
+After the <CODE>closing</CODE>, you can have additional material.  The
+<CODE>\cc</CODE> command produces the usual ``cc: ...''.  There's also a similar
+<CODE>\encl</CODE> command for a list of enclosures. With both these commands,
+use <CODE>\\</CODE> to separate the items. 
+</P>
+<P>
+These commands are used with the <CODE>letter</CODE> class:
+</P>
+<MENU>
+<LI><A HREF="$5caddress.html">\address</A>
+Your return address.
+<LI><A HREF="$5ccc.html">\cc</A>
+Cc list.
+<LI><A HREF="$5cclosing.html">\closing</A>
+Saying goodbye.
+<LI><A HREF="$5cencl.html">\encl</A>
+List of enclosed material.
+<LI><A HREF="$5clocation.html">\location</A>
+Your organisation's address.
+<LI><A HREF="$5cmakelabels.html">\makelabels</A>
+Making address labels.
+<LI><A HREF="$5cname.html">\name</A>
+Your name, for the return address.
+<LI><A HREF="$5copening.html">\opening</A>
+Saying hello.
+<LI><A HREF="$5cps.html">\ps</A>
+Adding a postscript.
+<LI><A HREF="$5csignature.html">\signature</A>
+Your signature.
+<LI><A HREF="$5cstartbreaks.html">\startbreaks</A>
+Allow page breaks.
+<LI><A HREF="$5cstopbreaks.html">\stopbreaks</A>
+Disallow page breaks.
+<LI><A HREF="$5ctelephone.html">\telephone</A>
+Your phone number.
+</MENU>
+</BODY></HTML>

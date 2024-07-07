@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0040)http://cs.baylor.edu/~singh/NISTnet.html -->
+<HTML><HEAD><TITLE>NISTnet</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+<META content="Ashish Arte" name=Author>
+<META content="MSHTML 5.50.4134.600" name=GENERATOR></HEAD>
+<BODY>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<U><FONT color=#3366ff><FONT size=+2>NIST NET</FONT></FONT></U> <BR><FONT 
+color=#000000><FONT size=+1></FONT></FONT>&nbsp; <BR><FONT color=#000000><FONT 
+size=+1></FONT></FONT>&nbsp; 
+<UL>
+  <LI><FONT color=#3333ff><FONT size=+1>Introduction</FONT></FONT> </LI></UL><FONT 
+color=#000000><FONT size=+1>NIST Net runs on Linux and is a network emulation 
+package.Using this package we can emulate a wide variety of network conditions 
+on a single machine which has been set up as a router.The network conditions can 
+be packet loss, duplication, delay and jitter, bandwidth limitations, and 
+network congestion. NIST Net allows&nbsp; allows testing of network-adaptive 
+protocols and applications&nbsp; in a lab setting.</FONT></FONT><FONT 
+color=#000000><FONT size=+1></FONT></FONT> 
+<P><FONT color=#000000><FONT size=+1>NIST Net is implemented as a kernel module 
+extension to the Linux operating system and an X Window System-based user 
+interface application.This package allows two kinds of interface one of which is 
+a graphical user interface.</FONT></FONT> <BR><FONT color=#000000><FONT 
+size=+1></FONT></FONT>&nbsp; 
+<UL>
+  <LI><FONT color=#3366ff><FONT size=+1>Installing NIST Net</FONT></FONT> 
+</LI></UL><FONT color=#000000><FONT size=+1>The source comes in a gzipped tar 
+file, nistnet.tar.gz.</FONT></FONT> <BR><FONT color=#000000><FONT size=+1>To 
+uncompress the file:</FONT></FONT> <BR><FONT color=#000000><FONT size=+1>tar 
+-xvzf nistnet.tar.gz - produces a directory nistnet and a bunch of files in it. 
+That is the directory referred to as nistnet below.</FONT></FONT><FONT 
+color=#000000><FONT size=+1></FONT></FONT> 
+<P><FONT color=#000000><FONT size=+1>Before you try to install NIST Net, first 
+make sure you can build and install usable kernels:</FONT></FONT> <BR><FONT 
+color=#000000><FONT size=+1>To do that follow the following steps:</FONT></FONT> 
+<BR><FONT color=#000000><FONT size=+1>Go to</FONT></FONT> <BR><FONT 
+color=#000000><FONT size=+1>cd /usr/src/linux</FONT></FONT> <BR><FONT 
+color=#000000><FONT size=+1>make config (or menuconfig/xconfig)</FONT></FONT> 
+<BR><FONT color=#000000><FONT size=+1>make</FONT></FONT> <BR><FONT 
+color=#000000><FONT size=+1>make modules</FONT></FONT> <BR><FONT 
+color=#000000><FONT size=+1>make install</FONT></FONT> <BR><FONT 
+color=#000000><FONT size=+1>make modules_install</FONT></FONT> <BR><FONT 
+color=#000000><FONT size=+1>reboot</FONT></FONT> <BR><FONT color=#000000><FONT 
+size=+1>- make sure new kernel boots properly</FONT></FONT><FONT 
+color=#000000><FONT size=+1></FONT></FONT> 
+<P><FONT color=#ff0000><FONT size=+1>WARNING:</FONT></FONT> <BR><FONT 
+color=#000000><FONT size=+1>Make sure you do this before you recompile the 
+kernel, else you will get a lot of warnings</FONT></FONT> <BR><FONT 
+color=#000000><FONT size=+1>1 Make sure&nbsp; time and date set on your computer 
+is correct. Use the command</FONT></FONT> <BR><FONT color=#000000><FONT 
+size=+1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+&gt; date MMDDhhmmYY</FONT></FONT> <BR><FONT color=#000000><FONT size=+1>&nbsp; 
+to set the appropriate date and time</FONT></FONT> <BR><FONT color=#000000><FONT 
+size=+1>2. Set the hardware clock to the current system time with the 
+command:</FONT></FONT> <BR><FONT color=#000000><FONT 
+size=+1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+&gt; hwclock --systohc</FONT></FONT> <BR><FONT color=#000000><FONT 
+size=+1>&nbsp;</FONT></FONT> <BR><FONT color=#000000><FONT size=+1>Install the 
+fast timer kernel patches:</FONT></FONT> <BR><FONT color=#000000><FONT 
+size=+1>Run:</FONT></FONT> <BR><FONT color=#000000><FONT 
+size=+1>./Patch.Kernel</FONT></FONT> <BR><FONT color=#000000><FONT size=+1>- to 
+install all the kernel patches</FONT></FONT> <BR><FONT color=#ff0000><FONT 
+size=+1>WARNING:</FONT></FONT> <BR><FONT color=#000000><FONT size=+1>Make sure 
+the patches install correctly! Messages like "offset 2 lines" or "with fuzz 2" 
+are ok; but things like "Hunk 1 FAILED" or "misordered hunks" are not. If some 
+of the patches fail, your kernel is pretty much guaranteed not to 
+work.</FONT></FONT> <BR><FONT color=#000000><FONT size=+1>Now, configure and 
+build the patched kernel:</FONT></FONT> <BR><FONT color=#000000><FONT size=+1>cd 
+/usr/src/linux</FONT></FONT> <BR><FONT color=#000000><FONT size=+1>make config 
+(or menuconfig/xconfig)</FONT></FONT> <BR><FONT color=#000000><FONT size=+1>- 
+say "y" to CONFIG_FAST_TIMER (at end, under "kernel hacks")*</FONT></FONT> 
+<BR><FONT color=#000000><FONT size=+1>make dep</FONT></FONT> <BR><FONT 
+color=#000000><FONT size=+1>make install</FONT></FONT> <BR><FONT 
+color=#000000><FONT size=+1>cd nistnet</FONT></FONT> <BR><FONT 
+color=#000000><FONT size=+1>edit Imakefile</FONT></FONT> <BR><FONT 
+color=#000000><FONT size=+1>cd nistnet/monitor</FONT></FONT> <BR><FONT 
+color=#000000><FONT size=+1>edit Imakefile</FONT></FONT> <BR><FONT 
+color=#000000><FONT size=+1>xmkmf -a</FONT></FONT> <BR><FONT color=#000000><FONT 
+size=+1>- creates customized Makefiles.</FONT></FONT> <BR><FONT 
+color=#000000><FONT size=+1>Build and install the nistnet module, API library, 
+and user interface</FONT></FONT> <BR><FONT color=#000000><FONT size=+1>cd 
+nistnet</FONT></FONT> <BR><FONT color=#000000><FONT size=+1>make</FONT></FONT> 
+<BR><FONT color=#000000><FONT size=+1>make install</FONT></FONT> <BR><FONT 
+color=#000000><FONT size=+1>Try things out:</FONT></FONT> <BR><FONT 
+color=#000000><FONT size=+1>insmod nistnet</FONT></FONT> <BR><FONT 
+color=#000000><FONT size=+1>- loads "nistnet" emulator module into 
+kernel</FONT></FONT> <BR><FONT color=#000000><FONT 
+size=+1>xnistnet</FONT></FONT> <BR><FONT color=#000000><FONT size=+1>- runs 
+(X-based) user interface</FONT></FONT> <BR><FONT color=#000000><FONT 
+size=+1>cnistnet -h</FONT></FONT> <BR><FONT color=#000000><FONT 
+size=+1>Information of other commands can be accessed by going to the following 
+link:</FONT></FONT> <BR><FONT color=#000000><FONT size=+1><A 
+href="http://www.itl.nist.gov/div892/itg/carson/nistnet/install.html">http://www.itl.nist.gov/div892/itg/carson/nistnet/install.html</A></FONT></FONT> 
+<BR><FONT color=#000000><FONT size=+1><A 
+href="http://www.itl.nist.gov/div892/itg/carson/nistnet/install.html"></A></FONT></FONT>&nbsp; 
+
+<UL>
+  <LI><FONT color=#3366ff><FONT size=+1>Running NISTnet</FONT></FONT> 
+</LI></UL><FONT color=#000000><FONT size=+1>Before running NIST Net, the kernel 
+emulator module must be installed through insmod nistnet.</FONT></FONT> 
+<BR><FONT color=#000000><FONT size=+1>There are two tools for controlling the 
+emulator, Hitbox which is a command line interface and Nistnet which is a 
+graphical user interface.</FONT></FONT> <BR><FONT color=#000000><FONT 
+size=+1>The Hitbox mode takes a lot of arguments some of which 
+are:</FONT></FONT> <BR><FONT color=#000000><FONT size=+1>-u up (turn emulator 
+on)</FONT></FONT> <BR><FONT color=#000000><FONT size=+1>-d down (turn emulator 
+off - entries are retained)</FONT></FONT> <BR><FONT color=#000000><FONT 
+size=+1>-a src dest delay delsigma bandwidth drop dup drdmin 
+drdmax</FONT></FONT> <BR><FONT color=#000000><FONT size=+1>add new 
+entry</FONT></FONT> <BR><FONT color=#000000><FONT size=+1>-r src 
+dest</FONT></FONT> <BR><FONT color=#000000><FONT size=+1>remove 
+entry</FONT></FONT> <BR><FONT color=#000000><FONT size=+1>-s src 
+dest</FONT></FONT> <BR><FONT color=#000000><FONT size=+1>see stats for 
+entry</FONT></FONT> <BR><FONT color=#000000><FONT size=+1>-S src 
+dest</FONT></FONT> <BR><FONT color=#000000><FONT size=+1>see stats for entry 
+continuously</FONT></FONT> <BR><FONT color=#000000><FONT 
+size=+1>-R</FONT></FONT> <BR><FONT color=#000000><FONT size=+1>read current list 
+of entries in kernel</FONT></FONT> <BR><FONT color=#000000><FONT 
+size=+1>-D</FONT></FONT> <BR><FONT color=#000000><FONT size=+1>debug 
+on</FONT></FONT> <BR><FONT color=#000000><FONT size=+1>-U</FONT></FONT> 
+<BR><FONT color=#000000><FONT size=+1>debug off</FONT></FONT> <BR><FONT 
+color=#000000><FONT size=+1>-G</FONT></FONT> <BR><FONT color=#000000><FONT 
+size=+1>see global stats</FONT></FONT> <BR><FONT color=#000000><FONT 
+size=+1>More information about the Nistnet Graphical user interface can be 
+accessed from:</FONT></FONT> <BR><FONT color=#000000><FONT size=+1><A 
+href="http://www.itl.nist.gov/div892/itg/carson/nistnet/usage.html">http://www.itl.nist.gov/div892/itg/carson/nistnet/usage.html</A></FONT></FONT><FONT 
+color=#000000><FONT size=+1><A 
+href="http://www.itl.nist.gov/div892/itg/carson/nistnet/usage.html"></A></FONT></FONT> 
+
+<P><FONT color=#000000><FONT size=+1><A 
+href="http://www.itl.nist.gov/div892/itg/carson/nistnet/faq.html">Nistnet 
+FAQ</A></FONT></FONT> <BR><FONT color=#000000><FONT size=+1><A 
+href="http://www.itl.nist.gov/div892/itg/carson/nistnet/">Nistnet Home 
+Page</A></FONT></FONT> <BR><FONT color=#000000><FONT 
+size=+1></FONT></FONT>&nbsp; <BR><FONT color=#000000><FONT 
+size=+1></FONT></FONT>&nbsp; <BR><FONT color=#000000><FONT 
+size=+1></FONT></FONT>&nbsp; </P>
+
+<P>
+Commands:
+<UL>
+<LI>cnistnet:  Prints NISTNet help
+<LI>cnistnet -R:  Prints NISTNet tables
+<LI>cnistnet -u:  Brings NISTNet up
+<LI>cnistnet -a anyhost michaela:6000.udp --delay 10000:  Adds a 10
+sec. delay for UDP packets from any host/port to michaela on port 6000
+</UL>
+</BODY></HTML>

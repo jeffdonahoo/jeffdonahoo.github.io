@@ -1,0 +1,107 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2018.01.25.16.47.34;	author donahoo;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2013.09.09.17.58.08;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@public class MyException extends Exception {
+    String message;
+    String extra;
+    Throwable cause;
+    
+    MyException(String message, String extra) {
+        if (extra == null) {
+            throw new NullPointerException();
+        }
+        this.message = message;
+        this.extra = extra;
+    }
+   
+    MyException(String message, String extra, Throwable cause) {
+        if (extra == null) {
+            throw new NullPointerException();
+        }
+        this.message = message;
+        this.extra = extra;
+    }
+    
+    public String getMessage() {
+        return message;
+    }
+    
+    String getExtra() {
+        return extra;
+    }
+    
+    public Throwable getCause() {
+        return cause;
+    }
+}
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 33
+a33 37
+public class MyException {
+
+  public static int average(String[] seq) throws BadElementException {
+    int sum = 0;
+
+    for (int i = 0; i < seq.length; i++){
+      try {
+	sum += ExceptionEx1.string2Integer(seq[i]);
+      } catch (Exception e) {
+	throw new BadElementException("Element is not a number", i);
+      }
+    }
+
+    return sum / seq.length;
+  }
+
+  public static void main(String[] args) {
+    try {
+      System.out.println(average(args));
+    } catch (BadElementException e) {
+      System.out.println("Oops, " + args[e.getIndex()] + " isn't a number");
+    }
+  }
+}
+
+class BadElementException extends Exception {
+  private int index;
+
+  public BadElementException(String message, int index) {
+    super(message);
+    this.index = index;
+  }
+
+  public int getIndex() {
+    return index;
+  }
+}@

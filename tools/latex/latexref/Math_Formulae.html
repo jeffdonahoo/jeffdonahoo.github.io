@@ -1,0 +1,68 @@
+<HTML>
+<!-- created Thu Apr 9 23:20:43 MET DST 1998
+ from ../latex2e.texi line 3462 via texi2www -->
+<HEAD>
+<TITLE>Math Formulae</TITLE>
+<LINK REL="Precedes" HREF="Modes.html">
+<LINK REV="Precedes" HREF="Margin_Notes.html">
+<LINK REV="Subdocument" HREF="Commands.html">
+</HEAD><BODY><P>
+<A HREF="Margin_Notes.html"><IMG ALIGN=MIDDLE SRC="prev-arrow.gif" ALT="PREV"></A>
+<A HREF="Commands.html"> <IMG ALIGN=MIDDLE SRC="up-arrow.gif" ALT="UP"></A>
+<A HREF="Modes.html"><IMG ALIGN=MIDDLE SRC="next-arrow.gif" ALT="NEXT"></A>
+<CITE>LaTeX2e help 1.6</CITE></P>
+<H2>2.13: Math Formulae</H2>
+<P>
+There are three environments that put LaTeX in math mode:
+</P>
+<TABLE>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>math</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+For Formulae that appear right in the text.
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>displaymath</CODE>
+</TD>
+    <TD VALIGN=TOP>For Formulae that appear on their own line.
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>equation</CODE>
+</TD>
+    <TD VALIGN=TOP>The same as the displaymath environment except that it adds an equation
+number in the right margin.
+</TD></TR>
+</TABLE>
+</P>
+<P>
+The <CODE>math</CODE> environment can be used in both paragraph and LR mode,
+but the <CODE>displaymath</CODE> and <CODE>equation</CODE> environments can be used
+only in paragraph mode.  The <CODE>math</CODE> and <CODE>displaymath</CODE>
+environments are used so often that they have the following short forms:
+</P>
+<DL><DT><DD>
+<PRE>
+    \(...\)     instead of     \begin{math}...\end{math}
+
+    \[...\]     instead of     \begin{displaymath}...\end{displaymath}
+</PRE>
+</DL>
+<P>
+In fact, the <CODE>math</CODE> environment is so common that it has an even
+shorter form:
+</P>
+<DL><DT><DD>
+<PRE>
+    $ ... $     instead of     \(...\)
+</PRE>
+</DL>
+<MENU>
+<LI><A HREF="Subscripts_$26amp$3b_Superscripts.html">Subscripts &amp; Superscripts</A>
+Also known as exponent or index.
+<LI><A HREF="Math_Symbols.html">Math Symbols</A>
+Various mathematical squiggles.
+<LI><A HREF="Spacing_in_Math_Mode.html">Spacing in Math Mode</A>
+Thick, medium, thin and negative spaces.
+<LI><A HREF="Math_Miscellany.html">Math Miscellany</A>
+Stuff that doesn't fit anywhere else.
+</MENU>
+</BODY></HTML>

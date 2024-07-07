@@ -1,0 +1,67 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2014.11.05.15.30.20;	author donahoo;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2013.09.09.17.58.08;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@<>
+@
+text
+@import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public class ListTest {
+
+  public static void main(String args[]) {
+
+    List<Integer> list = new ArrayList<>();
+
+    // Load list
+    long start = System.currentTimeMillis();
+    for (int i = 0; i < 10000; i++) {
+      list.add(0, i);
+    }
+    long stop = System.currentTimeMillis();
+    System.out.println("Add: " + (stop - start));
+
+    // Random get experiment
+    Random r = new Random();
+    start = System.currentTimeMillis();
+    for (int i = 0; i < 10000; i++) {
+      int value = list.get(Math.abs(r.nextInt()) % list.size());
+    }
+    stop = System.currentTimeMillis();
+    System.out.println("Random get: " + (stop - start));
+  }
+}
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d9 1
+a9 1
+    List<Integer> list = new ArrayList<Integer>();
+@

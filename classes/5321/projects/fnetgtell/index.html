@@ -1,0 +1,500 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>New Page 1</title>
+</head>
+
+<body>
+
+<table border="0" width="100%" height="2283">
+  <tr>
+    <td width="100%" height="2254">
+      <h3 style="text-align:justify"><span style="color:black">Freenet and
+      Gnutella <o:p>
+      </o:p>
+      </span></h3>
+      <h3 style="text-align:justify;text-indent:.5in"><span style="font-size:12.0pt;
+mso-bidi-font-size:13.5pt;font-family:&quot;Times New Roman&quot;;font-weight:normal">Freenet
+      and Gnutella represent a new step in distributed information systems. Each
+      is a system for searching information; each returns information without
+      telling you where it came from. They are innovative in the areas of
+      distributed information storage, information retrieval, and network
+      architecture. But they differ significantly in both goals and
+      implementation<span style="color:black"><o:p>
+      </o:p>
+      </span></span></h3>
+      <h3 style="text-align:justify"><span style="color:black">How Freenet
+      Works?<o:p>
+      </o:p>
+      </span></h3>
+      <p class="MsoNormal" style="text-align:justify"><span style="color:black">The
+      Freenet Network consists of many computers on the Internet each running a
+      piece of software called the &quot;Freenet Server&quot; or &quot;Freenet
+      Daemon&quot;. This piece of software allows that computer to become a
+      &quot;node&quot; in the Freenet, a small but equal part of the whole
+      network. This node may store some information itself, and it may know
+      something about <i>some</i> of the other nodes in the Freenet, but no one
+      node knows about the entire system, and no one node is superior to any
+      other. Freenet is, in effect, a perfect anarchy</span>.</p>
+      <h3 style="text-align:justify"><b>How Gnutella Works?</b>
+      </h3>
+      <p class="MsoNormal" style="text-align:justify">&nbsp;&nbsp; The
+      information in the following link explains how Gnutella works:
+      </p>
+      <p class="MsoNormal" style="text-align:justify"><a href="http://gnutella.wego.com/go/wego.pages.page?groupId=116705&amp;view=page&amp;pageId=119427&amp;folderId=118398&amp;panelId=119597&amp;action=view">http://gnutella.wego.com/go/wego.pages.page?groupId=116705&amp;view=page&amp;pageId=119427&amp;folderId=118398&amp;panelId=119597&amp;action=view</a>
+      </p>
+      <p class="MsoNormal" style="text-align:justify">&nbsp;<o:p> </o:p>
+      </p>
+      <h3 style="text-align:justify">What protocol is used?</h3>
+      <p class="MsoNormal" style="text-align:justify">Gnutella runs over HTTP.
+      Freenet uses its own port and protocol, rather than running over HTTP as
+      Gnutella does.</p>
+      <p class="MsoNormal" style="text-align:justify">&nbsp;<o:p>
+      </o:p>
+      </p>
+      <h3>How Freenet Stores information?</h3>
+      <p class="MsoNormal"><span style="color:black">Each node in the network
+      holds 3 types of information: </span><b>Key, reference,</b> and optionally
+      <b>Data<o:p>
+      </o:p>
+      </b></p>
+      <p class="MsoNormal"><b>Key</b>: <span style="color:black">Every material
+      posted in a Freenet has a unique identifier called its “key”. Nodes
+      store a number of keys.<o:p>
+      </o:p>
+      </span></p>
+      <p class="MsoNormal"><b><span style="color:black">Reference:</span></b><span style="color:black">
+      references to addresses of other Freenet nodes which are also likely to
+      know about those keys<o:p>
+      </o:p>
+      </span></p>
+      <p class="MsoNormal"><b><span style="color:black">Data:</span></b><span style="color:black"><span style="mso-spacerun: yes">&nbsp;
+      </span>the data corresponding to those keys<o:p>
+      </o:p>
+      </span></p>
+      <p><span style="font-family:&quot;Times New Roman&quot;;color:black">This
+      information is stored in a stack within the node like this: <o:p>
+      </o:p>
+      </span></p>
+      <table border="1" cellpadding="0" style="mso-cellspacing:1.5pt;mso-table-layout-alt:
+ fixed;border:solid windowtext .5pt">
+        <tr style="mso-row-margin-right:228.05pt">
+          <td width="37" style="width:27.75pt;border:solid windowtext .5pt;padding:.75pt .75pt .75pt .75pt">
+            <p class="MsoNormal">&nbsp;<span style="font-family:&quot;Arial Unicode MS&quot;;color:black"><o:p>
+            </o:p>
+            </span></p>
+          </td>
+          <td width="58" style="width:43.5pt;border:solid windowtext .5pt;padding:.75pt .75pt .75pt .75pt">
+            <p class="MsoNormal"><b><span style="color:black">Key</span></b><span style="font-family:&quot;Arial Unicode MS&quot;;color:black"><o:p>
+            </o:p>
+            </span></p>
+          </td>
+          <td width="58" style="width:43.5pt;border:solid windowtext .5pt;padding:.75pt .75pt .75pt .75pt">
+            <p class="MsoNormal"><b><span style="color:black">Data</span></b><span style="font-family:&quot;Arial Unicode MS&quot;;color:black"><o:p>
+            </o:p>
+            </span></p>
+          </td>
+          <td width="419" style="border: .5pt solid windowtext; padding: .75pt" colspan="2">
+            <p class="MsoNormal"><b><span style="color:black">Reference</span></b><span style="font-family:&quot;Arial Unicode MS&quot;;color:black"><o:p>
+            </o:p>
+            </span></p>
+          </td>
+        </tr>
+        <tr>
+          <td width="37" style="width:27.75pt;border:solid windowtext .5pt;padding:.75pt .75pt .75pt .75pt">
+            <p class="MsoNormal">&nbsp;<span style="font-family:&quot;Arial Unicode MS&quot;;color:black"><o:p>
+            </o:p>
+            </span></p>
+          </td>
+          <td width="58" style="width:43.5pt;border:solid windowtext .5pt;padding:.75pt .75pt .75pt .75pt">
+            <p class="MsoNormal"><span style="color:black">&quot;asc&quot;</span><span style="font-family:&quot;Arial Unicode MS&quot;;color:black"><o:p>
+            </o:p>
+            </span></p>
+          </td>
+          <td width="58" style="width:43.5pt;border:solid windowtext .5pt;padding:.75pt .75pt .75pt .75pt">
+            <p class="MsoNormal"><span style="color:black">&quot;bdf&quot;</span><span style="font-family:&quot;Arial Unicode MS&quot;;color:black"><o:p>
+            </o:p>
+            </span></p>
+          </td>
+          <td width="115" style="width:86.2pt;border:solid windowtext .5pt;padding:.75pt .75pt .75pt .75pt">
+            <p class="MsoNormal"><span style="color:black">193.123.23.7:8223</span><span style="font-family:&quot;Arial Unicode MS&quot;;color:black"><o:p>
+            </o:p>
+            </span></p>
+          </td>
+          <td width="304" style="width:228.05pt;border:solid windowtext .5pt;padding:
+  .75pt .75pt .75pt .75pt">
+            <p class="MsoNormal"><span style="color:black">&lt;- New items added
+            at top of stack</span><span style="font-family:&quot;Arial Unicode MS&quot;;color:black"><o:p>
+            </o:p>
+            </span></p>
+          </td>
+        </tr>
+        <tr>
+          <td width="37" style="width:27.75pt;border:solid windowtext .5pt;padding:.75pt .75pt .75pt .75pt">
+            <p class="MsoNormal">&nbsp;<span style="font-family:&quot;Arial Unicode MS&quot;;color:black"><o:p>
+            </o:p>
+            </span></p>
+          </td>
+          <td width="58" style="width:43.5pt;border:solid windowtext .5pt;padding:.75pt .75pt .75pt .75pt">
+            <p class="MsoNormal"><span style="color:black">&quot;bdf&quot;</span><span style="font-family:&quot;Arial Unicode MS&quot;;color:black"><o:p>
+            </o:p>
+            </span></p>
+          </td>
+          <td width="58" style="width:43.5pt;border:solid windowtext .5pt;padding:.75pt .75pt .75pt .75pt">
+            <p class="MsoNormal"><span style="color:black">&quot;mdf&quot;</span><span style="font-family:&quot;Arial Unicode MS&quot;;color:black"><o:p>
+            </o:p>
+            </span></p>
+          </td>
+          <td width="115" style="width:86.2pt;border:solid windowtext .5pt;padding:.75pt .75pt .75pt .75pt">
+            <p class="MsoNormal"><span style="color:black">132.156.75.93:1933</span><span style="font-family:&quot;Arial Unicode MS&quot;;color:black"><o:p>
+            </o:p>
+            </span></p>
+          </td>
+          <td width="304" style="width:228.05pt;border:solid windowtext .5pt;padding:
+  .75pt .75pt .75pt .75pt">
+            <p class="MsoNormal">&nbsp;<span style="font-family:&quot;Arial Unicode MS&quot;;color:black"><o:p>
+            </o:p>
+            </span></p>
+          </td>
+        </tr>
+        <tr>
+          <td width="37" style="width:27.75pt;border:solid windowtext .5pt;padding:.75pt .75pt .75pt .75pt">
+            <p class="MsoNormal">&nbsp;<span style="font-family:&quot;Arial Unicode MS&quot;;color:black"><o:p>
+            </o:p>
+            </span></p>
+          </td>
+          <td width="58" style="width:43.5pt;border:solid windowtext .5pt;padding:.75pt .75pt .75pt .75pt">
+            <p class="MsoNormal"><span style="color:black">&quot;mdp&quot;</span><span style="font-family:&quot;Arial Unicode MS&quot;;color:black"><o:p>
+            </o:p>
+            </span></p>
+          </td>
+          <td width="58" style="width:43.5pt;border:solid windowtext .5pt;padding:.75pt .75pt .75pt .75pt">
+            <p class="MsoNormal"><span style="color:black">&quot;rnvfv&quot;</span><span style="font-family:&quot;Arial Unicode MS&quot;;color:black"><o:p>
+            </o:p>
+            </span></p>
+          </td>
+          <td width="115" style="width:86.2pt;border:solid windowtext .5pt;padding:.75pt .75pt .75pt .75pt">
+            <p class="MsoNormal"><span style="color:black">177.32.23.15:1983</span><span style="font-family:&quot;Arial Unicode MS&quot;;color:black"><o:p>
+            </o:p>
+            </span></p>
+          </td>
+          <td width="304" style="width:228.05pt;border:solid windowtext .5pt;padding:
+  .75pt .75pt .75pt .75pt">
+            <p class="MsoNormal">&nbsp;<span style="font-family:&quot;Arial Unicode MS&quot;;color:black"><o:p>
+            </o:p>
+            </span></p>
+          </td>
+        </tr>
+        <tr>
+          <td width="37" style="width:27.75pt;border:solid windowtext .5pt;padding:.75pt .75pt .75pt .75pt">
+            <p class="MsoNormal"><span style="color:black">----&gt;</span><span style="font-family:&quot;Arial Unicode MS&quot;;color:black"><o:p>
+            </o:p>
+            </span></p>
+          </td>
+          <td width="58" style="width:43.5pt;border:solid windowtext .5pt;padding:.75pt .75pt .75pt .75pt">
+            <p class="MsoNormal"><span style="color:black">&quot;mmm&quot;</span><span style="font-family:&quot;Arial Unicode MS&quot;;color:black"><o:p>
+            </o:p>
+            </span></p>
+          </td>
+          <td width="58" style="width:43.5pt;border:solid windowtext .5pt;padding:.75pt .75pt .75pt .75pt">
+            <p class="MsoNormal">&nbsp;<span style="font-family:&quot;Arial Unicode MS&quot;;color:black"><o:p>
+            </o:p>
+            </span></p>
+          </td>
+          <td width="115" style="width:86.2pt;border:solid windowtext .5pt;padding:.75pt .75pt .75pt .75pt">
+            <p class="MsoNormal"><span style="color:black">65.34.234.54:234</span><span style="font-family:&quot;Arial Unicode MS&quot;;color:black"><o:p>
+            </o:p>
+            </span></p>
+          </td>
+          <td width="304" style="width:228.05pt;border:solid windowtext .5pt;padding:
+  .75pt .75pt .75pt .75pt">
+            <p class="MsoNormal"><span style="color:black">&lt;- Data stripped
+            from item when it passes below threshold</span><span style="font-family:&quot;Arial Unicode MS&quot;;
+  color:black"><o:p>
+            </o:p>
+            </span></p>
+          </td>
+        </tr>
+        <tr>
+          <td width="37" style="width:27.75pt;border:solid windowtext .5pt;padding:.75pt .75pt .75pt .75pt">
+            <p class="MsoNormal">&nbsp;<span style="font-family:&quot;Arial Unicode MS&quot;;color:black"><o:p>
+            </o:p>
+            </span></p>
+          </td>
+          <td width="58" style="width:43.5pt;border:solid windowtext .5pt;padding:.75pt .75pt .75pt .75pt">
+            <p class="MsoNormal"><span style="color:black">&quot;pp&quot;</span><span style="font-family:&quot;Arial Unicode MS&quot;;color:black"><o:p>
+            </o:p>
+            </span></p>
+          </td>
+          <td width="58" style="width:43.5pt;border:solid windowtext .5pt;padding:.75pt .75pt .75pt .75pt">
+            <p class="MsoNormal">&nbsp;<span style="font-family:&quot;Arial Unicode MS&quot;;color:black"><o:p>
+            </o:p>
+            </span></p>
+          </td>
+          <td width="115" style="width:86.2pt;border:solid windowtext .5pt;padding:.75pt .75pt .75pt .75pt">
+            <p class="MsoNormal"><span style="color:black">45.52.55.6:3245</span><span style="font-family:&quot;Arial Unicode MS&quot;;color:black"><o:p>
+            </o:p>
+            </span></p>
+          </td>
+          <td width="304" style="width:228.05pt;border:solid windowtext .5pt;padding:
+  .75pt .75pt .75pt .75pt">
+            <p class="MsoNormal"><span style="color:black">&lt;- Old items
+            removed when pushed off bottom of stack</span><span style="font-family:&quot;Arial Unicode MS&quot;;
+  color:black"><o:p>
+            </o:p>
+            </span></p>
+          </td>
+        </tr>
+      </table>
+      <p class="MsoNormal">&nbsp;</p>
+      <p class="MsoNormal"><span style="color:black">You will notice that below
+      the threshold (&quot;----&gt;&quot;) no data is stored for any of the
+      keys. In fact, if a key is pushed below the threshold its data will be
+      deleted</span></p>
+      <h3>How Freenet routes Requests:</h3>
+      <p style="text-align:justify;text-indent:.5in"><span style="font-family:&quot;Times New Roman&quot;;
+color:black">When the node receives a request for the data corresponding to the
+      key &quot;mdp&quot;. Fortunately the node has the relevant data and so it
+      sends a response back to the node that sent the request with the data and
+      also with its own address as the &quot;reference&quot; of the data. <o:p>
+      </o:p>
+      </span></p>
+      <p style="text-align:justify;text-indent:.5in"><span style="font-family:&quot;Times New Roman&quot;;
+color:black">But let's now imagine that the node receives a request for
+      &quot;pp&quot;. The node doesn't have the data itself but it does have a
+      reference, and so the node forwards the request on to 45.52.55.6:3245. If
+      the information is found by this node it will be sent back to our node.
+      Our node should forward it on to whichever node it received the request
+      from. It also removes the item corresponding to &quot;pp&quot; from the
+      stack, and pushes the full &quot;key/data/reference&quot; item back onto
+      the top (our node now knows the data as it has just received it in the
+      response). <o:p>
+      </o:p>
+      </span></p>
+      <p style="text-align:justify"><span style="font-family:&quot;Times New Roman&quot;;
+color:black"><span style="mso-spacerun: yes">&nbsp;</span><span style="mso-tab-count:
+1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>If the
+      node receives a request for a key that it doesn't have - say &quot;bdp&quot;,
+      then, well rather than give up, our node gives it its best guess. It
+      notices that &quot;bdf&quot; is the closest key that it has in its
+      datastore to &quot;bdp&quot; (this is assuming that keys are compared
+      alphabetically) and so it forwards the request on to the reference node
+      corresponding to &quot;bdf&quot;. If this data is successfully found then
+      it is pushed on to the top of the stack (the &quot;bdf&quot; key is *not*
+      deleted or moved to the top). If the node receives a message indicating
+      failure then rather than just giving up, it will forward the request to
+      its next best guess (which would be &quot;asc&quot; if comparing the keys
+      alphabetically). This process would continue until the node had exhausted
+      all of its keys (each time choosing the next closest key). If a node ever
+      receives a request that it has previously forwarded on, it will respond
+      with a &quot;seen before&quot; failure message (this prevents infinite
+      loops). Time-to-live values are also built into messages to prevent
+      hopeless searches going on for too long. <o:p>
+      </o:p>
+      </span></p>
+      <p class="MsoNormal">&nbsp;<o:p>
+      &nbsp;<o:p>
+      </o:p>
+      </p>
+      <h3>How Gnutella Network is formed?</h3>
+      <p class="MsoNormal"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Since
+      there are no central servers in the Gnutella network, in order to join the
+      system a user initially connects to one of several known hosts that are
+      almost always available (although these generally do not provide shared
+      files). One such host is www.gnutellahosts.com. You connect to this one
+      person on the network, by entering its IP or host name in the IP text box
+      and that connects you directly to that one person on the network. This
+      node then sends your requests to other nodes it knows and thus you get to
+      know many nodes in the network.<br>
+      </p>
+      <h3>How Gnutella routes information?</h3>
+      <p class="MsoNormal" style="text-align:justify;text-indent:.5in">Once
+      attached to the network, peers interact with each other by means of
+      messages. When you search for some information, your system sends a
+      unicast request to each of the hosts it knows and your request is
+      recursively sent throughout the network. The messages allowed in the network are:<o:p>
+      </o:p>
+      </p>
+      <p class="MsoNormal" style="text-align:justify"><i>Ping Messages</i> -
+      Essentially, an &quot;are you there?&quot; message directed at a host.<o:p>
+      </o:p>
+      </p>
+      <p class="MsoNormal" style="text-align:justify"><i>Pong Messages</i> - A
+      reply to a ping (&quot;yes, I'm here&quot;). The pong message contains
+      information about the peer such as their IP address and port as well as
+      the number of files shared and the total size of those files. Peers
+      forward this kind of message to their neighbors so that it is possible to
+      later find other peers. This is needed in case there is a disconnect in
+      the network.<o:p>
+      </o:p>
+      </p>
+      <p class="MsoNormal" style="text-align:justify"><i>Query Messages</i> -
+      These are messages stating, &quot;I am looking for x&quot; and can get
+      forwarded throughout the entire network (at least theoretically). Query
+      messages are uniquely identified, but their source is unknown.<o:p>
+      </o:p>
+      </p>
+      <p class="MsoNormal" style="text-align:justify"><i>Query Response Messages</i>
+      - These are replies to query messages, and they include the information
+      necessary to download the file (IP, port, and other location information).
+      Responses also contain a unique client ID associated with the replying
+      peer. These messages are propagated backwards along the path that the
+      query message originally took. Since these messages are not broadcast it
+      becomes impossible to trace all query responses in the system.<o:p>
+      </o:p>
+      </p>
+      <p class="MsoNormal" style="text-align:justify"><i>Get/Push Messages</i> -
+      Get messages are simply a request for a file returned by a query. The
+      requesting peer connects to the serving peer directly and requests the
+      file. Certain hosts, usually located behind a firewall, are unable to
+      directly respond to requests for files. For this reason the Gnutella
+      protocol includes push messages. Push messages request the serving client
+      to initiate the connection to the requesting peer and upload the file.
+      However, if both peers are located behind a firewall a connection between
+      the two will be impossible.</p>
+      <p class="MsoNormal">&nbsp;
+      </p>
+      <p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;Arial Unicode MS&quot;;
+color:black;mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language:
+AR-SA">Fig.&nbsp;&nbsp;&nbsp;&nbsp; How Gnutella retrieves information</span><span style="color:black">&nbsp;<o:p>
+      &nbsp;(From Reference </span><span style="color: black"><a href="http://www.oreillynet.com/pub/a/network/2000/05/12/magazine/gnutella.html">[1]</a>
+      )</span></p>
+      <p class="MsoNormal"><span style="color:black"><img border="0" src="wpe19.gif" width="450" height="320"></span>
+      </p>
+      <p class="MsoNormal">&nbsp;<o:p>
+      </o:p>
+      </p>
+      <h3>What determines where gnutella and freenet store info?</h3>
+      <h4>Freenet:</h4>
+      <p class="MsoNormal">When a new data item is inserted into the network,
+      each node forwards it to where it thinks it should be (ie. they will
+      forward it to the reference corresponding to the closest key to the
+      key/data pair being inserted). This is subject to a time-to-live which
+      will decide where the new data will actually rest (this time-to-live will
+      probably be 4 or 5 but experimentation will be required to determine an
+      optimum value).</p>
+      <p class="MsoNormal">Over time, nodes should come to specialize in
+      locating sets of similar keys. Because, if a node is listed in routing
+      tables under a particular key, it will tend to receive mostly requests for
+      keys similar to that key. It is therefore likely to gain more
+      ``experience'' in answering those queries and become better informed in
+      its routing tables about which other nodes carry those keys. Second, nodes
+      should become similarly specialized in storing clusters of files having
+      similar keys. Because forwarding a request successfully will result in the
+      node itself gaining a copy of the requested file, and most requests will
+      be for similar keys, the node will mostly acquire files with similar keys.
+      Taken together, these two effects should improve the efficiency of future
+      requests in a self-reinforcing cycle, as nodes build up routing tables and
+      datastores focusing on particular sets of keys, which will be precisely
+      those keys that they are asked about.</p>
+      <h4>Gnutella:</h4>
+      <p>Each node in the Gnutella Network can share a number of files with the
+      other nodes in the network. Over time, the popular files get
+      replicated&nbsp; in many other nodes in the network</p>
+      <p class="MsoNormal"><b><span style="color:black"><font size="3">Differences
+      between Gnutella and Freenet:</font></span></b><span style="color:black"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </span><o:p>
+      </o:p>
+      </span></p>
+      <p style="line-height: 100%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      1. Data Retrieval:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+      <p style="line-height: 100%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Gnutella: Suppose node A
+      asks node B for data matching &quot;MP3.&quot; After passing back anything
+      that might be of interest, node B passes the request on to its colleague
+      at node C and also node B keeps a record that node A has made the request.
+      If node C has something matching the request, it gives the information to
+      node B, which remembers that it is meant for node A and passes it through
+      to that node.</p>
+      <p class="MsoNormal" style="text-indent:.5in">&nbsp;<o:p>&nbsp;&nbsp;&nbsp;&nbsp;
+      Freenet: Suppose node A asks
+      node B for data matching &quot;MP3.&quot; If node B<span style="color:black">
+      HAS the relevant data, it sends the data to node A but unlike Gnutella, it
+      does not forward the request to any other neighbours.<o:p>
+      &nbsp;
+      </span>
+      </p>
+      <p class="MsoNormal" style="margin-left:.75in;text-indent:-.25in;mso-list:l1 level1 lfo1;
+tab-stops:list .75in"><span style="color: black">2</span><span style="color:black">.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </span>Every material posted in a Freenet has a unique identifier called
+      its “key”. So the success of a request depends on how close the
+      request key is to the actual key available in Freenet node.<span style="mso-spacerun:
+yes">&nbsp; </span>If a request key matches the key for which data is available
+      in the Freenet node, then the node returns the data to the requesting
+      node.<span style="mso-spacerun: yes">&nbsp; </span>Note that a Gnutella
+      node returns “some data relevant to the search key”, to the requesting
+      node, much like a search engine. There are no unique identifiers for each
+      material in a Gnutella Network.<o:p>
+      </o:p>
+      </span></p>
+      <p class="MsoNormal"><span style="color:black">&nbsp;<o:p>
+      </o:p></span><span style="color: black">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      3</span><span style="color:black">.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </span>Another difference is: w</span>hen a Freenet server receives a
+      request it cannot satisfy, it sends the request on to a single peer; it
+      does&nbsp; not&nbsp; multicast to all peers as Gnutella does. Thus <span style="color:black">Freenet
+      is more restrained in the traffic generated than Gnutella.<o:p>
+      </o:p>
+      </span></p>
+      <p class="MsoNormal"><span style="color:black">&nbsp;<o:p></span><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </span>4.<span style="mso-spacerun: yes">&nbsp; </span>What form does the
+      returned data take?</p>
+      <p class="MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      In Gnutella, the returned
+      data could be an entire file of music or other requested material, but
+      Gnutella is not limited to shipping around files. The return could just as
+      well be a URL, or anything else that could be of value. Thus, people are
+      likely to use Gnutella for sophisticated searches, ending up with a URL
+      just as they would with a traditional search engine. But in Freenet, the
+      returned data is a material matching the request key.</p>
+      <p class="MsoNormal" style="margin-left:.75in;text-indent:-.25in;mso-list:l2 level1 lfo3;
+tab-stops:list .75in">&nbsp;5.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </span>The main difference between the two systems is that when a Freenet
+      client satisfies a request, it passes the entire data to the requester.
+      This is an option in Gnutella but is not required. Even more important, as
+      the data passes back along a chain of Freenet clients to the original
+      requester, each client keeps a copy (unless it is a huge amount of data
+      and the client decides that keeping it is not worth the disk space). The
+      client keeps the data so long as other people keep asking for it, but
+      discards the data after some period of time when no one seems to want it.<span style="color:black"><o:p>
+      </o:p>
+      </span></p>
+      <p class="MsoNormal" style="margin-left:.5in"><span style="color:black">&nbsp;<o:p>
+      </o:p>
+      </span></p>
+      <p class="MsoNormal" style="margin-left:.5in"><span style="color:black">&nbsp;<o:p>
+      </o:p>
+      </span></p>
+      <p class="MsoNormal">References:<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;
+      </span>1.<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </span>Gnutella and Freenet Represent True Technological Innovation,</p>
+      <p class="MsoNormal" style="margin-left:1.0in;text-indent:.5in"><a href="http://www.oreillynet.com/pub/a/network/2000/05/12/magazine/gnutella.html">http://www.oreillynet.com/pub/a/network/2000/05/12/magazine/gnutella.html</a></p>
+      <p class="MsoNormal" style="margin-left:1.5in;text-indent:-.5in">2.<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </span><span style="color:black">Freenet: A Distributed Anonymous
+      Information Storage and Retrieval System<o:p>
+      </o:p>
+      </span></p>
+      <p class="MsoNormal" style="margin-left:1.5in;text-indent:-.5in"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </span><a href="http://freenet.sourceforge.net/index.php?page=theoppr">http://freenet.sourceforge.net/index.php?page=theoppr</a></p>
+      <p class="MsoNormal" style="margin-left:1.5in;text-indent:-.5in">&nbsp;3.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </span>The Freenet Project: How Freenet works</p>
+      <p class="MsoNormal" style="margin-left:1.5in"><a href="http://freenet.sourceforge.net/index.php?page=how-freenet-works">http://freenet.sourceforge.net/index.php?page=how-freenet-works</a></p>
+      <p class="MsoNormal" style="margin-left:1.5in;text-indent:-.5in">&nbsp;4.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="3">Gnutella
+      Tutorial</font></span></p>
+      <p class="MsoNormal" style="margin-left:1.5in"><a href="http://gnutella.wego.com">http://gnutella.wego.com</a></p>
+      <p class="MsoNormal" style="margin-left:1.5in">&nbsp;</p>
+      <p class="MsoNormal" style="margin-left:1.5in;text-indent:-.5in"><o:p> <font color="#666699" face="Monotype Corsiva"><i>Created by Rajesh Balla, Wei Cheng</i></font></o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+   <td width="230" align="right" valign="top" height="21"><a href="#top"><P><font color="#666699" style="text-decoration: none"><b>TOP</b></font></a><font color="#666699" style="text-decoration: none"><b>&nbsp;&nbsp;&nbsp;
+    <img border="0" src="TOP.gif" width="17" height="8"></b></font></td></tr>
+</table>
+
+</body>
+
+</html>

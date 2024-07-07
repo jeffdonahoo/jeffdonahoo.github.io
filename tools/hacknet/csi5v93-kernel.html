@@ -1,0 +1,396 @@
+<HTML>
+<!--This file created 11/27/00 3:05 PM by Claris Home Page version 3.0-->
+<HEAD>
+   <TITLE>Red Hat Kernel Compilation</TITLE>
+   <META NAME=GENERATOR CONTENT="Claris Home Page 3.0">
+   <X-CLARIS-WINDOW TOP=64 BOTTOM=471 LEFT=4 RIGHT=644>
+   <X-CLARIS-TAGVIEW MODE=minimal>
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><!--This file created 11/10/00 3:33 PM by Claris Home Page version 3.0--><!--This file created 11/8/00 5:03 PM by Claris Home Page version 3.0--><style type="text/css"><!--
+
+
+
+a {  text-decoration: none}
+
+
+
+--></style>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" LINK="#006633" VLINK="#CC9933">
+<P>&nbsp; <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=560 align=LEFT>
+   <TR>
+      <TD WIDTH=575 HEIGHT=2>
+         <H1><CENTER>Compiling a RedHat Linux Kernel</CENTER></H1>
+         
+         <BLOCKQUOTE><FONT FACE="Arial,Helvetica,Sans-Serif">We had
+            several </FONT><A HREF="kernel_difficulties.htm"><FONT FACE="Arial,Helvetica,Sans-Serif">difficulties</FONT></A><FONT FACE="Arial,Helvetica,Sans-Serif">
+            getting our first kernel to compile and boot
+            successfully.</FONT>
+            
+            <H4><FONT FACE="Arial,Helevetica,Sans-Serif">Preliminary
+            Steps:</FONT></H4>
+            
+            <UL>
+               <LI><FONT FACE="Arial,Helevetica,Sans-Serif">First you
+               need bootable media; either CD or floppy disk.&nbsp;
+               If you cannot boot from CD, you will need to make a
+               bootable floppy disk.&nbsp; In the images directory of
+               the RedHat Linux CD, you will find several images for
+               different methods of installation.&nbsp; Use
+               <B>RAWRITE</B>, a DOS command, to copy the image from
+               the CD to the floppy disk.&nbsp;</FONT>
+               
+               <P><BR>
+               &nbsp;</P></LI>
+               
+               <LI><FONT FACE="Arial,Helevetica,Sans-Serif">Boot the
+               computer with the bootable media.&nbsp; Linux will
+               prompt you for the installation mode at the boot
+               prompt.&nbsp; Press &lt;Enter&gt;.</FONT>
+               
+               <P><BR>
+               &nbsp;</P></LI>
+               
+               <LI><FONT FACE="Arial,Helevetica,Sans-Serif">The next
+               few steps are simple.&nbsp; You will be asked to pick
+               your language, time zone, monitor type, mouse type,
+               etc.&nbsp; If you have a SCSI device or network card
+               you want to install, you will need to add those
+               specifically.</FONT>
+               
+               <P><BR>
+               &nbsp;</P></LI>
+               
+               <LI><FONT FACE="Arial,Helevetica,Sans-Serif">The next
+               step is to select the type of installation you want to
+               perform: Install GNOME Workstation, Install KDE
+               Workstation, Install Server System, Install Custom
+               System, or Upgrade Existing Installation.&nbsp; We
+               suggest custom installation.</FONT>
+               
+               <P><BR>
+               &nbsp;</P></LI>
+               
+               <LI><FONT FACE="Arial,Helevetica,Sans-Serif">To copy
+               the source code of the kernel during installation of
+               Linux, select the <B><I>Kernel Development</I></B>
+               option.&nbsp; This will copy the kernel into the
+               </FONT><FONT FACE="Courier New,Courier"><B><I>/usr/src/linux-&lt;version
+               number&gt;</I></B></FONT><FONT FACE="Arial,Helevetica,Sans-Serif">
+               directory.&nbsp; To install the C++ compiler, select
+               the <B><I>Development</I></B>
+               option</FONT><FONT SIZE="-2" FACE="Arial,Helevetica,Sans-Serif"><SUP>1</SUP></FONT><FONT FACE="Arial,Helevetica,Sans-Serif">.&nbsp;</FONT>
+               
+               <P><BR>
+               &nbsp;</P></LI>
+               
+               <LI><FONT FACE="Arial,Helevetica,Sans-Serif">The
+               installation creates a kernel image called
+               '<B><I>vmlinuz-&lt;version number&gt;</I></B>' in the
+               <B>/boot</B> directory; however, in our case we had
+               two kernel images</FONT><FONT SIZE="-1" FACE="Arial,Helevetica,Sans-Serif"><SUP>2</SUP></FONT>
+               
+               <UL>
+                  <LI><FONT FACE="Courier New,Courier"><B><I>vmlinuz-2.2.14smp</I></B></FONT><FONT FACE="Arial,Helevetica,Sans-Serif">&nbsp;
+                  supporting multiprocessors</FONT></LI>
+                  
+                  <LI><FONT FACE="Courier New,Courier"><B><I>vmlinuz-2.2.14</I></B></FONT><FONT FACE="Arial,Helevetica,Sans-Serif">&nbsp;
+                  supporting uniprocessor</FONT></LI>
+               </UL>
+               
+               <P><BR>
+               &nbsp;</P></LI>
+               
+               <LI><FONT FACE="Arial,Helevetica,Sans-Serif">The
+               kernel is loaded at boot time.&nbsp; To load a kernel,
+               enter the label of the kernel at the lilo
+               prompt.&nbsp; To view the list of kernels, press
+               &lt;TAB&gt; at the lilo prompt.&nbsp; If you do not
+               enter the kernel label at the lilo prompt, lilo will
+               timeout and load the default
+               kernel.</FONT><FONT SIZE="-1" FACE="Arial,Helevetica,Sans-Serif"><SUP>3</SUP></FONT></LI>
+            </UL>
+            
+            <H4><FONT FACE="Arial,Helevetica,Sans-Serif">Building the
+            new Kernel</FONT></H4>
+            
+            <UL>
+               <LI><FONT FACE="Arial,Helevetica,Sans-Serif">You need
+               to be the root user to compile a kernel.</FONT>
+               
+               <P><BR>
+               &nbsp;</P></LI>
+               
+               <LI><FONT FACE="Arial,Helevetica,Sans-Serif">Change
+               directories to /usr/src.</FONT>
+               
+               <UL>
+                  <LI><FONT FACE="Courier New,Courier"><B><I>&gt; cd
+                  /usr/src</I></B></FONT></LI>
+               </UL>
+               </LI>
+               
+               <LI><FONT FACE="Arial,Helevetica,Sans-Serif">List the
+               contents of /usr/src directory with
+               attributes.&nbsp;</FONT>
+               
+               <UL>
+                  <LI><FONT FACE="Courier New,Courier"><B><I>&gt; ls
+                  -la</I></B></FONT></LI>
+               </UL>
+               
+               <P><FONT FACE="Arial,Helevetica,Sans-Serif">In the
+               list of contents there will be a link called
+               <B><I>linux</I></B> which points to the kernel source
+               directory (ie. <I>linux-&lt;version
+               number&gt;</I>).&nbsp;</FONT><BR>
+               &nbsp;</P></LI>
+               
+               <LI><FONT FACE="Arial,Helevetica,Sans-Serif">Change
+               directories to the linux kernel source directory. (If
+               you would like to build a version of the kernel that
+               is different than the one you installed. There are a
+               few </FONT><A HREF="kernel_extra_steps.htm"><FONT FACE="Arial,Helevetica,Sans-Serif">extra
+               steps</FONT></A><FONT FACE="Arial,Helevetica,Sans-Serif">.)</FONT>
+               
+               <UL>
+                  <LI><FONT FACE="Courier New,Courier"><B><I>&gt; cd
+                  ./linux</I></B></FONT></LI>
+               </UL>
+               </LI>
+               
+               <LI><FONT FACE="Arial,Helevetica,Sans-Serif">Open
+               <I>Makefile</I> in a text editor and verify the
+               entry:</FONT>
+               
+               <UL>
+                  <LI><FONT FACE="Courier New,Courier"><B><I>ROOT_DEV=current</I></B></FONT></LI>
+               </UL>
+               </LI>
+               
+               <LI><FONT FACE="Arial,Helevetica,Sans-Serif">To
+               prepare for the compilation, we issue the following
+               commands:</FONT>
+               
+               <UL>
+                  <LI><FONT FACE="Courier New,Courier"><B><I>&gt;
+                  make
+                  menuconfig</I></B></FONT><FONT SIZE="-1" FACE="Courier New,Courier"><SUP>4</SUP></FONT><BR>
+                  <FONT FACE="Arial,Helevetica,Sans-Serif">&nbsp;&nbsp;
+                  This presents a list of configuration
+                  options.&nbsp; There are three choices: *,
+                  &lt;blank&gt;, and M.&nbsp; The '*' selects the
+                  option, &lt;blank&gt; deselects the option, and 'M'
+                  means you wish the option to be compiled as a
+                  </FONT><A HREF="kernel_modules.html"><FONT FACE="Arial,Helevetica,Sans-Serif">module</FONT></A><FONT FACE="Arial,Helevetica,Sans-Serif">.</FONT><FONT SIZE="-1" FACE="Arial,Helevetica,Sans-Serif"><SUP>5</SUP></FONT><BR>
+                  <FONT FACE="Courier New,Courier"><B><I>&gt; make
+                  dep</I></B></FONT><BR>
+                  <FONT FACE="Arial,Helevetica,Sans-Serif">&nbsp;
+                  This will check for dependencies in selected
+                  options.</FONT><BR>
+                  <FONT FACE="Courier New,Courier"><B><I>&gt; make
+                  clean</I></B></FONT><BR>
+                  <FONT FACE="Arial,Helevetica,Sans-Serif">&nbsp;
+                  This will remove any files from previous
+                  compilations.</FONT></LI>
+               </UL>
+               </LI>
+            </UL>
+            
+            <H4><FONT FACE="Arial,Helevetica,Sans-Serif">Compiling
+            the Kernel</FONT></H4>
+            
+            <UL>
+               <LI><FONT FACE="Arial,Helevetica,Sans-Serif">To
+               initate compilation, type:&nbsp;</FONT>
+               
+               <UL>
+                  <LI><FONT FACE="Courier New,Courier"><B><I>&gt;
+                  make zImage</I></B></FONT><BR>
+                  <FONT FACE="Arial,Helevetica,Sans-Serif">&nbsp;&nbsp;
+                  This will create a kernel image called
+                  <B><I>zImage</I></B> in the
+                  <B><I>/usr/src/linux/arch/i386/boot</I></B><I>.</I>&nbsp;
+                  Go have a cup of coffee; this takes some
+                  time.&nbsp; If you get the error "system too
+                  large", type:</FONT><BR>
+                  <FONT FACE="Courier New,Courier"><B><I>&gt;&nbsp;
+                  make bzImage</I></B></FONT><BR>
+                  <FONT FACE="Arial,Helevetica,Sans-Serif">&nbsp;&nbsp;
+                  This will allow you to compile a big zImage.&nbsp;
+                  This won't take as long.</FONT></LI>
+               </UL>
+               </LI>
+               
+               <LI><FONT FACE="Arial,Helevetica,Sans-Serif">If you
+               selected any options to be modules you need to compile
+               those. Type:&nbsp;</FONT>
+               
+               <UL>
+                  <LI><FONT FACE="Courier New,Courier"><B>&gt;
+                  <I>make modules</I></B></FONT><BR>
+                  <FONT FACE="Arial,Helevetica,Sans-Serif">&nbsp;&nbsp;
+                  This will compile the options selected as
+                  modules.</FONT></LI>
+               </UL>
+               
+               <P><FONT FACE="Arial,Helevetica,Sans-Serif">Next
+               type:&nbsp;</FONT></P>
+               
+               <UL>
+                  <LI><FONT FACE="Courier New,Courier"><B>&gt;<I>
+                  make module_install</I></B></FONT><BR>
+                  <FONT FACE="Arial,Helevetica,Sans-Serif">&nbsp;&nbsp;
+                  This will install all the modules.</FONT></LI>
+               </UL>
+               </LI>
+            </UL>
+            
+            <H4><FONT FACE="Arial,Helevetica,Sans-Serif">Editing
+            /etc/lilo.conf</FONT></H4>
+            
+            <UL>
+               <LI><FONT FACE="Arial,Helevetica,Sans-Serif">Now copy
+               either the bzImage or the zImage into the
+               <B><I>/boot</I></B> directory.</FONT>
+               
+               <P><BR>
+               <FONT FACE="Courier New,Courier"><B><I>&gt; cp
+               /usr/src/linux/arch/i386/boot/bzImage</I></B></FONT><BR>
+               <FONT FACE="Courier New,Courier"><B><I>/boot/vmlinuz-&lt;version-number&gt;</I></B></FONT><BR>
+               <FONT FACE="Arial,Helevetica,Sans-Serif"><I>&nbsp;&nbsp;
+               </I>This command copies the bzImage file into the
+               <I>/boot</I> directory and renames it to
+               vmlinuz-&lt;version-number&gt;.</FONT><BR>
+               &nbsp;</P></LI>
+               
+               <LI><FONT FACE="Arial,Helevetica,Sans-Serif">Open
+               </FONT><A HREF="kernel_lilo.html"><FONT FACE="Arial,Helevetica,Sans-Serif">/etc/lilo.conf</FONT></A><FONT FACE="Arial,Helevetica,Sans-Serif">
+               in a text editor and add the following lines</FONT>
+               
+               <P><BR>
+               &nbsp;&nbsp; <FONT FACE="Courier New,Courier"><B><I>image=/boot/vmlinuz-&lt;version
+               number&gt;</I></B></FONT><BR>
+               <FONT FACE="Courier New,Courier"><B><I>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               label=newlinux-up</I></B></FONT><BR>
+               <FONT FACE="Courier New,Courier"><B><I>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               read-only</I></B></FONT><BR>
+               <FONT FACE="Courier New,Courier"><B><I>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               root=/dev/sda1</I></B></FONT><BR>
+               <FONT FACE="Arial,Helevetica,Sans-Serif"><I>newlinux-up
+               </I>would be the label for the new kernel
+               image.&nbsp;</FONT><BR>
+               &nbsp;</P></LI>
+               
+               <LI><FONT FACE="Arial,Helevetica,Sans-Serif">Save the
+               changes and quit the text editor.</FONT>
+               
+               <P><BR>
+               &nbsp;</P></LI>
+               
+               <LI><FONT FACE="Arial,Helevetica,Sans-Serif">Now you
+               need to run <B><I>lilo</I></B>. Lilo will read the
+               <B><I>/etc/lilo.conf</I></B> file and make the
+               appropriate changes.</FONT>
+               
+               <P><BR>
+               &nbsp;</P></LI>
+               
+               <LI><FONT FACE="Arial,Helevetica,Sans-Serif">Reboot
+               with your new kernel</FONT>
+               
+               <P><BR>
+               &nbsp;</P></LI>
+            </UL>
+            
+            <H4><FONT FACE="Arial,Helevetica,Sans-Serif">Hacking the
+            Source Code on Schemp</FONT></H4>
+            
+            <BLOCKQUOTE><FONT FACE="Arial,Helevetica,Sans-Serif">There
+               are currently two source trees:</FONT>
+               
+               <UL>
+                  <LI><FONT FACE="Arial,Helevetica,Sans-Serif">/usr/src/kernel-2.2.17/linux
+                  and&nbsp;</FONT><BR>
+                  <FONT FACE="Arial,Helevetica,Sans-Serif">/usr/src/linux-2.2.14/linux</FONT></LI>
+               </UL>
+               
+               <P><FONT FACE="Arial,Helevetica,Sans-Serif">If you
+               would like to edit the source code, please do so in
+               the /usr/src/kernel-2.2.17/linux directory
+               only.</FONT></P>
+               
+               <P><BR>
+               &nbsp;</P>
+               
+               <P><FONT FACE="Arial,Helevetica,Sans-Serif">/usr/src/kernel-2.2.17/linux/net/ipv4
+               contains the source code for TCP, IP, UDP and
+               others.&nbsp; The code for the TIME-WAIT state is in
+               tcp.c</FONT></P></BLOCKQUOTE>
+            
+            <P>&nbsp;</P>
+            
+            <P><FONT SIZE="-1" FACE="Arial,Helevetica,Sans-Serif"><SUP>1
+            </SUP>These option are only available in a custom
+            installation.</FONT><BR>
+            <FONT SIZE="-1" FACE="Arial,Helevetica,Sans-Serif"><SUP>2
+            </SUP>We installed Linux on a multiprocessor capable
+            motherboard.&nbsp; Therefore we had two kernel images:
+            one for multiprocessors and the other for a
+            uniprocessor.&nbsp; The two images can be distinguished
+            by the '-up' suffix, which stands for
+            uniprocessor.</FONT><BR>
+            <FONT SIZE="-1" FACE="Arial,Helevetica,Sans-Serif"><SUP>3
+            </SUP>In our case the multiproccessor capable kernel was
+            the default; therefore, we had to load the uniprocessor
+            kernel, modify the <I>/etc/lilo.conf</I> file to make the
+            uniprocessor kernel image the default kernel, and re-run
+            lilo to effect the change.</FONT><BR>
+            <FONT SIZE="-1" FACE="Arial,Helevetica,Sans-Serif"><SUP>4</SUP>
+            For obvious reasons, we suggest that you not include the
+            "Prompt for development of incomplete code versions"
+            option in the "Code Maturity Level Options".&nbsp; Even
+            though you might be tempted to include the option for
+            "Kernel hacking" you may not want to because it will make
+            the kernel less stable.&nbsp;</FONT><BR>
+            <FONT SIZE="-1" FACE="Arial,Helevetica,Sans-Serif"><SUP>5</SUP>
+            There are three configuration tools: make config, make
+            menuconfig, make xconfig.</FONT><BR>
+            <FONT SIZE="-1" FACE="Arial,Helevetica,Sans-Serif">&nbsp;i)
+            make config: This is the most basic configuration
+            tool.&nbsp; It is a text based interface.&nbsp; It also
+            does not let you go back to change an option.&nbsp; The
+            option defaults are capitalized.</FONT><BR>
+            <FONT SIZE="-1" FACE="Arial,Helevetica,Sans-Serif">ii)
+            make menuconfig:&nbsp; This is the one we used.&nbsp; It
+            provides a basic graphical user interface.</FONT><BR>
+            <FONT SIZE="-1" FACE="Arial,Helevetica,Sans-Serif">iii)
+            make xconfig: This is the most advanced tool.&nbsp; It
+            takes advantage of Xwindows.&nbsp; We have no experience
+            with it.</FONT></P></BLOCKQUOTE>
+         
+         <P>
+         
+         <HR>
+         
+         </P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=575 HEIGHT=2>
+         <P><BR>
+         <FONT SIZE="-1" FACE="Arial, Helvetica, sans-serif">Comments
+         or questions should be sent to </FONT><A HREF="mailto:Cori_Rhodes@baylor.edu"><FONT SIZE="-1" FACE="Arial, Helvetica, sans-serif">Cori_Rhodes@baylor.edu</FONT></A><FONT SIZE="-1" FACE="Arial, Helvetica, sans-serif">,
+         or </FONT><A HREF="mailto:Saifuddin_Suterwala@baylor.edu"><FONT SIZE="-1" FACE="Arial, Helvetica, sans-serif">Saifuddin_Suterwala@baylor.edu</FONT></A></P>
+      </TD>
+   </TR>
+   <TR>
+      <TD WIDTH=575>
+         <P></P>
+      </TD>
+   </TR>
+</TABLE>
+</P>
+
+<BLOCKQUOTE><BLOCKQUOTE><BLOCKQUOTE>&nbsp;</BLOCKQUOTE></BLOCKQUOTE></BLOCKQUOTE>
+</BODY>
+</HTML>

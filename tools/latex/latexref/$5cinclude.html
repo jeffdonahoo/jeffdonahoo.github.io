@@ -1,0 +1,40 @@
+<HTML>
+<!-- created Thu Apr 9 23:20:43 MET DST 1998
+ from ../latex2e.texi line 4685 via texi2www -->
+<HEAD>
+<TITLE>\include</TITLE>
+<LINK REL="Precedes" HREF="$5cincludeonly.html">
+<LINK REV="Precedes" HREF="Splitting_the_Input.html">
+<LINK REV="Subdocument" HREF="Splitting_the_Input.html">
+</HEAD><BODY><P>
+<A HREF="Splitting_the_Input.html"><IMG ALIGN=MIDDLE SRC="prev-arrow.gif" ALT="PREV"></A>
+<A HREF="Splitting_the_Input.html"> <IMG ALIGN=MIDDLE SRC="up-arrow.gif" ALT="UP"></A>
+<A HREF="$5cincludeonly.html"><IMG ALIGN=MIDDLE SRC="next-arrow.gif" ALT="NEXT"></A>
+<CITE>LaTeX2e help 1.6</CITE></P>
+<H3>2.19.1: \include</H3>
+<P>
+<CODE>\include{file}</CODE>
+</P>
+<P>
+The <CODE>\include</CODE> command is used in conjunction with the
+<CODE>\includeonly</CODE> command for selective inclusion of files.  The
+<CODE>file</CODE> argument is the first name of a file, denoting
+`<CODE>file.tex</CODE>'.  If <CODE>file</CODE> is one the file names in the file list
+of the <CODE>\includeonly</CODE> command or if there is no <CODE>\includeonly</CODE>
+command, the <CODE>\include</CODE> command is equivalent to
+</P>
+<DL><DT><DD>
+<PRE>
+\clearpage \input{file} \clearpage
+</PRE>
+</DL>
+<P>
+except that if the file `<CODE>file.tex</CODE>' does not exist, then a warning
+message rather than an error is produced.  If the file is not in the
+file list, the <CODE>\include</CODE> command is equivalent to <CODE>\clearpage</CODE>.
+</P>
+<P>
+The <CODE>\include</CODE> command may not appear in the preamble or in a file
+read by another <CODE>\include</CODE> command.
+</P>
+</BODY></HTML>

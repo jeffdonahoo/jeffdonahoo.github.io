@@ -1,0 +1,257 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Peter Lakov">
+   <meta name="GENERATOR" content="Mozilla/4.61 [en] (WinNT; I) [Netscape]">
+   <title>IP Packet Format</title>
+</head>
+<body>
+
+<h1>
+&nbsp;&nbsp;&nbsp; Internet Header Format</h1>
+&nbsp;&nbsp;&nbsp; This description is taken <a href="http://www.ietf.org/rfc/rfc0791.txt">RFC
+791</a>, pages 11 to 14.
+<br>&nbsp;
+<br>&nbsp;
+<p><tt>&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+3</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+2 3 4 5 6 7 8 9 0 1</tt>
+<br><tt>&nbsp;&nbsp; +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</tt>
+<br><tt>&nbsp;&nbsp; |Version|&nbsp; IHL&nbsp; |Type of Service|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Total Length&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |</tt>
+<br><tt>&nbsp;&nbsp; +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</tt>
+<br><tt>&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Identification&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |Flags|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Fragment Offset&nbsp;&nbsp;&nbsp; |</tt>
+<br><tt>&nbsp;&nbsp; +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</tt>
+<br><tt>&nbsp;&nbsp; |&nbsp; Time to Live |&nbsp;&nbsp;&nbsp; Protocol&nbsp;&nbsp;
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Header Checksum&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt>
+<br><tt>&nbsp;&nbsp; +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</tt>
+<br><tt>&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Source Address&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt>
+<br><tt>&nbsp;&nbsp; +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</tt>
+<br><tt>&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Destination Address&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt>
+<br><tt>&nbsp;&nbsp; +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</tt>
+<br><tt>&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Options&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|&nbsp;&nbsp;&nbsp; Padding&nbsp;&nbsp;&nbsp; |</tt>
+<br><tt>&nbsp;&nbsp; +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Example Internet Datagram Header</tt>
+<br>&nbsp;
+<br>&nbsp;
+<p><tt>&nbsp; Note that each tick mark represents one bit position.</tt>
+<p><tt>&nbsp; Version:&nbsp; 4 bits</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; The Version field indicates the format of the
+internet header.&nbsp; This</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; document describes version 4.</tt>
+<p><tt>&nbsp; IHL:&nbsp; 4 bits</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; Internet Header Length is the length of the internet
+header in 32</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; bit words, and thus points to the beginning
+of the data.&nbsp; Note that</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; the minimum value for a correct header is 5.</tt>
+<p><tt>&nbsp; Type of Service:&nbsp; 8 bits</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; The Type of Service provides an indication of
+the abstract</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; parameters of the quality of service desired.&nbsp;
+These parameters are</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; to be used to guide the selection of the actual
+service parameters</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; when transmitting a datagram through a particular
+network.&nbsp; Several</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; networks offer service precedence, which somehow
+treats high</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; precedence traffic as more important than other
+traffic (generally</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; by accepting only traffic above a certain precedence
+at time of high</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; load).&nbsp; The major choice is a three way
+tradeoff between low-delay,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; high-reliability, and high-throughput.</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bits 0-2:&nbsp; Precedence.</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bit&nbsp;&nbsp;&nbsp; 3:&nbsp; 0
+= Normal Delay,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 = Low Delay.</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bits&nbsp;&nbsp; 4:&nbsp; 0 = Normal
+Throughput, 1 = High Throughput.</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bits&nbsp;&nbsp; 5:&nbsp; 0 = Normal
+Relibility, 1 = High Relibility.</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bit&nbsp; 6-7:&nbsp; Reserved for
+Future Use.</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp;&nbsp;&nbsp;
+1&nbsp;&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp;&nbsp; 3&nbsp;&nbsp;&nbsp;&nbsp;
+4&nbsp;&nbsp;&nbsp;&nbsp; 5&nbsp;&nbsp;&nbsp;&nbsp; 6&nbsp;&nbsp;&nbsp;&nbsp;
+7</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +-----+-----+-----+-----+-----+-----+-----+-----+</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;
+|&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp; |</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp; PRECEDENCE&nbsp;&nbsp;&nbsp;
+|&nbsp; D&nbsp; |&nbsp; T&nbsp; |&nbsp; R&nbsp; |&nbsp; 0&nbsp; |&nbsp;
+0&nbsp; |</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;
+|&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp; |</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +-----+-----+-----+-----+-----+-----+-----+-----+</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Precedence</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 111 - Network
+Control</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 110 - Internetwork
+Control</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 101 - CRITIC/ECP</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 100 - Flash
+Override</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 011 - Flash</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 010 - Immediate</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 001 - Priority</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 000 - Routine</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; The use of the Delay, Throughput, and Reliability
+indications may</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; increase the cost (in some sense) of the service.&nbsp;
+In many networks</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; better performance for one of these parameters
+is coupled with worse</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; performance on another.&nbsp; Except for very
+unusual cases at most two</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; of these three indications should be set.</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; The type of service is used to specify the treatment
+of the datagram</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; during its transmission through the internet
+system.&nbsp; Example</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; mappings of the internet type of service to
+the actual service</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; provided on networks such as AUTODIN II, ARPANET,
+SATNET, and PRNET</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; is given in "Service Mappings" [8].</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; The Network Control precedence designation is
+intended to be used</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; within a network only.&nbsp; The actual use
+and control of that</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; designation is up to each network. The Internetwork
+Control</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; designation is intended for use by gateway control
+originators only.</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; If the actual use of these precedence designations
+is of concern to</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; a particular network, it is the responsibility
+of that network to</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; control the access to, and use of, those precedence
+designations.</tt>
+<p><tt>&nbsp; Total Length:&nbsp; 16 bits</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; Total Length is the length of the datagram, measured
+in octets,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; including internet header and data.&nbsp; This
+field allows the length of</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; a datagram to be up to 65,535 octets.&nbsp;
+Such long datagrams are</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; impractical for most hosts and networks.&nbsp;
+All hosts must be prepared</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; to accept datagrams of up to 576 octets (whether
+they arrive whole</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; or in fragments).&nbsp; It is recommended that
+hosts only send datagrams</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; larger than 576 octets if they have assurance
+that the destination</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; is prepared to accept the larger datagrams.</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; The number 576 is selected to allow a reasonable
+sized data block to</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; be transmitted in addition to the required header
+information.&nbsp; For</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; example, this size allows a data block of 512
+octets plus 64 header</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; octets to fit in a datagram.&nbsp; The maximal
+internet header is 60</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; octets, and a typical internet header is 20
+octets, allowing a</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; margin for headers of higher level protocols.</tt>
+<p><tt>&nbsp; Identification:&nbsp; 16 bits</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; An identifying value assigned by the sender to
+aid in assembling the</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; fragments of a datagram.</tt>
+<p><tt>&nbsp; Flags:&nbsp; 3 bits</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; Various Control Flags.</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bit 0: reserved, must be zero</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bit 1: (DF) 0 = May Fragment,&nbsp;
+1 = Don't Fragment.</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bit 2: (MF) 0 = Last Fragment, 1
+= More Fragments.</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp;
+1&nbsp;&nbsp; 2</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---+---+---+</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp; | D |
+M |</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 0 | F | F |</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---+---+---+</tt>
+<p><tt>&nbsp; Fragment Offset:&nbsp; 13 bits</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; This field indicates where in the datagram this
+fragment belongs.</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; The fragment offset is measured in units of
+8 octets (64 bits).&nbsp; The</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; first fragment has offset zero.</tt>
+<p><tt>&nbsp; Time to Live:&nbsp; 8 bits</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; This field indicates the maximum time the datagram
+is allowed to</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; remain in the internet system.&nbsp; If this
+field contains the value</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; zero, then the datagram must be destroyed.&nbsp;
+This field is modified</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; in internet header processing.&nbsp; The time
+is measured in units of</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; seconds, but since every module that processes
+a datagram must</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; decrease the TTL by at least one even if it
+process the datagram in</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; less than a second, the TTL must be thought
+of only as an upper</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; bound on the time a datagram may exist.&nbsp;
+The intention is to cause</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; undeliverable datagrams to be discarded, and
+to bound the maximum</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; datagram lifetime.</tt>
+<p><tt>&nbsp; Protocol:&nbsp; 8 bits</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; This field indicates the next level protocol
+used in the data</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; portion of the internet datagram.&nbsp; The
+values for various protocols</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; are specified in "Assigned Numbers" [9].</tt>
+<p><tt>&nbsp; Header Checksum:&nbsp; 16 bits</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; A checksum on the header only.&nbsp; Since some
+header fields change</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; (e.g., time to live), this is recomputed and
+verified at each point</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; that the internet header is processed.</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; The checksum algorithm is:</tt>
+<p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The checksum field is the 16 bit
+one's complement of the one's</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; complement sum of all 16 bit words
+in the header.&nbsp; For purposes of</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; computing the checksum, the value
+of the checksum field is zero.</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; This is a simple to compute checksum and experimental
+evidence</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; indicates it is adequate, but it is provisional
+and may be replaced</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; by a CRC procedure, depending on further experience.</tt>
+<p><tt>&nbsp; Source Address:&nbsp; 32 bits</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; The source address.&nbsp; See section 3.2.</tt>
+<p><tt>&nbsp; Destination Address:&nbsp; 32 bits</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; The destination address.&nbsp; See section 3.2.</tt>
+<p><tt>&nbsp; Options:&nbsp; variable</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; The options may appear or not in datagrams.&nbsp;
+They must be</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; implemented by all IP modules (host and gateways).&nbsp;
+In our</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; examples presented so far, no options were used.
+For full</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; description of the options, please refer to
+</tt><a href="http://www.ietf.org/rfc/rfc0791.txt">RFC 791</a><tt>.</tt>
+</body>
+</html>

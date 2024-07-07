@@ -1,0 +1,63 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@% @;
+
+
+1.1
+date	2001.12.10.22.27.51;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@\documentclass{article}
+
+\usepackage[dvips]{graphics}
+
+\title{Title of the Paper}
+\author{Bob Smith}
+
+% Set properties of paper
+\setlength{\textheight}{8.75in}
+\setlength{\textwidth}{6.8in}
+\setlength{\topmargin}{0.25in}
+\setlength{\headheight}{0.0in}
+\setlength{\headsep}{0.0in}
+\setlength{\oddsidemargin}{-.19in}
+\setlength{\parindent}{1pc}
+
+% Here's how to create macros
+\newcommand{\summation}[3]{\sum^{#2}_{#1} #3}
+\newcommand{\cond}[5]{#1 = \left\{ \begin{array}{ll}
+                                        #2 & \mbox{#3} \\
+                                        #4 & \mbox{#5}
+                                     \end{array}
+                                \right.}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This abstract is very abstract
+\end{abstract}
+
+\input{intro}
+\input{meat}
+\input{conc}
+
+\bibliography{bib}
+\bibliographystyle{apalike}
+
+\end{document}
+@

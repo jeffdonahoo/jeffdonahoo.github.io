@@ -1,0 +1,113 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>New Page 1</title>
+</head>
+
+<body>
+
+<p align="center"><font size="5"><b>Welcome to the Secure Shell* FAQ</b></font></p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;&nbsp;&nbsp; If you have read sequentially so far through
+HackNet, you will have realized by now that there is no security with IP (for example,
+see the sections on listening over the network to <b>ftp</b> and <b>telnet</b>.)&nbsp;
+</p>
+<p align="left">&nbsp;&nbsp;&nbsp; One highly touted method of dealing with the
+security issue is to use a new shell called <b>Secure Shell* </b>(<b>ssh*</b>).&nbsp;
+Secure Shell deals with issues ranging from IP routing to DNS spoofing to
+listening for passwords over the network.&nbsp; <b>Ssh</b> encrypts the messages going
+over the network so that X11 sessions are even safe.&nbsp; To read more about
+the powers of <b> ssh</b> overcoming security issues, go to <a href="ftp://ftp.cs.hut.fi/pub/ssh/README">here</a>.&nbsp;
+For our definition of &quot;secure&quot;, read <a href="secure.html">this</a>.
+</p>
+<p align="left"><b>How to Get SSH Running on Your Machine:</b></p>
+<p align="left">&nbsp;&nbsp;&nbsp; To download ssh, go <a href="http://www.ssh.fi/sshprotocols2/download.html">here</a>.</p>
+<p align="left">&nbsp;&nbsp; To install <b>ssh2</b>, follow <a href="install.html">this</a>.
+&nbsp;&nbsp;&nbsp; </p>
+
+<p align="left"><b>Using SSH on Your Machine:</b> </p>
+
+<p align="left">&nbsp;&nbsp;&nbsp; Now that <b>ssh2</b> is running (and the
+associated daemon), you will need to make keys for yourself.&nbsp; In order to
+do this, go <a href="keygen.html">here</a>. </p>
+
+<p align="left">&nbsp;&nbsp;&nbsp; Once you have your keys made, you may now
+connect to other machines that have Secure Shell running.&nbsp; In order to do
+this, you type </p>
+
+<p align="left"><b>&nbsp;&nbsp;&nbsp; ssh2 [options] [ -l &lt;log-in name&gt; ]
+&lt;host machine&gt;</b> </p>
+
+<p align="left">&nbsp;&nbsp;&nbsp; which takes over the old command <b>rlogin</b>
+and <b>rsh</b>.&nbsp;&nbsp; </p>
+
+<p align="left">&nbsp;&nbsp;&nbsp; The command </p>
+
+<p align="left">&nbsp;&nbsp;&nbsp; <b>sftp [options] &lt;host machine&gt;</b> </p>
+
+<p align="left">&nbsp;&nbsp;&nbsp; replaces the old command <b>ftp</b> with a
+secure version. </p>
+
+<p align="left">&nbsp;&nbsp;&nbsp; Finally, the command <b>rcp</b> has been
+replaced with </p>
+
+<p align="left">&nbsp;&nbsp;&nbsp; <b>scp2 [options] &lt;source file/directory
+name (incl. host)&gt; &lt;destination file/directory name (incl. host)&gt;</b> </p>
+
+<p align="left">&nbsp; </p>
+
+<p align="left"><b>Tutorials:</b> </p>
+
+<p align="left">&nbsp;&nbsp;&nbsp; Click <a href="http://www.employees.org/~satch/ssh/faq/ssh-faq-8.html#ss8.4">here</a>
+to see a list of excellent tutorials. </p>
+
+<p align="left"><b>Proceed at Your Own Risk!</b> </p>
+
+<p align="left">&nbsp;&nbsp;&nbsp; Before you imagine that Secure Shell is the
+End-All-Be-All answer to security, read the following: </p>
+
+<p align="left">&nbsp;&nbsp;&nbsp; If you are inclined to use <b>telnet</b>, or <b>ftp</b>,
+or any of the other aforementioned remote commands, then the Secure Shell will
+not encrypt your data because those commands are not routed through the Secure
+Shell daemon.&nbsp; Only the commands listed above (<b>ssh2</b>,<b> sftp</b>,
+and&nbsp;<b> scp2</b>) will encrypt the IP packets going across the network. </p>
+
+<p align="left">&nbsp;&nbsp;&nbsp; For example, to see an example of someone
+using Secure Shell unwisely using <b>ftp</b>, go <a href="unwise.html">here</a>. </p>
+
+<p align="left">&nbsp;&nbsp;&nbsp; For an abridged list of things that Secure
+Shell does not protect against, go <a href="http://www.employees.org/~satch/ssh/faq/ssh-faq-1.html#ss1.7">here</a>. </p>
+
+<p align="left">&nbsp; </p>
+
+<p align="left"><b>Examples of the Security of SSH:</b> </p>
+
+<p align="left">&nbsp;&nbsp;&nbsp; Below are links to examples of <b> ssh2</b> in various
+situations compared to the normal running of IP packets:</p>
+<p align="left">Normal running:&nbsp;&nbsp;&nbsp; <a href="../setup/config/telnet_without_ssh.html">telnet</a>&nbsp;&nbsp;&nbsp;
+-&nbsp;&nbsp;&nbsp; <a href="../setup/config/captured_ftp.html">ftp</a>&nbsp;&nbsp;&nbsp;
+-&nbsp;&nbsp;&nbsp; <a href="This%20goes%20nowhere">X11
+session</a>&nbsp;&nbsp;&nbsp;&nbsp;</p>
+
+<p align="left">Using <b>ssh2</b>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="../setup/config/telnet_with_ssh.html">telnet</a>&nbsp;&nbsp;&nbsp;
+-&nbsp;&nbsp;&nbsp; <a href="../setup/config/ftp_with_ssh.html">ftp</a>&nbsp;&nbsp;&nbsp;
+-&nbsp;&nbsp;&nbsp; <a href="This%20goes%20nowhere.">X11
+session</a>&nbsp;&nbsp;&nbsp;&nbsp; </p>
+
+<p align="left">&nbsp; </p>
+
+<p align="left">&nbsp; </p>
+
+<p align="left">&nbsp; </p>
+
+<p align="left"><font size="6">* NOTE:&nbsp; SSH is a registered trademark and Secure Shell is a
+trademark of SSH Communications Security Ltd (<a href="http://www.ssh.fi/">www.ssh.fi</a>).</font></p>
+
+</body>
+
+</html>

@@ -1,0 +1,125 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2013.09.09.17.58.08;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@import javax.swing.*;
+import javax.swing.table.*;
+import javax.swing.event.*;
+import java.awt.event.*;
+import java.awt.*;
+import java.util.*;
+
+public class AttendeeBoard2 extends JFrame {
+
+  public AttendeeBoard2(final AttendeeList model) {
+    super("Attendee Board");
+    setSize(500, 500);
+    setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+    // Create and add split pane
+    JSplitPane pane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+    pane.setDividerLocation(150);
+    getContentPane().add(pane);
+
+    // Create and add top pane
+    final JTable list = new JTable(model);
+    pane.setTopComponent(new JScrollPane(list));
+
+    // Create and add bottom pane
+    final JTextArea bioText = new JTextArea();
+    bioText.setEditable(false);
+    pane.setBottomComponent(new JScrollPane(bioText));
+
+    list.addMouseListener(
+      new MouseAdapter() {
+        public void mouseClicked(MouseEvent evt) {
+          try {
+            if (evt.getClickCount() >= 2) {
+              bioText.setText(model.getBiography(list.getSelectedRow()));
+              list.removeRowSelectionInterval(0, list.getRowCount() - 1);
+            }
+          } catch (Exception e) {}
+        }
+      }
+    );
+  }
+
+  public static void main(String[] args) {
+    AttendeeList list = new AttendeeList();
+    AttendeeBoard2 msgr = new AttendeeBoard2(list);
+    msgr.setVisible(true);
+    for (;;) {
+      list.addAttendee(new Attendee(ConsoleStream.readLine("Name>", System.in, System.out),
+                   ConsoleStream.readLine("IM ID>", System.in, System.out),
+                   ConsoleStream.readLine("Biography>", System.in, System.out)));
+    }
+  }
+}
+
+class AttendeeList extends AbstractTableModel {
+  private final String[] columnNames = {"Name", "IM ID"};
+  private ArrayList attendees = new ArrayList();
+
+  public int getColumnCount() {
+    return columnNames.length;
+  }
+
+  public int getRowCount() {
+    return attendees.size();
+  }
+
+  public String getColumnName(int col) {
+    return columnNames[col];
+  }
+
+  public Object getValueAt(int row, int col) {
+    switch (col) {
+      case 0:  // Name
+        return ((Attendee) attendees.get(row)).name;
+      case 1:  // IM ID
+        return  ((Attendee) attendees.get(row)).IMID;
+      default:
+        return "Bad entry";
+    }
+  }
+
+  public void addAttendee(Attendee a) {
+    attendees.add(a);
+    fireTableDataChanged();
+  }
+
+  public String getBiography(int row) {
+    return  ((Attendee) attendees.get(row)).biography;
+  }
+}
+
+class Attendee {
+  public String name;
+  public String IMID;
+  public String biography;
+
+  public Attendee(String name, String IMID, String biography) {
+    this.name = name;
+    this.IMID = IMID;
+    this.biography = biography;
+  }
+}
+@

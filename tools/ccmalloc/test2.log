@@ -1,0 +1,90 @@
+.--------------------------------------------------------------------------.
+|================ ccmalloc-0.3.8 (C) 1997-2001 Armin Biere ================|
++--------------------------------------------------------------------------+
+| executable       = /home/faculty/donahoo/public_html/tools/ccmalloc/a.out |
+| startup file     = .ccmalloc (but not found)                             |
+| log file         = stderr                                                |
+| start time       = Wed Dec 19 10:05:49 2001                              |
+| operating system = Linux 2.4.2-2smp i686 on earth.ecs.baylor.edu         |
++--------------------------------------------------------------------------+
+| only-count        = 0            keep-deallocated-data = 0               |
+| check-interval    = 0            check-free-space      = 0               |
+| check-start       = 0            file-info             = 1               |
+| chain-length      = 0            additional-line       = 1               |
+| check-underwrites = 0            print-addresses       = 0               |
+| check-overwrites  = 0            print-on-one-line     = 0               |
+| sort-by-wasted    = 1            sort-by-size          = 1               |
+| # only-log-chain  = 0            continue              = 0               |
+| # dont-log-chain  = 0            statistics            = 0               |
+| debug             = 0            library-chains        = 0               |
+| load-dynlibs      = 0            align-8-byte          = 0               |
+| only-wasting-alloc= 1                                                    |
+`--------------------------------------------------------------------------'
+
+.---------------.
+|ccmalloc report|
+=======================================================
+| total # of|   allocated | deallocated |     garbage |
++-----------+-------------+-------------+-------------+
+|      bytes|         525 |          21 |         504 |
++-----------+-------------+-------------+-------------+
+|allocations|         104 |           4 |         100 |
++-----------------------------------------------------+
+| number of checks: 1                                 |
+| number of counts: 108                               |
+| retrieving function names for addresses ... done.   |
+| reading file info from gdb ... done.                |
+| sorting by number of not reclaimed bytes ... done.  |
+| number of call chains: 3                            |
+| number of ignored call chains: 0                    |
+| number of reported call chains: 3                   |
+| number of internal call chains: 3                   |
+| number of library call chains: 0                    |
+=======================================================
+|
+* 97.2% = 490 Bytes of garbage allocated in 98 allocations
+|       |
+|       |       0x40047306 in <???>
+|       |
+|       |       0x0804944a in <main>
+|       |                  at test2.c:36
+|       |
+|       |       0x080493b9 in <g>
+|       |                  at test2.c:20
+|       |
+|       |       0x08049360 in <mkstr>
+|       |                  at test2.c:7
+|       |
+|       `-----> 0x08053007 in <malloc>
+|                          at src/wrapper.c:318
+|        
+|  1.8% = 9 Bytes of garbage allocated in 1 allocation
+|       |
+|       |       0x40047306 in <???>
+|       |
+|       |       0x08049430 in <main>
+|       |                  at test2.c:32
+|       |
+|       |       0x0804938b in <f>
+|       |                  at test2.c:11
+|       |
+|       |       0x08049360 in <mkstr>
+|       |                  at test2.c:7
+|       |
+|       `-----> 0x08053007 in <malloc>
+|                          at src/wrapper.c:318
+|        
+|  0.10% = 5 Bytes of garbage allocated in 1 allocation
+|       |
+|       |       0x40047306 in <???>
+|       |
+|       |       0x08049428 in <main>
+|       |                  at test2.c:30
+|       |
+|       |       0x08049360 in <mkstr>
+|       |                  at test2.c:7
+|       |
+|       `-----> 0x08053007 in <malloc>
+|                          at src/wrapper.c:318
+|        
+`------------------------------------------------------

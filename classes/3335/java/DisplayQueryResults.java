@@ -1,0 +1,150 @@
+import java.sql.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+
+public class DisplayQueryResults extends JFrame {
+  private Connection connection;
+  private Statement statement;
+  private ResultSet resultSet;
+  private ResultSetMetaData rsMetaData;
+  private JScrollPane queryResult = new JScrollPane();
+  private JTextArea inputQuery;
+  private JButton submitQuery;
+
+  {
+    try {
+      Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+    } catch (ClassNotFoundException e) {
+      System.err.println("Failed to load JDBC/ODBC driver." );
+      e.printStackTrace();
+      System.exit(1);
+    }
+  }
+
+  public DisplayQueryResults(String driverName) {
+    super("Enter Query and click Submit button.");
+
+    String url = "jdbc:odbc:" + driverName;
+
+    // Load the driver to allow connection to the database
+    try {
+      connection = DriverManager.getConnection(url);
+    } catch (SQLException e1) {
+      System.err.println("Unable to connect");
+      e1.printStackTrace();
+      System.exit(1);  // terminate program
+    }
+
+    addWindowListener(
+      new WindowAdapter() {
+        public void windowClosing(WindowEvent e)  {
+          shutDown();
+          System.exit(0);
+        }
+      }
+    );
+
+    // If connected to database, set up GUI
+    inputQuery = new JTextArea("", 4, 30);
+    submitQuery = new JButton("Submit query");
+    submitQuery.addActionListener(
+      new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          getTable();
+        }
+      }
+    );
+
+    JPanel topPanel = new JPanel();
+    topPanel.setLayout(new BorderLayout());
+    topPanel.add(new JScrollPane(inputQuery), BorderLayout.CENTER);
+    topPanel.add(submitQuery, BorderLayout.SOUTH);
+
+    Container c = getContentPane();
+    c.setLayout(new BorderLayout());
+    c.add(topPanel, BorderLayout.NORTH);
+    c.add(queryResult, BorderLayout.CENTER);
+
+    setSize(500, 500);
+    show();
+  }
+
+  private void getTable() {
+    try {
+      String query = inputQuery.getText();
+
+      statement = connection.createStatement();
+      resultSet = statement.executeQuery(query);
+      displayResultSet(resultSet);
+    } catch (SQLException sqlex) {
+      System.err.println("Error fetching metadata: " + sqlex.getMessage());
+      //sqlex.printStackTrace();
+    }
+  }
+
+  private void displayResultSet(ResultSet rs) throws SQLException {
+    boolean moreRecords = rs.next();
+
+    // If there are no records, display a message
+    if (!moreRecords) {
+      JOptionPane.showMessageDialog(this,
+        "ResultSet contained no records");
+      setTitle( "No records to display" );
+      return;
+    }
+
+    Vector columnHeads = new Vector();
+    Vector rows = new Vector();
+
+    try {
+      // get column heads
+      ResultSetMetaData rsmd = rs.getMetaData();
+
+      for (int i = 1; i <= rsmd.getColumnCount(); ++i) {
+        columnHeads.addElement(rsmd.getColumnLabel(i));
+      }
+
+      // get row data
+      do {
+        rows.addElement(getNextRow(rs, rsmd));
+      } while (rs.next());
+
+      queryResult.setViewportView(new JTable(rows, columnHeads));
+      //c.validate();
+    } catch (SQLException sqlex) {
+      System.err.println("Error fetching metadata: " + sqlex.getMessage());
+     // sqlex.printStackTrace();
+    }
+  }
+
+  private Vector getNextRow(ResultSet rs,  ResultSetMetaData rsmd)
+      throws SQLException {
+    Vector currentRow = new Vector();
+
+    for (int i = 1; i <= rsmd.getColumnCount(); ++i) {
+      currentRow.addElement(rs.getString(i));
+    }
+    return currentRow;
+  }
+
+  public void shutDown() {
+    try {
+      connection.close();
+    } catch (SQLException sqlex) {
+      System.err.println( "Unable to disconnect" );
+      sqlex.printStackTrace();
+      System.exit(1);
+    }
+  }
+
+  public static void main( String args[] ) {
+    if (args.length != 1) {
+      System.err.println("Parameters: <ODBC Driver Name>");
+      System.exit(1);
+    }
+
+    final DisplayQueryResults app = new DisplayQueryResults(args[0]);
+  }
+}

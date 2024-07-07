@@ -1,0 +1,3 @@
+interface Incrementable {
+  void increment();
+}

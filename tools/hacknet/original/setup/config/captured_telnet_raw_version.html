@@ -1,0 +1,127 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Wei Cheng">
+   <meta name="GENERATOR" content="Mozilla/4.61 [en] (WinNT; I) [Netscape]">
+   <title>Capture of telnet login with tcpdump</title>
+</head>
+<body>
+<tt><font color="#000000">23:54:22.940104
+moe.baylor.edu.1048 > larry.baylor.edu.telnet: P 219469296:219469297(1)
+ack 438978963 win 32120 &lt;nop,nop,timestamp 71657873 71751057> (DF)</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 4500 0035 051f 4000 4006
+0b6c 813e 93dd</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 813e 93de 0418 0017 0d14
+d5f0 1a2a 4993</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 8018 7d78 0c64 0000 0101
+080a 0445 6991</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 0446 d591 30</font></tt>
+<br><tt><font color="#000000">23:54:22.959976 larry.baylor.edu.telnet >
+moe.baylor.edu.1048: . ack 1 win 32120 &lt;nop,nop,timestamp 71751392 71657873>
+(DF)</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 4500 0034 bff8 4000 4006
+5093 813e 93de</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 813e 93dd 0017 0418 1a2a
+4993 0d14 d5f1</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 8010 7d78 3b1d 0000 0101
+080a 0446 d6e0</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 0445 6991</font></tt>
+<br><tt><font color="#000000">23:54:23.281805 moe.baylor.edu.1048 > larry.baylor.edu.telnet:
+P 1:2(1) ack 1 win 32120 &lt;nop,nop,timestamp 71657908 71751392> (DF)</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 4500 0035 0520 4000 4006
+0b6b 813e 93dd</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 813e 93de 0418 0017 0d14
+d5f1 1a2a 4993</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 8018 7d78 09f1 0000 0101
+080a 0445 69b4</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 0446 d6e0 31</font></tt>
+<br><tt><font color="#000000">23:54:23.299964 larry.baylor.edu.telnet >
+moe.baylor.edu.1048: . ack 2 win 32120 &lt;nop,nop,timestamp 71751426 71657908>
+(DF)</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 4500 0034 bff9 4000 4006
+5092 813e 93de</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 813e 93dd 0017 0418 1a2a
+4993 0d14 d5f2</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 8010 7d78 3ad7 0000 0101
+080a 0446 d702</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 0445 69b4</font></tt>
+<br><tt><font color="#000000">23:54:23.634633 moe.baylor.edu.1048 > larry.baylor.edu.telnet:
+P 2:3(1) ack 1 win 32120 &lt;nop,nop,timestamp 71657943 71751426> (DF)</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 4500 0035 0521 4000 4006
+0b6a 813e 93dd</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 813e 93de 0418 0017 0d14
+d5f2 1a2a 4993</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 8018 7d78 08ab 0000 0101
+080a 0445 69d7</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 0446 d702 32</font></tt>
+<br><tt><font color="#000000">23:54:23.649963 larry.baylor.edu.telnet >
+moe.baylor.edu.1048: . ack 3 win 32120 &lt;nop,nop,timestamp 71751461 71657943>
+(DF)</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 4500 0034 bffa 4000 4006
+5091 813e 93de</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 813e 93dd 0017 0418 1a2a
+4993 0d14 d5f3</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 8010 7d78 3a90 0000 0101
+080a 0446 d725</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 0445 69d7</font></tt>
+<br><tt><font color="#000000">23:54:23.915691 moe.baylor.edu.1048 > larry.baylor.edu.telnet:
+P 3:4(1) ack 1 win 32120 &lt;nop,nop,timestamp 71657971 71751461> (DF)</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 4500 0035 0522 4000 4006
+0b69 813e 93dd</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 813e 93de 0418 0017 0d14
+d5f3 1a2a 4993</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 8018 7d78 076b 0000 0101
+080a 0445 69f3</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 0446 d725 33</font></tt>
+<br><tt><font color="#000000">23:54:23.929964 larry.baylor.edu.telnet >
+moe.baylor.edu.1048: . ack 4 win 32120 &lt;nop,nop,timestamp 71751489 71657971>
+(DF)</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 4500 0034 bffb 4000 4006
+5090 813e 93de</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 813e 93dd 0017 0418 1a2a
+4993 0d14 d5f4</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 8010 7d78 3a57 0000 0101
+080a 0446 d741</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 0445 69f3</font></tt>
+<br><tt><font color="#000000">23:54:24.131806 moe.baylor.edu.1048 > larry.baylor.edu.telnet:
+P 4:5(1) ack 1 win 32120 &lt;nop,nop,timestamp 71657993 71751489> (DF)</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 4500 0035 0523 4000 4006
+0b68 813e 93dd</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 813e 93de 0418 0017 0d14
+d5f4 1a2a 4993</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 8018 7d78 0638 0000 0101
+080a 0445 6a09</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 0446 d741 34</font></tt>
+<br><tt><font color="#000000">23:54:24.149963 larry.baylor.edu.telnet >
+moe.baylor.edu.1048: . ack 5 win 32120 &lt;nop,nop,timestamp 71751511 71657993>
+(DF)</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 4500 0034 bffc 4000 4006
+508f 813e 93de</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 813e 93dd 0017 0418 1a2a
+4993 0d14 d5f5</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 8010 7d78 3a2a 0000 0101
+080a 0446 d757</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 0445 6a09</font></tt>
+<br><tt><font color="#000000">23:54:24.626419 moe.baylor.edu.1048 > larry.baylor.edu.telnet:
+P 5:6(1) ack 1 win 32120 &lt;nop,nop,timestamp 71658042 71751511> (DF)</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 4500 0035 0524 4000 4006
+0b67 813e 93dd</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 813e 93de 0418 0017 0d14
+d5f5 1a2a 4993</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 8018 7d78 0bf0 0000 0101
+080a 0445 6a3a</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 0446 d757 2e</font></tt>
+<br><tt><font color="#000000">23:54:24.639970 larry.baylor.edu.telnet >
+moe.baylor.edu.1048: . ack 6 win 32120 &lt;nop,nop,timestamp 71751560 71658042>
+(DF)</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 4500 0034 bffd 4000 4006
+508e 813e 93de</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 813e 93dd 0017 0418 1a2a
+4993 0d14 d5f6</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 8010 7d78 39c7 0000 0101
+080a 0446 d788</font></tt>
+<br><tt><font color="#000000">&nbsp;&nbsp;&nbsp; 0445 6a3a</font></tt>
+<br><tt><font color="#000000"></font></tt>&nbsp;
+</body>
+</html>

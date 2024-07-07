@@ -1,0 +1,169 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.6 [en] (Win95; I) [Netscape]">
+   <title>IP ADDRESSING ARCHITECTURE</title>
+</head>
+<body>
+
+<center>
+<h1>
+IP ADDRESSING ARCHITECTURE</h1></center>
+
+<hr WIDTH="100%"><b><font size=+1></font></b>
+<p><b><font size=+1>Table Of Contents</font></b><a href="#doc1"></a>
+<p><a href="#doc1">General IP Addressing Architecture</a>
+<br><a href="#doc2">Forms of IP Addresses</a>
+<br><a href="#doc3">Special forms of IP Addresses</a>
+<br><a href="#doc4">IP Addresses assignment example</a>
+<br><a href="#doc5">IP Subnetting</a>
+<br><a href="#doc6">IP Subnetting example</a>
+<br><a href="#doc7">IP - The Next Generation (IPng - IPv6)</a>
+<br><a href="#doc8">IPng - IPv6 addressing</a>
+<br><a href="#doc9">Upgrading IPv4 to IPng - IPv6</a><a href="#doc9"></a>
+<p>
+<hr>
+<p><a NAME="doc1"></a><b>General IP Addressing Architecture</b>
+<br>IP addresses consist of a 32-bit value.
+<br>Usually, for convenience, it is presented in DECIMAL DOT NOTATION:
+<br>4 octets (bytes) separated by a dot.
+<br>Each physical network has its own unique network address.
+<br>Each host has its own unique address.
+<br>Routers or gateways have one or more addresses
+<br>(depended on the of links they have)
+<p>An IP address is therefore built of a network and a host
+<br>identifications.
+<br>
+<hr>
+<p><a NAME="doc2"></a><b>Forms of IP Addresses</b>
+<br>There are five forms of IP addresses:
+<p>Class A :126 networks, each can have up to (16M-2) nodes.
+<br>(1.0.0.0 - 126.0.0.0)
+<p>Class B: (16K-2) networks, each can have up to (64K-2) nodes
+<br>(127.0.0.0 - 191.255.0.0)
+<p>Class C: (2M-2) networks, each can have up to 254 nodes.
+<br>(192.0.0.0 - 223.255.255.0)
+<p>Class D: a multicast address.
+<br>(224.0.0.0 - 240.0.0.0)
+<p>Class E: reserved for future use.
+<br>(241.0.0.0 - 248.0.0.0)
+<br>&nbsp;
+<p><img SRC="pic2.gif" height=485 width=588>
+<p>For example:
+<br>The address (binary) - 10000000 00000111 00001111 00000001
+<br>has the DECIMAL DOT NOTATION: 128.7.15.1
+<br>It belongs to Class B addresses.
+<br>Its Network-id is: 128.7
+<br>Its Host-id is: 15.1
+<br>
+<hr>
+<p><a NAME="doc3"></a><b>Special forms of INTERNET Addresses</b>
+<br>0.0.0.0 - This host.
+<p>0.host_number - host on this net.
+<p>255.255.255.255 - Limited broadcast (local net).
+<p>net_number.255 - Directed broadcast for the specified net.
+<p>127.anything - Loopback (should never appear on the net).
+<p>
+<hr>
+<p><a NAME="doc4"></a><b>IP Addresses assignment example</b>
+<br><img SRC="pic1.gif" height=395 width=512>
+<hr>
+<p><a NAME="doc5"></a><b>IP Subnetting</b>
+<br>Subnetting is a Technique used to allow a single IP network
+<br>address to span multiple physical networks.
+<br>IP hosts should support subnetting.
+<br>Subnetting is done by using some of the bits of the host-id part
+<br>of the IP address as a physical network identifier.
+<br>The subnet mask is used to determine the bits of the network
+<br>identifier.
+<br>All hosts on the same network should have the same subnet mask.
+<p>An example of Subnetting:
+<p>The Class B network 128.10.0.0 can be subnetted using the first
+<br>8 bits of the host-id, to span 254 different physical networks.
+<br>The subnet mask for this case is 255.255.255.0
+<br>The subnetworks are: 128.10.1.0, 128.10.2.0, ..., 128.10.254.0 .
+<br>Each of the subnetworks can have up to 254 different hosts:
+<br>128.10.XXX.1, 128.10.XXX.2, ..., 128.10.XXX.254 .
+<br>If there is a need for less physical nets and more hosts in each
+<br>one, less host-id bits can be used for subnetting. For example:
+<br>With the subnet mask 255.255.254.0, 126 different subnets are
+<br>available with up to 510 hosts in each one.
+<p>Many Class A and B networks do not contain as many hosts as
+<br>they could. This situation causes a lot of address space waste.
+<br>Subnetting better utilizes the address space by dividing these
+<br>big networks to smaller ones.
+<p>
+<hr>
+<p><a NAME="doc6"></a><b>IP Subnetting example</b>
+<br>Dividing a single Class B network into two subnetworks:
+<br>&nbsp;
+<p><img SRC="pic3.gif" height=379 width=534>
+<br>&nbsp;
+<p>All Gateways except G (Which is physically interconnected between
+<br>the networks) route as if there was a single physical network.
+<p>
+<hr>
+<p><a NAME="doc7"></a><b>IP - The Next Generation (IPng - IPv6)</b>
+<br>The growing number of INTERNET hosts causes a shortage in IP
+<br>addresses and will eventually consume the entire address space.
+<br>The theoretical address space size (2^32 nodes) is largely wasted
+<br>due to assignment inefficiencies.
+<br>Dividing the address space into classes (A, B and C) had its own
+<br>contribution to the inefficiency of addresses assignment.
+<br>Changing the IP addressing scheme is a matter concerning all
+<br>INTERNET users and is an opportunity for providing additional
+<br>functionality to the IP.
+<br>The new version of IP is often referred to as IPng:
+<br>"INTERNET Protocol: The Next Generation".
+<br>Most INTERNET users agreed IPng should have a hierarchical
+<br>address structure. This new address structure should be large
+<br>enough to meet the needs of the INTERNET community for a very
+<br>long time.
+<p>There were several proposals for IPng. The most likely to become
+<br>a standard were: "Common Architecture for the INTERNET" (CATNIP)
+<br>"Simple INTERNET Protocol Plus" (SIPP), and "The TCP/UDP Over
+<br>CLNP-Addressed Networks (TUBA) proposals.
+<p>The guidelines for choosing one proposals over the others were:
+<p>* Current address assignment policies should not be changed.
+<br>* There is no need to reclaim assigned network numbers.
+<br>* There is no need to renumber most of the INTERNET
+<p>Eventually the "Simple INTERNET Protocol Plus (SIPP) Spec.
+<br>(128 bit ver)" was adopted as the basis for IPng.
+<p>IPng was assigned the name IPv6.
+<p>
+<hr>
+<p><a NAME="doc8"></a><b>IPng - IPv6 addressing</b>
+<br>IPng offers a larger address space for the INTERNET users.
+<br>The IP address size will be increased from 32 bits to 128 bits.
+<br>This change will allow a much bigger number of nodes than is
+<br>available today, with more levels of addressing hierarchy,
+<br>and simpler auto-configuration of addresses.
+<p>An address size of 128 bits is large enough to support a huge
+<br>number of nodes even with the inefficiency of address assignment.
+<p>The IP header will be changed. Some fields will be removed
+<br>in order to keep the overhead low (in spite of increasing the
+<br>number of address bits). Thus, even though the IPv6 addresses are
+<br>four times longer than the IPv4 addresses, the IPv6 header is
+<br>only twice the size of the IPv4 header.
+<p>IPv6 will have a new type of address: "Cluster address", which
+<br>will identify topological regions.
+<br>A new function in IPv6 is source routing, which together with
+<br>Cluster addresses will allow nodes to control their routing in
+<br>a more precise way.
+<p>
+<hr>
+<p><a NAME="doc9"></a><b>Upgrading IPv4 to IPng - IPv6</b>
+<br>The transition from IPv4 to IPv6 will be simple and flexible.
+<p>The upgrade will be Incremental: Existing IPv4 hosts and Routers
+<br>may be upgraded to IPv6 and new hosts and Routers can be
+<br>installed independently.
+<br>When existing IPv4 hosts or Routers are upgraded, they can
+<br>continue to use their current address.
+<br>The start-up costs are low and little work is needed to upgrade
+<br>existing systems to IPv6.
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+</body>
+</html>

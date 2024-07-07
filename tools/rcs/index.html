@@ -1,0 +1,61 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Jeff Donahoo">
+   <meta name="GENERATOR" content="Mozilla/4.5 [en] (WinNT; I) [Netscape]">
+   <title>RCS</title>
+</head>
+<body>
+
+<center><b><font size=+3>RCS</font></b></center>
+
+<br><b><font size=+3></font></b>&nbsp;<b><font size=+3></font></b>
+<p>RCS (Revision Control System) is a good tool for controlling
+revisions of programs and documents.  It allows a user to maintain a
+catalog of revisions to a program and to "roll back" to a previous
+revision.  It is well integrated with other UNIX tools such as emacs
+and make. <P>
+
+Consider the following scenario:  You have two files (a.c and b.c) in a
+directory named stuff, and you want to control those files using RCS.
+Here are the steps:
+
+<OL>
+<LI> In the stuff directory, create a directory named RCS.  This
+directory will store the database of changes to your files.
+<LI> Set the permission to allow rw priviledges to the correct users.
+For example, if you are working with users in the UNIX group grad, the
+permissions for a.c and b.c should be read and write for both user and
+group (rw-rw----) and their group should be "grad".  The RCS and 
+stuff directory should have read, write, and execute permissions for
+both user and group (rwxrwx---) and their group should be "grad".
+<LI> Now we must check the files into source control.  In the stuff
+directory, type "ci a.c" and "ci b.c".  Each time you check in a file,
+RCS asks you for a comment describing the changes you made.  If
+you look in the RCS directory, you will see a.c,v and b.c,v.  These
+are the files that RCS uses to record changes to a.c and b.c,
+respectively.  Only in extreme circumstances would you edit or delete
+these files.
+<LI> If you just want to use a file (e.g., compile a.c), you can check
+it out without a lock by typing "co a.c" in the stuff directory.  This
+gives you a read-only copy of a.c that you can compile but not edit.
+<B> WARNING: </B> By default when you check in a file in RCS, there is
+no longer a copy of it in the stuff directory so to get a copy of it
+back in the stuff directory you must check it out
+without a lock to use it, even if you don't want to edit it.
+<LI> If you want to edit a file, you check it out with a lock by
+typing "co -l a.c" in the stuff directory.  Now you are the only person
+who can edit that file.  When you are done, check it back in with "ci
+a.c".  <B> WARNING: </B>  While you may be the only person who can
+edit a locked file, other people may still use (e.g., compile) the file in
+the stuff directory.  If your edits
+temporarily "break" (e.g., no longer compiles) the file, it will interfer with others who are
+using it; consequently, you may want to check it out with a lock, copy
+and make changes to it in another location, and copy it back to the
+stuff directory when edits are complete.
+</OL>
+
+To find out more about RCS, try "man rcsintro".
+</body>
+</html>

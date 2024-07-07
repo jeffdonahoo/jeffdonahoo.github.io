@@ -1,0 +1,80 @@
+<HTML>
+<!-- created Thu Apr 9 23:20:43 MET DST 1998
+ from ../latex2e.texi line 4039 via texi2www -->
+<HEAD>
+<TITLE>Sectioning</TITLE>
+<LINK REL="Precedes" HREF="Spaces_$26amp$3b_Boxes.html">
+<LINK REV="Precedes" HREF="Page_Styles.html">
+<LINK REV="Subdocument" HREF="Commands.html">
+</HEAD><BODY><P>
+<A HREF="Page_Styles.html"><IMG ALIGN=MIDDLE SRC="prev-arrow.gif" ALT="PREV"></A>
+<A HREF="Commands.html"> <IMG ALIGN=MIDDLE SRC="up-arrow.gif" ALT="UP"></A>
+<A HREF="Spaces_$26amp$3b_Boxes.html"><IMG ALIGN=MIDDLE SRC="next-arrow.gif" ALT="NEXT"></A>
+<CITE>LaTeX2e help 1.6</CITE></P>
+<H2>2.16: Sectioning</H2>
+<P>
+Sectioning commands provide the means to structure your text into units.
+</P>
+<UL>
+<LI>
+<CODE>\part</CODE>
+<LI>
+<CODE>\chapter</CODE> (report and book class only)
+<LI>
+<CODE>\section</CODE>
+<LI>
+<CODE>\subsection</CODE>
+<LI>
+<CODE>\subsubsection</CODE>
+<LI>
+<CODE>\paragraph</CODE>
+<LI>
+<CODE>\subparagraph</CODE>
+</UL>
+
+<P>
+All sectioning commands take the same general form, i.e.,
+</P>
+<P>
+<CODE>\chapter[optional]{title}</CODE>
+</P>
+<P>
+In addition to providing the heading in the text, the mandatory argument
+of the sectioning command can appear in two other places:
+</P>
+<OL>
+<LI>
+The table of contents
+<LI>
+The running head at the top of the page
+</OL>
+
+<P>
+You may not want the same thing to appear in these other two places as
+appears in the text heading.  To handle this situation, the sectioning
+commands have an <CODE>optional</CODE> argument that provides the text for
+these other two purposes.
+</P>
+<P>
+All sectioning commands have <CODE>*</CODE>-forms that print a <EM>title</EM>,
+but do not include a number and do not make an entry in the table of
+contents.
+</P>
+<P>
+<CODE>\appendix</CODE>
+</P>
+<P>
+The <CODE>\appendix</CODE> command changes the way sectional units are
+numbered.  The <CODE>\appendix</CODE> command generates no text and does not
+affect the numbering of parts.
+The normal use of this command is something like
+</P>
+<DL><DT><DD>
+<PRE>
+\chapter{The First Chapter}
+...
+\appendix
+\chapter{The First Appendix}
+</PRE>
+</DL>
+</BODY></HTML>

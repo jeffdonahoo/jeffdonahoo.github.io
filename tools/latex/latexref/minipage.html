@@ -1,0 +1,40 @@
+<HTML>
+<!-- created Thu Apr 9 23:20:43 MET DST 1998
+ from ../latex2e.texi line 1459 via texi2www -->
+<HEAD>
+<TITLE>minipage</TITLE>
+<LINK REL="Precedes" HREF="picture.html">
+<LINK REV="Precedes" HREF="list.html">
+<LINK REV="Subdocument" HREF="Environments.html">
+</HEAD><BODY><P>
+<A HREF="list.html"><IMG ALIGN=MIDDLE SRC="prev-arrow.gif" ALT="PREV"></A>
+<A HREF="Environments.html"> <IMG ALIGN=MIDDLE SRC="up-arrow.gif" ALT="UP"></A>
+<A HREF="picture.html"><IMG ALIGN=MIDDLE SRC="next-arrow.gif" ALT="NEXT"></A>
+<CITE>LaTeX2e help 1.6</CITE></P>
+<H3>2.6.13: minipage</H3>
+<DL><DT><DD>
+<PRE>
+ \begin{minipage}[position]{width}
+  text
+ \end{minipage}
+</PRE>
+</DL>
+<P>
+The <CODE>minipage</CODE> environment is similar to a <CODE>\parbox</CODE> command.
+It takes the same optional <CODE>position</CODE> argument and mandatory
+<CODE>width</CODE> argument.  You may use other paragraph-making environments
+inside a minipage.
+</P>
+<P>
+Footnotes in a <CODE>minipage</CODE> environment are handled in a way that is
+particularly useful for putting footnotes in figures or tables.  A
+<CODE>\footnote</CODE> or <CODE>\footnotetext</CODE> command puts the footnote at
+the bottom of the minipage instead of at the bottom of the page, and it
+uses the <CODE>mpfootnote</CODE> counter instead of the ordinary
+<CODE>footnote</CODE> counter See <A HREF="Counters.html">Counters</A>.
+</P>
+<P>
+NOTE: Don't put one minipage inside another if you are using footnotes;
+they may wind up at the bottom of the wrong minipage.
+</P>
+</BODY></HTML>

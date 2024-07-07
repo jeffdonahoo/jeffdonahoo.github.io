@@ -1,0 +1,244 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="ProgId" content="Word.Document">
+   <meta name="Generator" content="Microsoft Word 9">
+   <meta name="Originator" content="Microsoft Word 9">
+   <meta name="GENERATOR" content="Mozilla/4.61 [en] (WinNT; I) [Netscape]">
+   <title>Server ( larry )</title>
+<link rel=File-List href="./nfspic_files/filelist.xml">
+<link rel=Edit-Time-Data href="./nfspic_files/editdata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>LanM</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>LanM</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>23</o:TotalTime>
+  <o:Created>1999-10-12T03:08:00Z</o:Created>
+  <o:LastSaved>1999-10-12T03:31:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Company>Baylor University</o:Company>
+  <o:Lines>1</o:Lines>
+  <o:Paragraphs>1</o:Paragraphs>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:DrawingGridHorizontalSpacing>9.35 pt</w:DrawingGridHorizontalSpacing>
+  <w:DrawingGridVerticalSpacing>9.35 pt</w:DrawingGridVerticalSpacing>
+ </w:WordDocument>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+<!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="1066"/>
+</xml><![endif]-->
+<!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+<body lang="EN-US" style="tab-interval:.5in">
+
+<div class=Section1>
+<center><b><font size=+1>Listening to NFS</font></b></center>
+
+<p>This was one of series of experiments with tcpdump conducted on our
+small "made up" internet. The main purpose of this test was to demonstrate
+the possiblity to use tcpdump to capture packets going between a client
+and a server running Network File System (NFS). Before you delve into how
+the <a href="tcpnfs1.html">experiment was conducted</a>, please take a
+look at the below figure about how the NFS was set up on our machines.
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+
+<p class="MsoNormal"><![if !supportEmptyParas]><![endif]><o:p></o:p>
+
+<p class="MsoNormal" style="text-indent:.5in">Server ( larry )<span 
+style='mso-tab-count:6'></span><span 
+style='mso-tab-count:1'></span>Client
+( moe )
+
+<p class="MsoNormal"><!--[if gte vml 1]><v:shapetype id="_x0000_t202"
+ coordsize="21600,21600" o:spt="202" path="m0,0l0,21600,21600,21600,21600,0xe">
+ <v:stroke joinstyle="miter"/>
+ <v:path gradientshapeok="t" o:connecttype="rect"/>
+</v:shapetype><v:shape id="_x0000_s1030" type="#_x0000_t202" style='position:absolute;
+ margin-left:0;margin-top:9.8pt;width:140.25pt;height:187pt;z-index:1'>
+ <v:textbox>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=MsoNormal>RPC program MOUNT</p>
+    <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+    <p class=MsoNormal style='text-indent:.5in'>NFS server</p>
+    <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+    <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+    <p class=MsoNormal style='text-indent:.5in'>larry:/tmp</p>
+    <p class=MsoNormal><span style='mso-tab-count:1'>            </span><span
+    style="mso-spacerun: yes">    </span></p>
+    <p class=MsoNormal><span style="mso-spacerun: yes">                </span></p>
+    <p class=MsoNormal style='text-indent:.5in'><span style="mso-spacerun:
+    yes">    </span>root</p>
+    <p class=MsoNormal align=center style='text-align:center'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+    <p class=MsoNormal align=center style='text-align:center'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+    <p class=MsoNormal><span style="mso-spacerun: yes">   </span><b><span
+    style="mso-spacerun: yes"> </span>. . .<span style="mso-spacerun:
+    yes">         </span><span style='mso-tab-count:1'>      </span><span
+    style="mso-spacerun: yes">     </span></b>tmp<b><o:p></o:p></b></p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><v:line id="_x0000_s1031" style='position:absolute;z-index:2;
+ mso-position-horizontal:absolute;mso-position-vertical:absolute' from="0,65.9pt"
+ to="140.25pt,65.9pt" coordsize="21600,21600"/><v:line id="_x0000_s1038"
+ style='position:absolute;z-index:3;mso-position-horizontal:absolute;
+ mso-position-vertical:absolute' from="65.45pt,140.7pt" to="65.45pt,150.05pt"
+ coordsize="21600,21600"/><v:line id="_x0000_s1039" style='position:absolute;
+ z-index:4;mso-position-horizontal:absolute;mso-position-vertical:absolute'
+ from="28.05pt,150.05pt" to="102.85pt,150.05pt" coordsize="21600,21600"/><v:line
+ id="_x0000_s1040" style='position:absolute;z-index:5;
+ mso-position-horizontal:absolute;mso-position-vertical:absolute' from="28.05pt,150.05pt"
+ to="28.05pt,168.75pt" coordsize="21600,21600"/><v:line id="_x0000_s1041"
+ style='position:absolute;z-index:6;mso-position-horizontal:absolute;
+ mso-position-vertical:absolute' from="102.85pt,150.05pt" to="102.85pt,168.75pt"
+ coordsize="21600,21600"/><v:shape id="_x0000_s1043" type="#_x0000_t202"
+ style='position:absolute;margin-left:252.45pt;margin-top:9.8pt;width:196.35pt;
+ height:224.4pt;z-index:7'>
+ <v:textbox>
+  <![if !mso]>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td><![endif]>
+    <div>
+    <p class=MsoNormal>mount –t nfs <span style="mso-spacerun: yes"> </span>larry:/tmp
+    <span style="mso-spacerun: yes"> </span>/home/lakov</p>
+    <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+    <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+    <p class=MsoNormal style='margin-left:.5in;text-indent:.5in'>RPC API</p>
+    <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+    <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+    <p class=MsoNormal><span style='mso-tab-count:2'>                        </span>root</p>
+    <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+    <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+    <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+    <p class=MsoNormal><b><span style="mso-spacerun: yes">           </span>. .
+    .<span style='mso-tab-count:2'>                    </span><span
+    style="mso-spacerun: yes">      </span></b>home</p>
+    <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+    <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+    <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+    <p class=MsoNormal><span style='mso-tab-count:2'>                        </span><span
+    style="mso-spacerun: yes">  </span><span style="mso-spacerun:
+    yes">   </span><span style="mso-spacerun: yes"> </span>lakov<span
+    style='mso-tab-count:1'>          </span> <span style="mso-spacerun:
+    yes">  </span><b>. . .<o:p></o:p></b></p>
+    </div>
+    <![if !mso]></td>
+   </tr>
+  </table>
+  <![endif]></v:textbox>
+</v:shape><v:line id="_x0000_s1044" style='position:absolute;z-index:8' from="252.45pt,75.25pt"
+ to="448.8pt,75.25pt" coordsize="21600,21600"/><v:line id="_x0000_s1045"
+ style='position:absolute;z-index:9' from="252.45pt,47.2pt" to="448.8pt,47.2pt"
+ coordsize="21600,21600"/><v:line id="_x0000_s1049" style='position:absolute;
+ flip:x;z-index:10' from="215.05pt,65.9pt" to="252.45pt,65.9pt" coordsize="21600,21600"/><v:line
+ id="_x0000_s1050" style='position:absolute;flip:y;z-index:11' from="215.05pt,19.15pt"
+ to="215.05pt,65.9pt" coordsize="21600,21600"/><v:line id="_x0000_s1051"
+ style='position:absolute;flip:x;z-index:12' from="140.25pt,19.15pt" to="215.05pt,19.15pt"
+ coordsize="21600,21600">
+ <v:stroke endarrow="block"/>
+</v:line><v:line id="_x0000_s1052" style='position:absolute;z-index:13' from="345.95pt,112.65pt"
+ to="345.95pt,131.35pt" coordsize="21600,21600"/><v:line id="_x0000_s1053"
+ style='position:absolute;z-index:14' from="299.2pt,131.35pt" to="392.7pt,131.35pt"
+ coordsize="21600,21600"/><v:line id="_x0000_s1054" style='position:absolute;
+ z-index:15' from="299.2pt,131.35pt" to="299.2pt,150.05pt" coordsize="21600,21600"/><v:line
+ id="_x0000_s1056" style='position:absolute;z-index:16' from="392.7pt,131.35pt"
+ to="392.7pt,150.05pt" coordsize="21600,21600"/><v:line id="_x0000_s1058"
+ style='position:absolute;z-index:17' from="392.7pt,168.75pt" to="392.7pt,187.45pt"
+ coordsize="21600,21600"/><v:line id="_x0000_s1059" style='position:absolute;
+ z-index:18' from="364.65pt,187.45pt" to="420.75pt,187.45pt" coordsize="21600,21600"/><v:line
+ id="_x0000_s1060" style='position:absolute;z-index:19' from="420.75pt,187.45pt"
+ to="420.75pt,206.15pt" coordsize="21600,21600"/><v:line id="_x0000_s1062"
+ style='position:absolute;z-index:20' from="364.65pt,187.45pt" to="364.65pt,206.15pt"
+ coordsize="21600,21600"/><v:line id="_x0000_s1063" style='position:absolute;
+ z-index:21' from="215.05pt,215.5pt" to="252.45pt,215.5pt" coordsize="21600,21600">
+ <v:stroke endarrow="block"/>
+</v:line><v:line id="_x0000_s1064" style='position:absolute;flip:y;z-index:22'
+ from="215.05pt,93.95pt" to="215.05pt,215.5pt" coordsize="21600,21600"/><v:line
+ id="_x0000_s1065" style='position:absolute;flip:x;z-index:23' from="140.25pt,93.95pt"
+ to="215.05pt,93.95pt" coordsize="21600,21600">
+ <v:stroke endarrow="block"/>
+</v:line><![endif]--><![if !vml]><span style='mso-ignore:vglayout;position:
+relative;z-index:0;left:-1px;top:13px;width:602px;height:315px'><img SRC="nfs_pic.gif" v:shapes="_x0000_s1030 _x0000_s1031 _x0000_s1038 _x0000_s1039 _x0000_s1040 _x0000_s1041 _x0000_s1043 _x0000_s1044 _x0000_s1045 _x0000_s1049 _x0000_s1050 _x0000_s1051 _x0000_s1052 _x0000_s1053 _x0000_s1054 _x0000_s1056 _x0000_s1058 _x0000_s1059 _x0000_s1060 _x0000_s1062 _x0000_s1063 _x0000_s1064 _x0000_s1065" height=302 width=602></span><![endif]><![if !supportEmptyParas]><![endif]><o:p></o:p>
+<div class="MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+The /tmp directory on <i>larry</i> is now accessed</div>
+
+<div class="MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+as the /home/lakov directory on <i>moe</i></div>
+
+<div class="MsoNormal">The previous command:</div>
+
+<div class="MsoNormal">mount -t nfs larry:/tmp /home/lakov</div>
+
+
+<p class="MsoNormal">has three parts:
+<div class="MsoNormal">1. -t option is the client part. It indicates file
+type and has to be understood by the NFS client only. This means, it depends
+on the client host and is documented in&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; the
+client's documentation.</div>
+
+<div class="MsoNormal">2. larry:/tmp is the server part. The syntax depends
+on the server's file system. Refer to the documentation of the NFS server
+to know what parameters it will accept.</div>
+
+<div class="MsoNormal">3. /home/lakov is a client part and is called the
+<i>mount
+point</i>, that is, where the remote file system will be hooked on the
+local file system.</div>
+
+<div class="MsoNormal">The <i>umount </i>command removes the remote file
+system from the local file hierachy. Following the example above:</div>
+
+<div class="MsoNormal">umount /home/tmp</div>
+
+
+<p class="MsoNormal">will remove the /home/tmp directory.</div>
+
+</body>
+</html>

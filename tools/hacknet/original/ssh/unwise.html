@@ -1,0 +1,45 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>New Page 1</title>
+</head>
+
+<body>
+
+<p align="center">&nbsp;</p>
+<p align="center"><b><font size="5">How NOT to Use the Secure Shell</font></b></p>
+<p align="center"><b><font size="5">(and other unwise/foolish acts)</font></b></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp; Just because you have secure shell on your machine does
+NOT mean that you have a secure machine.&nbsp; It just means that you have the <u>potential</u>
+of having secure connections across the network.&nbsp; Unless insecure commands
+(such as <b>telnet</b>, <b>ftp</b>, <b>rlogin</b>, <b>rsh</b>, and <b>rcp</b>)
+are disabled from your host machine, then anyone can [foolishly] connect to the
+server using clear text to convey information such as login name, password, and
+any other data necessary for the login process.</p>
+<p>&nbsp;&nbsp;&nbsp; To prove this, this <a href="http://ada.baylor.edu/stu/vanhorn/ssh/demo1.html">demonstration</a>
+shows the effect of running <b>telnet</b> from a machine running <b>sshd2</b>
+(the Secure Shell daemon) to another machine also running the <b>sshd2</b>.</p>
+<p>&nbsp;&nbsp;&nbsp; Obviously, this is not good, and we want to do something
+about it.</p>
+<p>&nbsp;&nbsp;&nbsp; If our goal is to have a machine that is relatively secure
+in its actions across the network, then we will have to disable the insecure
+commands as <i>root</i> and allow only the <b>ssh2</b> commands to work.&nbsp;
+Once we have done that, we should be left with a system that will only enable
+users to connect to (or from) a machine.</p>
+<p>&nbsp;&nbsp;&nbsp; There is one more problem, though, and that occurs when
+the server uses a login scheme where it puts the login screen on several
+terminals.&nbsp; Login names and passwords are sent across the network via clear
+text.&nbsp; Thus, anyone can still sniff the passwords off that type of
+network.&nbsp; However, Secure Shell was not intended to prevent this type of
+security.&nbsp; Instead, Secure Shell was meant to make a secure connection from
+a secure machine to another secure machine.</p>
+
+</body>
+
+</html>

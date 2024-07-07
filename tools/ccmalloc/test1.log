@@ -1,0 +1,71 @@
+.--------------------------------------------------------------------------.
+|================ ccmalloc-0.3.8 (C) 1997-2001 Armin Biere ================|
++--------------------------------------------------------------------------+
+| executable       = /home/faculty/donahoo/public_html/tools/ccmalloc/a.out |
+| startup file     = .ccmalloc (but not found)                             |
+| log file         = stderr                                                |
+| start time       = Wed Dec 19 09:57:16 2001                              |
+| operating system = Linux 2.4.2-2smp i686 on earth.ecs.baylor.edu         |
++--------------------------------------------------------------------------+
+| only-count        = 0            keep-deallocated-data = 0               |
+| check-interval    = 0            check-free-space      = 0               |
+| check-start       = 0            file-info             = 1               |
+| chain-length      = 0            additional-line       = 1               |
+| check-underwrites = 0            print-addresses       = 0               |
+| check-overwrites  = 0            print-on-one-line     = 0               |
+| sort-by-wasted    = 1            sort-by-size          = 1               |
+| # only-log-chain  = 0            continue              = 0               |
+| # dont-log-chain  = 0            statistics            = 0               |
+| debug             = 0            library-chains        = 0               |
+| load-dynlibs      = 0            align-8-byte          = 0               |
+| only-wasting-alloc= 1                                                    |
+`--------------------------------------------------------------------------'
+
+.---------------.
+|ccmalloc report|
+=======================================================
+| total # of|   allocated | deallocated |     garbage |
++-----------+-------------+-------------+-------------+
+|      bytes|          57 |          26 |          31 |
++-----------+-------------+-------------+-------------+
+|allocations|           3 |           1 |           2 |
++-----------------------------------------------------+
+| number of checks: 1                                 |
+| number of counts: 4                                 |
+| retrieving function names for addresses ... done.   |
+| reading file info from gdb ... done.                |
+| sorting by number of not reclaimed bytes ... done.  |
+| number of call chains: 2                            |
+| number of ignored call chains: 0                    |
+| number of reported call chains: 2                   |
+| number of internal call chains: 2                   |
+| number of library call chains: 0                    |
+=======================================================
+|
+* 61.3% = 19 Bytes of garbage allocated in 1 allocation
+|       |
+|       |       0x40047306 in <???>
+|       |
+|       |       0x080493eb in <main>
+|       |                  at test1.c:20
+|       |
+|       |       0x0804935c in <Leak>
+|       |                  at test1.c:5
+|       |
+|       `-----> 0x08052fb7 in <malloc>
+|                          at src/wrapper.c:318
+|        
+* 38.7% = 12 Bytes of garbage allocated in 1 allocation
+|       |
+|       |       0x40047306 in <???>
+|       |
+|       |       0x0804941e in <main>
+|       |                  at test1.c:23
+|       |
+|       |       0x080493a4 in <AvoidLeak>
+|       |                  at test1.c:11
+|       |
+|       `-----> 0x08052fb7 in <malloc>
+|                          at src/wrapper.c:318
+|        
+`------------------------------------------------------

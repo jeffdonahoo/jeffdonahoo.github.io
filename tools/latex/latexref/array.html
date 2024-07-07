@@ -1,0 +1,49 @@
+<HTML>
+<!-- created Thu Apr 9 23:20:43 MET DST 1998
+ from ../latex2e.texi line 1011 via texi2www -->
+<HEAD>
+<TITLE>array</TITLE>
+<LINK REL="Precedes" HREF="center.html">
+<LINK REV="Precedes" HREF="Environments.html">
+<LINK REV="Subdocument" HREF="Environments.html">
+</HEAD><BODY><P>
+<A HREF="Environments.html"><IMG ALIGN=MIDDLE SRC="prev-arrow.gif" ALT="PREV"></A>
+<A HREF="Environments.html"> <IMG ALIGN=MIDDLE SRC="up-arrow.gif" ALT="UP"></A>
+<A HREF="center.html"><IMG ALIGN=MIDDLE SRC="next-arrow.gif" ALT="NEXT"></A>
+<CITE>LaTeX2e help 1.6</CITE></P>
+<H3>2.6.1: array</H3>
+<DL><DT><DD>
+<PRE>
+\begin{array}{col1col2...coln}
+column 1 entry &amp; column 2 entry ... &amp; column n entry \\
+ .
+ .
+ .
+\end{array}
+</PRE>
+</DL>
+<P>
+Math arrays are produced with the array environment.  It has a single
+mandatory argument describing the number of columns and the alignment
+within them.  Each column, <CODE>coln</CODE>, is specified by a single letter
+that tells how items in that row should be formatted.
+</P>
+<UL>
+<LI>
+<CODE>c</CODE> --- for centred
+<LI>
+<CODE>l</CODE> --- for flush left
+<LI>
+<CODE>r</CODE> --- for flush right
+</UL>
+
+<P>
+Column entries must be separated by an <CODE>&amp;</CODE>.  Column entries may
+include other LaTeX commands.  Each row of the array must be terminated
+with the string <CODE>\\</CODE>.
+</P>
+<P>
+Note that the <CODE>array</CODE> environment can only be used in math mode, so
+normally it is used inside an <CODE>equation</CODE> environment.
+</P>
+</BODY></HTML>

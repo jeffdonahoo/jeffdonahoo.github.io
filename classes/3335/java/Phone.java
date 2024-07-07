@@ -1,0 +1,161 @@
+import java.io.*;
+
+/**
+ * Phone holds a single phone number and description
+ */
+
+public class Phone implements Serializable {
+
+  private static final int DESCRIPTIONCHARS = 5;
+  private static final int AREACODECHARS = 3;
+  private static final int PREFIXCHARS = 3;
+  private static final int NUMBERCHARS = 4;
+
+  private String description;
+  private String areaCode;
+  private String prefix;
+  private String number;
+
+  /**
+   * Initializes a newly constructed Phone instance.  An phone has a
+   * description, area code, prefix, and number.
+   *
+   * @param description   Phone number description
+   * @param areaCode      Area code
+   * @param prefix        Prefix
+   * @param number        Number
+   */
+  private Phone(String description, String areaCode, String prefix, String number) {
+    this.description = description;
+    this.areaCode = areaCode;
+    this.prefix = prefix;
+    this.number = number;
+  }
+
+  /**
+   * Gets the phone description
+   *
+   * @return       Description
+   */
+  public String getDescription() {
+    return description;
+  }
+
+  /**
+   * Gets the area code
+   *
+   * @return       Area code
+   */
+  public String getAreaCode() {
+    return areaCode;
+  }
+
+  /**
+   * Gets the prefix
+   *
+   * @return       Prefix
+   */
+  public String getPrefix() {
+    return prefix;
+  }
+
+  /**
+   * Gets the number
+   *
+   * @return       Number
+   */
+  public String getNumber() {
+    return number;
+  }
+
+  /**
+   * Writes the phone record to the specified stream in the format specified
+   * in Program 3
+   *
+   * @param out            Output stream
+   * @throws IOException   if an I/O error occurs
+   */
+  public void write(DataOutput out) throws IOException {
+    // Write description
+    out.writeChars(description);
+    // Write area code
+    out.writeChars(areaCode);
+    // Write prefix
+    out.writeChars(prefix);
+    // Write number
+    out.writeChars(number);
+  }
+
+  /**
+   * Creates a Phone instance from the specified stream using the format specified
+   * in Program 3
+   *
+   * @param in             Input stream
+   * @throws IOException   if an I/O error occurs
+   */
+  public static Phone read(DataInput in) throws IOException {
+    // Read description
+    String description = readNChars(in, DESCRIPTIONCHARS);
+    // Read area code
+    String areaCode = readNChars(in, AREACODECHARS);
+    // Read prefix
+    String prefix = readNChars(in, PREFIXCHARS);
+    // Read number
+    String number = readNChars(in, NUMBERCHARS);
+
+    return new Phone(description, areaCode, prefix, number);
+  }
+
+  /**
+   * Creates a phone instance using console input
+   *
+   */
+  public static Phone read() {
+    StringBuffer description = new StringBuffer(Console.readLine("Enter Phone Description (5 chars)> "));
+    String areaCode = Console.readLine("Enter Area Code> ");
+    String prefix = Console.readLine("Enter Prefix> ");
+    String number = Console.readLine("Enter Number> ");
+
+    if ((areaCode.length() != AREACODECHARS) || (prefix.length() != PREFIXCHARS) ||
+        (number.length() != NUMBERCHARS)) {
+      System.out.println("Invalid phone entry");
+      return null;
+    }
+
+    try {
+      Integer.parseInt(areaCode.toString());
+      Integer.parseInt(prefix.toString());
+      Integer.parseInt(number.toString());
+    } catch (NumberFormatException e) {
+      System.out.println("Invalid phone entry");
+      return null;
+    }
+
+    if (description.length() > DESCRIPTIONCHARS) {
+      description.setLength(DESCRIPTIONCHARS);
+    } else {
+      for (int i=0; i < DESCRIPTIONCHARS - description.length(); i++) {
+        description.append(' ');
+      }
+    }
+
+    return new Phone(description.toString(), areaCode, prefix, number);
+  }
+
+  private static String readNChars(DataInput in, int n) throws IOException {
+    char[] rtn = new char[n];
+    for (int c = 0; c < n; c++) {
+      rtn[c] = in.readChar();
+    }
+    return new String(rtn);
+  }
+
+  /**
+   * Creates a String to represent the Phone object
+   *
+   * @return              String representation of Phone instance
+   */
+  public String toString() {
+    return ", " + description + ": (" + areaCode + ") " + prefix + "-" + number;
+  }
+}

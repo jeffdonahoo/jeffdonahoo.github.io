@@ -1,0 +1,42 @@
+<html>
+<head>
+   <title>Network Agent Example</title>
+</head>
+<body>
+
+I have hacked NS FEC sender and receiver agents.  The sender agent
+waits for a request from the receiver and then sends the file.  Below
+is a description on integration of these agents into NS.  Let me know
+if you have any problems or comments on these instructions.  I assume
+you have suceeded at the Ping tutorial<P>
+
+<OL>
+<LI>  Get the following files to put in your NS Agent C++ directory:
+<UL>
+<LI> FEC Agent <A HREF="fec.h">fec.h</A> <A HREF="fec.cc">fec.cc</A>
+<LI> FEC Sender Agent <A HREF="fec_snd.h">fec_snd.h</A> <A
+HREF="fec_snd.cc">fec_snd.cc</A>
+<LI> FEC Receiver Agent <A HREF="fec_rcv.h">fec_rcv.h</A> <A
+HREF="fec_rcv.cc">fec_rcv.cc</A>
+</UL>
+<LI> Add fec.o, fec_snd.o, and fec_rcv.o to NS Makefile
+<LI> In packet.h, add "PT_FEC," to the "enum packet_t" list and add
+"name_[PT_FEC]= "fec";" to the class p_info p_info() function.
+<LI> Perform a "make depend".  Ignore any warnings.
+<LI> Add the following to the end of tcl/lib/ns-default.tcl: <BR>
+Agent/FEC/Snd set packetSize_ 64 <BR>
+Agent/FEC/Snd set rate_ 100Kbps <BR>
+Agent/FEC/Snd set extraPkts_ 0 <BR>
+Agent/FEC/Snd set debug_ false <BR>
+<BR>
+Agent/FEC/Rcv set debug_ false <BR>
+<LI> Add the following to the "foreach pair" list in
+tcl/lib/ns-packet.tcl: <BR>
+{ FEC off_fec_ }
+<LI> Run "make"
+<LI> Try ns on the example TCL script, <A HREF="fec.tcl">fec.tcl</A>
+<LI> You can also try this TCL multicast script, <A HREF="mfec.tcl">mfec.tcl</A>
+</OL>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2013.09.09.17.58.08;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@import java.util.Date;
+
+public class ExceptionQ4c {
+
+  public static void importantFunction() {
+    return;
+  }
+
+  public static void main(String[] args) {
+    long startTime = (new Date()).getTime();
+    for (int i = 0; i < ExceptionQ4.NOTESTS; i++) {
+      importantFunction();
+    }
+    System.out.println("Time: " + (new Date().getTime() - startTime));
+  }
+}
+@

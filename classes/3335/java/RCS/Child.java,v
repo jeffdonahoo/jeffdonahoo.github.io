@@ -1,0 +1,121 @@
+head	1.3;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2016.02.10.23.23.31;	author donahoo;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2014.10.09.15.55.35;	author donahoo;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2013.09.09.17.58.08;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@public final class Child extends Person {
+
+  private int grade;
+
+  public Child(String name, int grade) {
+    super(name);    // Must be first
+    this.grade = grade;
+  }
+
+  @@Override
+  public void sayHello() {
+    super.sayHello();  // Need not be first
+    System.out.println("I'm in grade " + grade);
+  }
+
+  public static void sayType() {
+    System.out.println("I am a child!");
+  }
+
+  public int getGrade() {
+    return grade;
+  }
+
+  public static void main(String[] args) {
+    Person p = new Child("Julie", 5);
+    Person x = new Person("Bob");
+
+    p.sayHello();
+
+    p.sayType();
+
+    System.out.println(x instanceof Child);
+    // System.out.println(p.getGrade());
+  }
+}@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d1 35
+a35 34
+public class Child extends Person {
+
+  private int grade;
+
+  public Child(String name, int grade) {
+    super(name);    // Must be first
+    this.grade = grade;
+  }
+
+  public void sayHello() {
+    super.sayHello();  // Need not be first
+    System.out.println("I'm in grade " + grade);
+  }
+
+  public static void sayType() {
+    System.out.println("I am a child!");
+  }
+
+  public int getGrade() {
+    return grade;
+  }
+
+  public static void main(String[] args) {
+    Person p = new Child("Julie", 5);
+    Person x = new Person("Bob");
+
+    p.sayHello();
+
+    p.sayType();
+
+    System.out.println(x instanceof Child);
+    // System.out.println(p.getGrade());
+  }
+}
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d15 4
+d29 2
+@

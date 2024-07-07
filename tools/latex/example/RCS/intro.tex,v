@@ -1,0 +1,51 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@% @;
+
+
+1.1
+date	2001.12.10.22.27.51;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@\section{Introduction}
+
+This is intro stuff.
+
+Here's a list.  There are three types of lists
+\begin{description}
+
+\item[description:]  This is a description list
+\item[enumerate:]  An enumerate list uses numbers
+\item[itemize:]  An itemized list has bullets
+\end{description}
+
+You can cite stuff like this\cite{ref99}.
+
+\begin{table}[htbp]
+\begin{center}
+\caption{\label{tab:mytable}This is a table}
+\begin{tabular}{|l||c|c|c|} \hline
+Name & Test 1 & Test 2 & Final \\ \hline \hline
+Bob & 93 & 92 & 70 \\ \hline
+Jane & 95 & 87 & 96 \\ \hline \hline
+Avg: & 94 & 90 & 83 \\ \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+Table~\ref{tab:mytable} is a grade sheet.
+
+@

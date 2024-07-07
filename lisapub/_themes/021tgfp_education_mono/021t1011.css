@@ -1,0 +1,166 @@
+.mstheme     { separator-image: url(hr.gif); list-image-1: url(bullet1.gif); list-image-2: 
+               url(bullet2.gif); list-image-3: url(bullet3.gif); 
+               nav-banner-image: url(bnr.gif); navbutton-horiz-normal: 
+               url(nav.gif); navbutton-horiz-hovered: url(nav_h.gif); 
+               navbutton-horiz-pushed: url(nav_s.gif); navbutton-vert-normal: 
+               url(nav.gif); navbutton-vert-hovered: url(nav_h.gif); 
+               navbutton-vert-pushed: url(nav_s.gif); navbutton-home-normal: 
+               url(back.gif); navbutton-home-hovered: url(back_h.gif); 
+               navbutton-home-pushed: url(blhomep.gif); 
+               navbutton-next-normal: url(next.gif); navbutton-next-hovered: 
+               url(next_h.gif); navbutton-next-pushed: url(blnextp.gif); 
+               navbutton-prev-normal: url(back.gif); navbutton-prev-hovered: 
+               url(back_h.gif); navbutton-prev-pushed: url(blprevp.gif); 
+               navbutton-up-normal: url(up.gif); navbutton-up-hovered: 
+               url(up_h.gif); navbutton-up-pushed: url(blupp.gif) }
+.mstheme-bannertxt { font-family: verdana, Arial, Helvetica; color: rgb(255, 255, 255); font-size: 
+               3; font-style: normal; font-weight: bold; text-align: left }
+.mstheme-horiz-navtxt { font-family: Verdana, Arial, Helvetica; color: rgb(0, 0, 0); font-size: 1; 
+               font-style: normal; font-weight: normal; text-align: center; 
+               vertical-align: middle }
+.mstheme-vert-navtxt { font-family: Verdana, Arial, Helvetica; color: rgb(0, 0, 0); font-size: 1; 
+               font-style: normal; font-weight: normal; text-align: center; 
+               vertical-align: middle }
+.mstheme-navtxthome { font-family: verdana, Arial, Helvetica; color: rgb(0, 0, 0); font-size: 1; 
+               font-style: normal; font-weight: normal }
+.mstheme-navtxtnext { font-family: verdana, Arial, Helvetica; color: rgb(0, 0, 0); font-size: 1; 
+               font-style: normal; font-weight: normal }
+.mstheme-navtxtprev { font-family: verdana, Arial, Helvetica; color: rgb(0, 0, 0); font-size: 1; 
+               font-style: normal; font-weight: normal }
+.mstheme-navtxtup { font-family: verdana, Arial, Helvetica; color: rgb(0, 0, 0); font-size: 1; 
+               font-style: normal; font-weight: normal }
+ul           { list-style-image: url('bullet1.gif') }
+ul ul        { list-style-image: url('bullet2.gif') }
+ul ul ul     { list-style-image: url('bullet3.gif') }
+a:link       { color: rgb(51, 153, 255) }
+a:active     { color: rgb(0, 0, 128) }
+a:visited    { color: rgb(64, 128, 128) }
+body         { background-color: rgb(255, 255, 255); color: rgb(0, 0, 0) }
+table        { table-border-color-light: rgb(123, 123, 123); table-border-color-dark: 
+               rgb(123, 123, 123) }
+h1           { color: rgb(0, 64, 64) }
+h2           { color: rgb(64, 128, 128) }
+h3           { color: rgb(64, 128, 128) }
+h4           { color: rgb(0, 0, 0) }
+h5           { color: rgb(0, 0, 0) }
+h6           { color: rgb(0, 0, 0) }
+button       {  }
+label        {  }
+.mstheme-text {  }
+textarea     {  }
+fieldset     {  }
+legend       {  }
+select       {  }
+caption      {  }
+th           {  }
+.mstheme-bannertxt a:link { color: rgb(51, 153, 255) }
+.mstheme-bannertxt a:active { color: rgb(0, 0, 128) }
+.mstheme-bannertxt a:visited { color: rgb(64, 128, 128) }
+.mstheme-bannertxt-g { font-family: verdana, Arial, Helvetica; color: rgb(255, 255, 255); font-size: 
+               3; font-style: normal; font-weight: bold; text-align: left }
+.mstheme-bannertxt-g a:link { color: rgb(51, 153, 255) }
+.mstheme-bannertxt-g a:active { color: rgb(0, 0, 128) }
+.mstheme-bannertxt-g a:visited { color: rgb(64, 128, 128) }
+.mstheme-bannertxt-s { font-family: verdana, Arial, Helvetica; color: rgb(255, 255, 255); font-size: 
+               3; font-style: normal; font-weight: bold; text-align: left }
+.mstheme-bannertxt-s a:link { color: rgb(51, 153, 255) }
+.mstheme-bannertxt-s a:active { color: rgb(0, 0, 128) }
+.mstheme-bannertxt-s a:visited { color: rgb(64, 128, 128) }
+.mstheme-horiz-navtxt a:link { color: rgb(51, 153, 255) }
+.mstheme-horiz-navtxt a:active { color: rgb(0, 0, 128) }
+.mstheme-horiz-navtxt a:visited { color: rgb(64, 128, 128) }
+.mstheme-horiz-navtxt-g { font-family: Verdana, Arial, Helvetica; color: rgb(0, 0, 0); font-size: 1; 
+               font-style: normal; font-weight: normal; text-align: center; 
+               vertical-align: middle }
+.mstheme-horiz-navtxt-g a:link { color: rgb(51, 153, 255) }
+.mstheme-horiz-navtxt-g a:active { color: rgb(0, 0, 128) }
+.mstheme-horiz-navtxt-g a:visited { color: rgb(64, 128, 128) }
+.mstheme-horiz-navtxt-gs { font-family: Verdana, Arial, Helvetica; color: rgb(0, 0, 0); font-size: 1; 
+               font-style: normal; font-weight: normal; text-align: center; 
+               vertical-align: middle }
+.mstheme-horiz-navtxt-gs a:link { color: rgb(51, 153, 255) }
+.mstheme-horiz-navtxt-gs a:active { color: rgb(0, 0, 128) }
+.mstheme-horiz-navtxt-gs a:visited { color: rgb(64, 128, 128) }
+.mstheme-navtxthome a:link { color: rgb(51, 153, 255) }
+.mstheme-navtxthome a:active { color: rgb(0, 0, 128) }
+.mstheme-navtxthome a:visited { color: rgb(64, 128, 128) }
+.mstheme-navtxthome-g { font-family: verdana, Arial, Helvetica; color: rgb(0, 0, 0); font-size: 1; 
+               font-style: normal; font-weight: normal }
+.mstheme-navtxthome-g a:link { color: rgb(51, 153, 255) }
+.mstheme-navtxthome-g a:active { color: rgb(0, 0, 128) }
+.mstheme-navtxthome-g a:visited { color: rgb(64, 128, 128) }
+.mstheme-navtxthome-gs { font-family: verdana, Arial, Helvetica; color: rgb(0, 0, 0); font-size: 1; 
+               font-style: normal; font-weight: normal }
+.mstheme-navtxthome-gs a:link { color: rgb(51, 153, 255) }
+.mstheme-navtxthome-gs a:active { color: rgb(0, 0, 128) }
+.mstheme-navtxthome-gs a:visited { color: rgb(64, 128, 128) }
+.mstheme-navtxtnext a:link { color: rgb(51, 153, 255) }
+.mstheme-navtxtnext a:active { color: rgb(0, 0, 128) }
+.mstheme-navtxtnext a:visited { color: rgb(64, 128, 128) }
+.mstheme-navtxtnext-g { font-family: verdana, Arial, Helvetica; color: rgb(0, 0, 0); font-size: 1; 
+               font-style: normal; font-weight: normal }
+.mstheme-navtxtnext-g a:link { color: rgb(51, 153, 255) }
+.mstheme-navtxtnext-g a:active { color: rgb(0, 0, 128) }
+.mstheme-navtxtnext-g a:visited { color: rgb(64, 128, 128) }
+.mstheme-navtxtnext-gs { font-family: verdana, Arial, Helvetica; color: rgb(0, 0, 0); font-size: 1; 
+               font-style: normal; font-weight: normal }
+.mstheme-navtxtnext-gs a:link { color: rgb(51, 153, 255) }
+.mstheme-navtxtnext-gs a:active { color: rgb(0, 0, 128) }
+.mstheme-navtxtnext-gs a:visited { color: rgb(64, 128, 128) }
+.mstheme-navtxtprev a:link { color: rgb(51, 153, 255) }
+.mstheme-navtxtprev a:active { color: rgb(0, 0, 128) }
+.mstheme-navtxtprev a:visited { color: rgb(64, 128, 128) }
+.mstheme-navtxtprev-g { font-family: verdana, Arial, Helvetica; color: rgb(0, 0, 0); font-size: 1; 
+               font-style: normal; font-weight: normal }
+.mstheme-navtxtprev-g a:link { color: rgb(51, 153, 255) }
+.mstheme-navtxtprev-g a:active { color: rgb(0, 0, 128) }
+.mstheme-navtxtprev-g a:visited { color: rgb(64, 128, 128) }
+.mstheme-navtxtprev-gs { font-family: verdana, Arial, Helvetica; color: rgb(0, 0, 0); font-size: 1; 
+               font-style: normal; font-weight: normal }
+.mstheme-navtxtprev-gs a:link { color: rgb(51, 153, 255) }
+.mstheme-navtxtprev-gs a:active { color: rgb(0, 0, 128) }
+.mstheme-navtxtprev-gs a:visited { color: rgb(64, 128, 128) }
+.mstheme-navtxtup a:link { color: rgb(51, 153, 255) }
+.mstheme-navtxtup a:active { color: rgb(0, 0, 128) }
+.mstheme-navtxtup a:visited { color: rgb(64, 128, 128) }
+.mstheme-navtxtup-g { font-family: verdana, Arial, Helvetica; color: rgb(0, 0, 0); font-size: 1; 
+               font-style: normal; font-weight: normal }
+.mstheme-navtxtup-g a:link { color: rgb(51, 153, 255) }
+.mstheme-navtxtup-g a:active { color: rgb(0, 0, 128) }
+.mstheme-navtxtup-g a:visited { color: rgb(64, 128, 128) }
+.mstheme-navtxtup-gs { font-family: verdana, Arial, Helvetica; color: rgb(0, 0, 0); font-size: 1; 
+               font-style: normal; font-weight: normal }
+.mstheme-navtxtup-gs a:link { color: rgb(51, 153, 255) }
+.mstheme-navtxtup-gs a:active { color: rgb(0, 0, 128) }
+.mstheme-navtxtup-gs a:visited { color: rgb(64, 128, 128) }
+.mstheme-topbar-font a:link { color: rgb(51, 153, 255) }
+.mstheme-topbar-font a:active { color: rgb(0, 0, 128) }
+.mstheme-topbar-font a:visited { color: rgb(64, 128, 128) }
+.mstheme-topbar-font-g { font-family: Verdana, Arial, Helvetica; color: rgb(0,0,0); font-size: 8pt }
+.mstheme-topbar-font-g a:link { color: rgb(51, 153, 255) }
+.mstheme-topbar-font-g a:active { color: rgb(0, 0, 128) }
+.mstheme-topbar-font-g a:visited { color: rgb(64, 128, 128) }
+.mstheme-vert-navtxt a:link { color: rgb(51, 153, 255) }
+.mstheme-vert-navtxt a:active { color: rgb(0, 0, 128) }
+.mstheme-vert-navtxt a:visited { color: rgb(64, 128, 128) }
+.mstheme-vert-navtxt-g { font-family: Verdana, Arial, Helvetica; color: rgb(0, 0, 0); font-size: 1; 
+               font-style: normal; font-weight: normal; text-align: center; 
+               vertical-align: middle }
+.mstheme-vert-navtxt-g a:link { color: rgb(51, 153, 255) }
+.mstheme-vert-navtxt-g a:active { color: rgb(0, 0, 128) }
+.mstheme-vert-navtxt-g a:visited { color: rgb(64, 128, 128) }
+.mstheme-vert-navtxt-gs { font-family: Verdana, Arial, Helvetica; color: rgb(0, 0, 0); font-size: 1; 
+               font-style: normal; font-weight: normal; text-align: center; 
+               vertical-align: middle }
+.mstheme-vert-navtxt-gs a:link { color: rgb(51, 153, 255) }
+.mstheme-vert-navtxt-gs a:active { color: rgb(0, 0, 128) }
+.mstheme-vert-navtxt-gs a:visited { color: rgb(64, 128, 128) }
+.mstheme     { navbutton-background-color: rgb(255,255,255); top-bar-button: url(gbtn.gif) }
+.mstheme-topbar-font { color: rgb(0,0,0); font-family: Verdana, Arial, Helvetica; font-size: 8pt }
+body         { background-image: url('bg.gif'); font-family: verdana, Arial, Helvetica }
+h1           { font-family: verdana, Arial, Helvetica }
+h2           { font-family: verdana, Arial, Helvetica }
+h3           { font-family: verdana, Arial, Helvetica }
+h4           { font-family: verdana, Arial, Helvetica }
+h5           { font-family: verdana, Arial, Helvetica }
+h6           { font-family: verdana, Arial, Helvetica }

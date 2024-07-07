@@ -1,0 +1,12 @@
+\contentsline {part} {\chapternameToC }{\relax }
+\contentsline {part}{\relax \fontsize {12}{14.5}\selectfont \abovedisplayskip 12\p@ plus3\p@ minus7\p@ \abovedisplayshortskip \z@ plus3\p@ \belowdisplayshortskip 6.5\p@ plus3.5\p@ minus3\p@ \belowdisplayskip \abovedisplayskip \let \leftmargin \leftmargini \parsep 5\p@ plus2.5\p@ minus\p@ \topsep 10\p@ plus4\p@ minus6\p@ \itemsep 5\p@ plus2.5\p@ minus\p@ \leftmargin \leftmargini \parsep 5\p@ plus2.5\p@ minus\p@ \topsep 10\p@ plus4\p@ minus6\p@ \itemsep 5\p@ plus2.5\p@ minus\p@ \hspace *{-0.0625in} \vspace *{-0.5in} \th@ChapterStyle \th@DoChapCenter \vspace *{0.2in}LIST OF FIGURES\vspace *{-0.75in}\normalfont \vspace *{0.7in}}{iv}
+\contentsline {chapter}{\numberline {\rm 1}\rm Introduction}{1}
+\contentsline {section}{\numberline {1.1}Stuff to think about}{2}
+\contentsline {subsection}{\numberline {1.1.1}Really neat stuff}{2}
+\contentsline {subsection}{\numberline {1.1.2}Boring stuff}{2}
+\contentsline {section}{\numberline {1.2}Stuff to ignore}{3}
+\contentsline {chapter}{\numberline {\rm 2}\rm Related Work}{4}
+\contentsline {chapter}{\numberline {\rm 3}\rm Design and Implementation}{5}
+\contentsline {chapter}{\numberline {\rm 4}\rm Experimental Results}{6}
+\contentsline {chapter}{\numberline {\rm 5}\rm Summary}{7}
+\contentsline {chapter}{\hspace *{-0.0625in} \relax \fontsize {12}{14.5}\selectfont \abovedisplayskip 12\p@ plus3\p@ minus7\p@ \abovedisplayshortskip \z@ plus3\p@ \belowdisplayshortskip 6.5\p@ plus3.5\p@ minus3\p@ \belowdisplayskip \abovedisplayskip \let \leftmargin \leftmargini \parsep 5\p@ plus2.5\p@ minus\p@ \topsep 10\p@ plus4\p@ minus6\p@ \itemsep 5\p@ plus2.5\p@ minus\p@ \leftmargin \leftmargini \parsep 5\p@ plus2.5\p@ minus\p@ \topsep 10\p@ plus4\p@ minus6\p@ \itemsep 5\p@ plus2.5\p@ minus\p@ \normalfont \vspace *{-0.01in}BIBLIOGRAPHY\normalfont }{8}

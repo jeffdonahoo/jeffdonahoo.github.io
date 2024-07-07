@@ -1,0 +1,116 @@
+head	1.1;
+access;
+symbols;
+locks
+	donahoo:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2019.05.27.16.27.28;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@<html>
+<head>
+<title>TCP/IP Sockets in Java:  Practical Guide for Programmers,
+Second Edition</title>
+</head>
+<body>
+
+<img src="../images/javasocket2.jpg">
+<p>Below is the example source code from "TCP/IP Sockets in Java<sup>TM</sup>:
+Practical Guide for Programmers, Second Edition" by Kenneth
+L. Calvert and Michael J. Donahoo.  This book can be ordered at your favorite local bookstore
+or online.  <p> <a
+href="http://www.mkp.com/books_catalog/catalog.asp?ISBN=1-55860-685-8">Official
+Book Website</a>
+<p>
+
+<b>Disclaimer:</b> The purpose of this book is to provide general
+information about network programming as of the book's publication
+date. The authors have included sample code that is intended for the
+sole purpose of illustrating the use of the sockets API. Neither the
+authors nor the publisher are aware of any third party patents or
+proprietary rights that may cover any sample of any kind. The authors
+and the Publisher DISCLAIM ALL EXPRESS AND IMPLIED WARRANTIES,
+including warranties of merchantability and fitness for any particular
+purpose. Your use or reliance upon any sample code or other
+information in this book will be at your own risk. No one should use
+any sample code (or illustrations) from this book in any software
+application without first obtaining competent legal advice.
+<p>
+Example code: 
+<ul>
+<li> Chapter 2
+<ul>
+<li><a href="code/InetAddressExample.java">InetAddressExample.java</a>
+<li><a href="code/TCPEchoClient.java">TCPEchoClient.java</a>
+<li><a href="code/TCPEchoClientGUI.java">TCPEchoClientGUI.java</a>
+<li><a href="code/TCPEchoServer.java">TCPEchoServer.java</a>
+<li><a href="code/UDPEchoClientTimeout.java">UDPEchoClientTimeout.java</a>
+<li><a href="code/UDPEchoServer.java">UDPEchoServer.java</a>
+</ul>
+<li> Chapter 3 
+<ul>
+<li><a href="code/BruteForceCoding.java">BruteForceCoding.java</a>
+<li><a href="code/Framer.java">Framer.java</a>
+<li><a href="code/DelimFramer.java">DelimFramer.java</a>
+<li><a href="code/LengthFramer.java">LengthFramer.java</a>
+<li><a href="code/VoteMsg.java">VoteMsg.java</a>
+<li><a href="code/VoteMsgCoder.java">VoteMsgCoder.java</a>
+<li><a href="code/VoteMsgTextCoder.java">VoteMsgTextCoder.java</a>
+<li><a href="code/VoteMsgBinCoder.java">VoteMsgBinCoder.java</a>
+<li><a href="code/VoteService.java">VoteService.java</a>
+<li><a href="code/VoteClientTCP.java">VoteClientTCP.java</a>
+<li><a href="code/VoteServerTCP.java">VoteServerTCP.java</a>
+<li><a href="code/VoteClientUDP.java">VoteClientUDP.java</a>
+<li><a href="code/VoteServerUDP.java">VoteServerUDP.java</a>
+</ul>
+<li> Chapter 4
+<ul>
+<li><a href="code/ThreadExample.java">ThreadExample.java</a>
+<li><a href="code/EchoProtocol.java">EchoProtocol.java</a>
+<li><a href="code/TCPEchoServerThread.java">TCPEchoServerThread.java</a>
+<li><a href="code/TCPEchoServerPool.java">TCPEchoServerPool.java</a>
+<li><a href="code/TCPEchoServerExecutor.java">TCPEchoServerExecutor.java</a>
+<li><a href="code/TimeLimitEchoProtocol.java">TimeLimitEchoProtocol.java</a>
+<li><a href="code/VoteMulticastSender.java">VoteMulticastSender.java</a>
+<li><a href="code/VoteMulticastReceiver.java">VoteMulticastReceiver.java</a>
+<li><a href="code/CompressClient.java">CompressClient.java</a>
+<li><a href="code/CompressProtocol.java">CompressProtocol.java</a>
+<li><a href="code/FileClientApplet.html">FileClientApplet.html</a>
+<li><a href="code/FileClientApplet.java">FileClientApplet.java</a>
+<li><a href="code/TCPFileServer.java">TCPFileServer.java</a>
+</ul>
+<li> Chapter 5
+<ul>
+<li><a href="code/TCPEchoClientNonblocking.java">TCPEchoClientNonblocking.java</a>
+<li><a href="code/TCPProtocol.java">TCPProtocol.java</a>
+<li><a href="code/TCPServerSelector.java">TCPServerSelector.java</a>
+<li><a href="code/EchoSelectorProtocol.java">EchoSelectorProtocol.java</a>
+<li><a href="code/UDPEchoServerSelector.java">UDPEchoServerSelector.java</a>
+</ul>
+<li> Chapter 6
+<ul>
+<li><a href="code/CompressClient.java">CompressClient.java</a>
+<li><a href="code/CompressClientNoDeadlock.java">CompressClientNoDeadlock.java</a>
+</ul>
+
+<p align="right">
+<a href="http://www.mkp.com/books_catalog/catalog.asp?ISBN=1-55860-686-6">
+<img src="images/MK_blue.gif" border=0></a>
+
+</body>
+</html>
+@

@@ -1,0 +1,91 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.74 [en] (Windows NT 5.0; U) [Netscape]">
+   <title>Kernel Extra Steps</title>
+<!--This file created 11/10/00 4:57 PM by Claris Home Page version 3.0-->
+<X-CLARIS-WINDOW TOP=67 BOTTOM=489 LEFT=9 RIGHT=666>
+<X-CLARIS-TAGVIEW MODE=minimal>
+</head>
+<body bgcolor="#FFFFFF" link="#006633" vlink="#FFCC00">
+&nbsp;
+<table ALIGN=LEFT BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH="560" >
+<tr>
+<td HEIGHT="2">
+<center>
+<h1>
+<font face="Arial,Helvetica,Sans-Serif">Compiling a RedHat Linux Kernel</font></h1></center>
+
+<blockquote>
+<center>
+<h3>
+<font face="Arial,Helvetica,Sans-Serif">Extra Steps</font></h3></center>
+
+<h3>
+<font face="Arial,Helvetica,Sans-Serif">&nbsp;Finding the Kernel Source</font></h3>
+
+<ul>
+<li>
+<font face="Arial,Helvetica,Sans-Serif">If you would like to build a kernel
+from a different version of the source than what is on the computer, you
+will need to download it from the Internet. We got our's from <a href="http://www.kernel.org">www.kernel.org</a>.</font></li>
+
+<br>&nbsp;
+<li>
+<font face="Arial,Helvetica,Sans-Serif">Since Schemp has a zip drive, we
+copied the kernel to a zip disk.</font></li>
+
+<br>&nbsp;
+<li>
+<font face="Arial,Helvetica,Sans-Serif">Mount the zip disk with the command&nbsp;</font></li>
+
+<ul><b><i><font face="Courier New,Courier">> mount /mnt/zip</font></i></b></ul>
+
+<li>
+<font face="Arial,Helvetica,Sans-Serif">Make a new directory in <i>/usr/src</i>
+for the new source and copy it to the new directory. We called it linux-2.2.17.</font></li>
+
+<br><i><font face="Arial,Helvetica,Sans-Serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</font><b><font face="Courier New,Courier">> mkdir /usr/src/linux-&lt;version
+number></font></b></i>
+<br>&nbsp;
+<li>
+<font face="Arial,Helvetica,Sans-Serif">From the newly created <b><i>linux-&lt;version
+number></i></b> directory, issue the command:&nbsp;</font></li>
+
+<br><font face="Arial,Helvetica,Sans-Serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</font><b><i><font face="Courier New,Courier">> tar xzf &lt;filename></font></i></b>
+<br><font face="Arial,Helvetica,Sans-Serif">where <b><i>&lt;filename></i></b>
+is the name of the kernel that you downloaded from the Internet. This command
+will unzip and untar the file creating a directory called <i><b>linux</b>
+</i>in
+<i><b>linux-&lt;version number></b>,</i>&nbsp; with all the source
+files in it.</font>
+<br>&nbsp;
+<li>
+<font face="Arial,Helvetica,Sans-Serif">Now we need to change the<i> </i></font><b><i><font face="Courier New,Courier">/usr/src/linux</font></i></b><font face="Arial,Helvetica,Sans-Serif">
+link to point to the <i>linux</i> directory in <i>linux-&lt;version number></i>.
+You do this by removing the previous link and then creating the new link
+with the following commands:</font></li>
+
+<br><i><font face="Arial,Helvetica,Sans-Serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</font><b><font face="Courier New,Courier">> rm -f /usr/src/linux</font></b></i>
+<ul><i><b><font face="Courier New,Courier">> ln -sf /usr/src/linux-&lt;version-number>/linux
+/usr/src/linux</font></b><font face="Arial,Helvetica,Sans-Serif">&nbsp;</font></i></ul>
+</ul>
+</blockquote>
+
+<hr></td>
+</tr>
+
+<tr>
+<td HEIGHT="2">
+<br><font face="Arial, Helvetica, sans-serif"><font size=-1>Comments or
+questions should be sent to <font color="#187534"><a href="mailto:Cori_Rhodes@baylor.edu">Cori_Rhodes@baylor.edu</a>,
+or <a href="mailto:Saifuddin_Suterwala@baylor.edu">Saifuddin_Suterwala@baylor.edu</a></font></font></font></td>
+</tr>
+</table>
+
+</body>
+</html>

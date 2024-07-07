@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>FreeOxy</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="foo.css" rel="stylesheet" type="text/css">
+</head>
+
+<body bgcolor="#888899">
+<table width="100%"><tr><td align="center"><img src="logo.png" width="432" height="144"></td></tr></table>
+<p class="Topic">What is FreeOxy?</p>
+<p class="Text"> &nbsp;&nbsp;&nbsp;&nbsp;FreeOxy is a tool designed to prevent
+  censorship of the World Wide Web.  Using FreeOxy, any individual may
+  view content on the web, regardless of any filtering mechanism which
+  may lie between the individual's web browser and the desired
+  content.  In addition FreeOxy is designed to prevent the creation of
+  browse histories for any individual and to provide a degree of
+  plausible deniability so that the user is protected (at least in
+  theory) from legal repercussions which might otherwise result from
+  the viewing of politically dissident material, for instance.
+  FreeOxy is a scalable, robust solution that is resistant to
+  blocking.  In order to block FreeOxy, a malicious agent would need
+  to discover and block all the current FreeOxy servents at once.
+  FreeOxy was designed to make this task very difficult, if not
+  impossible.<br>
+<br>
+Long Live the Web.</p>
+<p class="Topic">Where can I get FreeOxy?</p>
+<p class="Text"> &nbsp;&nbsp;&nbsp;&nbsp;Because its authors feel that
+a tool such as FreeOxy should be used to its fullest extent, the FreeOxy
+source code is made available for download on this very website.  Just
+click <a href="FreeOxySrc.zip">here</a> to download a JBuilder project
+containing the source.
+<p class="Topic">How do I use FreeOxy?</p>
+<p class="Text"> &nbsp;&nbsp;&nbsp;&nbsp;FreeOxy is very easy to use.
+Simply download the <a href="FreeOxy.zip">application</a> and unzip
+into a directory of your choosing.  Next run
+RunFreeOxy.bat.  If you encounter any problems starting the program,
+make sure that the PATH environment variable contains the location of
+your SDK installation in it.  Once the program starts, enter the IP
+address of the interface on which FreeOxy should listen for other
+peers to connect.  Also, enter the port number on which FreeOxy should
+listen to your web browser.  If desired, enable paranoid mode (the
+FreeOxy peer will never attempt to fetch any webpages itself if it is
+paranoid mode) and then simply press the button labelled "Start".
+<p class="Topic">How does FreeOxy work?</p>
+<p class="Text"> &nbsp;&nbsp;&nbsp;&nbsp;FreeOxy works by forwarding
+a request randomly through the network of FreeOxy peers until a peer is
+reached which can satisfy the request.  For further details of the
+design and implementation, see our design document, which is located
+<a href="FreeOxy.doc">here</a>.
+
+</body>
+</html>

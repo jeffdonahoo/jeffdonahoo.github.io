@@ -1,0 +1,68 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2014.11.05.15.29.56;	author donahoo;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2013.09.09.17.58.08;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@<>
+@
+text
+@import java.awt.Point;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
+public class SetTest {
+
+  public static void main(String args[]) {
+
+    Set<Person> set = new HashSet<>();
+
+    if (!set.add(new Person("Bob"))) System.out.println("Add 1 failed");
+    if (!set.add(new Person("Jane"))) System.out.println("Add 2 failed");
+    if (!set.add(new Person("Bob"))) System.out.println("Add 3 failed");
+
+    for (Person p : set) {
+      System.out.println(p);
+    }
+  }
+}
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d10 1
+a10 1
+    Set<Point> set = new HashSet<Point>();
+d12 3
+a14 3
+    if (!set.add(new Point(1, 1))) System.out.println("Add 1 failed");
+    if (!set.add(new Point(1, 2))) System.out.println("Add 2 failed");
+    if (!set.add(new Point(1, 1))) System.out.println("Add 3 failed");
+d16 2
+a17 2
+    for (Iterator<Point> i=set.iterator(); i.hasNext();) {
+	System.out.println(i.next());
+@

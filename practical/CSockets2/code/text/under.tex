@@ -1,0 +1,1010 @@
+\chapter{Under the Hood}
+\label{chap:under}%
+\newcommand{\netstat}{\texttt{netstat}}
+
+Some of the subtleties of network programming are difficult to grasp
+without some understanding of the data structures associated with each
+socket in the implementation and certain details of how the underlying
+protocols work.  This is especially true of stream (TCP) sockets.
+This chapter describes some of what goes on ``under the hood'' when you
+create and use a socket.
+The initial discussion and Section~\ref{sect:demux} apply to both
+datagram (UDP) and stream (TCP) sockets; the rest applies only to TCP
+sockets.
+Please note that
+this description covers only the normal sequence of events and glosses
+over many details.  Nevertheless, we believe that even this basic
+level of understanding is helpful.  Readers who want the full story
+are referred to the TCP specification~[\cite{RFC793}] or to one of the
+more comprehensive treatises on the subject~[\cite{ComerV2},
+\cite{StevensV2}].
+
+Figure~\ref{fig:structures} is a simplified view of some of the
+information associated with a socket---that is, the object created by
+a call to \fcn{socket()}.  The integer returned by \fcn{socket()} is
+best thought of as a ``handle'' that identifies the collection of data
+structures for one communication endpoint that we refer to in this
+chapter as the ``socket structure.''
+As the figure indicates, more than one
+descriptor can refer to the same socket structure.  In fact,
+descriptors in \emph{different processes} can refer to the same
+underlying socket structure.
+
+\begin{figure}
+%\jfigs{figures/ja05f01}{0.7}
+\jfigs{figures/structures.eps}{0.5\textwidth}
+\caption{\label{fig:structures}Data structures associated with a socket.}
+\end{figure}
+
+By ``socket structure'' here we mean all data structures
+in the socket layer and TCP implementation that contain state
+information relevant to this socket abstraction. 
+Thus, the socket structure contains send and receive
+queues and other information, including the following:
+
+
+\begin{itemize}
+
+\item The {local and remote} Internet addresses and port numbers
+associated with the socket.  The local Internet address (labeled
+``Local IP'' in the figure) is one of those assigned to the local
+host; the local port is set at \fcn{bind()} time.
+The remote address and port identify the remote
+socket, if any, to which the local socket is connected.  We will say
+more about how and when these values are determined shortly
+(Section~\ref{sect:demux} contains a concise summary).
+
+\item A FIFO queue (``\sque'') of received data waiting to be delivered and a
+FIFO queue (``\rque'') for data waiting to be transmitted.
+
+\item For a TCP socket, additional {protocol state} information
+relevant to the opening and closing TCP handshakes.  In
+Figure~\ref{fig:structures}, the state is ``Closed''; all sockets start
+out in the Closed state.
+\end{itemize}
+Some general-purpose operating systems provide tools that enable users
+to obtain a ``snapshot'' of these underlying data structures.
+On such tool is \netstat, which is typically available on both
+Unix (Linux) and Windows platforms.  Given appropriate options, 
+\netstat\ displays exactly the information indicated in
+Figure~\ref{fig:structures}: number of bytes in 
+\emph{SendQ} and \emph{RecvQ}, 
+local and remote IP addresses and port
+numbers, and the connection state.
+Command-line options may vary, but the output should look something
+like this:
+\begin{verbatim}
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address       State      
+tcp        0      0 0.0.0.0:36045           0.0.0.0:*             LISTEN     
+tcp        0      0 0.0.0.0:111             0.0.0.0:*             LISTEN     
+tcp        0      0 0.0.0.0:53363           0.0.0.0:*             LISTEN     
+tcp        0      0 127.0.0.1:25            0.0.0.0:*             LISTEN     
+tcp        0      0 128.133.190.219:34077   4.71.104.187:80       TIME_WAIT  
+tcp        0      0 128.133.190.219:43346   79.62.132.8:22        ESTABLISHED
+tcp        0      0 128.133.190.219:875     128.133.190.43:2049   ESTABLISHED
+tcp6       0      0 :::22                   :::*                  LISTEN
+\end{verbatim}
+The first four lines and the last line
+depict server sockets listening for connections.
+(The last line is a listening socket bound to an IPv6 address.)
+The fifth line corresponds to a connection to a web server
+(port 80) that is partially shut
+down (see Section~\ref{sect:closingTCP} below).
+The next-to-last two lines are existing TCP connections.
+You may want to play with \netstat, if it is available on your system,
+to examine the status of connections in the scenarios depicted below.
+Be aware, however, that because the transitions between states
+depicted in the figures happen so quickly, it may be difficult to
+catch them in the ``snapshot'' provided by \netstat.
+
+Knowing that these data structures exist and how they are affected by
+the underlying protocols is useful because they control various
+aspects of the behavior of the socket.
+For example, because TCP
+provides a \emph{reliable} byte-stream service, a copy of any data
+sent over a TCP socket must be kept \emph{by the TCP implementation}
+until it has been successfully received at the other end of the
+connection.
+Completion of a call to \fcn{send()} on a TCP socket
+does \emph{not}, in general,
+imply that the data has actually transmitted---only that it has
+been copied into the local buffer.  Under normal conditions it will be
+transmitted soon, but the exact moment is under the control of TCP,
+not the application.
+Moreover, the nature of the
+byte-stream service means that message boundaries are \emph{not\/} necessarily
+preserved in the input stream.  As we saw in
+Section~\ref{sect:framing}, this means that most application protocols
+need a \emph{framing\/} mechanism, so the receiver can tell when it has
+received an entire message.
+
+On the other hand, with a datagram (UDP) socket, 
+packets are
+\emph{not} buffered for retransmission, and by the time a call to
+\fcn{send}/\fcn{sendto} returns, the data has been
+given to the network subsystem for transmission. If the network
+subsystem cannot handle the message for some reason, the packet is
+silently dropped (but this is rare).
+
+The next three sections deal with some of the subtleties of sending
+and receiving with TCP's byte-stream service.  Then,
+Section~\ref{sect:lifecycle} considers the connection establishment
+and termination of the TCP protocol.  Finally,
+Section~\ref{sect:demux} discusses the process of matching incoming
+packets to sockets and the rules about binding to port numbers.
+
+\section{Buffering and TCP}
+\label{sect:sendrec}%
+
+As a programmer, the most important thing to remember when using a TCP
+socket is this:
+
+\begin{quote}
+\textbf{You cannot assume any correspondence between
+writes to the output stream at one end of the connection
+and reads from the input stream at  the other end.}
+\end{quote}
+
+In particular, data passed in a single invocation of the output
+stream's \fcn{send} method at the sender can
+be spread across multiple invocations of the input stream's
+\fcn{recv} method at the other end; and a
+single \fcn{recv} may return data passed in
+multiple \fcn{send}s.
+
+To see this,
+consider a program that does the following:
+%
+\begin{inlinecode}
+rv = connect(s,...);
+...
+rv = send(s, buffer0, 1000, 0);
+...
+rv = send(s, buffer1, 2000, 0);
+...
+rv = send(s, buffer2, 5000, 0);
+...
+close(s);
+
+\end{inlinecode}
+%
+where the ellipses represent code that sets up the data in the
+buffers but contains no other calls to \fcn{send}.
+%
+This TCP connection transfers 8000 bytes to the receiver.  The way
+these 8000 bytes are grouped for delivery at the receiving end of the
+connection depends on the timing between the calls to
+\fcn{send()} and
+\fcn{recv()} at the two ends of the
+connection---as well as the size of the buffers provided to the
+\fcn{recv()} calls.
+
+We can think of the sequence of all bytes sent (in one direction) on a
+TCP connection up to a particular instant in time as being divided into three
+FIFO queues:
+
+\begin{enumerate}
+
+\item \emph{\sque}: Bytes buffered in the underlying implementation at
+the sender that have been written to the output stream but not yet
+successfully transmitted to the receiving host.
+
+\item \emph{\rque}: Bytes buffered in the underlying implementation at
+the receiver waiting to be delivered to the receiving program---that
+is, read from the input stream.
+
+\item \emph{Delivered}: Bytes already read from the input stream by
+the receiver.
+
+\end{enumerate}
+%
+A call to \fcn{send()} at the sender
+appends bytes to \sque.  The TCP protocol is responsible for
+moving bytes---in order---from \sque\ to \rque.  It is
+important to realize that this transfer cannot be controlled or
+directly observed by the user program, and that it occurs in chunks
+whose sizes are more or less independent of the size of the buffers
+passed in \fcn{send}s.  Bytes are moved from
+\rque\ to \emph{Delivered}\ by calls to \fcn{recv()};
+the size of the transferred chunks depends on the amount of
+data in \rque\ and the size of the buffer given to
+\fcn{recv()}.
+
+Figure~\ref{fig:buffers0} shows one possible state of the three queues
+\emph{after} the three \fcn{send}s in
+the example above, but \emph{before} any
+\fcn{in.reads}s at the other end.  The
+different shading patterns denote bytes passed in the three different
+invocations of \fcn{send()} shown above.
+
+\begin{figure}
+%\jfigs{figures/ja05f02}{0.7}
+\jfigs{figures/buffers0.eps}{\textwidth}
+\caption{\label{fig:buffers0}State of  the three queues after three
+  \fcn{send()} calls.}
+\end{figure}
+
+The output of \netstat\ on the sending host at the instant depicted in
+this figure would contain a line like:
+\begin{verbatim}
+Active Internet connections
+Proto Recv-Q Send-Q Local Address        Foreign Address      State
+tcp        0   6500 10.21.44.33:43346    192.0.2.8:22         ESTABLISHED
+\end{verbatim}
+On the receiving host, \netstat\ shows:
+\begin{verbatim}
+Active Internet connections
+Proto Recv-Q Send-Q Local Address        Foreign Address      State
+tcp     1500      0 192.0.2.8:22         10.21.44.33:43346    ESTABLISHED
+\end{verbatim}
+
+Now suppose the receiver calls \fcn{recv} with
+a byte array of size 2000.  The \fcn{recv} call
+will move all of the 1500 bytes present in the waiting-for-delivery
+(\rque) queue into the byte array and return the value 1500.
+Note that this data includes bytes passed in both the first and second
+calls to \fcn{send}.  At some time later,
+after TCP has completed transfer of more data, the three partitions
+might be in the state shown in Figure~\ref{fig:buffers1}.
+
+\begin{figure}
+%\jfigs{figures/ja05f03}{0.7}
+\jfigs{figures/buffers1.eps}{\textwidth}
+\caption{\label{fig:buffers1}After first \fcn{recv}}
+\end{figure}
+
+If the receiver now calls \fcn{recv} with a
+buffer of size 4000, that many bytes will be moved from the
+waiting-for-delivery (\rque) queue to the already-delivered
+(\emph{Delivered}) queue; this includes the remaining 1500 bytes from
+the second \fcn{send}, plus the first 2500
+bytes from the third \fcn{send}.  The
+resulting state of the queues is shown in Figure~\ref{fig:buffers2}.
+
+\begin{figure}
+%\jfigs{figures/ja05f04}{0.7}
+\jfigs{figures/buffers2.eps}{\textwidth}
+\caption{\label{fig:buffers2}After another \fcn{recv}}.
+\end{figure}
+
+The number of bytes returned by the next call to
+\fcn{recv} depends on the size of the buffer
+and the timing of the transfer of data over the network from the
+send-side socket/TCP implementation to the receive-side
+implementation.  The movement of data from the \sque\ to the
+\rque\ buffer has important implications for the design of
+application protocols. We have already encountered the need to parse
+messages as they are received via a socket
+when in-band delimiters are used for framing (see
+Section~\ref{sect:framing}).  In the following 
+sections, we consider two more subtle ramifications.
+
+\section{Deadlock Danger}
+\label{sect:deadlock}%
+
+Application protocols have to be designed with some care to avoid
+\emph{deadlock}---that is, a state in which each peer is blocked
+waiting for the other to do something.  For example, it is pretty
+obvious that if both client and server try to receive immediately
+after a connection is established, deadlock will result.  Deadlock can
+also occur in less immediate ways.
+
+The buffers \sque\ and \rque\ in the implementation have
+limits on their capacity.  Although the actual amount of memory they
+use may grow and shrink dynamically, a hard limit is necessary to
+prevent all of the system's memory from being gobbled up by a single
+TCP connection under control of a misbehaving program.  Because these
+buffers are finite, they can fill up, and it is this fact, coupled
+with TCP's \emph{flow control} mechanism, that leads to the
+possibility of another form of deadlock.
+
+Once \rque\ is full, the TCP {flow control} mechanism kicks in
+and prevents the transfer of any bytes from the sending host's
+\sque\ until space becomes available in \rque\ as a
+result of the receiver calling \fcn{recv()}.
+(The purpose of the flow
+control mechanism is to ensure that the sender does not transmit more
+data than the receiving system can handle.)  A sending program can
+continue to call \fcn{send()} until \sque\ is full; however, once
+\sque\ is full, a \fcn{send} will block until space
+becomes available, that is, until some bytes are transferred to the
+receiving socket's \rque.  If \rque\ is also full,
+everything stops until the receiving program calls
+\fcn{recv} and some bytes are transferred
+to \emph{Delivered}.
+
+Let's assume the sizes of \sque\ and \rque\ are
+\sqsize\ and \rqsize, respectively.  A
+call to \fcn{send()} passing in a buffer of size $n$
+such that $n > \sqsize$ will not return until at least
+$n-\sqsize$ bytes have been transferred to \rque\ at the
+receiving host.  If $n$ exceeds $(\sqsize +\rqsize)$,
+\fcn{send()} cannot return until after the
+receiving program has read at least $n-(\sqsize +\rqsize)$ bytes
+from the input stream.  If the receiving program does not call
+\fcn{recv()}, a large
+\fcn{send} may not complete successfully.  In
+particular, if both ends of the connection call
+\fcn{send()} simultaneously, each passing a buffer
+bigger than $\sqsize + \rqsize$ bytes,
+deadlock \emph{will\/} result: neither write will ever complete, and both
+programs will remain blocked forever.
+
+As a concrete example, consider a connection between a program on Host
+A and a program on Host B.  Assume \sqsize\ and \rqsize\ are 500
+at both A and B.  Figure~\ref{fig:deadlock} shows what happens when
+both programs try to send 1500 bytes at the same time.  The first 500
+bytes of data in the program at Host A have been transferred to the
+other end; another 500 bytes have been copied into \sque\ at
+Host A.  The remaining 500 bytes cannot be sent---and therefore
+\fcn{send()} will not return---until
+space frees up in \rque\ at Host B.  Unfortunately, the same
+situation holds in the program at Host B.  Therefore, neither
+program's call to \fcn{send()} call will ever return!
+
+\begin{figure}
+%\jfigs{figures/ja05f05}{0.7}
+\jfigs{figures/deadlock3.eps}{\textwidth}
+\caption{\label{fig:deadlock}Deadlock due to simultaneous \fcn{send}s
+to output streams at opposite ends of the connection.}
+\end{figure}
+
+\begin{quote}
+The moral of the story: Design the protocol carefully to avoid
+sending large quantities of data simultaneously in both directions.
+\end{quote}
+
+% XXXX Removed because this example is only in the Java version! :-(
+
+%% Can this really happen?  Let's review the compression protocol example
+%% in Section~\ref{sect:shutdown}.  Try running the compression client
+%% with a large file that is still large \emph{after compression}.  The
+%% precise definition of ``large'' here depends on your system, but a
+%% file that is already compressed and exceeds 2MB should do nicely.  For
+%% each read/write, the compression client prints an ``R''/``W'' to the
+%% console.  If both the uncompressed and compressed versions of the file
+%% are large enough, your client will print a series of Ws and then stop
+%% without terminating or printing any~Rs.
+
+%% Why does this happen?  The program \file{CompressClient.java} sends
+%% \emph{all} of the uncompressed data to the compression server
+%% \emph{before} it attempts to read anything from the compressed stream.
+%% The server, on the other hand, simply reads the uncompressed byte
+%% sequence and writes the compressed sequence back to the client. (The
+%% number of bytes the server reads before it writes some compressed data
+%% depends on the compression algorithm it uses.)  Consider the case
+%% where \sque\ and \rque\ for both client and server hold
+%% 500 bytes each and the client sends a 10,000-byte (uncompressed) file.
+%% Suppose also that for this file the server reads about 1000 bytes and
+%% then writes 500 bytes, for a 2:1 compression ratio. After the client
+%% sends 2000 bytes, the server will eventually have read them all and
+%% sent back 1000 bytes, and the client's \rque\ and the server's
+%% \sque\ will both be full.  After the client sends another 1000
+%% bytes and the server reads them, the server's subsequent attempt to
+%% write will block.  When the client sends the next 1000 bytes, the
+%% client's \sque\ and the server's \rque\ will both fill up.
+%% The next client write will block, creating deadlock.
+
+%% How do we solve this problem?  One solution is to execute the
+%% client writing and reading loop in separate threads.  One thread
+%% repeatedly reads uncompressed bytes from a file and sends
+%% them to the server until the end of the file is reached, whereupon it
+%% calls \fcn{shutdown()} on the
+%% socket.  The other thread repeatedly reads compressed
+%% bytes from the input stream connected to the server
+%% and writes them to the output file, until the
+%% input stream ends (i.e., the server closes the socket).  When one
+%% thread blocks, the other thread can proceed independently.  We can
+%% easily modify our client to follow this approach by putting the call
+%% to \fcn{SendBytes} in \file{CompressClient.java} inside a thread as
+%% follows:
+
+%% \begin{inlinecode}
+%% Thread thread = new Thread() \{
+%%   public void run() \{
+%%     try \{
+%%       SendBytes(sock, fileIn);
+%%     \} catch (Exception ignored) \{\}
+%%   \}
+%% \};
+%% thread.start();
+%% \end{inlinecode}
+
+%% \noindent See \file{CompressClientNoDeadlock.java} on the book's Web
+%% site for the complete example.
+
+%% Of course, the problem can be solved without using threads, through
+%% the use of nonblocking \class{Channel}s and \class{Selector}s,
+%% as described in Chapter~\ref{chap:nio}.
+
+\section{Performance Implications}
+
+The TCP implementation's need to copy user data into \sque\ before
+sending it also has implications for performance.  In
+particular, the sizes of the \sque\ and \rque\ buffers
+affect the throughput achievable over a TCP connection.  ``Throughput''
+is the \emph{rate} at which bytes of user data from the sender are
+made available to the receiving program; in programs that transfer a
+large amount of data, we want to maximize the number of bytes
+delivered per second.  In the absence
+of network capacity or other limitations, \emph{bigger buffers generally
+result in higher throughput}.
+
+The reason for this has to do with the cost of transferring data into
+and out of the buffers in the underlying implementation.  If you want
+to transfer $n$ bytes of data (where $n$ is large), it is generally
+much more efficient to call \fcn{send()} once
+with a buffer of size $n$ than it is to call it $n$ times with a
+single byte.\footnote{The same thing generally applies to receiving,
+although calling \fcn{recv} with a larger buffer does not
+guarantee that more data will be returned---in general, only the
+data present at the time of a call will be returned.}  However, if you call
+\fcn{send()} with a size parameter that is much
+larger than \sqsize\ (the size of \sque),
+the system has to transfer the data from the
+user address space in \sqsize-sized chunks.  That is, the socket
+implementation fills up the \sque\ buffer, waits for data to be
+transferred out of it by the TCP protocol, refills \sque, waits
+some more, and so on.  Each time the socket implementation has to wait
+for data to be removed from \sque, some time is wasted in the
+form of overhead (a context switch occurs). This overhead is
+comparable to that incurred by a completely new call to
+\fcn{send()}.  Thus the \emph{effective\/} size
+of a call to \fcn{send} is limited by the actual \sqsize.
+The same thing applies at the receiving end:
+however large the buffer we pass to
+\fcn{recv()}, data will be copied out in chunks no
+larger than \rqsize, with overhead incurred between chunks.
+
+If you are writing a program for which throughput is an important
+performance metric, you will want to change the send and receive
+buffer sizes using the  \const{SO\_RCVBUF} and \const{SO\_SNDBUF} socket
+options.   Although there is
+always a system-imposed maximum size for each buffer, it is typically
+significantly larger than the default on modern systems.  Remember
+that these considerations apply only if your program needs to send an
+amount of data significantly larger than the buffer size, all at once.
+Note also that wrapping a TCP socket in a \type{FILE}-stream adds
+another stage of buffering and additional overhead, and thus may
+negatively affect throughput.
+
+\section{TCP Socket Life Cycle}
+\label{sect:lifecycle}%
+
+When a new TCP \type{socket} is created, it cannot be used immediately
+for sending and receiving data.  First it needs to be connected to a
+remote endpoint.
+%
+Let us therefore consider in more detail how the underlying structure
+gets to and from the connected, or ``Established,'' state.  As we'll
+see later, these details affect the definition of
+reliability and the ability to bind a socket to a particular port that
+was in use earlier.
+
+\subsection{Connecting}
+\label{sect:connecting}%
+
+The relationship between the \fcn{connect()} call and
+the protocol events associated with
+connection establishment at the client are
+illustrated in Figure~\ref{fsm0}.  In this and the remaining figures
+of this section, the large arrows depict external events that cause
+the underlying socket structures to change state.  Events that occur
+in the application program---that is, method calls and returns---are
+shown in the upper part of the figure; events such as message arrivals
+are shown in the lower part of the figure.  Time proceeds left to
+right in these figures.  The client's Internet address is depicted as
+A.B.C.D, while the server's is W.X.Y.Z; the server's port number is~Q.
+(We have depicted IPv4 addresses, but everything here applies to both
+IPv4 and IPv6.)
+\begin{figure}
+%\jfigs{figures/ja05f06}{0.7}
+\jfigs{figures/fsm0.eps}{\textwidth}
+\caption{\label{fsm0}Client-side connection establishment.}
+\end{figure}
+
+When the client calls \fcn{connect()}
+with the server's Internet address, W.X.Y.Z, and port, Q,
+the underlying implementation creates a socket instance; it is
+initially in the Closed state.  If the client did not specify the
+local address/port in the constructor call, a local port number (P),
+not already in use by another TCP socket, is chosen by the
+implementation.  The local Internet address is also assigned; if not
+explicitly specified, the address of the network interface through
+which packets will be sent to the server is used.  The implementation
+copies the local and remote addresses and ports into the underlying
+socket structure, and initiates the TCP connection establishment
+handshake.
+
+The TCP opening handshake is known as a \emph{3-way handshake} because
+it typically involves three messages: a connection request from client
+to server, an acknowledgment from server to client, and another
+acknowledgment from client back to server.  The client TCP considers
+the connection to be established as soon as it receives the
+acknowledgment from the server.  In the normal case, this happens
+quickly.  However, the Internet is a best-effort network, and either
+the client's initial message or the server's response can get lost.
+For this reason, the TCP implementation retransmits handshake messages
+multiple times, at increasing intervals.  If the client TCP does not
+receive a response from the server after some time, it \emph{times
+out} and gives up.  In this case \fcn{connect()} returns $-1$ and sets
+\var{errno} to \const{ETIMEDOUT}.
+The implementation tries very hard to complete the connection before
+giving up, and thus it can take on the
+order of minutes for a \fcn{connect()} call to fail.
+%
+After the initial handshake message is sent and before the
+reply from the server is received (i.e. the middle part of
+Figure~\ref{fsm0}), the output from \netstat\ on the
+client host would look something like:
+
+\begin{verbatim}
+Active Internet connections
+Proto Recv-Q Send-Q Local Address    Foreign Address      State      
+tcp        0      0 A.B.C.D:P        W.X.Y.Z:Q            SYN_SENT
+\end{verbatim}
+where ``\verb+SYN_SENT+'' is the technical name of the client's state
+between the first and second messages of the handshake.
+
+If the
+server is not accepting connections---say, if there is no program
+associated with the given port at the destination---the server-side
+TCP will respond (immediately) with a rejection message instead of an
+acknowledgment, and \fcn{connect()} returns $-1$ with \var{errno} set
+to \const{ECONNREFUSED}.
+%
+Otherwise, after the client receives a positive reply from the server,
+the netstat output would look like:
+\begin{verbatim}
+Active Internet connections
+Proto Recv-Q Send-Q Local Address    Foreign Address      State      
+tcp        0      0 A.B.C.D:P        W.X.Y.Z:Q            ESTABLISHED
+\end{verbatim}
+
+The sequence of events at the server side is rather different; we
+describe it in Figures~\ref{fsm1a}, \ref{fsm1b}, and~\ref{fsm1c}.
+The server needs to bind to the particular TCP port
+known to the client. Typically, the server specifies only the
+port number (here, Q)
+in the \fcnsys{bind()} call and gives the special
+wildcard address
+\const{INADDR\_ANY} for the local IP address.
+In case the server host has more than one IP address, this technique allows the
+socket to receive connections addressed to any of its IP addresses.
+When the server calls \fcn{listen()}, the state of the socket is changed to
+``Listening'', indicating that it is ready to accept new connections.
+%
+These events are depicted in Figure~\ref{fsm1a}.
+The output from \netstat\ on the server after this sequence
+would include a line like:
+\begin{verbatim}
+Active Internet connections
+Proto Recv-Q Send-Q Local Address    Foreign Address      State      
+tcp        0      0 0.0.0.0:Q        0.0.0.0:0            LISTENING
+\end{verbatim}
+%
+Note that any client
+connection request that arrives at the server before the
+call to \fcn{listen()} will be rejected, even if it arrives
+after the call to \fcn{bind()}.
+
+\begin{figure}
+%\jfigs{figures/ja05f07}{0.7}
+\jfigs{figures/fsm1a.eps}{\textwidth}
+\caption{\label{fsm1a}Server-side socket setup.}
+\end{figure}
+
+\begin{figure}
+%\jfigs{figures/ja05f08}{0.7}
+\jfigs{figures/fsm1b.eps}{\textwidth}
+\caption{\label{fsm1b}Incoming connection request processing.}
+\end{figure}
+
+
+The next thing the server does is call \fcnsys{accept()}, which
+blocks until a connection with a client is established.
+We therefore focus in Figure~\ref{fsm1b} on the events that
+occur in the TCP implementation when a client connection request
+arrives.  Note that everything depicted in this figure happens
+``under the covers,'' in the TCP implementation.
+
+When the request for a connection arrives from the client,
+a new socket structure is created for the connection.
+The new socket's addresses are filled
+in based on the arriving packet: The packet's destination  Internet
+address and port (W.X.Y.Z and Q, respectively)  become the socket's local
+address and port; the packet's source
+address and port (A.B.C.D and P)
+become the  socket's remote Internet address and port.
+Note that the local port number  of the new socket
+is always the same as that of the listening socket.
+The new socket's state is set to Connecting, and it is added to a list of
+not-quite-connected sockets associated with the original server socket.
+Note well that the original server socket does not change state.
+%
+At this point the output of \netstat\ should show \emph{both\/} the original,
+listening socket and the newly-created one:
+\begin{verbatim}
+Active Internet connections
+Proto Recv-Q Send-Q Local Address    Foreign Address      State      
+tcp        0      0 0.0.0.0:Q        0.0.0.0:0            LISTENING
+tcp        0      0 W.X.Y.Z:Q        A.B.C.D:P            SYN_RCVD
+\end{verbatim}
+
+In addition to creating a new underlying socket structure, the
+server-side TCP implementation sends an acknowledging TCP handshake
+message back to the client.  However, the server TCP does not consider
+the handshake complete until the third message of the 3-way handshake
+is received from the client.  When that message eventually arrives,
+the new structure's state is set to ``Established'', and it is then
+(and only then) moved to a list of socket structures associated with
+the original socket, which represent established connections ready to be
+\fcn{accept}ed.
+(If the third
+handshake message fails to arrive, eventually the ``Connecting''
+structure is deleted.)
+Output from \netstat\ would then include:
+\begin{verbatim}
+Active Internet connections
+Proto Recv-Q Send-Q Local Address    Foreign Address      State      
+tcp        0      0 0.0.0.0:Q        0.0.0.0:0            LISTENING
+tcp        0      0 W.X.Y.Z:Q        A.B.C.D:P            ESTABLISHED
+\end{verbatim}
+
+Now we can consider (in Figure~\ref{fsm1c}) what happens when the
+server program calls \fcn{accept()}.
+The call unblocks as soon as there is something in the listening
+socket's list of new connections. 
+(Note that this list may already be non-empty when \fcn{accept()}
+is called.)  At that time, the new socket structure is removed from the list,
+and a socket descriptor is allocated and returned as the result of
+\fcn{accept()}.
+
+\begin{figure}
+%\jfigs{figures/ja05f09}{0.7}
+\jfigs{figures/fsm1c.eps}{\textwidth}
+\caption{\label{fsm1c}\fcn{accept}}
+\end{figure}
+
+It is important to note that each structure in the
+server socket's associated list
+represents a fully established TCP connection with a client at the
+other end.  Indeed, the client can send data as soon as it receives
+the second message of the opening handshake---which may be long before
+the server accepts the client connection!
+
+\subsection{Closing a TCP Connection}
+\label{sect:closingTCP}%
+
+TCP has a \emph{graceful close} mechanism that allows applications to
+terminate a connection without having to worry about loss of data that
+might still be in transit.  The mechanism is also designed to allow
+data transfers in each direction to be terminated independently.
+% XXXXX FIXME: COMPRESSION EXAMPLE
+% as in
+% the [FIX: compression] example of Section~\ref{sect:shutdown}.
+It works like
+this: the application indicates that it is finished sending data on a
+connected socket by calling \fcn{close()} or by
+calling \fcn{shutdown()}.  At
+that point, the underlying TCP implementation first transmits any data
+remaining in \sque\ (subject to available space in
+\rque\ at the other end), and then sends a closing TCP
+handshake message to the other end.  This closing handshake message
+can be thought of as an end-of-stream marker: it tells the
+receiving TCP that no more bytes will be placed in \rque.
+(Note that the closing handshake message itself is \emph{not} passed
+to the receiving application, but that its position in the byte stream
+is indicated by \fcn{recv} returning $-1$.)  The closing TCP waits
+for an acknowledgment of its closing handshake message, which
+indicates that all data sent on the connection made it safely to
+\rque.  Once that acknowledgment is received, the connection is
+``Half closed.''
+%
+The connection is not \emph{completely} closed until a symmetric
+handshake happens in the other direction---that is, until \emph{both}
+ends have indicated that they have no more data to send.
+
+\begin{figure}
+%\jfigs{figures/ja05f10}{0.7}
+\jfigs{figures/fsm2.eps}{\textwidth}
+\caption{\label{fsm2}Closing a TCP connection first.}
+\end{figure}
+
+The closing event sequence in TCP can happen in two ways: either one
+application calls \fcn{close()} (or
+\fcn{shutdown()}) and completes
+its closing handshake before the other calls
+\fcn{close/shutdown}, or both close
+simultaneously, so that their
+closing handshake messages cross in the network.  Figure~\ref{fsm2}
+shows the sequence of events in the implementation when the
+application invokes \fcn{close()} \emph{before\/}
+the other end closes.  The closing handshake message is sent, the
+state of the socket structure is set to ``Closing'', and the call
+returns.
+After this point, further attempts to perform any operation on the
+socket result in error returns. % XXXX
+When the acknowledgment for the close handshake is
+received, the state changes to ``Half closed'', where it remains until
+the other end's close handshake message is received.
+At this point the output of \netstat\ on the
+client would show the status of the connection as:
+\begin{verbatim}
+Active Internet connections
+Proto Recv-Q Send-Q Local Address    Foreign Address      State      
+tcp        0      0 A.B.C.D:P        W.X.Y.Z:Q            FIN_WAIT_2
+\end{verbatim}
+(\verb+FIN_WAIT_2+ is the technical name for the ``half-closed'' state at
+the host that initiates close first.  The state denoted by ``closing''
+in the figure is technically called \verb+FIN_WAIT_1+,
+but it is transient and is difficult to catch with \netstat.)
+Note that if the
+remote endpoint goes away while the connection is in this state, the
+local underlying structure will stay around indefinitely.  Otherwise,
+when the other end's close handshake message arrives an
+acknowledgment is sent and the state is changed to ``Time-Wait''.
+Although the descriptor in the application
+program may have long since been reclaimed (and even reused),
+the associated underlying
+socket structure continues to exist in the implementation for a minute or
+more; the reasons for this are discussed on
+page~\pageref{time-wait-state}.
+
+\begin{figure}
+%\jfigs{figures/ja05f11}{0.7}
+\jfigs{figures/fsm3.eps}{\textwidth}
+\caption{\label{fsm3}Closing after the other end closes.}
+\end{figure}
+The output of \netstat\ at the right end of Figure~\ref{fsm2} 
+includes:
+\begin{verbatim}
+Active Internet connections
+Proto Recv-Q Send-Q Local Address    Foreign Address      State      
+tcp        0      0 A.B.C.D:P        W.X.Y.Z:Q            TIME_WAIT
+\end{verbatim}
+
+Figure~\ref{fsm3} shows the simpler sequence of events at the endpoint
+that does not close first.  When the closing handshake message
+arrives, an acknowledgment is sent immediately, and the connection
+state becomes ``Close-Wait.''
+The output of \netstat\ on this host shows:
+\begin{verbatim}
+Active Internet connections
+Proto Recv-Q Send-Q Local Address    Foreign Address      State      
+tcp        0      0 W.X.Y.Z:Q        A.B.C.D:P            CLOSE_WAIT
+\end{verbatim}
+%
+At this point, it's all over: the implementation is just
+waiting for the application to call \fcn{close()}.
+When it does, the socket descriptor is deallocated and the final close
+handshake is initiated. When it completes, the underlying socket structure is 
+deallocated.
+
+Although most applications use \fcn{close()}, \fcn{shutdown()}
+actually provides more flexibility.  A call to \fcn{close()}
+terminates \emph{both\/} directions of transfer and causes the file
+descriptor associated with the socket to be deallocated.
+Any undelivered data remaining in \rque\ is
+discarded, and the flow control mechanism prevents any further
+transfer of data from the other end's \sque.  All trace of the socket
+disappears from the calling program.
+Underneath, however, the associated socket structure continues to exist
+until the other end initiates its closing handshake.
+A program calling \fcn{shutdown()} with second argument
+\const{SHUT\_WR} can continue to receive data on
+the socket; only sending is prohibited.
+The fact that the other end of the connection has closed is
+indicated by \fcn{recv()} returning $0$ (once \rque\ 
+is empty, of course)
+to indicate that there will be no more data available on the connection.
+
+In view of the fact that both \fcn{close()} and
+\fcn{shutdown()} return without
+waiting for the closing handshake to complete, you may wonder how the
+sender can be assured that sent data has actually made it to the
+receiving program (i.e., to \emph{Delivered}).  In fact, it is
+possible for an application to call
+\fcn{close()} or
+\fcn{shutdown()} and have it
+complete successfully (i.e., not return $-1$) \emph{while there
+is still data in \sque}.  If either end of the connection then crashes
+before the data makes it to \rque, data may be lost without the
+sending application knowing about~it!
+
+\callout{The best solution is to design the application protocol so that
+whichever side closes first, does so
+\emph{only after} receiving application-level assurance that its data
+was received.}  For example, when our \file{TCPEchoClient.c} program
+receives the same number of bytes as it sent, there should be nothing
+more in transit in either direction, so it is safe for it to close the
+connection.  (Note that there is no \emph{guarantee\/} that the bytes
+received were those sent; the client is assuming that the server
+implements the ``echo'' protocol.  In a real application the client
+should certainly \emph{not\/} trust the server to ``do the right thing''.
+
+The other solution is to modify the semantics of \fcn{close()}
+by setting the \const{SO\_LINGER} socket option before
+calling it.  The \const{SO\_LINGER} option specifies an amount of time
+for the TCP
+implementation to wait for the closing handshake to complete.  The
+setting of \const{SO\_LINGER} and the specification
+of the wait time is given to \fcn{setsockopt()} using the
+\type{linger} structure:
+
+\begin{inlinecode}
+struct linger {
+    int  l_onoff;   // Nonzero to linger
+    int  l_linger;  // Time (secs.) to linger
+};
+\end{inlinecode}
+
+\noindent To use the linger behavior, set \param{l\_onoff} to a
+nonzero value and specify the time to linger in \param{l\_linger}.
+When \const{SO\_LINGER} is set,
+\fcn{close()} blocks \emph{until the
+closing handshake is completed\/} or until the specified amount of time
+passes.  If the handshake does not complete in time,
+an error indication (\const{ETIMEDOUT}) is returned.
+Thus, if \const{SO\_LINGER} is set and
+\fcn{close()} returns no error, the
+application is assured that everything it sent reached \rque.
+
+At the
+time of this writing, however, \fcn{close()} provides no indication
+that the closing handshake failed to complete, even if the time limit
+set by \fcn{setSoLinger} expires before the closing sequence
+completes.  In other words, \fcn{setSoLinger} does not provide any
+additional assurance to the application in current implementations.
+
+The final subtlety of closing a TCP connection revolves around the
+need for the Time-Wait state\label{time-wait-state}.  The TCP
+specification requires that when a connection terminates, at least one
+of the sockets persists in the Time-Wait state for a period of time
+after both closing handshakes complete.  This requirement is motivated
+by the possibility of messages being delayed in the network.  If both
+ends' underlying structures go away as soon as both closing handshakes
+complete, and a \emph{new} connection is immediately established
+between the same pair of socket addresses, a message from the previous
+connection, which happened to be delayed in the network, could arrive
+just after the new connection is established.  Because it would
+contain the same source and destination addresses, the old message
+could be mistaken for a message belonging to the new connection, and
+its data might (incorrectly) be delivered to the application.
+
+Unlikely though this scenario may be, TCP employs multiple mechanisms
+to prevent it, including the Time-Wait\ state.  The Time-Wait\ state
+ensures that every TCP connection ends with a quiet time, during which
+no data is sent.  The quiet time is supposed to be equal to twice the
+maximum amount of time a packet can remain in the network.  Thus, by
+the time a connection goes away completely (i.e., the socket structure
+leaves the Time-Wait\ state and is deallocated) and clears the way for
+a new connection between the same pair of addresses, no messages from
+the old instance can still be in the network.  In practice, the length
+of the quiet time is implementation dependent, because there is no
+real mechanism that limits how long a packet can be delayed by the
+network.  Values in use range from 4~minutes down to 30~seconds or
+even shorter.
+
+The most important consequence of Time-Wait\ is that as long as the
+underlying socket structure exists, no other socket is permitted to
+bind to the same local port.  (More on this below.)
+
+\section{Demultiplexing Demystified}
+\label{sect:demux}%
+
+The fact that different sockets on the same machine can have the same
+local address and port number is implicit in the discussions above.
+For example, on a machine with only one IP address, every
+new socket \fcn{accept()}ed via a listening socket
+will have the same local address and port number
+as the listening socket.  
+Clearly the process
+of deciding to which socket an incoming packet should be
+delivered---that is, the \emph{demultiplexing} process---involves
+looking at {more} than just the packet's destination address and port.
+Otherwise there could be ambiguity about which socket an incoming
+packet is intended for.  The process of matching an incoming packet to
+a socket is actually the same for both TCP and UDP, and can be
+summarized by the following points:
+\begin{itemize}
+\item The local port
+in the socket structure \emph{must} match the destination port number
+in the incoming packet.
+\item Any address fields in the socket
+structure that contain the wildcard value (*) are considered to match
+\emph{any} value in the corresponding field in the packet.
+\item If there is more than one socket structure that matches an incoming
+packet for all four address fields, the one that matches using the
+fewest wildcards gets the packet.
+\end{itemize}
+
+For example, consider a host with two IP addresses, 10.1.2.3 and
+192.168.3.2, and with a subset of its active TCP socket structures, as
+shown in Figure~\ref{demuxex}.  The structure labeled 0 is associated
+with a listening socket and has port 99
+with a wildcard local address.  Socket structure~1 is also for a
+listening socket on the same port, but
+with the local IP address 10.1.2.3 specified (so it will only accept
+connection requests to that address).  Structure~2 is for a connection
+that was accepted via structure 0's listening socket, and
+thus has the same local port number (99), but also has its local and remote
+Internet addresses filled in.  Other sockets belong to other active
+connections.  Now consider a packet with source IP address
+172.16.1.10, source port 56789, destination IP address 10.1.2.3, and
+destination port 99.  It will be delivered to the socket associated
+with structure 1, because that one matches with the fewest wildcards.
+
+\begin{figure}
+%\jfigs{figures/ja05f12}{0.7}
+\jfigs{figures/demuxex.eps}{\textwidth}
+\caption{\label{demuxex}Demultiplexing with multiple matching sockets.}
+\end{figure}
+
+When a program attempts to \fcnsys{bind()} to a particular local port
+number, the existing sockets are checked to make sure that no socket
+is already using that local port.  The call to \fcn{bind()} will fail
+and set \const{EADDRINUSE}  if \emph{any} socket matches the local
+port and local IP address (if any) specified in the argument to \fcn{bind()}.
+This can cause problems in the following scenario:
+%
+\begin{enumerate}
+
+\item A server's listening socket is bound to some particular port
+  $P$.
+
+\item The server accepts a connection from a client, which enters the
+  Established state.
+
+\item The server terminates for some reason---say, because the
+  programmer has created a new version and wants to test it.
+  When the server program exits,
+  the underlying system automatically (and virtually) calls
+ \fcn{close()} on  all of its existing sockets.  The socket that was
+  in the Established state immediatey  transitions to the Time-Wait state.
+
+\item
+The programmer starts up a new instance of the server, which attempts
+to \fcn{bind()} to port $P$.
+\end{enumerate}
+Unfortunately the new server's call to \fcnsys{bind()} will fail with
+EADDRINUSE because of the old socket in Time-Wait state.
+
+As of this writing, there are two ways around this.  One
+is to wait until the underlying structure leaves the
+Time-Wait\ state.  The other is for the server to set the
+\const{SO\_REUSEADDR} socket option  \emph{before\/} calling
+\fcn{bind()}. That lets \fcn{bind()} succeed in spite of the existence
+of any sockets representing earlier connections to the server's port.
+%
+There is no danger of ambiguity, because the existing connections
+(whether still in the Established or Time-Wait\ state) have remote
+addresses filled in, while the socket being bound does not.
+In general, the \const{SO\_REUSEADDR} option also
+enables a socket
+to bind to a local port to which another socket is already bound,
+provided that the IP address to which it is
+being bound (typically the wildcard \const{INADDR\_ANY}
+address)
+is different from the existing socket's.
+The default \fcnsys{bind()} behavior is to disallow such requests.
+
+\begin{exercises}
+
+\item The TCP protocol is designed so that simultaneous connection
+attempts will succeed.  That is, if an application using port P and
+Internet address W.X.Y.Z attempts to connect to address A.B.C.D, port
+Q, at the same time as an application using the same address and port
+tries to connect to W.X.Y.Z, port P, they will end up connected to
+each other.  Can this be made to happen when the programs use the
+sockets API?
+
+\item The first example of ``buffer deadlock'' in this chapter
+involves the programs on {both} ends of a connection trying to send
+large messages.  However, this is not necessary for deadlock.  How
+could the \file{TCPEchoClient} from earlier chapters be made
+to deadlock when 
+it connects to the \file{TCPEchoServer} from that chapter?
+
+\end{exercises}

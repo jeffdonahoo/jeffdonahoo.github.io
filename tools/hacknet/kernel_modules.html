@@ -1,0 +1,59 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.74 [en] (Windows NT 5.0; U) [Netscape]">
+   <title>Kernel Modules</title>
+<!--This file created 11/10/00 4:58 PM by Claris Home Page version 3.0-->
+<X-CLARIS-WINDOW TOP=43 BOTTOM=465 LEFT=5 RIGHT=662>
+<X-CLARIS-TAGVIEW MODE=minimal>
+<!--This file created 11/8/00 4:55 PM by Claris Home Page version 3.0-->
+</head>
+<body bgcolor="#FFFFFF">
+&nbsp;
+<table ALIGN=LEFT BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH="560" >
+<tr>
+<td HEIGHT="2">
+<center>
+<h1>
+Compiling a RedHat Linux Kernel</h1></center>
+
+<blockquote>
+<center>
+<h3>
+<font face="Arial,Helvetica,Sans-Serif">Modules</font></h3></center>
+<font face="Arial,Helevetica,Sans-Serif">Modules provide a means to add
+functionality dynamically instead of compiling everything into the kernel.
+It saves space because the kernel will be smaller and not take up as much
+memory. Modules can be loaded either manually or automatically. The steps
+below outline how to make modules work for you.</font>
+<p><font face="Arial,Helevetica,Sans-Serif">In the "Loadable Module Support"
+menu we would recommend selecting the options to&nbsp;</font>
+<blockquote><font face="Arial,Helevetica,Sans-Serif">"Enable loadable module
+support"</font>
+<br><font face="Arial,Helevetica,Sans-Serif">"Set version information on
+all symbols for modules"</font>
+<br><font face="Arial,Helevetica,Sans-Serif">"Kernel module loader".&nbsp;</font></blockquote>
+<font face="Arial,Helevetica,Sans-Serif">"Enable loadable module support"
+allows options to be loaded as modules instead of in the kernel.&nbsp;
+The second option just tags the modules with the version number so you
+know which version of the kernel the go with.&nbsp; "Kernel daemon support"
+allows the modules to be loaded dynamically instead of manually.</font>
+<p><font face="Arial,Helevetica,Sans-Serif">If you selected any options
+to be modules you need to compile those using the <b><i>make modules</i></b>and<i>
+<b>make module_install</b></i> commands.</font>
+<br>&nbsp;</blockquote>
+</td>
+</tr>
+
+<tr>
+<td HEIGHT="2">
+<hr WIDTH="100%">
+<br><font face="Arial, Helvetica, sans-serif"><font size=-1>Comments or
+questions should be sent to <font color="#187534"><a href="mailto:Cori_Rhodes@baylor.edu">Cori_Rhodes@baylor.edu</a>,
+or <a href="mailto:Saifuddin_Suterwala@baylor.edu">Saifuddin_Suterwala@baylor.edu,</a></font></font></font></td>
+</tr>
+</table>
+
+</body>
+</html>

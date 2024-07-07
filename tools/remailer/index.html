@@ -1,0 +1,432 @@
+<HTML>
+<TITLE>Anonymous Remailers</TITLE>
+
+<BODY>
+<H1> Anonymous Remailers</H1>
+
+<!--  <H2> This is currently broken because the remailer I was using is no longer -->
+<!--  in service.  Also, it appears that the popular remailer server software has  -->
+<!--  changed so the syntax I use may be outdated.  The ideas are correct; however, -->
+<!--  if you want this to work, you need to find a remailer (search for "remailer" -->
+<!--  on your favorite search engine) and determine the correct syntax </H2> -->
+
+Suppose you are madly in love with Pat<SUP>*</SUP> but too shy to announce this
+directly.  You need some mechanism to anonymously communicate with
+Pat to get a sense of Pat's feelings about a blind date.  Clearly,
+talking to Pat is out of the question.  Calling is no good because
+1) it is awkward, 2) you may just get an answering machine, and 3)
+caller-id may negate anonymity.  Email is out because it exposes your
+user ID, and if you spoof (fake) your email address as some
+non-existent email address, Pat will be unable to respond to you.  What can
+you do? <P>
+
+<FONT size=-1> <SUP>*</SUP> The name Pat was selected due to its
+inherent androgeny; therefore, this scenario can apply to males
+or females. </FONT> <P>
+
+Solution:  Anonymous Remailers <P>
+
+Anonymous remailers email from Person A and forward it to Person B,
+stripping all information that identifies the message as being from
+Person A.  There are several types of anonymous remailers.  Mixmaster
+appears to be the most popular; however, it requires special client
+software.  We focus on the simplest anonymous remailer type called
+Cyberpunk<SUP>+</SUP>.
+
+<FONT size=-1> <SUP>+</SUP> Anonymity cannot be absolutely guaranteed
+by any system.  Mixmaster does more than Cyberpunk to combat the
+classical attack against anonymity.  Which type to use depends on how
+you tradeoff complexity with anonymity.</FONT> <P>
+
+The following links are good sources of information on remailers:
+
+<UL>
+<LI><A HREF="http://anon.efga.org/Remailers">anon.efga.org</A>
+<LI><A
+HREF="http://www.skuz.net/potatoware/reli/UserMan.htm#Info">Remailer
+User's Guide</A>
+</UL>
+
+One caveat when dealing with remailers is that they are not necessarily
+reliable.  Abuse of remailers has resulted in legal actions against
+remailing systems to seize machines and even shut them down.  This
+makes it difficult to find an anonymous remailer when you need one.
+To deal with this problem, various sites maintain lists of remailers,
+which include statistics on operational and response time.  (See <A
+HREF="http://anon.efga.org/Remailers">anon.efga.org</A> for one such
+list source.)  These lists are quasi-standard.  They usually contain
+two sections.  One list information on using the remailer:
+
+<PRE>
+$remailer{"xganon"} = "<remailer@anon.xg.nu> cpunk mix pgp remix latent hash cut test ek ekx esub inflt50 rhop20 post";
+</PRE>
+
+This remailer's id is xganon and its email address is
+remailer@anon.xg.nu.  The list of terms after the email address
+describe the remailer's capabilities.  For example, "cpunk" indicates
+that this remailer does Cyberpunk, and "mix" indicates that this
+remailer does Mixmaster.  The remailer list will contain
+a dictionary for the other terms.  The next list provides statistics
+on the remailer:
+
+<PRE>
+remailer  email address                        history  latency  uptime
+-----------------------------------------------------------------------
+xganon   remailer@anon.xg.nu              ############     5:11  99.97%
+</PRE>
+
+Read the list for details on interpreting the statistics.  Once you
+have a remailer email address, you can directly ask it for help.  Send
+email to the remailer's address with subject line
+<i>remailer-help</i>.  Most remailers will return a document
+describing their use.<P>
+
+Below I describe 4 procedures for using the cyberpunk anonymous remailers for
+communication, each adding functionality 
+to the previous procedures.  I use a fictitious remailer at
+<i>remailer@remailer.com</i> so you must find your own actual remailer
+address.  The first procedure simply allows you to
+send Bob an anonymous message.  The second procedure does the same
+thing as 1, except that it allows the anonymous message to be
+encrypted before it is sent to the remailer.  This will prevent anyone
+from intercepting a "readable" message between you and the remailer
+since the message, if intercepted before arriving at the remailer,
+does identify you as the sender and Pat as the intended recipient.
+The third procedure allows you to send anonymous email to Bob that Bob
+can reply to WITHOUT compromising your identity.  The fourth and final
+procedure adds encryption to the third procedure, just as the second
+procedure added encryption to the first procedures.
+
+<OL>
+<LI>  Procedure to send an anonymous message to Bob.<P>
+<OL>
+<LI> Create an email message addressed to remailer@remailer.com.  Do not
+fill in the subject line as it will be stripped off along with all
+other header information.
+<LI>  The body of the message should look something like the
+following:
+
+<pre>
+::
+Anon-To: bob@place.com
+Latent-Time: +1:00
+Cutmarks:  -XX-
+
+##
+Subject: This will be the subject Bob sees
+
+This will be the message Bob sees
+
+-XX-
+
+Information below (and including) the -XX- will *NOT* be in the message
+Bob sees.
+
+</pre>
+
+This message will be sent to the remailer at remailer@remailer.com.  The
+:: in the message is a signal to the remailer that remailer
+commands follow.  The :: must be the first characters in the first
+line of the body of the message.  The Anon-To: command tells the
+remailer to forward this email to bob@place.com.  If you are really
+paranoid, the Latent-Time: command tells the remailer to hold off
+forwarding the message for 1 hour.  This helps prevent Bob from
+figuring out who sent the message by checking who was logged on to the
+system when he received it.  The Cutmarks: command tells the remailer
+to cutoff everything below where the cutmark occurs later in the
+message.  In the example 
+above, everything after the -XX- mark is deleted by the remailer
+before it forwards the email to Bob.  Some mailers
+automatically add a signature to the end of outgoing email which may
+violate your anonymity.  The cutoff is a mechanism for chopping off
+anything added to the end of the email.  All but the Anon-To: command
+are optional. <B> You will probably want to eliminate the Latent-Time:
+command when playing with anonymous remailers because your test
+results will be delayed by an hour.</B><P>
+
+The ## indicates the
+beginning of the message.  A subject line immediately after it will
+create a subject line for the message Bob receives.  Bob will receive
+a message of the form:
+
+<PRE>
+
+To: bob@place.com
+From: nobody@remailer.com
+Subject: This will be the subject Bob sees
+
+This will be the message Bob sees
+
+</PRE>
+
+Bob has no way of knowing who sent this message.  Replies will go to
+nobody@remailer.com, an email black hole.  The problems with this
+approach are 1) the message to the remailer, including the recipient,
+goes in clear text to the remailer so it could be intercepted by Bob
+and 2)  Bob has no way to reply to you. <P>
+
+</OL>
+<LI> Procedure to send an encrypted, anonymous letter to Bob,
+avoiding interception prior to delivery of the email to the remailer
+that would reveal your intent to send the letter to Bob.
+<OL>
+<LI> Constructs the very same message as in Procedure 1.
+<LI> Encrypts with <A HREF="index.html#PGP">PGP</A> using
+the public key of
+the remailer.  The encryption should have an ASCII armor because
+it will be emailed.  Of course, only the remailer can decrypt this
+message. To get the public key of the remailer, send email to
+remailer@remailer.com with the subject line <i>remailer-key</i><P>
+
+Assuming the public key of the remailer can be found with the keyword
+"remailer" and the email is in a file named bob, the PGP command-line is
+<Pre>
+pgp -ea remailer bob
+</pre> 
+
+This outputs the encrypted file to bob.asc.
+
+<LI> Embed the encrypted file in an email to the remailer.
+The embedded file is proceeded by the double colon and the command
+"Encrypted: PGP":
+
+<PRE> 
+::
+Encrypted: PGP
+
+-----BEGIN PGP MESSAGE-----
+Version: PGP for Personal Privacy 5.0
+MessageID: g1hUVSgQ7+nnaYaw53a3IiWps8OUe0Mf
+
+hQCJAz0VsrLnrsHlAQPkDGZS5Iwxy0MLIQICgH0OQm6aGNi2QA15GseF+bjOZruM
+RA9ypRIim0v1mgYizlzKrp0hSp4hXLw4OgMVC404+YSBYGDpcA7WV0Ho6EhyHoXu
+6EsOIODTK18zJyi5/ng2VvUWvD5ti4Ew6fmWSzmIaGHOv9GC+7FXmchB5dukJmOt
+S5msSODHf7ruYseIKXbEA4qiqonHzWsYLsBv14YMnnG4WnJL
+=OU6O
+-----END PGP MESSAGE-----
+</PRE>
+</OL>
+The remailer receives this file, decrypts it, and processes it as it
+would a clear-text file by forwarding to the specified recipient.
+Note that the message does not reveal the contents or the intended
+recipient in transit to the remailer.  This approach still has the
+problem that Bob cannot communicate with you without sacrificing your
+anonymity.
+
+<LI> Procedure to send a clear-text, anonymous message to
+Bob where Bob can reply <b>without</b> knowing your identity.
+<OL>
+<LI> Constructs an Encrypted Reply Block (ERB) containing the
+necessary information to reply.  This information is encrypted with
+the remailer's public key so only the remailer can determine a reply
+address.  To create an ERB, create a file name ERB.txt containing:
+
+<PRE>
+::
+Anon-To: you@place.com
+</PRE>
+
+<LI> Then encrypt (with ASCII armor) ERB.txt with the remailer's
+public key.  Now only the remailer can decrypt the ERB.
+
+<LI> Preface the ERB with instructions for Bob on
+replying.  <B>The ERB will be reused over and over again so store
+it in the file ERB.</B>
+
+<PRE>  
+--------------------------------------------------------------
+The above message was sent to you via an anonymous remailer,
+therefore, you can not reply using the "reply to" feature of
+your e-mailer. If you'd like to send a reply to me, please
+follow these instructions EXACTLY.
+
+This method of reply is know as an Encrypted Reply Block.
+The unreadable ASCII text below is actually my e-mail,
+address which has been encrypted using a program called PGP.
+The remailer which you will address this message to has the "key"
+to decrypt the message, then forward the message on to me.
+
+INSTRUCTIONS:
+
+1. Open a NEW e-mail message (do not use the "reply to" feature)
+2. Address the message to: remailer@remailer.com
+3. Make the subject anything you like
+4. Below these instructions, copy everything from the :: (double colon)
+   all the way through and including the -----END PGP MESSAGE-----
+5. Paste selection into the body of the new message you just created.
+6. The :: (double colon) MUST BE ON THE FIRST LINE, ALL THE
+   WAY TO THE LEFT in the message body. If it isn't, this message
+   won't make it to me.
+7. Type your reply BELOW the -----END PGP MESSAGE-----, leaving a
+   blank line between your message and the -----END PGP MESSAGE-----
+8. Be sure to include your e-mail address in your message, or I won't
+   know who this message came from.
+
+(copy everything below this sentence, not including this sentence)
+::
+Encrypted: PGP
+
+-----BEGIN PGP MESSAGE-----
+Version: PGP for Personal Privacy 5.0
+MessageID: yMAtxP2ThFOjAtgTDr28siFTYC3jXvt2
+
+hQCJAz0VsrLnrsHlAQPolniBDyP+jdKP2Vilf+MOjLRgF+ZK+Lul3NjXwZmWpr2k
+JBYiwE6gEi+SFUYhJqV4UUx+MpooH0smhQSXVWXvVAmOWGfbg77rhTplaV7XAMmb
+3MciEuttfWRW/CndL0BJ775bCN5p00u00FQPZCst399D8OpGxcgy8faAA5mkMZyA
+d5lNmOoG69Y8ztAmcJTvFWczKFiPoHy6qR5ECPDXsKgOgQE/06ZM73Fr74GeLuI=
+=4nSs
+-----END PGP MESSAGE-----
+</PRE>
+
+<LI> Create an email message to Bob as in Procedure 1
+(minus the Cutmarks) and postpend the ERB.  For example:
+
+<PRE>
+::
+Anon-To: bob@place.com
+
+##
+Subject: This will be the subject Bob sees
+
+This will be the message Bob sees
+
+--------------------------------------------------------------
+The above message was sent to you via an anonymous remailer,
+therefore, you can not reply using the "reply to" feature of
+your e-mailer. If you'd like to send a reply to me, please
+follow these instructions EXACTLY.
+
+This method of reply is know as an Encrypted Reply Block.
+The unreadable ASCII text below is actually my e-mail,
+address which has been encrypted using a program called PGP.
+The remailer which you will address this message to has the "key"
+to decrypt the message, then forward the message on to me.
+
+INSTRUCTIONS:
+
+1. Open a NEW e-mail message (do not use the "reply to" feature)
+2. Address the message to: remailer@remailer.com
+3. Make the subject anything you like
+4. Below these instructions, copy everything from the :: (double colon)
+   all the way through and including the -----END PGP MESSAGE-----
+5. Paste selection into the body of the new message you just created.
+6. The :: (double colon) MUST BE ON THE FIRST LINE, ALL THE
+   WAY TO THE LEFT in the message body. If it isn't, this message
+   won't make it to me.
+7. Type your reply BELOW the -----END PGP MESSAGE-----, leaving a
+   blank line between your message and the -----END PGP MESSAGE-----
+8. Be sure to include your e-mail address in your message, or I won't
+   know who this message came from.
+
+(copy everything below this sentence, not including this sentence)
+::
+Encrypted: PGP
+
+-----BEGIN PGP MESSAGE-----
+Version: PGP for Personal Privacy 5.0
+MessageID: yMAtxP2ThFOjAtgTDr28siFTYC3jXvt2
+
+hQCJAz0VsrLnrsHlAQPolniBDyP+jdKP2Vilf+MOjLRgF+ZK+Lul3NjXwZmWpr2k
+JBYiwE6gEi+SFUYhJqV4UUx+MpooH0smhQSXVWXvVAmOWGfbg77rhTplaV7XAMmb
+3MciEuttfWRW/CndL0BJ775bCN5p00u00FQPZCst399D8OpGxcgy8faAA5mkMZyA
+d5lNmOoG69Y8ztAmcJTvFWczKFiPoHy6qR5ECPDXsKgOgQE/06ZM73Fr74GeLuI=
+=4nSs
+-----END PGP MESSAGE-----
+</PRE>
+
+<LI> Bob simply follows the instructions to reply.  His email will
+be sent to the remailer and might look like:
+
+<PRE> 
+::
+Encrypted: PGP
+
+-----BEGIN PGP MESSAGE-----
+Version: PGP for Personal Privacy 5.0
+MessageID: yMAtxP2ThFOjAtgTDr28siFTYC3jXvt2
+
+hQCJAz0VsrLnrsHlAQPolniBDyP+jdKP2Vilf+MOjLRgF+ZK+Lul3NjXwZmWpr2k
+JBYiwE6gEi+SFUYhJqV4UUx+MpooH0smhQSXVWXvVAmOWGfbg77rhTplaV7XAMmb
+3MciEuttfWRW/CndL0BJ775bCN5p00u00FQPZCst399D8OpGxcgy8faAA5mkMZyA
+d5lNmOoG69Y8ztAmcJTvFWczKFiPoHy6qR5ECPDXsKgOgQE/06ZM73Fr74GeLuI=
+=4nSs
+-----END PGP MESSAGE-----
+
+Hi, whoever you are.  As you instructed, I am including my email
+(bob@place.com).
+</PRE>
+
+</OL>
+The remailer will decrypt the ERB containing instructions on
+anonymously forwarding the message to you.  Note that the remailer
+keeps the text following the ERB.  You will simple receive the
+message below from nobody@remailer.com:
+
+<PRE>
+Hi, whoever you are.  As you instructed, I am including my email
+(bob@place.com).
+</PRE>
+
+Of course, your original email to the remailer is clear-text;
+therefore, it could be intercepted. <P>
+
+<LI> Procedure to send an <B>encrypted</B>, anonymous
+message to Bob where Bob can reply <b>without</b> knowing your
+identity.
+<OL>
+<LI> Follow the same procedure as in Procedure 3 up to the point
+that you are ready to send the email.
+<LI> Encrypt the email with the public key of the remailer.
+<LI> Create a new email as follows, postpending the email
+encrypted in the previous step as follows:
+
+<PRE>
+::
+Encrypted: PGP
+
+-----BEGIN PGP MESSAGE-----
+Version: PGP for Personal Privacy 5.0
+MessageID: zfQCycsnJgVWs03xcBnhyV2cMYPQN+GT
+
+hQCJAz0VsrLnrsHlAQPnX6ax3vv4o7I9vYKE9kmrEwi0nwLBCq4/tNS1cA/QHv/d
++eslNAJ/23nghjGLWRPO1lz3Jn0ICIPP6+cZ70mz2OOZC4ufXT6fYjsSTMYFDted
+6aTGLsC+jE/ZZoMaBGLvLePt0YGLz7WQD767fIdQEe9mKCo73jvD7MqIAYelBGJU
+khF29ZYauJ9lXTiZGjh7L+XhINproAq9UtyNrKSy9R/flWg5prmH+f9oHfrVGn/t
+s9FnTpxmI6+bOEL4gyO7ey4ihEBd6KhyXPY95ePH2flQCqnefxuyOcBodukePxMf
+Tvhpd0YdImK5tlZ5h0FzRevtt4A23fHyTF/BgxTIWE6ir7nWxlk4AHemQsE44OBW
+oDRvIFHMVNi8AvIlKRKXG6tJ9vd5xVeKwpPVeO4PiOxw1zEWsXKcB3NHt0s19zq5
+7+FeesqlJaQeIaBfY73IH5N/wh81rWb6QNkxHsppk4vzcm+3FX/rYQS62jUEavlT
+ZoJJ7hkNHKxifmIcCNVIXWYCSHQwj1dEj0yw8epJVDVfdWE9fGA7TrTrwbkd7+KO
+5nVvwi5NACzvlGbcgBPxzGTtakx4ty/igv+zP68vv6vi8l2qJpDqKbtGpLpAAzTU
+HdWvDb9hdLNlnNB9zIWlwUTVKZSA5hxxfQTTBBy5mdQr1INUtuIOC53rzNIpdwiN
+dlC0U9jU+k42AiKxhYuWjZToc1uPb31Op4RMlB5NAG1JUlDzAxPXyxY2JJuZ3Vu+
+mtgnEscd+ns3/GUnQ1Wx0g9jT1RRyrn7fO2L4RmAGZ18Mw0LVX/90gX3fhm+9IUF
+SzGK3gbysEgq8rtrpKoLj03f/MMbYO+n5GL+drBfAT3Nk54Gc2zHtHM7Us/ng69s
+0oo3oUmpEcRviWteG5FTIkw58ywkAf9UwaPVfc3ipM9bzrCGlw9+AzjAHjC1o7VF
++I5Ng5OF+Ym1tAh/PnWT76aTIzgqzznLCAgYkjFvM3We6GqFlFZBkEi6X/OQFdg/
+cjPyPqKBnKoqlJl2+197sK6VtWmpxISRn7fDnpuMAdb1S3cZeLnigQZ5wtQOoTN0
+eeZ9odQfel/K7PpasCUzrTaZKLi+VQ0AjLA0K6Hi8z/a+zcwRcWAFUjRaBxqc5+P
+0gm0Aq4L7M5MW+BZ7Bxr6SER39IaMcGuktoSPmLPLijH0eEJ6SP60ygeOVLbUMyM
+O1+BmP5dlMBJpSwwnwyzURmuvzel3gfPGJj+Rpu4VQtzL01NHKCQpLJKkw+qxwuz
+PJ4kUEbpBm86FrJ4DxMxlcpJd7N8b2UoJBDpQXKh8EZFaPBLux6kX0EBGiB6m/U0
+USGemqciGyH/ifxA+9RB7JBZxupI0yRkkqo1RUO3xBIr/7ce0I7WMhoko1KdFi1P
+SeqYN9GoTmXmuyTbGPScBC54RSuZbdUnontbavsylZwmChZapFLafcSLKOLNF2WM
+X32Uprx5lnjBLCiS5CXXfgxw+t7zMA0OzlHakoDSQ1pBkQXijfyY8YMbK5bQgleX
+in3rLb38UYXYKJjg9G6FBXXR8LTbklFewcltBgFzSrC1B9n4NOG9I7SO3ery45yC
+4ZmUFca2YBpmVjX0IxKrL4Qq7Th3u/Pkzl1fn/cCG3ok1JL4SuGjqBrLNoXeV+d1
+r1RY7it/d3/o/I40xT927Hw=
+=U3oR
+-----END PGP MESSAGE-----
+
+</OL>
+
+The remailer decrypts the message and forwards the clear text version
+with the postpended ERB to Bob.  The email Bob receives looks exactly
+as it did in the previous procedure; however, you are able to send
+Bob email without revealing the contents or receiver in transit to the
+remailer.  In addition, you are able to receive a reply from Bob
+without revealing your identity.
+
+</UL>
+</BODY>
+</HTML>

@@ -1,0 +1,28 @@
+<html>
+<head>
+<title>Form Test</title>
+</head>
+
+<body>
+
+<form action="formout.jsp">
+Name: <input type="text" name="username"><br>
+Password: <input type="password" name="password"><br>
+Comment: <br><textarea name="comment" rows="5" cols="30">Comments go here</textarea><br>
+Gender: 
+<select name="gender">
+  <option>Male</option>
+  <option value="F">Female</option>
+  <option value="N" selected="selected">Undeclared</option>
+</select><br>
+Call me: <input type="checkbox" name="call" checked="checked"><br>
+Customer Type:
+  <input type="radio" name="type" checked="checked" value="F"> Free 
+  <input type="radio" name="type" value="E"> Enterprise<p>
+<input type="submit" value="Send Comment">
+<input type="reset" value="Cancel">
+</form>
+
+<a href="formout.jsp?username=Ed&password=edpass&comment=Run+Away&gender=M&call=on&type=E">Ed Autocomment</a>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<HTML>
+<!-- created Thu Apr 9 23:20:43 MET DST 1998
+ from ../latex2e.texi line 3734 via texi2www -->
+<HEAD>
+<TITLE>Modes</TITLE>
+<LINK REL="Precedes" HREF="Page_Styles.html">
+<LINK REV="Precedes" HREF="Math_Formulae.html">
+<LINK REV="Subdocument" HREF="Commands.html">
+</HEAD><BODY><P>
+<A HREF="Math_Formulae.html"><IMG ALIGN=MIDDLE SRC="prev-arrow.gif" ALT="PREV"></A>
+<A HREF="Commands.html"> <IMG ALIGN=MIDDLE SRC="up-arrow.gif" ALT="UP"></A>
+<A HREF="Page_Styles.html"><IMG ALIGN=MIDDLE SRC="next-arrow.gif" ALT="NEXT"></A>
+<CITE>LaTeX2e help 1.6</CITE></P>
+<H2>2.14: Modes</H2>
+<P>
+When LaTeX is processing your input text, it is always in one of three
+modes:
+</P>
+<UL>
+<LI>
+Paragraph mode
+<LI>
+Math mode
+<LI>
+Left-to-right mode, called LR mode for short
+</UL>
+
+<P>
+LaTeX changes mode only when it goes up or down a staircase to a
+different level, though not all level changes produce mode changes.
+Mode changes occur only when entering or leaving an environment, or when
+LaTeX is processing the argument of certain text-producing commands.
+</P>
+<P>
+``Paragraph mode'' is the most common; it's the one LaTeX is in when
+processing ordinary text.  In that mode, LaTeX breaks your text into
+lines and breaks the lines into pages.  LaTeX is in ``math mode'' when
+it's generating a mathematical formula.  In ``LR mode'', as in paragraph
+mode, LaTeX considers the output that it produces to be a string of
+words with spaces between them.  However, unlike paragraph mode, LaTeX
+keeps going from left to right; it never starts a new line in LR mode.
+Even if you put a hundred words into an <CODE>\mbox</CODE>, LaTeX would keep
+typesetting them from left to right inside a single box, and then
+complain because the resulting box was too wide to fit on the line.
+</P>
+<P>
+LaTeX is in LR mode when it starts making a box with an <CODE>\mbox</CODE>
+command.  You can get it to enter a different mode inside the box - for
+example, you can make it enter math mode to put a formula in the box.
+There are also several text-producing commands and environments for
+making a box that put LaTeX in paragraph mode.  The box make by one of
+these commands or environments will be called a <CODE>parbox</CODE>.  When
+LaTeX is in paragraph mode while making a box, it is said to be in
+``inner paragraph mode''.  Its normal paragraph mode, which it starts out
+in, is called ``outer paragraph mode''.
+</P>
+</BODY></HTML>

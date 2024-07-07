@@ -1,0 +1,182 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.6 [en] (Win95; I) [Netscape]">
+   <title> Request </title>
+</head>
+<body background="blue_lines.jpg">
+
+<h1>
+<img SRC="greenbal.gif" height=14 width=14> REQUEST:</h1>
+Request is used to ask for a response containing all or part of the <a href="diction.htm#host">host</a>'s
+routing table. [Note that the term <a href="diction.htm#host">host</a>
+is used for either <a href="diction.htm#host">host</a> or <a href="diction.htm#gate">gateway</a>
+, in most cases it would be unusual for a non-<a href="diction.htm#gate">gateway</a>
+<a href="diction.htm#host">host</a> to send RIP messages.] Normally, requests
+are sent as broadcasts, from a <a href="diction.htm#udp">UDP</a> source
+port of 520. ( Rip is <a href="diction.htm#udp">UDP</a> based protocol)
+<br>In this case, silent processes do not respond to the request. Silent
+processes are by definition processes for which we normally do not want
+to see routing information. However, there may be situations involving
+<a href="diction.htm#gate">gateway</a> monitoring where it is desired to
+look at the routing table even for a silent process. In this case, the
+request should be sent from a <a href="diction.htm#udp">UDP</a> port number
+other than 520. If a request comes from port 520, silent processes do not
+respond. If the request comes from any other port, processes must respond
+even if they are silent.
+<p>The request is processed entry by entry. If there are no entries, no
+response is given. There is one special case. If there is exactly one entry
+in the request, with an address family identifier of 0 (meaning unspecified),
+and a metric of infinity (i.e., 16 for current implementations), this is
+a request to send the entire routing table. In that case, a call is made
+to the output process to send the routing table to the requesting port.
+<p>Except for this special case, processing is quite simple. Go down the
+list of entries in the request one by one. For each entry, look up the
+destination in the <a href="diction.htm#host">host</a>'s routing database.
+If there is a route, put that route's metric in the metric field in the
+<a href="diction.htm#datagram">datagram</a>. If there isn't a route to
+the specified destination, put infinity (i.e., 16) in the metric field
+in the <a href="diction.htm#datagram">datagram</a>. Once all the entries
+have been filled in, set the command to response and send the <a href="diction.htm#datagram">datagram</a>
+back to the port from which it came.
+<p>Note that there is a difference in handling depending upon whether the
+request is for a specified set of destinations, or for a complete routing
+table. If the request is for a complete <a href="diction.htm#host">host</a>
+table, normal output processing is done. This includes <a href="algorith.htm#Split_Horizon">split
+horizon</a> and subnet hiding, so that certain entries from the routing
+table will not be shown. If the request is for specific entries, they are
+looked up in the <a href="diction.htm#host">host</a> table and the information
+is returned. No split horizon processing is done, and subnets are returned
+if requested. When a <a href="diction.htm#host">host</a> first comes up,
+it broadcasts requests on every connected network asking for a complete
+routing table. In general, we assume that complete routing tables are likely
+to be used to update another <a href="diction.htm#host">host</a>'s routing
+table. For this reason, split horizon and all other filtering must be used.
+Requests for specific networks are made only by diagnostic software, and
+are not used for routing. In this case, the requester would want to know
+the exact contents of the routing database, and would not want any information
+hidden.
+<br><a NAME="respond"></a>
+<h1>
+<img SRC="greenbal.gif" height=14 width=14> RESPOND:</h1>
+
+
+Responses can be received for several different reasons:
+
+<ul>
+<li>
+response to a specific query</li>
+
+<li>
+regular updates</li>
+
+<li>
+triggered updates triggered by a metric change</li>
+</ul>
+Processing is the same no matter how responses were generated.
+<p>Because processing of a response may update the <a href="diction.htm#host">host</a>'s
+routing table, the response must be checked carefully for validity. The
+response must be ignored if it is not from port 520. The <a href="http://ftp.technion.ac.il/teach/topnet/cnpp94/ip_addr/tcpip2.html">IP</a>
+source address should be checked to see whether the <a href="diction.htm#datagram">datagram</a>
+is from a valid neighbor. The source of the <a href="diction.htm#datagram">datagram</a>
+must be on a directly-connected network. It is also worth checking to see
+whether the response is from one of the <a href="diction.htm#host">host</a>'s
+own addresses. Interfaces on broadcast networks may receive copies of their
+own broadcasts immediately. If a <a href="diction.htm#host">host</a> processes
+its own output as new input, confusion is likely, and such <a href="diction.htm#datagram">datagram</a>s
+must be ignored (except as discussed in the next paragraph).
+<p>Before actually processing a response, it may be useful to use its presence
+as input to a process for keeping track of interface status. We have to
+time out a route when we haven't heard from its <a href="diction.htm#gate">gateway</a>
+for a certain amount of time. This works fine for routes that come from
+another <a href="diction.htm#gate">gateway</a>. It is also desirable to
+know when one of our own directly-connected networks has failed. Method
+of doing this depend upon the characteristics of the network and the hardware
+interface to it. However, such methods often involve listening for <a href="diction.htm#datagram">datagram</a>s
+arriving on the interface. Arriving <a href="diction.htm#datagram">datagram</a>s
+can be used as an indication that the interface is working. However, some
+caution must be used, as it is possible for interfaces to fail in such
+a way that input <a href="diction.htm#datagram">datagram</a>s are received,
+but output <a href="diction.htm#datagram">datagram</a>s are never sent
+successfully.
+<p>Now that the <a href="diction.htm#datagram">datagram</a> as a whole
+has been validated, process the entries in it one by one. Again, start
+by doing validation. If the metric is greater than infinity, ignore the
+entry. (This should be impossible, if the other <a href="diction.htm#host">host</a>
+is working correctly. Incorrect metrics and other format errors should
+probably cause alerts or be logged.) Then look at the destination address.
+Check the address family identifier. If it is not a value which is expected
+(e.g., 2 for Internet addresses), ignore the entry. Now check the address
+itself for various kinds of inappropriate addresses. Ignore the entry if
+the address is class D or E, if it is on net 0 (except for 0.0.0.0, if
+we accept default routes) or if it is on net 127 (the loopback network).
+Also, test for a broadcast address, i.e., anything whose <a href="diction.htm#host">host</a>
+part is all ones on a network that supports broadcast, and ignore any such
+entry. If the implementor has chosen not to support <a href="diction.htm#host">host</a>
+routes, check to see whether the <a href="diction.htm#host">host</a> portion
+of the address is non-zero; if so, ignore the entry.
+<p>The address field may contains a number of unused octets. If the version
+number of the <a href="diction.htm#datagram">datagram</a> is 1, they must
+also be checked. If any of them is nonzero, the entry is to be ignored.
+<p>Update the metric by adding the cost of the network on which the message
+arrived. If the result is greater than 16, use 16. That is, metric = MIN
+(metric + cost, 16) Now look up the address to see whether this is already
+a route for it. In general, if not, we want to add one. However, there
+are various exceptions. If the metric is infinite, don't add an entry.
+(We would update an existing one, but we don't add new entries with infinite
+metric.) We want to avoid adding routes to <a href="diction.htm#host">host</a>s
+if the <a href="diction.htm#host">host</a> is part of a net or subnet for
+which we have at least as good a route. If neither of these exceptions
+applies, add a new entry to the routing database. This includes the following
+actions:
+<p>- Set the destination and metric to those from the <a href="diction.htm#datagram">datagram</a>.
+<p>- Set the <a href="diction.htm#gate">gateway</a> to be the <a href="diction.htm#host">host</a>
+from which the <a href="diction.htm#datagram">datagram</a> came.
+<p>- Initialize the timeout for the route. If the garbage- collection timer
+is running for this route, stop it.
+<p>- Set the route change flag, and signal the output process to trigger
+an update.
+<p>If there is an existing route, first compare <a href="diction.htm#gate">gateway</a>s.
+If this <a href="diction.htm#datagram">datagram </a>is from the same <a href="diction.htm#gate">gateway</a>
+as the existing route, reinitialize the timeout. Next compare metrics.
+If the <a href="diction.htm#datagram">datagram</a> is from the same <a href="diction.htm#gate">gateway</a>
+as the existing route and the new metric is different than the old one,
+or if the new metric is lower than the old one, do the following actions:
+<ul>
+<li>
+adopt the route from the <a href="diction.htm#datagram">datagram</a>. That
+is, put the new metric in, and set the <a href="diction.htm#gate">gateway</a>
+to be the <a href="diction.htm#host">host</a> from which the <a href="diction.htm#datagram">datagram</a>
+came.</li>
+
+<li>
+Initialize the timeout for the route.</li>
+
+<li>
+Set the route change flag, and signal the output process to trigger an
+update.</li>
+</ul>
+If the new metric is 16 (infinity), the deletion process is started.
+<p>If the new metric is 16 (infinity), this starts the process for deleting
+the route. The route is no longer used for routing <a href="diction.htm#packet">packet</a>s,
+and the deletion timer is started. Note that a deletion is started only
+when the metric is first set to 16. If the metric was already 16, then
+a new deletion is not started. (Starting a deletion sets a timer. The concern
+is that we do not want to reset the timer every 30 seconds, as new messages
+arrive with an infinite metric.)
+<p>If the new metric is the same as the old one, it is simplest to do nothing
+further (beyond reinitializing the timeout.) However, the 4BSD routed uses
+an additional heuristic here. Normally, it is senseless to change to a
+route with the same metric as the existing route but a different <a href="diction.htm#gate">gateway</a>.
+If the existing route is showing signs of timing out, though, it may be
+better to switch to an equally-good alternative route immediately, rather
+than waiting for the timeout to happen. Therefore, if the new metric is
+the same as the old one, routed looks at the timeout for the existing route.
+If it is at least halfway to the expiration point, routed switches to the
+new route. That is, the <a href="diction.htm#gate">gateway</a> is changed
+to the source of the current message. This heuristic is optional.
+<p>Any entry that fails these tests is ignored, as it is no better than
+the current route.
+</body>
+</html>

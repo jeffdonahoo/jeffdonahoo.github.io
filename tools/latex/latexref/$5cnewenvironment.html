@@ -1,0 +1,66 @@
+<HTML>
+<!-- created Thu Apr 9 23:20:43 MET DST 1998
+ from ../latex2e.texi line 674 via texi2www -->
+<HEAD>
+<TITLE>\newenvironment</TITLE>
+<LINK REL="Precedes" HREF="$5cnewtheorem.html">
+<LINK REV="Precedes" HREF="$5cnewcommand.html">
+<LINK REV="Subdocument" HREF="Definitions.html">
+</HEAD><BODY><P>
+<A HREF="$5cnewcommand.html"><IMG ALIGN=MIDDLE SRC="prev-arrow.gif" ALT="PREV"></A>
+<A HREF="Definitions.html"> <IMG ALIGN=MIDDLE SRC="up-arrow.gif" ALT="UP"></A>
+<A HREF="$5cnewtheorem.html"><IMG ALIGN=MIDDLE SRC="next-arrow.gif" ALT="NEXT"></A>
+<CITE>LaTeX2e help 1.6</CITE></P>
+<H3>2.3.2: \newenvironment</H3>
+<DL><DT><DD>
+<PRE>
+ \newenvironment{nam}[args]{begdef}{enddef}
+ \newenvironment{nam}[args][default]{begdef}{enddef}
+ \renewenvironment{nam}[args]{begdef}{enddef}
+</PRE>
+</DL>
+<P>
+These commands define or redefine an environment.
+</P>
+<TABLE>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>nam</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+The name of the environment.  For <CODE>\newenvironment</CODE> there must be
+no currently defined environment by that name, and the command
+<CODE>\nam</CODE> must be undefined.  For <CODE>\renewenvironment</CODE> the
+environment must already be defined.
+</P>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>args</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+An integer from 1 to 9 denoting the number of arguments of
+the newly-defined environment.  The default is no arguments.
+</P>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>default</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+If this is specified, the first argument is optional, and <CODE>default</CODE>
+gives the default value for that argument.
+</P>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>begdef</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+The text substituted for every occurrence of <CODE>\begin{nam}</CODE>; a
+parameter of the form <CODE>#n</CODE> in <CODE>cmd</CODE> is replaced by the text of
+the nth argument when this substitution takes place.
+</P>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>enddef</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+The text substituted for every occurrence of <CODE>\end{nam}</CODE>.  It may
+not contain any argument parameters.
+</P>
+</TD></TR>
+</TABLE>
+</BODY></HTML>

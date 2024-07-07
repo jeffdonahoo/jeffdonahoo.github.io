@@ -1,0 +1,77 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2014.11.05.15.31.11;	author donahoo;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2013.09.09.17.58.08;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@<>
+@
+text
+@import java.util.Map;
+import java.util.HashMap;
+
+public class MapTest {
+
+  public static void main(String args[]) {
+
+    Map<Integer, Employee> map = new HashMap<>();
+
+    for (int id = 10; id > 0; id--) {
+      map.put(new Integer(id), new Employee(id, "Bob-" + id));
+    }
+
+    System.out.println("Employee 5 is " + map.get(new Integer(5)));
+    map.remove(new Integer(6));
+
+    for (Employee e : map.values()) {
+      System.out.println(e);
+    }
+  }
+}
+
+class Employee {
+  public int ID;
+  public String name;
+
+  public Employee(int ID, String name) {
+    this.ID = ID;
+    this.name = name;
+  }
+
+  public String toString() {
+    return ID + ": " + name;
+  }
+}
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 2
+a2 1
+import java.util.*;
+d8 1
+a8 1
+    Map<Integer, Employee> map = new HashMap<Integer, Employee>();
+@

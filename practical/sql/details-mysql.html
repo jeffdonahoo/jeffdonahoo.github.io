@@ -1,0 +1,348 @@
+<html>
+<head>
+<title>SQL:  Practical Guide for Developers</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+<center><font size=+10>SQL:  Practical Guide for Developers<br>MySQL</font></center><p>
+
+All MySQL-specific information given here is based on version 4.1.13.
+We welcome any updates, correction, and clarifications.  Send them to
+Jeff_Donahoo at baylor.edu (email address munged to avoid
+harvesting).
+
+<ul>
+  <li><a href="http://mysql.com">MySQL Website</a> 
+  <li><a href="http://dev.mysql.com/doc/mysql/en/index.html">Reference Manual</a> 
+  <li>Example Database Creation 
+    <ul>
+      <li>Scripts 
+        <ul>
+          <li>Restaurant Database Creation Script <a href="restaurant-mysql.sql">restaurant-mysql.sql</a> 
+          <li>Employee Database Creation Script <a href="employees-mysql.sql">employees-mysql.sql</a> 
+        </ul>
+      <li>Instructions 
+        <ol>
+          <li>Install MySQL and start database server<a href="http://dev.mysql.com/doc/mysql/en/installing.html">(installing)</a>. 
+          <li>Start MySQL client<a href="http://dev.mysql.com/doc/mysql/en/connecting-disconnecting.html">(connecting)</a>. 
+          <li>Execute SQL script at MySQL client prompt: "source &lt;sql file&gt;". 
+        </ol>
+    </ul>
+  <li>Resource Sites Below are some sites on MySQL that you may find useful. Please 
+    note that I have not verified the accuracy or timeliness of the information 
+    contained in these sites. 
+    <ul>
+      <li><a href="http://sql-info.de/mysql/gotchas.html">MySQL Gotchas</a> 
+    </ul>
+  <li>MySQL Differences: 
+    <ul>
+      <li> 
+        <div class="secthdr">General:</div>
+        <ul>
+          <li>MySQL has several extensions and deviations from the standard. They 
+            claim to be working toward supporting the standard except when it 
+            impacts "speed and quality of the code" <a
+	  href="http://dev.mysql.com/doc/mysql/en/standards.html">(standards)</a>. 
+            Operating the MySQL server in ANSI mode will makes its syntax and 
+            behavior "more conformant to the standard SQL" <a
+	  href="http://dev.mysql.com/doc/mysql/en/server-sql-mode.html">(SQL mode)</a>. 
+            Consider using this mode if you want to write more portable SQL. 
+        </ul>
+   <li> 
+     <div class="secthdr">Chapter 2: Retrieval: Basic SELECTion</div>
+       <dl>
+         <dt> 
+           <div class="issuehdr"><a name="ch2StringSyntax"></a>Literal String 
+              Escape Sequence</div>
+           
+          <dd>In MySQL you can use the '\' character to escape special characters, 
+            like quote('), rather than quoting them. You can also use this escape 
+            character rather than defining your own when using LIKE on literal 
+            strings <a href = "http://dev.mysql.com/doc/mysql/en/string-syntax.html">(String 
+            Syntax)</a>. </dd>
+       </dl>		
+   </li>
+   <li> 
+     <div class="secthdr">Chapter 3: Reshaping Results</div>
+       <dl>
+         <dt> 
+           <div class="issuehdr">String Concatenation</div>
+           <dd>MySQL treats || as a logical OR, not concatenation. MySQL uses the 
+            CONCAT function for concatenation (<a
+			    href="http://dev.mysql.com/doc/mysql/en/string-functions.html">String 
+            Functions</a>). If you start the MySQL server with the --ansi option, 
+            MySQL will use || for concatenation. </dd>
+         <dt> 
+           <div class="issuehdr">Trailing White Space in VARCHAR Columns</div>
+           <dd>In MySQL versions prior to 5.0.3 trailing white space is removed 
+            from strings in VARCHAR columns when the value is stored <a href="http://dev.mysql.com/doc/refman/5.1/en/differences-from-ansi.html">(manual 
+            version 5.1: Differences from ansi)</a>.</dd>
+		 <dt> 
+           <div class="issuehdr">Literal String Escape Sequence</div>
+           <dd>See this issue in <a href="#ch2StringSyntax">Chapter 2</a>.</dd>
+         <dt> 
+           <div class="issuehdr"><a name="ch3CAST"></a>CAST</div>
+           <dd>MySQL has a limited number of data types that may be used in a CAST, 
+            Numeric is not one of them <a href="http://dev.mysql.com/doc/mysql/en/cast-functions.html">(cast)</a>. 
+          </dd>
+         <dt> 
+           <div class="issuehdr"><a name="ch3DateObjects"></a>Temporal Operations</div>
+           <dd>Use MySQL's temporal functions for temporal arithmetic <a
+      		href="http://dev.mysql.com/doc/mysql/en/date-and-time-functions.html">(temporal 
+            functions)</a>.</dd>
+         
+       </dl>
+   </li>
+   <li>
+     <div class="secthdr">Chapter 4: Aggregating Results </div>
+       <dl>
+         <dt> 
+           <div class="issuehdr">CAST</div>
+           <dd>See this issue in <a href="#ch3CAST">Chapter 3</a></dd>
+          <a href="#ch3CAST"></a>
+		 <dt>
+           <div class="issuehdr">GROUP BY with &quot;hidden&quot;</div>
+             <dd>Consider the following query: 
+           <pre>	SELECT companyname, referredby
+	FROM vendors
+	GROUP BY referredby;
+        
+	companyname            referredby 
+	---------------------- ------------- 
+	Veggies_R_Us           (null) 
+	Spring Water Supply    EDDRS 
+	&quot;Fruit Eating&quot;         Friends FLVCR 
+	Ed's Dressings         FRTFR 
+	Don's Dairy            VGRUS </pre>
+            This is illegal in SQL. The SELECT list may only contain attributes 
+            that appear in the GROUP BY clause unless they are only used in an 
+            aggregate function. MySQL allows this <a href="http://dev.mysql.com/doc/en/group-by-hidden-fields.html">(Group-by 
+            hidden fields)</a>.<br>
+            <br>
+          	Note the odd results above. VGRUS refers both Don's Dairy and Flavorful 
+            Creams; however, since we are grouping by referredby, VGRUS may only 
+            show up once. MySQL arbitrarily decides to use Don's Dairy, thereby 
+            excluding Flavorful Creams from the result.<br><br>
+          	Of course, MySQL warns you about this in the manual:<br>
+            &quot;Do not use this feature if the columns you omit from the GROUP 
+            BY part are not unique in the group! You get unpredictable results.&quot; 
+          </dd> 
+		</dl>
+   </li>
+   <li>Chapter 5: Joins 
+     <dl>
+       <dt> 
+            <div class = "issuehdr"><a name="ch5FullJoins"></a>FULL OUTER JOIN</div>
+          <dd> As of version 5.0.13, MySQL does not support FULL OUTER JOINs <a href="http://dev.mysql.com/doc/mysql/en/join.html">(Join 
+            Syntax)</a>. </dd>
+          
+      </dl>
+   </li>
+   <li>
+	 <div class="secthdr">Chapter 6: Set Queries: UNION, INTERSECT, and EXCEPT</div>
+	   <dl>
+	     <dt>
+	        <div class="issuehdr"><a name="ch6IntExc"></a>INTERSECT and EXCEPT</div>
+	       
+          <dd>As of version 5.0.13, MySQL does not support INTERSECT or EXCEPT. 
+            UNION, however, does work.</dd>
+          
+	   </dl>
+   </li>
+   <li>
+     <div class="secthdr">Chapter 7: Subqueries</div>
+	    <dl>
+          <dt> 
+            <div class="issuehdr"><a name="ch7NULLComp"></a>NULL Comparison</div>
+          <dd> In MySQL if a NULL value is on the left hand side of the &quot;IN&quot; 
+            operator the result is NULL rather than 1 or 0. This can cause problems 
+            with subqueries using IN. For example, consider query 7.19: 
+            <pre>SELECT companyname
+FROM vendors
+WHERE referredby NOT IN 
+    (SELECT vendorid
+     FROM vendors
+     WHERE companyname = 'No Such Company');</pre>
+            In the ANSI SQL standard, the company name "Veggies_R_Us" is included in 
+            the result set. However, because the referedby value associated with 
+            &quot;Veggies_R_Us&quot; is NULL, MySQL returns NULL rather than 1 
+            for the NOT IN operation and &quot;Veggies_R_Us&quot; is not included 
+            in the result set <a href="http://dev.mysql.com/doc/mysql/en/comparison-operators.html">(Comparison 
+            Functions and Operators)</a>.</dd>
+          
+          <dt>
+		     
+            <div class="issuehdr"><a name="ch7DTnames"></a>Derived Table Names</div>
+			 <dd>
+			 MySQL does not support naming derived tables and their attributes using a single AS statment in the form:
+			 <pre>SELECT *
+FROM (SELECT att1, att2, att3) AS d(a1, a2, a3)</pre>
+			 Instead each attribute must have its own AS statement in the SELECT clause of the subquery like this:
+			 <pre>SELECT *
+FROM (SELECT att1 AS a1, att2 AS a2, att3 AS a3) AS d</pre>
+            This syntax will give the exact same results as using the single AS 
+            statement in ANSI <a href="http://dev.mysql.com/doc/mysql/en/unnamed-views.html">(Subqueries 
+            in the FROM Clause)</a>. </dd>
+		  
+		  <dt>
+		     <div class="issuehdr">EXCEPT</div>
+			 
+          <dd>As of version 5.0.13, MySQL does not support EXCEPT (see this issue 
+            in <a href="#ch6IntExc">Chapter 6</a>).</dd>
+		  
+        </dl>
+   </li>
+   <li>
+     <div class="secthdr">Chapter 8: Modifying Data</div>
+	   <dl>
+	     <dt>
+		    <div class="issuehdr"><a name="ch8DefIns"></a>Inserting DEFAULT rows</div>
+		   <dd>To insert an entire row of default values in MySQL use the following format:
+		   <pre>INSERT INTO <i>table</i> VALUES();</pre>
+		   Rather than the ANSI format:
+		   <pre>INSERT INTO <i>table</i> DEFAULT VALUES;</pre>
+            These statements have identical results, its merely a matter of MySQL 
+            syntax <a href="http://dev.mysql.com/doc/mysql/en/insert.html">(INSERT 
+            Syntax)</a>. </dd>
+		 
+		 <dt>
+		    <div class="issuehdr">FULL OUTER Joins</div>
+			
+          <dd>See this issue in <a href="#ch5FullJoins">Chapter 5</a></dd>
+		 
+	   </dl>
+   </li>
+   <li> 
+     <div class="secthdr">Chapter 9: Creating, Deleting, and Altering Tables</div>
+       <dl>
+         <dt> 
+           <div class="issuehdr">DEFAULT</div>
+           <dd>The default value in MySQL must be a constant. Expressions and functions 
+            are not allowed <a
+    href="http://dev.mysql.com/doc/mysql/en/create-table.html">(create table)</a>. 
+            This means that you cannot have the following column declaration: 
+            <pre>dateadded DATE DEFAULT CURRENT_DATE</pre>
+            CURRENT_DATE is a function call. The one (weird) exception to 
+              this rule is that you can set the DEFAULT value of a TIMESTAMP to 
+              CURRENT_TIMESTAMP. Beware that MySQL has some strange rules about 
+              TIMESTAMP so read the manual before using this type</dd>
+	    
+		<dt>
+		    <div class="issuehdr"><a name="ch9NamingConstraints"></a>Naming Constraints</div>
+		  <dd>In MySQL you must include the item in addition to the table referenced 
+            when naming constraints <a href="http://dev.mysql.com/doc/mysql/en/innodb-foreign-key-constraints.html">(Foreign 
+            Key Constraints)</a>. You cannot issue the command: 
+            <pre>CONSTRAINT z FOREIGN KEY(x) REFRENCES y</pre> but rather must use the full syntax: 
+			<pre>CONSTRAINT z FOREIGN KEY(x) REFERENCES y(a)</pre>
+          </dd>
+		
+		<dt>
+		  <div class="issuehdr"><a name="ch9CrtTblAs"></a>CREATE TABLE AS</div>
+			
+          <dd>In MySQL you cannot use this syntax <a href="http://dev.mysql.com/doc/mysql/en/create-table.html">(Create 
+            Syntax)</a>: 
+            <pre>CREATE TABLE x(a1, a2, a3) AS
+SELECT att1, att2, att3
+FROM tables</pre>
+                Instead you should use this syntax:
+				<pre>CREATE TABLE x
+SELECT att1 AS a1, att2 AS a2, att3 AS a3
+FROM tables</pre>              
+          </dd>
+		
+		<dt>
+		  <div class="issuehdr">SELECT INTO</div>
+          <dd>MySQL does not support the SELECT INTO query. Instead they support 
+            INSERT INTO table (fieldID). However, in this method the table must 
+            already exist. If you want to create the table in the query you have 
+            to use a CREATE clause<a href="http://dev.mysql.com/doc/mysql/en/ansi-diff-select-into-table.html">(Select 
+            Into)</a>. </dd>
+					
+		<dt>
+		  <div class="issuehdr">Domains</div>
+	      <dd>MySQL does not currently support Domains.</dd>
+		<dt>
+		    <div class="issuehdr"><a name="ch9DropConstraint"></a>DROP CONSTRAINT</div>
+		  <dd>MySQL does not support the DROP CONSTRAINT command. Rather you may 
+            use the DROP FOREIGN KEY command, but cannot specify RESTRICT or CASCADE 
+            <a href="http://dev.mysql.com/doc/mysql/en/alter-table.html">(ALTER 
+            TABLE Syntax)</a>.</dd>
+		
+		<dt>
+		    <div class="issuehdr"><a name="ch9GenBy"></a>GENERATED BY</div>
+		  <dd>MySQL does not support the "GENERATED BY" syntax. You can use the 
+            "AUTO_INCREMENT" attribute instead, if applicable <a href="http://dev.mysql.com/doc/mysql/en/example-auto-increment.html">(AUTO_INCREMENT 
+            syntax)</a>. </dd>
+       <dt>
+	     <div class="issuehdr">Sequences</div>
+		 <dd>MySQL currently does not support sequences.
+		 </dd>
+	   
+	   <dt>
+	     <div class="issuehdr"><a name="ch9TempTable"></a>Temporary Tables</div>
+		  <dd>MySQL does not implement the concept of a "LOCAL" temporary table 
+            <a href="http://dev.mysql.com/doc/mysql/en/create-table.html">(CREATE 
+            TABLE Syntax)</a>. </dd>
+	   
+      </dl>
+   </li>
+   <li> 
+     <div class="secthdr">Chapter 10: Views</div>
+        MySQL 4.X does not support views. MySQL 5.X does <a href="http://dev.mysql.com/doc/mysql/en/views.html">(views)</a>. 
+		<dl>
+         <dt> 
+           <div class="issuehdr">Updatable Views</div>
+           
+          <dd>As of MySQL v. 5.1, not all views are updatable in MySQL, even some 
+            that theoretically should be <a href="http://dev.mysql.com/doc/refman/mysql/view-restrictions.html">(Restrictions 
+            on Views).</a> Insert 10.11 will not work on MySQL because <i>vrs</i> is not updatable.</dd>
+		<dt>
+  		   <div class="issuehdr">CAST</div>
+           <dd>See this issue in <a href="#ch3CAST">Chapter 3</a></dd>
+          <a href="#ch3CAST"></a>
+		</dt>
+		 
+       </dl>	
+   </li>
+   <li> 
+     <div class="secthdr">Chapter 11: Transactions</div>
+       <dl>
+         <dt> 
+           <div class="issuehdr">DEFERRED Constraints</div>
+           <dd>In MySQL, all contraints are enforced immediately so there are no 
+            deferred constraints <a
+	         href="http://dev.mysql.com/doc/mysql/en/innodb-foreign-key-constraints.html">(constraints)</a>.</dd>   
+       </dl>
+   </li> 
+   <li>
+    <div class="secthdr">Chapter 12: Database Privileges</div>
+       <dl>
+         <dt> 
+           <div class="issuehdr">REVOKEs without GRANTs</div>
+           <dd>MySQL generates an error if you try to revoke privileges that were not granted, so DCL 12.9 will cause
+		   an error.</dd>   
+		 <dt>
+		    <div class="issuehdr">ROLEs</div>
+			<dd>MySQL does not currently support roles.
+			</dd>
+		 </dt>
+       </dl>
+	   <li>
+    <div class="secthdr">Chapter 13: Introduction to Cursors, Embedded SQL, Stored Procedures, and Triggers</div>
+        <dl>
+          <dt> <a name="ch13CreateProc"></a> 
+            <div class="issuehdr">CREATE PROCEDURE and FUNCTION Syntax</div>
+          <dd>MySQL syntax for stored procedures and functions is different than 
+            that presented in the book <a href="http://dev.mysql.com/doc/mysql/en/create-procedure.html">(Procedure/Function 
+            Create Syntax).</a> </dd></dt>
+          <dt> <a name="ch13CreateTrig"></a> 
+            <div class="issuehdr">CREATE TRIGGER Syntax</div>
+          <dd>MySQL syntax for triggers is different than that presented in the 
+            book <a href="http://dev.mysql.com/doc/mysql/en/create-trigger.html">(Trigger 
+            Create Syntax).</a> </dd></dt>
+          Unfortunately, MySQL does not support
+          <dt>the &quot;ON UPDATE OF &lt;column&gt;&quot; syntax, so we cannot 
+            replicate DDL13.3 correctly in MySQL.</dt>
+        </dl>
+   </ul>
+ </ul>

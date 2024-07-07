@@ -1,0 +1,355 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+   <title>nfs_annot</title>
+</head>
+<body>
+&nbsp;&nbsp;&nbsp;&nbsp; In this version the first, third, and
+fifth packets are the ones sent from the NFS client ( moe ) to the NFS
+server ( larry ), which contain NFS procedures <i>lookup</i>,<i> getattr</i>,and<i>
+read</i>. The second, fourth, and sixth packets were responses from the
+server, respectively.
+<p>&nbsp;&nbsp;&nbsp; The packets shown by tcpdump contain the following
+data: IP header and data portion.&nbsp; The IP data contains a UDP packet,
+that is, it contains a UDP header and it's data portion.&nbsp; We have
+used the following typographical notation:
+<p>packet 1:
+<br>* underlined for IP headers, UDP headers and NFS procedure call parameters
+<br>* bold for UDP headers
+<br>* italic for RPC headers
+<br>* each block of numbers in black and red color indicates a particular
+field
+<p>packet 2:
+<br>* underlined for IP headers, UDP headers
+<br>* bold for UDP headers
+<br>* italic for file attributes
+<br>* each block of numbers in black and red color indicates a particular
+field
+<p>packet 3:
+<br>* underlined for IP headers, UDP headers
+<br>* bold for UDP headers
+<br>* blue for RPC header
+<br>* red for file handler
+<p>packet 4:
+<br>* underlined for IP headers, UDP headers
+<br>* bold for UDP headers
+<br>* blue for RPC header
+<br>* red for file attributes
+<p>packet 5:
+<br>* underlined for IP headers, UDP headers
+<br>* bold for UDP headers
+<br>* blue for RPC header
+<br>* red for file handler
+<p>packet 6:
+<br>* underlined for IP headers, UDP headers, actual file data
+<br>* bold for UDP headers
+<br>* blue for RPC header
+<br>* red for file attributes
+<p>Some Useful References:
+<br><a href="../setup/config/ip_format.html" target="_blank">IP
+header format</a>
+<br><a href="udp_format.html" target="_blank">UDP
+header format</a>
+<br><a href="../setup/config/ascii.html" target="_blank">ASCII
+table</a>
+<br><a href="../setup/config/tcpdump.html" target="_blank">tcpdump</a>
+<br><a href="snoop.html" target="_blank">snoop</a>
+<br><a href="nfstrace.html" target="_blank">nfstrace</a>
+<br><a href="http://www.duth.gr/InfoBase/noc/nfswatch.txt" target="_blank">nfswatch</a>
+<br><a href="http://www.mathcs.emory.edu/~dj/thesis_main/node1.html" target=_blank>A
+detailed analysis of monitoring NFS systems</a>
+<br><a href="http://www.cis.ohio-state.edu/htbin/rfc/rfc1057.html" target="_blank">RFC1057</a>
+<br><a href="http://www.sunsite.auc.dk/RFC/rfc/rfc1831.html" target="_blank">RFC1831</a>
+<br><a href="http://www.cis.ohio-state.edu/htbin/rfc/rfc1813.html" target="_blank">RFC1813</a>
+<p>Here is the printout of the dumped packets:
+<p><b>packet 1:</b>
+<br>21:32:54.898924 moe.baylor.edu.1791010337 > larry.baylor.edu.nfs: 148
+lookup fh Unknown/1 "secret" (ttl 64, id 267)
+<br>&nbsp;&nbsp;&nbsp; <u><font color="#FF6666">4</font><font color="#000000">5</font><font color="#FF6666">00</font>
+00b0 <font color="#FF6666">010b</font> 0000 <font color="#FF6666">40</font>11
+<font color="#FF6666">4efa</font>
+813e 93dd</u>
+<br>&nbsp;&nbsp;&nbsp; <u><font color="#FF6666">813e 93de</font></u> <b><u>0320
+<font color="#FF6666">0801</font>
+009c <font color="#FF6666">db4e</font></u></b> <i><font color="#000000">6ac0
+a621</font></i>
+<br><i>&nbsp;&nbsp;&nbsp; <font color="#CC0000">0000 0000</font> <font color="#000000">0000
+0002</font> <font color="#CC0000">0001 86a3</font> 0000 0002</i>
+<br><i>&nbsp;&nbsp;<font color="#FF0000">&nbsp; </font><font color="#CC0000">0000
+0004</font> <font color="#000000">0000 0001</font> <font color="#CC0000">0000
+0040</font> 0000 7239</i>
+<br><i>&nbsp;&nbsp;&nbsp; <font color="#CC0000">0000 000e</font> <font color="#000000">6d6f
+652e 6261 796c 6f72 2e65</font></i>
+<br><i><font color="#000000">&nbsp;&nbsp;&nbsp; 6475 0c</font>23 <font color="#CC0000">0000
+0000</font> 0000 0000 <font color="#CC0000">0000 0007</font></i>
+<br><i>&nbsp;&nbsp;&nbsp; 0000 0000</i> <font color="#000000">0000 0001
+0000 0002 0000 0003</font>
+<br><font color="#000000">&nbsp;&nbsp;&nbsp; 0000 0004 0000 0006 0000 000a
+0000 0000</font>
+<br><font color="#000000">&nbsp;&nbsp;&nbsp; 0000 0000</font><u><font color="#CC0000">caba
+ebfe c11f 0000 0200 0000</font></u>
+<br><font color="#CC0000">&nbsp;&nbsp;&nbsp; <u>0208 0000 0208 0000 c11f
+0000 8b68 2036</u></font>
+<br><font color="#CC0000">&nbsp;&nbsp;&nbsp; <u>0000 0000 0000 0006</u></font><u><font color="#000000">7365
+6372 6574</font></u> <u>0000</u>
+<p>&nbsp;&nbsp;&nbsp; In the first line, host<i> moe.baylor.edu </i>sent
+a transaction with id 1791010337 to <i>larry.baylor.edu </i>(note that
+the number following the src host is a transaction id, not the source port).
+The request was 148 bytes, excluding the UDP and IP headers. The operation
+was a <i>lookup </i>( Searches for a file in the current directory and
+if found, returns a file handle pointing to it plus information on the
+file's attributes. ) on file handle( fh ) Unknow/1. ( If one is lucky,
+not in this case, the file handle can be interpreted as a major, minor
+device number pair, followed by the inode number and generation number,
+for example 21,24/10.73165 ) The <i>moe </i>asked<i> larry </i>to lookup
+name "secret" in directory file "Unknown/1".
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Additional information that is
+readily available from the IP header:
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#FF6666"> </font><font color="#CC0000">4&nbsp;&nbsp;
+Version 4</font>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5&nbsp;&nbsp; Internet Header
+Length - 5 32-bit words.
+<br>&nbsp;&nbsp;&nbsp;<font color="#FF6666">&nbsp;&nbsp;&nbsp; </font><font color="#CC0000">00&nbsp;&nbsp;
+Type of Service - Normel Delay, Normal Throughput, Normal Reliability</font>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 00b0&nbsp;&nbsp; Total Length
+- the whole packet is b0 hex (176 decimal = 20 bytes IP header + 8 bytes
+UDP header + 148 bytes data for request) bytes long
+<br>&nbsp;&nbsp;<font color="#FF6666">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#CC0000">
+010b&nbsp; Identification</font>
+<br><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0000&nbsp;
+Flags and Fragmentation Offset</font>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#CC0000">40&nbsp;&nbsp;
+Time To Live - 64 hops</font>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 11&nbsp;&nbsp; Protocol - UDP
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#CC0000">4efa&nbsp;
+Header Checksum</font>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 813e 93dd&nbsp;&nbsp; Source Address
+- 129.62.147.221 - 81 hex is 129 dec, 3e is 62, 93 is 147 and dd is 221.
+<br>&nbsp;&nbsp;&nbsp;<font color="#FF6666">&nbsp;&nbsp;&nbsp;</font><font color="#CC0000">
+813e 93de&nbsp;&nbsp; Destination Address - 129.62.147.222</font>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Additional information that is
+readily available from the UDP header:
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0320&nbsp; Source Port, 800 decimal
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#FF6666"> </font><font color="#CC0000">0801&nbsp;
+Destination Port, 2049 decimal, which is usually used as port number for
+NFS</font>
+<br><font color="#FF6666">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font><font color="#000000">009c&nbsp;
+Total length for the UDP packet, 9c hex ( 156 decimal = 8 bytes UDP header
++ 148 bytes data for request ) bytes long</font>
+<br><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font><font color="#CC0000">db4e&nbsp;
+Checksum</font>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Additional information that is
+readily available from the RPC header:
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i><font color="#000000">6ac0
+a621</font><font color="#CC33CC">&nbsp;&nbsp;&nbsp; </font><font color="#000000">transaction
+identifier</font></i>
+<br><i><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font><font color="#CC0000">0000
+0000&nbsp;&nbsp;&nbsp; </font>msg_type = CALL</i>
+<br><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#000000">0000
+0002&nbsp;&nbsp; rpcvers = 2</font><font color="#FF0000"> </font><font color="#000000">(
+in version 2 of the RPC protocol specification, rpcvers must be equal to
+2 )</font></i>
+<br><i><font color="#FF0000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font><font color="#CC0000">0001
+86a3&nbsp;&nbsp; hex 000186a3 (decimal 100003),&nbsp; remote&nbsp; program
+ID</font></i>
+<br><i><font color="#CC0000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font>0000
+0002&nbsp;&nbsp; <font color="#000000">remote program version number</font></i>
+<br><i><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font><font color="#CC0000">0000
+0004&nbsp;&nbsp; procedure within the remote program to be called ( hex
+4 for "lookup" )</font></i>
+<br><i><font color="#CC0000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font><font color="#000000">0000
+0001&nbsp; auth_flavor = AUTH_UNIX ( for authentification purpose )</font></i>
+<br><i><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font><font color="#CC0000">0000
+000e&nbsp; stamp ( an arbitrary ID which te caller machine may generate
+)</font></i>
+<br><i><font color="#CC0000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font><font color="#000000">6d6f
+652e 6261 796c 6f72 2e65 6475&nbsp;&nbsp;&nbsp; moe.baylor.edu ( name of
+the caller machine )</font></i>
+<br><i><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font><font color="#CC0000">0000
+0000&nbsp; uid ( the caller's effective user ID )</font></i>
+<br><i><font color="#CC0000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font>0000
+0000&nbsp; gid ( the caller's effective group ID )</i>
+<br><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#CC0000">0000
+0007 gids ( a counted array of groups which contain the caller as a member
+)</font></i>
+<br><i><font color="#CC0000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font>0000
+0000&nbsp; AUTH_NULL ( the verifier accompanying the credential )</i>
+<p><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </i>NFS procedure call parameters:
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <u><font color="#CC0000">caba ebfe c11f
+0000 0200 0000 0208 0000 0208 0000</font></u>
+<br><font color="#CC0000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <u>c11f
+0000 8b68 2036 0000 0000 0000 0006</u>&nbsp;&nbsp;&nbsp; file handle for
+the directory in which to manipulate or access the file</font>
+<br><font color="#CC0000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font><font color="#000000"><u>7365
+6372 6574</u>&nbsp;&nbsp;&nbsp;&nbsp;</font> "<font color="#000000">secret"
+( name of the file to be looked up )</font>
+<p><b>packet 2:</b>
+<br>21:32:54.899211 larry.baylor.edu.nfs > moe.baylor.edu.1791010337: reply
+ok 128 lookup fh Unknown/1 REG 100644 ids 0/0 sz 40&nbsp; (ttl 64, id 1964)
+<br>&nbsp;&nbsp;&nbsp; <u>4500 009c 07ac 0000 4011 486d 813e 93de</u>
+<br>&nbsp;&nbsp;&nbsp; <u>813e 93dd</u> <b><u>0801 0320 0088 3a66</u></b>
+6ac0 a621
+<br>&nbsp;&nbsp;&nbsp;<font color="#3333FF"> </font><font color="#CC0000">0000
+0001</font><font color="#000000"> 0000 0000 </font><font color="#CC0000">0000
+0000</font><font color="#000000"> 0000 0000</font>
+<br><font color="#000000">&nbsp;&nbsp;&nbsp; 0000 0000 0000 0000</font><font color="#CC0000">
+caba ebfe e720 0000</font>
+<br><font color="#CC0000">&nbsp;&nbsp;&nbsp; c11f 0000 0208 0000 0208 0000
+c11f 0000</font>
+<br><font color="#CC0000">&nbsp;&nbsp;&nbsp; 131e 0c23 0000 0000</font><i><font color="#000000">0000
+0001</font> <font color="#CC0000">0000 81a4</font></i>
+<br><i>&nbsp;&nbsp;&nbsp;<font color="#3366FF"> </font><font color="#000000">0000
+0001</font> <font color="#CC0000">0000 0000</font><font color="#000000">0000
+0000</font><font color="#FF0000"> </font><font color="#CC0000">0000 0028</font></i>
+<br><i>&nbsp;&nbsp;&nbsp; 0000 1000 <font color="#CC0000">0000 0000</font>
+0000 0002 <font color="#CC0000">0000 0802</font></i>
+<br><i><font color="#3333FF">&nbsp;&nbsp;&nbsp; </font><font color="#000000">0000
+20e7</font> <font color="#CC0000">3802 9d5a 0000 0000</font> <font color="#000000">3802
+9d5a</font></i>
+<br><i><font color="#000000">&nbsp;&nbsp;&nbsp; 0000 0000</font> <font color="#CC0000">3802
+9d5a 0000 0000</font></i>
+<p>&nbsp;&nbsp;&nbsp; 6ac0 a621&nbsp;&nbsp;&nbsp; transaction ID
+<br>&nbsp;&nbsp;&nbsp; <font color="#CC0000">0000 0001&nbsp;&nbsp; msg_type
+= REPLY</font>
+<br>&nbsp;&nbsp;&nbsp; <font color="#000000">0000 0000&nbsp;&nbsp;&nbsp;
+reply_stat = MSG_ACCEPTED ( hex 0 )</font>
+<br><font color="#000000">&nbsp;&nbsp;&nbsp; </font><font color="#CC0000">0000
+0000&nbsp;&nbsp;&nbsp; verifier, auth_flavor = AUTH_NULL ( hex 0 )</font>
+<br><font color="#CC0000">&nbsp;&nbsp;&nbsp; </font><font color="#000000">0000
+0000&nbsp;&nbsp;&nbsp; accept_stat = SUCCESS ( hex 0 )</font>
+<br><font color="#000000">&nbsp;&nbsp;&nbsp; </font><font color="#CC0000">caba
+ebfe e720 0000 c11f 0000 0208 0000 0208 0000 c11f 0000 131e 0c23 0000 0000&nbsp;&nbsp;
+returned&nbsp; file ( "secret" ) handle</font>
+<p>&nbsp;&nbsp;&nbsp; <i><font color="#000000">0000 0001&nbsp;&nbsp;&nbsp;
+file type: REG (regular) = hex 1</font></i>
+<br>&nbsp;&nbsp;&nbsp; <i><font color="#CC0000">0000 81a4&nbsp;&nbsp;&nbsp;
+file mode (type and access permission)</font></i>
+<br>&nbsp;&nbsp;&nbsp; <i><font color="#000000">0000 0001&nbsp;&nbsp;&nbsp;
+link count</font></i>
+<br>&nbsp;&nbsp;&nbsp; <i><font color="#CC0000">0000 0000&nbsp;&nbsp;&nbsp;
+user id</font></i>
+<br>&nbsp;&nbsp;&nbsp; <i><font color="#000000">0000 0000&nbsp;&nbsp;&nbsp;
+group id</font></i>
+<br><i><font color="#000000">&nbsp;&nbsp;&nbsp; </font><font color="#CC0000">0000
+0028</font><font color="#000000">&nbsp;&nbsp;&nbsp; </font><font color="#CC0000">file
+size ( 40 bytes in decimal )</font></i>
+<br><i><font color="#CC0000">&nbsp;&nbsp;&nbsp; </font>0000 1000 
+<font color="#000000">actually
+used disk space (4096 bytes, 2 blokes)</font></i>
+<br><i><font color="#CC0000">&nbsp;&nbsp;&nbsp; 0000 0000&nbsp;&nbsp;&nbsp;
+device major number (only meaningful if file is a device)</font></i>
+<br><i><font color="#CC0000">&nbsp;&nbsp;&nbsp; </font>0000 0002 
+<font color="#000000">device
+minor number ( only meaningful if file is a device )</font></i>
+<br><i>&nbsp;&nbsp;&nbsp; <font color="#CC0000">0000 0802&nbsp;&nbsp;&nbsp;
+file system major number ( 8 ) and minor number ( 2 )</font></i>
+<br><i>&nbsp;&nbsp;&nbsp; <font color="#000000">0000 20e7&nbsp;&nbsp;&nbsp;
+Inode number</font></i>
+<br><i><font color="#000000">&nbsp;&nbsp;&nbsp;</font><font color="#CC0000">
+3802 9d5a 0000 0000&nbsp;&nbsp;&nbsp; Atime, the time when the file data
+was last accessed</font></i>
+<br><i><font color="#CC0000">&nbsp;&nbsp;&nbsp; </font><font color="#000000">3802
+9d5a 0000 0000&nbsp;&nbsp;&nbsp; Mtime, the time when the attributes of
+the file were last changed</font></i>
+<br><i><font color="#000000">&nbsp;&nbsp;&nbsp; </font><font color="#CC0000">3802
+9d5a 0000 0000&nbsp;&nbsp;&nbsp; Ctime, the time when the attributes of
+the file were last changed</font></i>
+<p><b>packet 3:</b>
+<br>21:32:54.900034 moe.baylor.edu.1807787553 > larry.baylor.edu.nfs: 136
+getattr fh Unknown/1 (ttl 64, id 268)
+<br>&nbsp;&nbsp;&nbsp; <u>4500 00a4 010c 0000 4011 4f05 813e 93dd</u>
+<br>&nbsp;&nbsp;&nbsp; <u>813e 93de</u> <b><u>0320 0801 0090 bdf8</u></b><i><font color="#3333FF">6bc0
+a621</font></i>
+<br><i><font color="#3333FF">&nbsp;&nbsp;&nbsp; 0000 0000 0000 0002 0001
+86a3 0000 0002</font></i>
+<br><i><font color="#3333FF">&nbsp;&nbsp;&nbsp; 0000 0001 0000 0001 0000
+0040 0000 7239</font></i>
+<br><i><font color="#3333FF">&nbsp;&nbsp;&nbsp; 0000 000e 6d6f 652e 6261
+796c 6f72 2e65</font></i>
+<br><i><font color="#3333FF">&nbsp;&nbsp;&nbsp; 6475 0c23 0000 0000 0000
+0000 0000 0007</font></i>
+<br><i><font color="#3333FF">&nbsp;&nbsp;&nbsp; 0000 0000</font></i>0000
+0001 0000 0002 0000 0003
+<br>&nbsp;&nbsp;&nbsp; 0000 0004 0000 0006 0000 000a <font color="#000000">0000
+0000</font>
+<br><font color="#000000">&nbsp;&nbsp;&nbsp; 0000 0000</font><font color="#CC0000">
+caba ebfe e720 0000 c11f 0000</font>
+<br><font color="#CC0000">&nbsp;&nbsp;&nbsp; 0208 0000 0208 0000 c11f 0000
+131e 0c23</font>
+<br><font color="#CC0000">&nbsp;&nbsp;&nbsp; 0000 0000</font>
+<p><b>packet 4:</b>
+<br>21:32:54.900238 larry.baylor.edu.nfs > moe.baylor.edu.1807787553: reply
+ok 96 getattr REG 100644 ids 0/0 sz 40&nbsp; (ttl 64, id 1965)
+<br>&nbsp;&nbsp;&nbsp; <u>4500 007c 07ad 0000 4011 488c 813e 93de</u>
+<br>&nbsp;&nbsp;&nbsp; <u>813e 93dd</u> <b><u>0801 0320 0068 7d11</u></b><font color="#3333FF">6bc0
+a621</font>
+<br><font color="#3333FF">&nbsp;&nbsp;&nbsp; 0000 0001 0000 0000 0000 0000
+0000 0000</font>
+<br>&nbsp;&nbsp;&nbsp; <font color="#3333FF">0000 0000 0000 0000</font><font color="#CC0000">0000
+0001 0000 81a4</font>
+<br><font color="#CC0000">&nbsp;&nbsp;&nbsp; 0000 0001 0000 0000 0000 0000
+0000 0028</font>
+<br><font color="#CC0000">&nbsp;&nbsp;&nbsp; 0000 1000 0000 0000 0000 0002
+0000 0802</font>
+<br><font color="#CC0000">&nbsp;&nbsp;&nbsp; 0000 20e7 3802 9d5a 0000 0000
+3802 9d5a</font>
+<br><font color="#CC0000">&nbsp;&nbsp;&nbsp; 0000 0000 3802 9d5a 0000 0000</font>
+<p><b>packet 5:</b>
+<br>21:32:54.901147 moe.baylor.edu.1824564769 > larry.baylor.edu.nfs: 148
+read fh Unknown/1 4096 bytes @ 0 (ttl 64, id 269)
+<br>&nbsp;&nbsp;&nbsp; <u>4500 00b0 010d 0000 4011 4ef8 813e 93dd</u>
+<br>&nbsp;&nbsp;&nbsp; <u>813e 93de <b>0320 0801 009c 98fe</b></u> <font color="#3333FF">6cc0
+a621</font>
+<br><font color="#3333FF">&nbsp;&nbsp;&nbsp; 0000 0000 0000 0002 0001 86a3
+0000 0002</font>
+<br><font color="#3333FF">&nbsp;&nbsp;&nbsp; 0000 0006 0000 0001 0000 0040
+0000 7239</font>
+<br><font color="#3333FF">&nbsp;&nbsp;&nbsp; 0000 000e 6d6f 652e 6261 796c
+6f72 2e65</font>
+<br><font color="#3333FF">&nbsp;&nbsp;&nbsp; 6475 1000 0000 0000 0000 0000
+0000 0007</font>
+<br><font color="#3333FF">&nbsp;&nbsp;&nbsp; 0000 0000</font> 0000 0001
+0000 0002 0000 0003
+<br>&nbsp;&nbsp;&nbsp; 0000 0004 0000 0006 0000 000a 0000 0000
+<br>&nbsp;&nbsp;&nbsp; 0000 0000 <font color="#CC0000">caba ebfe e720 0000
+c11f 0000</font>
+<br><font color="#CC0000">&nbsp;&nbsp;&nbsp; 0208 0000 0208 0000 c11f 0000
+131e 0c23</font>
+<br>&nbsp;&nbsp;&nbsp; <font color="#CC0000">0000 0000</font> <i>0000 0000
+0000 1000</i> 0000 1000
+<p>&nbsp;&nbsp;&nbsp; <i>0000 0000 0000 1000&nbsp;&nbsp;&nbsp; offset-the
+position within the file at which the read is to begin</i>
+<br><i>&nbsp;&nbsp;&nbsp; </i>0000 1000&nbsp;&nbsp;&nbsp; the number of
+bytes of data that are to be read
+<p><b>packet 6:</b>
+<br>21:32:54.901513 larry.baylor.edu.nfs > moe.baylor.edu.1824564769: reply
+ok 140 read REG 100644 ids 0/0 sz 40&nbsp; (ttl 64, id 1966)
+<br>&nbsp;&nbsp;&nbsp; <u>4500 00a8 07ae 0000 4011 485f 813e 93de</u>
+<br>&nbsp;&nbsp;&nbsp; <u>813e 93dd <b>0801 0320 0094 945a</b></u> <font color="#3333FF">6cc0
+a621</font>
+<br><font color="#3333FF">&nbsp;&nbsp;&nbsp; 0000 0001 0000 0000 0000 0000
+0000 0000</font>
+<br><font color="#3333FF">&nbsp;&nbsp;&nbsp; 0000 0000 0000 0000</font><font color="#CC0000">0000
+0001 0000 81a4</font>
+<br><font color="#CC0000">&nbsp;&nbsp;&nbsp; 0000 0001 0000 0000 0000 0000
+0000 0028</font>
+<br><font color="#CC0000">&nbsp;&nbsp;&nbsp; 0000 1000 0000 0000 0000 0002
+0000 0802</font>
+<br><font color="#CC0000">&nbsp;&nbsp;&nbsp; 0000 20e7 3802 9dd6 0000 0000
+3802 9d5a</font>
+<br><font color="#CC0000">&nbsp;&nbsp;&nbsp; 0000 0000 3802 9d5a 0000 0000</font><i>0000
+0028</i>
+<br>&nbsp;&nbsp;&nbsp; <u>3031 3233 3435 2054 6869 7320 6973 2061</u>
+<br>&nbsp;&nbsp;&nbsp; <u>2073 6563 7265 7420 6d65 7373 6167 652e</u>
+<br>&nbsp;&nbsp;&nbsp; <u>2035 3433 3231 30</u>0a
+<p>&nbsp;&nbsp;&nbsp; <i>0000 0028&nbsp;&nbsp;&nbsp; count-the number of
+bytes of data returned by the read`</i>
+<br><i>&nbsp;&nbsp;&nbsp; </i><u>3031 3233 3435 2054 6869 7320 6973 2061</u>
+<br>&nbsp;&nbsp;&nbsp; <u>2073 6563 7265 7420 6d65 7373 6167 652e</u>
+<br>&nbsp;&nbsp;&nbsp; <u>2035 3433 3231 30</u>&nbsp;&nbsp;&nbsp; file
+contents: 012345 This is a secret message. 543210
+<br>&nbsp;&nbsp;&nbsp; 0a&nbsp;&nbsp;&nbsp; Line Feed
+</body>
+</html>

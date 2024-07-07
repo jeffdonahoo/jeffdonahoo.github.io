@@ -1,0 +1,434 @@
+\chapter{Using UDP Sockets}
+\label{chap:udp}%
+
+The User Datagram Protocol (UDP) provides a simpler end-to-end
+service than that of TCP.  In fact, UDP performs only two functions:
+(1)~It adds another
+layer of addressing (ports) to that of IP; and (2)~It detects data
+corruption that may occur in transit and discards any corrupted
+datagrams.
+Because of this simplicity, UDP (datagram) sockets have some different
+characteristics from the TCP (stream) sockets we saw earlier.
+
+For example, UDP sockets do not have to be connected before being
+used.  Where TCP is analogous to telephone communication, UDP is
+analogous to communicating by mail: You do not have to ``connect''
+before you send a package or letter, but you do have to specify the
+destination address for each one.  In receiving, a UDP
+socket is like a mailbox into which letters or packages from many
+different sources can be placed.
+
+Another difference between UDP sockets and TCP sockets is the way
+they deal with message boundaries: UDP sockets preserve them.  This
+makes receiving an application message simpler, in some ways, than with
+TCP sockets.  We will discuss this further in
+Section~\ref{sect:udpsendrcv}.
+A final difference is that the end-to-end transport service UDP
+provides is best effort: There is no guarantee that a message sent
+via a UDP socket will arrive at its destination.  This means that a
+program using UDP sockets must be prepared to deal with loss and
+reordering of messages; we'll see an example of that later.
+
+Again we introduce the UDP portion of the Sockets API through simple
+client and server programs.  As before, they implement a trivial
+echo protocol.  Afterward, we describe the API functionality in more
+detail in Sections~\ref{sect:udpsendrcv} and~\ref{sect:udpconnect}.
+
+\section{UDP Client}
+
+\noindent Our UDP echo client, \file{UDPEchoClient.c}, looks similar to
+our address-family-independent
+\file{TCPEchoClient.c} in the way it sets up the server address
+and communicates with the servier.  However,
+it does not call \fcnrefsys{connect()}, it uses \fcnrefsys{sendto()}
+and
+\fcnrefsys{recvfrom()} instead of \fcnrefsys{send()} and
+\fcnrefsys{recv()}, and it only needs
+to do a single receive because UDP sockets preserve message
+boundaries, unlike TCP's byte-stream service.
+%
+Of course, a UDP client only communicates with a UDP server.  Many
+systems include a UDP echo server for debugging and testing
+purposes; the server simply echoes whatever messages it receives back to
+wherever they came from.
+After setting up, our echo client performs the following steps: (1)~it
+sends the echo string to the server, (2)~it receives the echo, and
+(3)~it shuts down the program.
+
+\jcode{UDPEchoClient.c}{code/UDPEchoClient.c}{1}{1}
+
+\begin{topcode}
+
+\tlcitems{Program setup and parameter parsing}{1--27}
+
+The server address/name and string to echo are passed in as the first two
+parameters.  We restrict the size of our echo message; therefore, we must
+verify that the given string satisfies this restriction.  
+Optionally, the client takes the server port or service name as the third
+parameter. If no port is provided, the client uses the well-known echo protocol
+service name, ``echo''.
+
+\tlcitems{Get foreign address for server}{29--40}
+
+For the server, we may be given an IPv4 address, IPv6 address,
+or name to resolve.  For the optional port, we may be given a port number or
+service name.  We use \fcnrefsys{getaddrinfo()} to determine the
+corresponding address information (i.e., family, address, and port number). 
+Note that we'll accept an address for any family (\constsys{af\_unspec}) for
+UDP (\constsys{sock\_dgram} and \constsys{ipproto\_udp}); specifying
+the latter two effectively restricts the returned address families
+to IPv4 and IPv6. 
+Note that \fcnrefsys{getaddrinfo()} may return multiple addresses;
+by simply using the first, we may fail to communicate with the server
+when communication is possible using an address later in the list.
+\textbf{A production client should be prepared to try all returned addresses.}
+
+\tlcitems{Socket creation and setup}{42--46}
+
+This is almost identical to the TCP echo client, except that we
+create a datagram socket using UDP.  Note that we do not need to
+\fcnrefsys{connect()} before communicating with the server.
+
+\tlcitems{Send a single echo datagram}{48--55}
+
+With UDP we simply tell \fcnrefsys{sendto()} the datagram
+destination.  If we wanted to,
+we could call \fcnrefsys{sendto()} multiple times,
+changing the destination on every call, thus communicating with
+multiple servers through the same socket.
+The first call to \fcnrefsys{sendto()} also assigns an
+arbitrarily chosen local port number, not in use by any other socket, to the
+socket identified by \var{sock}, because we have not bound the socket
+to a port number.  We do not know (or care) what the chosen port number
+is, but the server will use it to send the echoed message back to us.
+
+\tlcitems{Get and print echo reply}{57--76}
+
+\begin{bottomcode}
+
+\blcitems{Receive a message}{58--68}
+
+We initialize \var{fromAddrLen} to contain the
+size of the address buffer (\var{fromAddr}) and then
+pass its address  as the  last parameter.
+\fcnrefsys{recvfrom()} blocks until a UDP datagram addressed to
+this socket's port arrives.  It
+then copies the data from the first arriving datagram
+into \var{buffer} and copies the
+Internet address and (UDP) port number of its source from the
+packet's headers into the structure \var{fromAddr}.
+Note that the data buffer is actually one byte bigger than
+\const{maxstringlength}, to allow us to add a null byte to terminate the
+string.
+
+\blcitems{Check message source}{70--75}
+
+Because there is no connection, a received message can come from
+any source.  The output parameter \var{fromAddr} informs us of
+the datagram's source, and we check it to make sure it matches the
+server's Internet address.  We use our own function,
+\fcnref{SockAddrsEqual()}, to
+perform protocol-independent comparison of socket addresses.  Although it is
+very unlikely that a packet would ever arrive from any other source, we include
+this check to emphasize that it is possible.
+There's one other complication.
+For applications with multiple or repeated requests, we must keep 
+in mind that UDP messages may be reordered and arbitrarily delayed so
+simply checking 
+the source address and port
+may not be sufficient.  (For example, the DNS protocol over UDP
+uses an identifier field to link requests and responses and detect
+duplication.)  This is our last use of the address returned
+from \fcnrefsys{getaddrinfo()} so we can free the associated storage.
+
+\blcitems{Print received string}{77--78}
+
+Before printing the received data as a string, we
+first ensure that it is null-terminated.
+
+\end{bottomcode}
+
+\tlcitems{Wrap up}{80--81}
+
+\end{topcode}
+
+This example client is fine as an introduction to the UDP socket
+calls; it will work correctly most of the time.  However,
+\callout{it would not
+be suitable for production use, because if a message is lost going
+to or from the server, the call to \fcnrefsys{recvfrom()} blocks
+forever, and the program does not terminate.}
+Clients generally deal with this problem through the use of
+\emph{timeouts}, a subject we cover later in Section~\ref{sect:timeouts}.
+
+\section{UDP Server}
+
+\noindent Our next example program implements the UDP version of the echo
+server, \file{UDPEchoServer.c}.  The server is very simple: It loops forever,
+receiving a message and then sending the same message back to wherever it came
+from.  Actually, the server only receives and
+sends back the first 255 characters of the message; any excess is
+silently discarded by the sockets implementation.  (See
+Section~\ref{sect:udpsendrcv} for an explanation.)
+
+\jcode{UDPEchoServer.c}{code/UDPEchoServer.c}{1}{1}
+
+\begin{topcode}
+
+\tlcitems{Program setup and parameter parsing}{1--15}
+
+\tlcitems{Parse/resolve address/port args}{17--29}
+
+The port may be specified on the command line as a port number or service name.
+We use \fcnrefsys{getaddrinfo()} to determine the actual local port
+number.  As with our UDP client, we'll accept an address for any family
+(\constsys{af\_unspec}) for UDP (\constsys{sock\_dgram} and
+\constsys{ipproto\_udp}).  We want our UDP server to
+accept echo requests from any of its interfaces.  By
+specifying the \constsys{ai\_passive} flag, \fcnrefsys{getaddrinfo()} returns
+the wildcard Internet address (e.g., \constsys{inaddr\_any} for IPv4 or
+\constsys{in6addr\_any} for IPv6).  \fcnrefsys{getaddrinfo()} may return
+multiple addresses; we simply use the first.
+
+\tlcitems{Socket creation and setup}{30--35}
+
+This is nearly identical to the TCP echo server, except that we
+create a datagram socket using UDP.  Also, we do not need to
+call
+\fcnrefsys{listen()} because there is no connection setup---the
+socket is ready to receive messages as soon as it has an address.
+
+\tlcitems{Iteratively handle incoming echo requests}{43--59}
+
+Several key differences between UDP and TCP servers are demonstrated
+in how each communicates with the client.  In the TCP server, we
+blocked on a call to \fcnrefsys{accept()} awaiting a connection
+from a client.  Since UDP servers do not establish a
+connection, we do not need to get a new socket for each client.
+Instead, we can immediately call \fcnrefsys{recvfrom()}
+with the same socket that was bound to
+the desired port number.
+
+\begin{bottomcode}
+
+\blcitems{Receive an echo request}{46--51}
+
+\fcnrefsys{recvfrom()} blocks until a datagram is received from a
+client.  Since there is no connection, each datagram may come from
+a different sender, and we learn the source at the same time
+we receive the datagram. \fcnrefsys{recvfrom()} puts
+the address of the source in \var{echoClntAddr}.  The length
+of this address buffer is specified by \var{cliAddrLen}.
+
+\blcitems{Send echo reply}{56--58}
+
+\fcnrefsys{sendto()} transmits the data in \var{echoBuffer} back
+to the address specified by \var{clntAddr}.  Each received
+datagram is considered a single client echo request,
+so we only need a single send and receive---unlike the TCP echo server,
+where we needed to receive until the client closed the connection.
+
+\end{bottomcode}
+
+\end{topcode}
+
+\section{Sending and Receiving with UDP Sockets}
+\label{sect:udpsendrcv}%
+
+As soon as it is created, a UDP socket can be used to send/receive
+messages to/from any address and to/from many \emph{different}
+addresses in succession.  To allow the
+destination address to be specified for each message,
+the sockets API provides a different sending routine
+that is generally used with UDP sockets: \fcnrefsys{sendto()}.
+Similarly, the \fcnrefsys{recvfrom()} routine returns the
+source address of each received message in addition to the message
+itself.
+\begin{inlinefcn}
+\type{ssize\_t} \fcnrefsys{sendto}(\type{int} \param{socket},
+\type{const void *}\param{msg}, \type{size\_t} \param{msgLength}, 
+\type{int} \param{flags},\\
+\hspace*{2in} \type{const struct sockaddr *}\param{destAddr}, 
+\type{socklen\_t} \param{addrLen}) \\
+\type{ssize\_t} \fcnrefsys{recvfrom}(\type{int} \param{socket},
+\type{void *}\param{msg}, \type{size\_t} \param{msgLength}, 
+\type{int} \param{flags},\\
+\hspace*{2in} \type{struct sockaddr *}\param{srcAddr}, 
+\type{socklen\_t *}\param{addrLen})
+\end{inlinefcn}
+
+The first four parameters to \fcnrefsys{sendto()} are the same
+as those
+for \fcnrefsys{send()}.  The two additional parameters specify the
+message's destination.  Again, they will
+invariably be a pointer to a \typesys{struct sockaddr\_in} and
+its size, respectively, or a pointer to
+a \typesys{struct sockaddr\_in6} and its size, respectively.
+%
+Similarly, \fcnrefsys{recvfrom()} takes the same  parameters  as
+\fcnrefsys{recv()} but, in addition, has two parameters that inform
+the caller of the source of the received datagram.
+One thing to note is that \param{addrLen} is an
+\emph{in-out} parameter in \fcnrefsys{recvfrom()}:
+On input it specifies the size of the
+address buffer \param{srcAddr}, which will typically be a
+\typesys{struct sockaddr\_storage} in IP-version-independent code.
+On output, it specifies the size of the
+address that was actually copied into the buffer.
+`\callout{Two errors often made by
+novices are (1)~passing an integer value instead of a pointer to an
+integer for \param{addrLen}
+and (2)~forgetting to initialize the pointed-to length variable
+to contain the appropriate size.}
+
+We have already pointed out a
+subtle but important difference between TCP and UDP, namely that
+\emph{UDP preserves message boundaries}.
+In particular, each call to \fcnrefsys{recvfrom()}
+returns data from at most one \fcnrefsys{sendto()} call.
+Moreover, different calls
+to \fcnrefsys{recvfrom()} will never return data from the same
+call to \fcnrefsys{sendto()}
+(unless you use the msg\_peek
+flag with \fcnrefsys{recvfrom()}---see next page).
+
+When a call to \fcnrefsys{send()} on a TCP socket returns, all the caller
+knows is that the data has been copied into a buffer for transmission; the
+data may or may not have actually been transmitted yet. (This is explained
+in more detail in Chapter~\ref{chap:under}.)
+However, UDP does not buffer data for possible retransmission because
+it does not recover from errors.
+This means that by the time a call to \fcnrefsys{sendto()} on a
+UDP socket returns, the message has been passed to the underlying
+channel for transmission and is (or soon will be) on its way out the
+door.
+
+Between the time a message arrives from the network and the time its
+data is returned via \fcnrefsys{recv()} or
+\fcnrefsys{recvfrom()}, the
+data is stored in a first-in, first-out (FIFO) receive buffer.  With a 
+connected TCP socket, all
+received-but-not-yet-delivered bytes are treated as one continuous sequence
+(see Section~\ref{sect:sendrec}).  For a UDP socket,
+however, the bytes from different messages may have come from
+different senders.  Therefore, the boundaries between them need to be
+preserved so that the data from each message can be returned with the
+proper address.  The buffer really contains a FIFO sequence of ``chunks''
+of data, each with an associated source address.  A call to
+\fcnrefsys{recvfrom()} will never return more than one of these
+chunks.  However, if \fcnrefsys{recvfrom()} is called with size parameter
+$n$, and the size of the first chunk in the receive FIFO is bigger than
+$n$, only the first $n$ bytes of the chunk are returned.  \callout{The
+remaining bytes are quietly discarded, with no indication to the
+receiving program}.
+
+For this reason, a receiver should always supply a buffer big enough
+to hold the largest message allowed by its application protocol at the
+time it calls
+\fcnrefsys{recvfrom()}. This technique will guarantee that no data will be
+lost.  The maximum amount of data that can ever be returned by
+\fcnrefsys{recvfrom()} on a UDP socket is 65,507 bytes---the
+largest payload that can be carried in a UDP datagram.
+% XXXXXX THIS CHANGEs WITH IPv6!?
+% IP header is bigger, so ...
+
+Alternatively, the receiver can use the \const{msg\_peek}
+flag with \fcnrefsys{recvfrom()} to
+``peek'' at the first chunk waiting to be received.
+This flag causes the received data to remain in the
+socket's receive FIFO so it can be received more than once.
+This strategy can be
+useful if memory is scarce, application messages vary widely in
+size, and each message carries information about its size in the first
+few bytes.  The receiver first calls \fcnrefsys{recvfrom()} with
+\const{msg\_peek} and a small buffer, examines the first
+few bytes of the message to determine its size, and then calls
+\fcnrefsys{recvfrom()} again (without \const{msg\_peek})
+with a buffer big enough to hold the entire message.  In the
+usual case where memory is not scarce, using a buffer big enough for
+the largest possible message is simpler.
+
+
+\section{Connecting a UDP Socket}
+\label{sect:udpconnect}
+It is possible to
+call \fcnrefsys{connect()} on a UDP socket to fix the
+destination address of future datagrams sent over the socket.
+Once connected, you may use
+\fcnrefsys{send()} instead of \fcnrefsys{sendto()} to transmit datagrams
+because you no longer need to specify the destination address.
+%
+In a similar way you may use \fcnrefsys{recv()} instead of
+\fcnrefsys{recvfrom()}, because a connected UDP socket can \emph{only\/}
+receive datagrams from the associated foreign address and port, so
+after calling \fcnsys{connect()} you
+know the source address of any incoming datagrams.
+In fact, after
+connecting, you may \emph{only} send and receive to/from the address
+specified to \fcnrefsys{connect()}.  Note that connecting and then using \fcnrefsys{send()} and
+\fcnrefsys{recv()} with UDP does not change how UDP behaves.  Message 
+boundaries are still preserved, datagrams can be lost, etc.  You can ``disconnect'' by calling
+\fcnrefsys{connect()} with an address family of \constsys{AF\_UNSPEC}.
+
+Another subtle advantage to calling \fcnrefsys{connect()} on a UDP
+socket is that it 
+enables you to receive error indications that result from earlier actions
+on the socket.  The canonical example is sending a datagram to a
+non-existent server or port.  When this happens, the \fcn{send()} that
+eventually leads to the error returns with no indication of error.
+Some time later, an error message is delivered to your host,
+indicating that the sent datagram encountered a problem.
+Because this datagram is a \emph{control\/} message and not a regular
+UDP datagram, the system can't always tell where to send it if your
+socket is unconnected, because an unconnected socket has no
+associated foreign address and port.
+However, if your socket is connected, the system is able to match the
+information in the error datagram with your socket's associated foreign IP
+address and port. (See Section~\ref{sect:demux} in for details about this process.)
+Note such a control error message being delivered
+to your socket will result in
+an error return from a \emph{subsequent\/}
+system call (for example the
+\fcnsys{recv()} that was intended to get the reply)
+not the offending \fcnrefsys{send()}.
+
+\begin{exercises}
+
+\item Modify \file{UDPEchoClient.c} to use \fcnrefsys{connect()}.
+After the final \fcnrefsys{recv()}, show how to disconnect 
+the UDP socket.  Using 
+\fcnrefsys{getsockname()} and \fcnrefsys{getpeername()}, print the local and 
+foreign address before and after \fcnrefsys{connect()}, and after disconnect.
+
+\item Modify \file{UDPEchoServer.c} to use \fcnrefsys{connect()}.
+
+\item Verify experimentally the size of the largest datagram you can send
+and receive using a UDP socket.  Is the answer different for IPv4 and IPv6?
+
+\item While \file{UDPEchoServer.c} explicitly specifies its local port
+number using \fcnrefsys{bind()}, we do not call \fcnrefsys{bind()} in
+\file{UDPEchoClient.c}. How is the UDP echo client's socket given a port
+number? Note that the answer is different for UDP and TCP.  We can select the
+client's local port using \fcnrefsys{bind()}.  What difficulties might we
+encounter if we do this?
+
+\item Modify \file{UDPEchoClient.c} and \file{UDPEchoServer.c} to
+allow the largest echo string possible where an echo request is
+restricted to a single datagram.
+
+\item Modify \file{UDPEchoClient.c} and \file{UDPEchoServer.c} to
+allow arbitrarily large echo strings. You may ignore datagram loss and
+reordering (for now).
+
+\item Using \fcnrefsys{getsockname()} and \fcnrefsys{getpeername()},
+modify \file{UDPEchoClient.c} to print the local and foreign address
+for the server socket immediately before and after
+\fcnrefsys{sendto()}.
+
+\item You can use the same UDP socket to send datagrams to many different
+destinations.  Modify \file{UDPEchoClient.c} to send and receive an echo
+datagram to/from two different UDP echo servers.  You can use the book's server
+running on multiple hosts or twice on the same host with different ports.
+
+\end{exercises}
+

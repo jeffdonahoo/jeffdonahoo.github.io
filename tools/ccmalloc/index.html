@@ -1,0 +1,49 @@
+<html>
+<head>
+   <title>CCMALLOC</title>
+</head>
+<body>
+
+<center><b><font size=+3>CCMALLOC</font></b></center>
+
+ccmalloc is a memory profiler that detects memory leaks, detects
+multiple deallocation of same data, detects under writes and over
+writes, detects writes to already deallocated data, and provides
+allocation and deallocation statistics.
+
+If a program is compiled using the ccmalloc library, it generates a
+log file after execute that details all memory leaks including the
+call stack for the offending (leaking) allocation.
+</UL>
+
+<br><b><font size=+3></font></b>&nbsp;<b><font size=+3></font></b>
+
+<UL>
+<LI> To use this on a C program called test1.c, try
+<PRE>
+ccmalloc gcc test1.c
+</PRE>
+For more details, see <A HREF="USAGE">USAGE</A>
+<LI> If you want to change the default behavior, copy <A
+HREF="ccmalloc.cfg">ccmalloc.cfg</A> to your local or home directory
+with the name .ccmalloc
+<LI> Examples
+<UL>
+<LI> Example 1 (<A HREF="test1.c">Source - test1.c</A>)(<A HREF="test1.log">Log - test1.log</A>)
+<LI> Example 2 (<A HREF="test2.c">Source - test2.c</A>)(<A HREF="test2.log">Log - test2.log</A>)
+</UL>
+<LI> <A
+HREF="http://www.inf.ethz.ch/personal/biere/projects/ccmalloc/">Official
+ccmalloc site</A>
+<LI> <A HREF="http://iseran.ira.uka.de/~armin/ccmalloc/">Older (but
+still very useful) ccmalloc site</A> 
+<LI> <b>Note:</b>  Locally, we only have ccmalloc installed on the
+Linux machines
+<LI> An alternative to ccmalloc is <A
+HREF="http://developer.kde.org/~sewardj">Valgrind</A>.  To use this,
+simple run valgrind on an existing executable (e.g., valgrind ls).
+You do not need to compile with a special library as you do with ccmalloc.
+</UL>
+
+</body>
+</html>

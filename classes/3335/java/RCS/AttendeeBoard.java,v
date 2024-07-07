@@ -1,0 +1,161 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2014.11.05.15.29.27;	author donahoo;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2013.09.09.17.58.08;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@<>
+@
+text
+@import java.io.PrintStream;
+import java.util.List;
+import java.util.Scanner;
+
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+
+public class AttendeeBoard extends JFrame {
+
+  public AttendeeBoard(final AttendeeList model) {
+    super("Attendee Board");
+    setSize(500, 500);
+    setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+    // Create and add split pane
+    JSplitPane pane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+    pane.setDividerLocation(150);
+    getContentPane().add(pane);
+
+    // Create and add top pane
+    final JTable list = new JTable(model);
+    // Make sortable
+    list.setRowSorter(new TableRowSorter<TableModel>(model));
+    pane.setTopComponent(new JScrollPane(list));
+
+    // Create and add bottom pane
+    final JTextArea bioText = new JTextArea();
+    bioText.setEditable(false);
+    pane.setBottomComponent(new JScrollPane(bioText));
+
+    ListSelectionModel sm = list.getSelectionModel();
+    sm.addListSelectionListener(
+      new ListSelectionListener() {
+        public void valueChanged(ListSelectionEvent e) {
+          if (e.getValueIsAdjusting()) return;
+
+          ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+          if (!lsm.isSelectionEmpty()) {
+            bioText.setText(model.getBiography(list.convertRowIndexToModel(lsm.getMinSelectionIndex())));
+          }
+        }
+      }
+    );
+  }
+
+  public static void main(String[] args) {
+    AttendeeList list = new AttendeeList();
+    AttendeeBoard msgr = new AttendeeBoard(list);
+    msgr.setVisible(true);
+    Scanner in = new Scanner(System.in);
+    for (;;) {
+      list.addAttendee(new Attendee(in, System.out));
+    }
+  }
+}
+
+class AttendeeList extends AbstractTableModel {
+  private final String[] columnNames = {"Name", "IM ID"};
+  private List<Attendee> attendees = new ArrayList<>();
+
+  public int getColumnCount() {
+    return columnNames.length;
+  }
+
+  public int getRowCount() {
+    return attendees.size();
+  }
+
+  public String getColumnName(int col) {
+    return columnNames[col];
+  }
+
+  public Object getValueAt(int row, int col) {
+    switch (col) {
+      case 0:  // Name
+        return attendees.get(row).name;
+      case 1:  // IM ID
+        return attendees.get(row).IMID;
+      default:
+        return "Bad entry";
+    }
+  }
+
+  public void addAttendee(Attendee a) {
+    attendees.add(a);
+    fireTableDataChanged();
+  }
+
+  public String getBiography(int row) {
+    return attendees.get(row).biography;
+  }
+}
+
+class Attendee {
+  public String name;
+  public String IMID;
+  public String biography;
+
+  public Attendee(String name, String IMID, String biography) {
+    this.name = name;
+    this.IMID = IMID;
+    this.biography = biography;
+  }
+
+  public Attendee(Scanner in, PrintStream out) {
+    System.out.print("Name> ");
+    name = in.nextLine();
+    out.print("IM ID> ");
+    IMID = in.nextLine();
+    out.print("Biography> ");
+    biography = in.nextLine();
+  }
+}
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d68 1
+a68 1
+  private List<Attendee> attendees = new java.util.ArrayList<Attendee>();
+@

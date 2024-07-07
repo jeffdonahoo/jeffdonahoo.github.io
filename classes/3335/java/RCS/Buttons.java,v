@@ -1,0 +1,50 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2013.09.09.17.58.08;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class test {
+  public static void make(final String[] list, Container c) {
+    for (int i=0; i < list.length; i++) {
+      final int x = i;
+      JButton b = new JButton(list[i]);
+      b.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+          System.out.println(list[x]);
+        }
+      });
+      c.add(b);
+    }
+  }
+
+  public static void main(String[] args) {
+    String list[] = {"Mom", "Dad", "Brother"};
+    JFrame f = new JFrame();
+    f.getContentPane().setLayout(new FlowLayout());
+    f.setSize(500, 500);
+    make(list, f.getContentPane());
+    f.setVisible(true);
+  }
+}
+@

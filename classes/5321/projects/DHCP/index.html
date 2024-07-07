@@ -1,0 +1,208 @@
+<html>
+<head>
+<title>Dynamic Host Configuration Protocol </title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<div align="center"> 
+  <p>&nbsp;</p>
+  <p><font size="4" face="Arial, Helvetica, sans-serif"><b>Dynamic Host Configuration 
+    Protocol</b></font> </p>
+  <p align="left">&nbsp;</p>
+  <p align="left"><font face="Arial, Helvetica, sans-serif" size="3"><b>1. What 
+    is DHCP ?</b></font></p>
+  <div align="left"> 
+    <p align="left"> <font face="Arial, Helvetica, sans-serif" size="3">DHCP stands 
+      for Dynamic Host Configuration Protocol. It is an Application Layer Protocol 
+      that provides <br>
+      configuration parameters to Internet hosts. DHCP consists of two components 
+      - a protocol for delivering<br>
+      host-specific configuration parameters from a DHCP server to a host and 
+      a mechanism for allocation of<br>
+      network addresses to hosts.<br>
+      <br>
+      DHCP is built on a client-server model, where designated DHCP server hosts 
+      allocate <br>
+      network addresses and deliver configuration parameters to dynamically configured 
+      hosts. The term &quot;server&quot;<br>
+      refers to a host providing initialization parameters through DHCP, and the 
+      term &quot;client&quot; refers to a host<br>
+      requesting initialization parameters from a DHCP server. A client and server 
+      may negotiate for the transmission<br>
+      of only those parameters required by the client or specific to a particular 
+      subnet.<br>
+      <br>
+      The configuration parameters include those defined in the Host Requirements 
+      RFCs like <br>
+      IP-Address, subnet mask, MTU etc.,. After obtaining parameters via DHCP, 
+      a DHCP client should be able to<br>
+      exchange packets with any other host in the Internet.<br>
+      </font></p>
+    <p><font face="Arial, Helvetica, sans-serif" size="3"><b>2. Definition of 
+      useful terms.</b></font></p>
+    <p><font face="Arial, Helvetica, sans-serif" size="3"> a. &quot;DHCP client&quot;</font></p>
+    <p> <font face="Arial, Helvetica, sans-serif" size="3"> A DHCP client is an 
+      Internet host using DHCP to obtain<br>
+      configuration parameters such as a network address.</font></p>
+    <p> <font face="Arial, Helvetica, sans-serif" size="3">b. &quot;DHCP server&quot;</font></p>
+    <p><font face="Arial, Helvetica, sans-serif"> <font size="3"> A DHCP server 
+      is an Internet host that returns configuration<br>
+      parameters to DHCP clients.</font></font></p>
+    <p><font face="Arial, Helvetica, sans-serif" size="3"> c. &quot;BOOTP relay 
+      agent&quot;</font></p>
+    <p><font face="Arial, Helvetica, sans-serif"> <font size="3">A BOOTP relay 
+      agent or relay agent is an Internet host or router<br>
+      that passes DHCP messages between DHCP clients and DHCP servers.<br>
+      DHCP is designed to use the same relay agent behavior as specified<br>
+      in the BOOTP protocol specification.</font></font></p>
+    <p><font face="Arial, Helvetica, sans-serif"> d. &quot;binding&quot; </font></p>
+    <p><font face="Arial, Helvetica, sans-serif"> <font size="3"> A binding is 
+      a collection of configuration parameters, including<br>
+      at least an IP address, associated with or &quot;bound to&quot; a DHCP<br>
+      client. Bindings are managed by DHCP servers.<br>
+      <br>
+      </font></font><font face="Arial, Helvetica, sans-serif" size="3">e. &quot;lease&quot;<br>
+      <br>
+      The period over which a network address is allocated to a client.<br>
+      </font></p>
+    <p><font face="Arial, Helvetica, sans-serif" size="3"><b>3. How does DHCP 
+      work ?</b></font></p>
+    <p><font face="Arial, Helvetica, sans-serif" size="3"> 3.1 Client-server interaction 
+      - allocating a network address</font></p>
+  </div>
+</div>
+<blockquote> 
+  <div align="center"> 
+    <div align="left"> 
+      <p> <font face="Arial, Helvetica, sans-serif" size="3"> DHCP uses UDP as 
+        its transport protocol. DHCP messages from a client<br>
+        to a server are sent to the 'DHCP server' port (67), and DHCP<br>
+        messages from a server to a client are sent to the 'DHCP client' port 
+        (68). <br>
+        <br>
+        The following summary of the protocol exchanges between clients and<br>
+        servers describes the basic DHCP protocol :</font></p>
+    </div>
+  </div>
+  <blockquote> 
+    <div align="center"> 
+      <div align="left"> 
+        <p><font face="Arial, Helvetica, sans-serif" size="3"> 1. The client broadcasts 
+          a DHCPDISCOVER message on its local physical<br>
+          subnet. The DHCPDISCOVER message may include options that suggest<br>
+          values for the network address and lease duration. BOOTP relay<br>
+          agents may pass the message on to DHCP servers not on the same<br>
+          physical subnet.</font></p>
+      </div>
+    </div>
+    <div align="center"> 
+      <div align="left"> 
+        <p><font face="Arial, Helvetica, sans-serif" size="3"> 2. Each server 
+          may respond with a DHCPOFFER message that includes an<br>
+          available network address (and other configuration parameters in DHCP 
+          <br>
+          options). The server transmits the DHCPOFFER message to the client, 
+          <br>
+          using the BOOTP relay agent if necessary.<br>
+          <br>
+          3. The client receives one or more DHCPOFFER messages from one or more<br>
+          servers. The client may choose to wait for multiple responses.<br>
+          The client chooses one server from which to request configuration<br>
+          parameters, based on the configuration parameters offered in the<br>
+          DHCPOFFER messages. A DHCPREQUEST message is<br>
+          broadcasted and relayed through DHCP/BOOTP relay agents <br>
+          to the same set of DHCP servers that received the original<br>
+          DHCPDISCOVER message</font></p>
+      </div>
+    </div>
+  </blockquote>
+  </blockquote>
+<blockquote>
+  <div align="center">
+    <div align="left"></div>
+  </div>
+</blockquote>
+<div align="center"> 
+  <div align="left"> 
+    <p></p>
+  </div>
+</div>
+<blockquote> 
+  <blockquote> 
+    <div align="center"> 
+      <div align="left"> 
+        <p><font face="Arial, Helvetica, sans-serif" size="3">4. The servers receive 
+          the DHCPREQUEST broadcast from the client.<br>
+          Those servers not selected by the DHCPREQUEST message use the<br>
+          message as notification that the client has declined that server's<br>
+          offer. The server selected in the DHCPREQUEST message commits the<br>
+          binding for the client to persistent storage and responds with a<br>
+          DHCPACK message containing the configuration parameters for the<br>
+          requesting client. </font></p>
+      </div>
+    </div>
+    <div align="center"> 
+      <div align="left"><font face="Arial, Helvetica, sans-serif" size="3">5. 
+        The client receives the DHCPACK message with configuration<br>
+        parameters and performs a final check on the parameters<br>
+        (e.g., ARP for allocated network address), and notes the<br>
+        duration of the lease specified in the DHCPACK message.<br>
+        At this point, the client is configured. If the client detects that the<br>
+        address is already in use (e.g., through the use of ARP), the<br>
+        client MUST send a DHCPDECLINE message to the server and restarts<br>
+        the configuration process. </font></div>
+    </div>
+  </blockquote>
+  <div align="center">
+    <div align="left"> 
+      <pre><font face="Arial, Helvetica, sans-serif" size="3">		If the client receives a DHCPNAK message, the client restarts the
+		configuration process.</font>
+             
+   <font face="Arial, Helvetica, sans-serif" size="3">6. The client may choose to relinquish its lease on a network address
+           by sending a DHCPRELEASE message to the server.
+             
+             </font></pre>
+    </div>
+  </div>
+  <div align="center"> 
+    <div align="left"> 
+      <p><font face="Arial, Helvetica, sans-serif" size="3"><br>
+        </font><font face="Arial, Helvetica, sans-serif" size="3"><b>Useful References 
+        and Bibliography</b></font></p>
+    </div>
+  </div>
+  <blockquote> 
+    <div align="center">
+      <div align="left">
+        <a href="DHCP.ppt">DHCP Presentation</a></b></font></p>
+      </div>
+    </div>
+    <div align="center">
+      <div align="left">
+        <p><font face="Arial, Helvetica, sans-serif" size="3"><b> <a href="http://www.dhcp.org/">http://www.dhcp.org/</a><br>
+          <br>
+          <a href="http://www.networksorcery.com/enp/protocol/dhcp.htm#Hardware%20address%20length">http://www.networksorcery.com/enp/protocol/dhcp.htm</a></b></font></p>
+      </div>
+    </div>
+    <div align="center">
+<div align="left"><font face="Arial, Helvetica, sans-serif" size="3"><b> 
+        <a href="rfc2131.txt">RFC 2131- Dynamic Host Configuration Protocol</a></b></font></div>
+    </div>
+    <blockquote>
+      <div align="center">
+        <div align="left">
+          <p><font face="Arial, Helvetica, sans-serif" size="3"><b><br>
+            </b></font></p>
+        </div>
+      </div>
+      <blockquote> 
+        <div align="center"> 
+          <div align="left"></div>
+        </div>
+      </blockquote>
+    </blockquote>
+  </blockquote>
+</blockquote>
+</body>
+</html>

@@ -1,0 +1,333 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>How To Setup Your Own Linux Network</title>
+</head>
+
+<body>
+
+<p class="MsoTitle" align="center"><b><font size="6">How To Setup Your Own Linux
+Network</font></b></p>
+<p class="MsoNormal"><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">&nbsp;<o:p>
+&nbsp;
+</span></p>
+<p class="MsoNormal"><span style="font-size: 14.0pt; mso-bidi-font-size: 12.0pt"><b>Formal
+Instructions:</b></span></p>
+<p class="MsoNormal">&nbsp;&nbsp;&nbsp;<span style="font-size: 14.0pt; mso-bidi-font-size: 12.0pt">
+<a href="http://www.employees.org/~satch/ssh/faq/ssh-faq-3.html#ss3.2">SSH FAQ
+Install Instructions</a></span></p>
+<p class="MsoNormal">&nbsp;&nbsp;&nbsp; <a href="config/network_setup.html"><font size="4">Our
+Formal Instructions</font></a><font size="4"> </font>(which is the best
+instructions you're going to get <i>[of course we're biased]</i>)</p>
+<p class="MsoNormal">&nbsp;</p>
+<p class="MsoNormal"><b><span style="font-size: 14.0pt; mso-bidi-font-size: 12.0pt">Informal
+instructions:</span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt"></o:p>
+</span></b></p>
+<p class="MsoNormal">&nbsp;</p>
+<p class="MsoNormal"><span style="font-size:18.0pt;mso-bidi-font-size:12.0pt">Preconditions:<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo1;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">1.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">The Linux
+System has been installed.<span style="mso-spacerun: yes">&nbsp; </span>(We used
+Red Hat Linux 6.0.<span style="mso-spacerun: yes">&nbsp; </span>If different,
+then the following might not apply.)<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo1;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">2.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">You have
+root access.<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo1;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">3.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">You have
+installed the network cards and know the hardware information about them (such
+as maker, type, etc.)<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo1;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">4.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">You know
+the name of the machine to be installed, as well as the IP address of the
+machine (which you can probably make up if the entire HackNet is not connected
+to the rest of the world), the subnet mask for the machine/network, the IP
+address of the nameserver, and the default gateway of the HackNet.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo1;
+tab-stops:list .5in"><span style="font-size: 14.0pt; mso-bidi-font-size: 12.0pt">5.&nbsp;
+You know the IP address of the router.</span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt"><o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal"><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">&nbsp;<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal"><span style="font-size:18.0pt;mso-bidi-font-size:12.0pt">Instructions:<o:p>
+ </span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">&nbsp;<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">1.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">Log in as
+root.<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">2.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">Run <b>netconf</b>.<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">3.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">A menu
+choice appears.<span style="mso-spacerun: yes">&nbsp; </span>Hit <b>Enter</b> on
+the first choice, <b>Basic Host Information</b>.<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">4.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">Enter the
+name of that machine, such as www.cnn.com.<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">5.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">Hit the
+down arrow key.<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">6.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">Hit the
+space bar to select <b>Enabled</b>.<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">7.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">Hit the
+down arrow key and continue hitting the space bar until the <b>Manual</b> mode
+is selected.<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">8.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">Hit the
+down arrow key and enter the primary + domain name of the machine (this should
+be the same as #4.)<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">9.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">Hit the
+down arrow key and enter the alias for the machine (the primary name).<span style="mso-spacerun: yes">&nbsp;
+</span>In the above example, it would be <b>www</b>.<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">10.<span style="font:7.0pt &quot;Times New Roman&quot;">
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">Hit the
+down arrow key and enter the IP address for the machine.<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">11.<span style="font:7.0pt &quot;Times New Roman&quot;">
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">Hit the
+down arrow key and enter the subnet mask information (this will be dependent on
+the number of machines on your subnetworks.<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">12.<span style="font:7.0pt &quot;Times New Roman&quot;">
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">Hit the
+down arrow key and enter the <b>net device</b> (the network card for that
+adaptor.)<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">13.<span style="font:7.0pt &quot;Times New Roman&quot;">
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">Hit the
+down arrow key and enter the .<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">14.<span style="font:7.0pt &quot;Times New Roman&quot;">
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">Continue
+hitting the down arrow key until the cursor is in the <b>Enabled</b> menu for
+the following <b>Adaptor</b>.<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">15.<span style="font:7.0pt &quot;Times New Roman&quot;">
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">Repeat
+steps 6 – 14 for each network card.<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">16.<span style="font:7.0pt &quot;Times New Roman&quot;">
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">Press the
+<b>Tab</b> key until <b>Accept</b> is selected.<span style="mso-spacerun: yes">&nbsp;
+</span>Press <b>Enter</b>.<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">17.<span style="font:7.0pt &quot;Times New Roman&quot;">
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">Hit the
+down arrow key and hit the <b>Enter</b> key (thereby selecting <b>Name Server
+Specification (DNS)</b>).<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">18.<span style="font:7.0pt &quot;Times New Roman&quot;">
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">Press the
+<b>Space Bar</b> to select <b>DNS Usage</b>.<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">19.<span style="font:7.0pt &quot;Times New Roman&quot;">
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">Press the
+down arrow key.<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">20.<span style="font:7.0pt &quot;Times New Roman&quot;">
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">Press the
+down arrow key and enter the IP address of the nameserver.<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">21.<span style="font:7.0pt &quot;Times New Roman&quot;">
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">Repeat
+step 20 for each nameserver.<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">22.<span style="font:7.0pt &quot;Times New Roman&quot;">
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">Press the
+down arrow key until the <b>Search Domain</b> is selected.<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">23.<span style="font:7.0pt &quot;Times New Roman&quot;">
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">Enter the
+information, if desired, and then press the down arrow key.<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">24.<span style="font:7.0pt &quot;Times New Roman&quot;">
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">Repeat
+step 23 for each new search domain.<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">25.<span style="font:7.0pt &quot;Times New Roman&quot;">
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">Press the
+<b>Tab</b> key until <b>Accept</b> is selected.<span style="mso-spacerun: yes">&nbsp;
+</span>Press <b>Enter</b>.<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">26.<span style="font:7.0pt &quot;Times New Roman&quot;">
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">Press the
+down arrow key and press <b>Enter</b>.<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">27.<span style="font:7.0pt &quot;Times New Roman&quot;">
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">Press <b>Enter</b>
+key to enter the default gateway information.<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">28.<span style="font:7.0pt &quot;Times New Roman&quot;">
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">If this
+machine is not a host, then enter the IP address of the router and disable <b>Enable
+Routing</b>.<span style="mso-spacerun: yes">&nbsp; </span>Otherwise, if this
+machine IS a host, then enter the default gateway (usually the gateway that
+leads to the rest of the Internet or larger network) and enable <b>Enable
+Routing</b>.<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">29.<span style="font:7.0pt &quot;Times New Roman&quot;">
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">Press the
+<b>Tab</b> key until <b>Accept</b> is selected.<span style="mso-spacerun: yes">&nbsp;
+</span>Press <b>Enter</b>.<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l2 level1 lfo2;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">30.<span style="font:7.0pt &quot;Times New Roman&quot;">
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">Press the
+down arrow key until <b>Configure – the routed daemon</b> is highlighted.<span style="mso-spacerun: yes">&nbsp;
+</span>Press <b>Enter</b>.<o:p>
+</o:p>
+<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal"><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">&nbsp;<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal"><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">&nbsp;<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal"><span style="font-size:18.0pt;mso-bidi-font-size:12.0pt">Postconditions:<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l1 level1 lfo3;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">1.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">The
+router machine will have a different subnet for each network card.<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;mso-list:l1 level1 lfo3;
+tab-stops:list .5in"><span style="font-size:14.0pt;
+mso-bidi-font-size:12.0pt">2.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt">The
+router will transfer packets from one subnet (one of its cards) to the
+corresponding network (one of its other cards.)<o:p>
+</o:p>
+</span><span style="font-size:14.0pt;mso-bidi-font-size:12.0pt"><o:p>
+</o:p>
+</span></p>
+
+</body>
+
+</html>

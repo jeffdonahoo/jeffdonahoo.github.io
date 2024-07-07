@@ -1,0 +1,62 @@
+<HTML>
+<!-- created Thu Apr 9 23:20:43 MET DST 1998
+ from ../latex2e.texi line 4452 via texi2www -->
+<HEAD>
+<TITLE>\parbox</TITLE>
+<LINK REL="Precedes" HREF="$5craisebox.html">
+<LINK REV="Precedes" HREF="$5cnewsavebox.html">
+<LINK REV="Subdocument" HREF="Spaces_$26amp$3b_Boxes.html">
+</HEAD><BODY><P>
+<A HREF="$5cnewsavebox.html"><IMG ALIGN=MIDDLE SRC="prev-arrow.gif" ALT="PREV"></A>
+<A HREF="Spaces_$26amp$3b_Boxes.html"> <IMG ALIGN=MIDDLE SRC="up-arrow.gif" ALT="UP"></A>
+<A HREF="$5craisebox.html"><IMG ALIGN=MIDDLE SRC="next-arrow.gif" ALT="NEXT"></A>
+<CITE>LaTeX2e help 1.6</CITE></P>
+<H3>2.17.17: \parbox</H3>
+<P>
+<CODE>\parbox[position][height][inner-pos]{width}{text}</CODE>
+</P>
+<P>
+A <CODE>parbox</CODE> is a box whose contents are created in <CODE>paragraph</CODE>
+mode.  The <CODE>\parbox</CODE> has two mandatory arguments:
+</P>
+<UL>
+<LI>
+<CODE>width</CODE> - specifies the width of the parbox, and
+<LI>
+<CODE>text</CODE> - the text that goes inside the parbox.
+</UL>
+
+<P>
+LaTeX will position a <CODE>parbox</CODE> so its centre lines up with the centre of
+the text line.  The optional <EM>position</EM> argument allows you
+to line up either the top or bottom line in the parbox (default is top).
+</P>
+<P>
+If the <EM>height</EM> argument is not given, the box will have the natural
+height of the text.
+</P>
+<P>
+The <EM>inner-pos</EM> argument controls the placement of the text inside the
+box. If it is not specified, <EM>position</EM> is used.
+</P>
+<UL>
+<LI>
+<CODE>t</CODE> --- text is placed at the top of the box.
+<LI>
+<CODE>c</CODE> --- text is centred in the box.
+<LI>
+<CODE>b</CODE> --- text is placed at the bottom of the box.
+<LI>
+<CODE>s</CODE> --- stretch vertically. The text must contain
+vertically stretchable space for this to work.
+</UL>
+
+<P>
+A <CODE>\parbox</CODE> command is used for a parbox containing a small piece
+of text, with nothing fancy inside.  In particular, you shouldn't use
+any of the paragraph-making environments inside a <CODE>\parbox</CODE>
+argument.  For larger pieces of text, including ones containing a
+paragraph-making environment, you should use a <CODE>minipage</CODE>
+environment See <A HREF="minipage.html">minipage</A>.
+</P>
+</BODY></HTML>

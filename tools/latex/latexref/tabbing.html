@@ -1,0 +1,148 @@
+<HTML>
+<!-- created Thu Apr 9 23:20:43 MET DST 1998
+ from ../latex2e.texi line 1891 via texi2www -->
+<HEAD>
+<TITLE>tabbing</TITLE>
+<LINK REL="Precedes" HREF="table.html">
+<LINK REV="Precedes" HREF="quote.html">
+<LINK REV="Subdocument" HREF="Environments.html">
+</HEAD><BODY><P>
+<A HREF="quote.html"><IMG ALIGN=MIDDLE SRC="prev-arrow.gif" ALT="PREV"></A>
+<A HREF="Environments.html"> <IMG ALIGN=MIDDLE SRC="up-arrow.gif" ALT="UP"></A>
+<A HREF="table.html"><IMG ALIGN=MIDDLE SRC="next-arrow.gif" ALT="NEXT"></A>
+<CITE>LaTeX2e help 1.6</CITE></P>
+<H3>2.6.17: tabbing</H3>
+<DL><DT><DD>
+<PRE>
+ \begin{tabbing}
+ text \= more text \= still more text \= last text \\
+ second row \&gt;  \&gt; more \\
+ .
+ .
+ .
+ \end{tabbing}
+</PRE>
+</DL>
+<P>
+The <CODE>tabbing</CODE> environment provides a way to align text in columns.
+It works by setting tab stops and tabbing to them much the way you do
+with an ordinary typewriter.
+</P>
+<P>
+It is best suited for cases where the width of each column is constant
+and known in advance.
+</P>
+<P>
+This environment can be broken across pages, unlike the <CODE>tabular</CODE>
+environment.
+</P>
+<P>
+The following commands can be used inside a <CODE>tabbing</CODE> enviroment:
+</P>
+<TABLE>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\=</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+Sets a tab stop at the current position.
+</P>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\&gt;</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+Advances to the next tab stop.
+</P>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\&lt; </CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+This command allows you to put something to the left of the
+local margin without changing the margin.
+Can only be used at the start of the line.
+</P>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\+</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+Moves the left margin of the next and all the
+following commands one tab stop to the right.
+</P>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\- </CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+Moves the left margin of the next and all the
+following commands one tab stop to the left.
+</P>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\'</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+Moves everything that you have typed so far in the
+current column, i.e. everything from the most recent <CODE>\&gt;</CODE>,
+<CODE>\&lt;</CODE>, <CODE>\'</CODE>, <CODE>\\</CODE>, or <CODE>\kill</CODE> command, to the right
+of the previous column, flush against the current column's tab stop.
+</P>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\`</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+Allows you to put text flush right against any tab stop, including tab
+stop 0.  However, it can't move text to the right of the last column
+because there's no tab stop there.  The <CODE>\`</CODE> command moves all the
+text that follows it, up to the <CODE>\\</CODE> or <CODE>\end{tabbing}</CODE>
+command that ends the line, to the right margin of the tabbing
+environment.  There must be no <CODE>\&gt;</CODE> or <CODE>\'</CODE> command between
+the <CODE>\`</CODE> and the command that ends the line.
+</P>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\kill</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+Sets tab stops without producing
+text.  Works just like  <CODE>\\</CODE> except that it throws away the
+current line instead of producing output for it.  The effect of any
+<CODE>\=</CODE>, <CODE>\+</CODE> or <CODE>\-</CODE> commands in that line remain in
+effect.
+</P>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\pushtabs</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+Saves all current tab stop positions. Useful for
+temporarily changing tab stop positions in the middle of a
+<CODE>tabbing</CODE> environment.
+</P>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\poptabs</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+Restores the tab stop positions saved by the last <CODE>\pushtabs</CODE>.
+</P>
+</TD></TR>
+<TR><TD VALIGN=TOP><CODE>\a</CODE>
+</TD>
+    <TD VALIGN=TOP><P>
+In a <CODE>tabbing</CODE> environment, the commands <CODE>\=</CODE>, <CODE>\'</CODE> and
+<CODE>\`</CODE> do not produce accents as normal. Instead, the commands
+<CODE>\a=</CODE>, <CODE>\a'</CODE> and <CODE>\a`</CODE> are used.
+</TD></TR>
+</TABLE>
+</P>
+<P>
+This example typesets a Pascal function in a traditional format:
+</P>
+<DL><DT><DD>
+<PRE>
+        \begin{tabbing}
+        function \= fact(n : integer) : integer;\\
+                 \&gt; begin \= \+ \\
+                       \&gt; if \= n $&gt;$ 1 then \+ \\
+                                fact := n * fact(n-1) \- \\
+                          else \+ \\
+                                fact := 1; \-\- \\
+                    end;\\
+        \end{tabbing}
+</PRE>
+</DL>
+</BODY></HTML>

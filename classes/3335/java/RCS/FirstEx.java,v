@@ -1,0 +1,39 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2013.09.09.17.58.08;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@public class FirstEx {
+
+  public static void main(String[] args) {
+
+    if (args.length != 1) {
+      System.out.println("Parameter(s): radius (inches)");
+      System.exit(1);
+    }
+
+    final double PI = 3.14;
+
+    double radius = Double.parseDouble(args[0]);
+
+    String out = "The area of the circle is " + PI * radius * radius;
+    System.out.println(out + " square inches");
+  }
+}@

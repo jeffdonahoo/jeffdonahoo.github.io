@@ -1,0 +1,39 @@
+head	1.1;
+access;
+symbols;
+locks
+	donahoo:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2019.01.14.23.51.27;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.Arrays;
+
+public class ReaderCopy {
+    public static void main(String[] args) throws IOException {
+    	Reader in = new FileReader("ReaderCopy.java");
+    	char[] buf = new char[10];
+    	int charsRead;
+    	while ((charsRead = in.read(buf)) != -1) {
+    		System.out.print(Arrays.copyOf(buf, charsRead));
+    	}
+    }
+}
+@

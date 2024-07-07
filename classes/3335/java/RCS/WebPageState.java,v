@@ -1,0 +1,181 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2021.10.26.12.42.15;	author donahoo;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2018.02.13.16.23.20;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@import java.util.Scanner;
+
+/*
+ * State Diagram
+ * 
+ * State        Transition     Next
+ * MAIN         login          LOGIN
+ * MAIN         register       REGISTER
+ * LOGIN        bad            LOGIN
+ * LOGIN        success        APP
+ * REGISTER     exists         REGISTER
+ * REGISTER     new            LOGIN
+ * APP          logout         MAIN
+ */
+public enum WebPageState {
+    MAIN("main.html") {
+        public WebPageState next(String in) {
+            return switch (in) {
+            case "login" -> LOGIN;
+            case "register" -> REGISTER;
+            default -> MAIN;
+            };
+        }
+    },
+    LOGIN("login.html") {
+        public WebPageState next(String in) {
+            return switch (in) {
+            case "success" -> APP;
+            default -> LOGIN;
+            };
+        }
+    },
+    REGISTER("register.html") {
+        public WebPageState next(String in) {
+            return switch (in) {
+            case "new" -> LOGIN;
+            default -> MAIN;
+            };
+        }
+    },
+    APP("app.html") {
+        public WebPageState next(String in) {
+            return switch (in) {
+            case "logout" -> MAIN;
+            default -> APP;
+            };
+        }
+    };
+
+    private String html;
+
+    WebPageState(String html) {
+        this.html = html;
+    }
+
+    public String getHTML() {
+        return html;
+    }
+
+    public abstract WebPageState next(String in);
+
+    public static void main(String[] args) {
+        WebPageState page = MAIN;
+        try (Scanner in = new Scanner(System.in)) {
+            while (true) {
+                System.out.println(page.getHTML());
+                System.out.print("next> ");
+                page = page.next(in.next());
+            }
+        }
+    }
+}
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d6 8
+a13 8
+ * State         Transition     New
+ * MAIN         login             LOGIN
+ * MAIN          register       REGISTER
+ * LOGIN        bad              LOGIN
+ * LOGIN        success       APP
+ * REGISTER  exists           REGISTER
+ * REGISTER  new              LOGIN
+ * APP            logout          MAIN
+d18 5
+a22 8
+            switch (in) {
+            case "login":
+                return LOGIN;
+            case "register":
+                return REGISTER;
+            default:
+                return MAIN;
+            }
+d24 2
+a25 1
+    }, LOGIN("login.html") {
+d27 4
+a30 6
+            switch (in) {
+            case "success":
+                return APP;
+            default:
+                return LOGIN;
+            }
+d32 2
+a33 1
+    }, REGISTER("register.html") {
+d35 4
+a38 6
+            switch (in) {
+            case "new":
+                return LOGIN;
+            default:
+                return MAIN;
+            }
+d40 2
+a41 1
+    }, APP("app.html") {
+d43 4
+a46 6
+            switch (in) {
+            case "logout":
+                return MAIN;
+            default:
+                return APP;
+            }
+d49 1
+a49 1
+    
+d51 1
+a51 1
+    
+d55 1
+a55 1
+    
+d59 1
+a59 1
+    
+d61 1
+a61 1
+    
+d66 3
+a68 3
+            System.out.println(page.getHTML());
+            System.out.print("next> ");
+            page = page.next(in.next());
+@

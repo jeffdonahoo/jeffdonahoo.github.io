@@ -1,0 +1,29 @@
+<project name="browser" default="compile">
+
+  <target name="all" depends="package"/>
+
+  <target name="compile">
+    <mkdir dir="classes"/>
+    <javac destdir="./classes" srcdir=".">
+      <classpath>
+        <pathelement location="/usr/share/java/idev_bluez.jar"/>  
+      </classpath>
+      <include name="*"/>
+    </javac>
+  </target>
+
+  <target name="package" depends="compile">
+    <mkdir dir="lib"/>
+    <jar basedir="classes" jarfile="lib/browser.jar"/>
+  </target>
+
+  <target name="clean">
+    <delete includeEmptyDirs="yes">
+      <fileset dir=".">
+        <include name="classes/**"/>
+        <include name="lib/**"/>
+      </fileset>
+    </delete>
+  </target>
+
+</project>

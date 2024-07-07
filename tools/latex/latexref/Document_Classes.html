@@ -1,0 +1,108 @@
+<HTML>
+<!-- created Thu Apr 9 23:20:43 MET DST 1998
+ from ../latex2e.texi line 782 via texi2www -->
+<HEAD>
+<TITLE>Document Classes</TITLE>
+<LINK REL="Precedes" HREF="Environments.html">
+<LINK REV="Precedes" HREF="Definitions.html">
+<LINK REV="Subdocument" HREF="Commands.html">
+</HEAD><BODY><P>
+<A HREF="Definitions.html"><IMG ALIGN=MIDDLE SRC="prev-arrow.gif" ALT="PREV"></A>
+<A HREF="Commands.html"> <IMG ALIGN=MIDDLE SRC="up-arrow.gif" ALT="UP"></A>
+<A HREF="Environments.html"><IMG ALIGN=MIDDLE SRC="next-arrow.gif" ALT="NEXT"></A>
+<CITE>LaTeX2e help 1.6</CITE></P>
+<H2>2.4: Document Classes</H2>
+<P>
+Valid LaTeX document classes include:
+</P>
+<UL>
+<LI>
+article
+<LI>
+report
+<LI>
+letter
+<LI>
+book
+<LI>
+slides
+</UL>
+
+<P>
+Other document classes are often available. See <A HREF="Overview.html">Overview</A>, for details.
+They are selected with the following command:
+</P>
+<P>
+<CODE>\documentclass [options] {class}</CODE>
+</P>
+<P>
+All the standard classes (except slides) accept the following options
+for selecting the typeface size (10 pt is default):
+</P>
+<P>
+10pt, 11pt, 12pt
+</P>
+<P>
+All classes accept these options for selecting the paper size (default
+is letter):
+</P>
+<P>
+a4paper, a5paper, b5paper, letterpaper, legalpaper, executivepaper
+</P>
+<P>
+Miscellaneous options:
+</P>
+<UL>
+<LI>
+landscape --- selects landscape format. Default is portrait.
+<LI>
+titlepage, notitlepage --- selects if there should be a separate title
+page. 
+<LI>
+leqno --- equation number on left side of equations. Default is right side.
+<LI>
+fleqn --- displayed formulas flush left. Default is centred.
+<LI>
+openbib --- use ``open'' bibliography format.
+<LI>
+draft, final --- mark/do not mark overfull boxes with a rule.
+Default is final.
+</UL>
+
+<P>
+These options are not available with the slides class:
+</P>
+<UL>
+<LI>
+oneside, twoside --- selects one- or twosided layout. Default is
+oneside, except for the book class.
+<LI>
+openright, openany --- determines if a chapter should start on a
+right-hand page. Default is openright for book.
+<LI>
+onecolumn, twocolumn --- one or two columns. Defaults to one column.
+</UL>
+
+<P>
+The slides class offers the option <CODE>clock</CODE> for printing the time at
+the bottom of each note.
+</P>
+<P>
+If you specify more than one option, they must be separated by a comma.
+</P>
+<P>
+Additional packages are loaded by a
+</P>
+<P>
+<CODE>\usepackage[options]{pkg}</CODE>
+</P>
+<P>
+command. If you specify more than one package, they must be separated by
+a comma.
+</P>
+<P>
+Any options given in the <CODE>\documentclass</CODE> command that are unknown
+by the selected document class are passed on to the packages loaded with
+<CODE>\usepackage</CODE>. 
+</P>
+</BODY></HTML>

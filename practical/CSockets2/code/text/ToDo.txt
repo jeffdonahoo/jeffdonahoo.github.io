@@ -1,0 +1,4 @@
+0. Test everything on other platforms: solaris, macintosh.
+
+1. Test SO_REUSEADDR on linux (I have a vague dread...)
+

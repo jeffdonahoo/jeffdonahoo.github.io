@@ -1,0 +1,121 @@
+<html>
+<head>
+<title>4321 - Data Communications</title>
+</head>
+<body link="#0000ff" vlink="#800080">
+
+<b><font size=4><p align="center">Data Communications<br>
+</font>CS4321</p></b>
+
+If you have any trouble viewing the PDF files in your web browser
+(using the PDF browser plug-in), download the PDF and view it with the
+stand-alone Acrobat Reader.
+
+<ul>
+  <li> <a href="../success.html">Success Guide</a>
+
+  <li> Class Materials </li>
+  <ul>
+    <li>Java
+      <ul>
+        <li> <a href="../CodePreparation.pdf">Code Preparation</a></li>
+        <li> <a href="../JavaCodingConvention.pdf">Java Coding Convention</a>
+        <li> <a href="../JavaCodingGuidelines.pdf">Java Coding Guidelines</a>
+      </ul>
+    <li>Spanning Tree Algorithm<a href="SpanningBridge.pdf">(PDF)</a> </li>
+    <li>Hamming Error Correction<a href="HammingCorrection.pdf">(PDF)</a> </li>
+    <li> <a href="ascii.html">ASCII Chart</a>
+  </ul>
+  <li> Homeworks </li>
+    <ul>
+    <li>Homework 1
+      <ul>
+        <li><a href="BadParse.java">BadParse.java</a>
+        <li><a href="StreamCopy.java">StreamCopy.java</a>
+      </ul>
+    </ul>
+    <ul>
+    <li>Homework 6<br>Test with server running on wind:4567
+  <li> Programs </li>
+  <ul>
+    <li>Program 1
+    <ul>
+      <li><a href="prog1/Program1-Test.pdf">Program 1 Test</a>
+    </ul>
+    <li>Program 2
+    <ul>
+      <li><a href="prog2/Program2-Test.pdf">Program 2 Test</a>
+      <li><a href="prog2/DNSServerTest.java">DNSServerTest.java</a>
+    </ul>
+    <li>Program 3
+    <ul>
+      <li><a href="prog3/Program3-Test.pdf">Program 3 Test</a>
+    </ul>
+    <li>Program 4
+    <ul>
+      <li>Process Directory:  I have defined an interface,
+    ProcessDirectory, with a single method, getProcessIDs(), that
+    given a user ID returns a list of process IDs.  I provide a
+    cheesy (simulated) implementation that derives a static mapping
+    from an input file.  Anybody is welcome to do a "real" implementation.
+      <ul>
+        <li><a href="prog4/ProcessDirectory.java">ProcessDirectory.java</a>
+        <li><a href="prog4/ProcessDirectoryFile.java">ProcessDirectoryFile.java</a>
+        <li><a href="prog4/pids.txt">Example user ID -> PID mapping file</a>
+      </ul>
+      <li><a href="prog4/Program4-Test.pdf">Program 4 Test</a>
+    </ul>
+    <li>Program 5
+    <ul>
+      <li><a href="prog5/DataCipher.java">DataCipher.java</a>
+      <li><a href="prog5/DataCipherDES.java">DataCipherDES.java</a>
+      <li>Scale and Load Testing
+      <ul>
+        <li>Download Apache's <a
+  href="http://jakarta.apache.org/jmeter/">JMeter</a> and extract it to
+  the <install> directory.  (&lt;install&gt; can be anywhere you wish.)
+	<li>Copy <a href="prog5/protocoltests.jar">protocoltests.jar</a> into &lt;install&gt;/lib/ext.
+	<li>Start JMeter by executing
+  &lt;install&gt;/bin/jmeter.[bat|sh].
+        <li>Load the test plan <a href="prog5/ossumatest.jmx">ossumatest.jmx</a>
+  into JMeter.
+        <li>Click "Test Plan" and specify the server name/IP and port.
+	<li>Execute the test by selecting Run->Start.
+	<li>Click "Throughput Results Graph" to watch the show.  Note
+  the per minute throughput after it stabilizes.
+        <li>Click "Client" under "Simulated Users" to change
+  parameters.  Note that donacipher.DataCipherSlow is an implementation of the
+  DataCipher interface whose encryption is computationally expensive.
+  You can use it from the JAR to play with your server.
+      </ul>
+      <li>Test
+      <ul>
+        <li><a href="prog5/Program5-Test.pdf">Program 5 Test</a>
+        <li><a href="prog5/DataCipherTest.java">DataCipherTest.java</a>
+        <li><a href="prog5/OSSUMAServer.java">OSSUMAServer.java</a>
+        <li><a href="prog5/OSSUMAServer2.java">OSSUMAServer2.java</a>
+        <li><a href="prog5/OSSUMAServer3.java">OSSUMAServer3.java</a>
+        <li><a href="prog5/OSSUMAServer4.java">OSSUMAServer4.java</a>
+        <li><a href="prog5/OSSUMAServer5.java">OSSUMAServer5.java</a>
+        <li><a href="prog5/OSSUMAServerTest.java">OSSUMAServerTest.java</a>
+        <li><a href="prog5/big.txt">big.txt</a>
+        <li><a href="prog5/empty.txt">empty.txt</a>
+        <li><a href="prog5/file.txt">file.txt</a>
+      </ul>
+    </ul>
+  </ul> 
+  <li>Wireshark Dumps</li>
+  <ul>
+    <li> <a href="fragmentation.eth">fragmentation.eth</a> </li>
+    <li> <a href="TCPEcho.eth">TCPEcho.eth</a> </li>
+  </ul>
+  <li>Useful Stuff</li>
+  <ul>
+    <li> <a href="http://cs.baylor.edu/~donahoo/tools/PGP">PGP</a> </li>
+    <li> <a href="http://cs.baylor.edu/~donahoo/tools/gdb">GDB Tutorial</a> </li>
+    <li> <a href="http://cs.baylor.edu/~donahoo/tools/valgrind">Valgrind Tutorial</a> </li>
+  </ul>
+  <li> <a href="../gennet/">General Networking Stuff</a>
+</ul>
+</body>
+</html>

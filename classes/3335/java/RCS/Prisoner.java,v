@@ -1,0 +1,89 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2014.11.05.15.30.27;	author donahoo;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2013.09.12.15.11.36;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@<>
+@
+text
+@import java.util.HashSet;
+import java.util.Set;
+
+public class Prisoner {
+
+    private String prisonId;
+    
+    public Prisoner(final String prisonId) {
+        this.prisonId = prisonId;
+    }
+    
+    public static void main(String[] args) {
+        Set<Prisoner> roll = new HashSet<>();
+        
+        roll.add(new Prisoner("123"));
+        roll.add(new Prisoner("123"));
+        System.out.println(roll.size());
+    }
+
+    @@Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                + ((prisonId == null) ? 0 : prisonId.hashCode());
+        return result;
+    }
+
+    @@Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Prisoner other = (Prisoner) obj;
+        if (prisonId == null) {
+            if (other.prisonId != null) {
+                return false;
+            }
+        } else if (!prisonId.equals(other.prisonId)) {
+            return false;
+        }
+        return true;
+    }
+}
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d13 1
+a13 1
+        Set<Prisoner> roll = new HashSet<Prisoner>();
+@

@@ -1,0 +1,120 @@
+head	1.1;
+access;
+symbols;
+locks
+	donahoo:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2006.11.08.13.44.00;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@<html>
+<head>
+<title>SQL:  Practical Guide for Developers</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+<center><font size=+10>SQL:  Practical Guide for Developers<br>MySQL</font></center><p>
+
+All MySQL-specific information given here is based on version 4.1.13.
+We welcome any updates, correction, and clarifications.  Send them to
+Jeff_Donahoo at baylor.edu (email address munged to avoid
+harvesting).
+
+<ul>
+  <li><a href="http://mysql.com">MySQL Website</a>
+  <li><a href="http://dev.mysql.com/doc/mysql/en/index.html">Reference Manual</a>
+  <li>Example Database Creation
+  <ul>
+    <li>Scripts
+    <ul>
+      <li>Restaurant Database Creation Script <a href="restaurant-mysql.sql">restaurant-mysql.sql</a>
+      <li>Employee Database Creation Script <a href="employees-mysql.sql">employees-mysql.sql</a>
+    </ul>
+    <li>Instructions
+    <ol>
+      <li>Install MySQL and start database server<a href="http://dev.mysql.com/doc/mysql/en/installing.html">(installing)</a>.
+      <li>Start MySQL client<a href="http://dev.mysql.com/doc/mysql/en/connecting-disconnecting.html">(connecting)</a>.
+      <li>Execute SQL script at MySQL client prompt:  "source <sql file>".
+    </ol>
+  </ul>
+  <li>Resource Sites
+
+  Below are some sites on MySQL that you may find useful.  Please note
+  that I have not verified the accuracy or timeliness of the
+  information contained in these sites.
+
+  <ul>
+    <li><a href="http://sql-info.de/mysql/gotchas.html">MySQL Gotchas</a>
+  </ul>
+  <li>MySQL Differences:
+  <ul>
+    <li><div class="secthdr">General:</div>
+    <ul>
+      <li>MySQL has several extensions and deviations from the
+          standard.  They claim to be working toward supporting the standard
+	  except when it impacts "speed and quality of the code" <a
+	  href="http://dev.mysql.com/doc/mysql/en/standards.html">(standards)</a>.
+	  Operating the MySQL server in ANSI mode will makes its syntax and behavior "more
+	  conformant to the standard SQL" <a
+	  href="http://dev.mysql.com/doc/mysql/en/server-sql-mode.html">(SQL mode)</a>.
+	  Consider using this mode if you want to write more portable SQL.
+    </ul>
+    <li><div class="secthdr">Chapter 3:  Reshaping Results</div>
+    <dl>
+
+      <dt><div class="issuehdr">String Concatenation</div><dd>MySQL treats ||
+      as a logical OR, not concatenation.  MySQL uses the CONCAT
+      function for concatenation (<a
+      href="http://dev.mysql.com/doc/mysql/en/string-functions.html">string
+      functions</a>).  If you start the MySQL server with the --ansi
+      option, MySQL will use || for concatenation.
+
+      <dt><div class="issuehdr">CAST</div><dd>MySQL has a limited number of data types that
+      may be used in a CAST <a href="http://dev.mysql.com/doc/mysql/en/cast-functions.html">(cast)</a>.
+
+      <dt><div class="issuehdr">Temporal Operations</div><dd>Use
+      MySQL's temporal functions for temporal arithmetic <a
+      href="http://dev.mysql.com/doc/mysql/en/date-and-time-functions.html">(temporal
+      functions)</a>.
+
+    </dl>
+    <li><div class="secthdr">Chapter 9: Creating, Deleting, and Altering Tables</div>
+    <dl>
+      <dt><div class="issuehdr">DEFAULT</div><dd>The default value in MySQL must be a constant.
+      Expressions and functions are not allowed <a
+      href="http://dev.mysql.com/doc/mysql/en/create-table.html">(create table)</a>.<P>
+
+      This means that you cannot have the following column declaration:<P>
+
+      dateadded DATE DEFAULT CURRENT_DATE<P>
+
+      CURRENT_DATE is a function call.  The one (weird) exception to this
+      rule is that you can set the DEFAULT value of a TIMESTAMP to
+      CURRENT_TIMESTAMP.  Beware that MySQL has some strange rules about
+      TIMESTAMP so read the manual before using this type.
+    </dl>
+    <li><div class="secthdr">Chapter 10:  Views</div>
+      MySQL 4.X does not support views.  MySQL 5.X does 
+      <a href="http://dev.mysql.com/doc/mysql/en/views.html">(views)</a>.
+    <li><div class="secthdr">Chapter 11:  Transactions</div>
+    <dl>
+      <dt><div class="issuehdr">DEFERRED Constraints</div><dd>In MySQL, all contraints are
+      enforced immediately so there are no deferred constraints <a
+      href="http://dev.mysql.com/doc/mysql/en/innodb-foreign-key-constraints.html">(constraints)</a>.
+    </dl>
+  </ul>
+</ul>@

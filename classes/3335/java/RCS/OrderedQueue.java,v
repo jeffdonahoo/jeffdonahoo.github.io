@@ -1,0 +1,68 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2013.09.09.17.58.08;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@/**
+ * OrderedQueue is a cheesy implementation of an ordered queue.  Array bound
+ * exceptions are used to signal some boundary cases (e.g., queue full).  The
+ * queue has a fixed maximum length.
+ */
+public class OrderedQueue {
+
+  private Object queue[];  // Array implementation of queue
+  private int head;        // Array element represent queue head + 1
+
+  public OrderedQueue(int size) {
+    queue = new Object[size];
+    head = 0;
+  }
+
+  public void enqueue(Comparable newItem) {
+    int insPos;
+    for (insPos = head; ((insPos > 0) && (newItem.compareTo(queue[insPos-1]) >= 0)); --insPos) {
+      queue[insPos] = queue[insPos-1];
+    }
+    queue[insPos] = newItem;
+    head++;
+  }
+
+  public Object dequeue() throws Exception {
+    if (head == 0) throw new Exception("Dequeue on empty queue");
+    return queue[--head];
+  }
+
+  public int size() {
+    return head;
+  }
+
+  public static void main(String args[]) throws Exception {
+    OrderedQueue q = new OrderedQueue(10);
+
+    q.enqueue(new Person("Bob"));
+    q.enqueue(new String("Ed"));
+    q.enqueue(new Child("Jane", 3));
+
+    while (q.size() > 0) {
+      System.out.println(((Person) q.dequeue()).getName());
+    }
+  }
+}
+@

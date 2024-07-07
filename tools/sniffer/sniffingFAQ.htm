@@ -1,0 +1,806 @@
+<html>
+
+<head>
+<title>Sniffing</title>
+</head>
+
+<body>
+
+<h1 align="center">Sniffing (network wiretap, sniffer) FAQ</h1>
+<dl>
+  <hr>
+  <dt>&nbsp;
+  <h1><a name="1"><font size="3">1</font></a><font size="3">. The basics</font></h1>
+  <blockquote>
+  <h2><font size="3">1.1 What is a &quot;packet sniffer&quot;?</font></h2>
+  </blockquote>
+  <dd><font size="3">A <b>packet sniffer</b> is a wire-tap devices that plugs
+    into computer networks and eavesdrops on the network traffic. Like a
+    telephone wiretap allows the FBI to listen in on other people's
+    conversations, a &quot;sniffing&quot; program lets someone listen in on
+    computer conversations.</font>
+    <p><font size="3">However, computer conversations consist of apparently
+    random binary data. Therefore, network wiretap programs also come with a
+    feature known as &quot;protocol analysis&quot;, which allow them to
+    &quot;decode&quot; the computer traffic and make sense of it.</font>
+    <p><font size="3">Sniffing also has one advantage over telephone wiretaps:
+    many networks use &quot;shared media&quot;. This means that you don't need
+    to break into a wiring closet to install your wiretap, you can do it from
+    almost any network connection to eavesdrop on your neighbors. This is called
+    a &quot;promiscuous mode&quot; sniffer. However, this &quot;shared&quot;
+    technology is moving quickly toward &quot;switched&quot; technology where
+    this will no longer be possible, which means you will have to actually tap
+    into the wire.</font>
+    <dl>
+      <dt>&nbsp;
+      <h3><font size="3">1.1.1 Is &quot;packet sniffer&quot; trademarked?</font></h3>
+      <dd><font size="3">The word &quot;sniffer&quot; is a registered trademark
+        by Network Associates referring to the &quot;Sniffer(r) Network
+        Analyzer&quot;. However, the term &quot;snif&quot; is used in many other
+        products (some of which are listed in this document) and the term &quot;sniffer&quot;
+        is more popular in everyday usage than alternatives like &quot;protocol
+        analyzer&quot; or &quot;network analyzer&quot; (as far as my search on
+        AltaVista reveals). I'm not sure what this means in trademark law, where
+        brandnames like &quot;aspirin&quot;, &quot;escalator&quot;, and
+        &quot;cellophane&quot; lose their distinctiveness over time.</font></dd>
+    </dl>
+  <blockquote>
+  <h2><font size="3">1.2 What is it used for?</font></h2>
+  </blockquote>
+  <dd>
+    <p><font size="3">Sniffing programs have been around for a long time in two
+    forms. Commercial packet sniffers are used to help maintain networks.
+    Underground packet sniffers are used to break into computers.</font>
+    <p><font size="3">Typical uses of such wiretap programs include:</font>
+    <ul>
+      <li><font size="3">Automatic sifting of <a class="dict" href="http://www.robertgraham.com/pubs/hacking-dict.html#clear-text">clear-text</a>
+        passwords and usernames from the network. Used hackers/crackers in order
+        to break into systems.</font>
+      <li><font size="3">Conversion of data to human readable format so that
+        people can read the traffic</font>
+      <li><font size="3">Fault analysis to discover problems in the network,
+        such as why computer A can't talk to computer B</font>
+      <li><font size="3">Performance analysis to discover network bottlenecks</font>
+      <li><font size="3">Network intrusion detection in order to discover
+        hackers/crackers (see <a href="http://www.robertgraham.com/pubs/network-intrusion-detection.html">http://www.robertgraham.com/pubs/network-intrusion-detection.html</a></font>
+      <li><font size="3">Network traffic logging, to create logs that hackers
+        can't break into and erase.</font></li>
+    </ul>
+</dl>
+<blockquote>
+  <h2><font size="3">1.3 Is there a single point on the Internet I can plug into
+  in order to see all the traffic?</font></h2>
+</blockquote>
+<dl>
+  <dd><font size="3">No. The connectivity of the Internet looks much like a
+    fisherman's net. Traffic flows through a mesh, and no single point will see
+    it all. The Internet was built to withstand a nuclear attack -- and to
+    survive any &quot;single point of failure&quot;. This likewise prevents any
+    single point of sniffing.</font>
+    <p><font size="3">Think of it this: you have two machines in your own office
+    talking to each other, and both are on the Internet. They take a direct
+    route of communication, and the traffic never goes across the outside public
+    portion of the Internet. Any communication anywhere in the net follows a
+    similar &quot;least-cost-path&quot; principle.</font></p>
+  <h2><font size="3">1.4 How does sniffing/wiretap work?</font></h2>
+</dl>
+<blockquote>
+  <h2><font size="3">1.4 How does sniffing/wiretap work?</font></h2>
+</blockquote>
+<dl>
+  <dd>
+    <dl>
+      <h2><font size="3">1.4.1 How does it eavesdrop on network traffic?</font></h2>
+      <dd><font size="3">Ethernet was built around a &quot;shared&quot;
+        principle: all machines on a local network share the same wire.</font>
+        <p><font size="3">This implies that all machines are able to
+        &quot;see&quot; all the traffic on the same wire.</font>
+        <p><font size="3">Thus, Ethernet hardware is built with a
+        &quot;filter&quot; that ignores all traffic that doesn't belong to it.
+        It does this by ignoring all frames whose MAC address doesn't match.</font>
+        <p><font size="3">A wiretap program turns off this filter, puttin the
+        Ethernet hardware into &quot;promiscuous mode&quot;. Thus, Mark can see
+        all the traffic between Alice and Bob, as long as they are on the same
+        Ethernet wire.</font></p>
+      <h2><font size="3">1.4.2 What are the components of a packet sniffer?</font></h2>
+      <dd>
+        <dl>
+          <dt><font size="3">The hardware</font>
+          <dd><font size="3">Most products work from standard network adapters,
+            though some require special hardware. If you use special hardware,
+            you can analyze hardware faults like CRC errors, voltage problems,
+            cable programs, &quot;dribbles&quot;, &quot;jitter&quot;,
+            negotiation errors, and so forth.</font>
+          <dt><font size="3">Capture driver</font>
+          <dd><font size="3">This is the most important part. It captures the
+            network traffic from the wire, filters it for the particular traffic
+            you want, then stores the data in a buffer.</font>
+          <dt><font size="3">Buffer</font>
+          <dd><font size="3">Once they frames are captured from the network,
+            they are stored in a buffer. There are a couple captures modes:
+            capture until the buffer fills up, or use the buffer as a
+            &quot;round robin&quot; where the newest data replaces the oldest
+            data. Some products (like the BlackICE Sentry IDS from <a href="http://www.networkice.com/">Network
+            ICE</a> can maintain a full round-robin capture buffer on disk at
+            full 100-mbps speeds. This allows have hundreds of gigabytes of
+            buffer rather than the meager 1-gigabyte you're likely to have in a
+            memory-based buffer.</font>
+          <dt><font size="3">Real-time analysis</font>
+          <dd><font size="3">Pioneered by the Network General Sniffer, this
+            feature does some minor bit of analysis of the frames as they come
+            off the wire. This is able to find network performance issues and
+            faults while capturing. Many vendors have started to add minimal
+            capabilities along this line to their products. <a href="http://www.robertgraham.com/pubs/network-intrusion-detection.html">Network
+            intrusion detection systems</a> do this, but they sift the traffic
+            for signs of hacker activity rather than fault/performance issues.</font>
+          <dt><font size="3">Decode</font>
+          <dd><font size="3">As discussed in section <a href="#5.">5</a>, this
+            displays the contents of network traffic with descriptive text so
+            that an analysist can figure out what is going on.</font>
+          <dt><font size="3">Packet editing/transmission</font>
+          <dd><font size="3">Some products contain features that allow you to
+            edit your own network packets and transmit them onto the network.</font></dd>
+        </dl>
+      </dd>
+    </dl>
+  <h2><font size="3"><a name="1.5">1.5</a> What is an Ethernet MAC address?</font></h2>
+  <dd><font size="3">Since many machines may share a single Ethernet wire, each
+    must have an individual identifier. This doesn't happen with dial-up modems,
+    because it is assumed that any data you send to the modem is destinated for
+    the other side of the phone line. But when you send data out onto an
+    Ethernet wire, you have to be clear which machine you intend to send the
+    data to. Sure, in many cases today there are only two machines talking to
+    each other, but you have to remember that Ethernet was designed for
+    thousands of machines to share the same wire.</font>
+    <p><font size="3">This is accomplished by putting a unique 12-digit hex
+    number in every piece of Ethernet hardware. Section <a href="#1.5.4">1.5.4</a>
+    explains how to discover the Ethernet MAC address of your own machine.</font>
+    <p><font size="3">To really understand why this is so important, you might
+    want to review the information in section <a href="#5.4&quot;">5.4</a>
+    below. Ethernet was designed to carry other traffic than just TCP/IP, and
+    TCP/IP was designed to run over other wires (such as dial-up lines, which
+    use no Ethernet). For example, many home users install &quot;NetBEUI&quot;
+    for File and Print Sharing because it is unrelated to TCP/IP, and therefore
+    hackers from across the Internet can't get at their hard-drives.</font>
+    <p><font size="3">Raw transmission and reception on Ethernet is governed by
+    the Ethernet equipment. You just can't send data raw over the wire, you must
+    first do something to it that Ethernet understands. In much the same way,
+    you can't stick a letter in a mailbox, you must first wrap it in an envelope
+    with an address and stamp.</font>
+    <p><font size="3">Following a is a brief explanation how this works:</font>
+    <pre><font size="3">                    _________      
+                   /.........\     
+                  /..Internet.\    
++-----+     +------+.........+---+ 
+|Alice|-----|ROUTER|.........|Bob| 
++-----+  ^  +------+.........+---+ 
+         |        \.........../    
+         |         \---------/     
+      +-------+                    
+      |wiretap|                    
+      +-------+                    
+</font></pre>
+    <font size="3">Alice has IP address: 10.0.0.23<br>
+    Bob has IP address: 192.168.100.54<br>
+    </font>
+    <p><font size="3">In order to talk to Bob, Alice needs to create an IP
+    packet of the form 10.0.0.23--&gt;192.168.100.54</font>
+    <p><font size="3">As the packet traverses the Internet, it will be passed
+    from router-to-router. Therefore, Alice must first hand off the packet to
+    the first router. Each router along the way will examine the destination IP
+    address (192.168.100.54) and decide the correct path it should take.</font>
+    <p><font size="3">In the able diagram, we draw the Internet as a
+    &quot;cloud&quot;. All Alice knows about is the local connection to the
+    first router, and Bob's eventual IP address. Alice knows nothing about the
+    structure of the Internet and the route that packet will take.</font>
+    <p><font size="3">Alice must talk to the router in order to send the packet.
+    She uses the Ethernet to do so. An Ethernet frame looks like the following:</font>
+    <pre><font size="3">+--+--+--+--+--+--+
+| destination MAC |
++--+--+--+--+--+--+
+| source MAC      |
++--+--+--+--+--+--+
+|08 00|            
++--+--+-----------+
+|                 |
+.     IP          .
+.    packet       .
+.                 .
+|                 |
++--+--+--+--+-----+
+| CRC       |
++--+--+--+--+
+</font></pre>
+    <font size="3">What this means is that the TCP/IP stack in Alice's machine
+    might create a packet that is 100 bytes long (let's say 20 bytes for the IP
+    info, 20 bytes for the TCP info, and 60 bytes of data). The TCP/IP stack
+    then sends it to the Ethernet module, which puts 14 bytes on the front for
+    the destination MAC address, source MAC address, and the ethertype 0x0800 to
+    indicate that the other end's TCP/IP stack should process the frame. It also
+    attaches 4-bytes on the end with a checksum/CRC (a validator to see if the
+    frame gets corrupted as it goes across the wire).</font>
+    <p><font size="3">The adapter then sends the bits out onto the wire.</font>
+    <p><font size="3">All hardware adapters on the wire see the frame, including
+    the ROUTER's adapter, the packet sniffer, and any other machines. Proper
+    adapters, however, have a hardware chip that compares the frame's
+    &quot;destination MAC&quot; with its own MAC address. If they don't match,
+    then it discards the frame. This is done at the hardware level, so the
+    machine the adapter is attached to is completely unaware of this process.</font>
+    <p><font size="3">When the ROUTER ethernet adapeter sees this frame, it
+    reads it off the wire and removes the leading 14-bytes and the trailing
+    4-bytes. It looks at the 0x0800 ethertype and decides to send it to the
+    TCP/IP stack for processing (which will presumably forward it to the next
+    router in the chain toward the destination).</font>
+    <p><font size="3">In the above scenario, only the ROUTER machine is supposed
+    to see the Ethernet frame, and all other machines are supposed to ignore it.
+    The wiretap, however, breaks the rules and copies the frame off the network,
+    too.</font>
+    <p><font size="3">See Charles Spurgeon's Ethernet website at: <a href="http://wwwhost.ots.utexas.edu/ethernet/ethernet-home.html">http://wwwhost.ots.utexas.edu/ethernet/ethernet-home.html</a></font>
+    <dl>
+      <blockquote>
+      <h3><font size="3"><a name="1.5.2">1.5.2</a> What does &quot;MAC&quot;
+      stand for?</font></h3>
+      </blockquote>
+      <dd><font size="3">MAC stands for <i>Media Access Control</i>.</font>
+        <p><font size="3">The logic behind this is that the Ethernet has
+        multiple sublayers, PHY (physical), MAC, LLC (logical). The Ethernet
+        address is considered part of the MAC sublayer. The physical layer is
+        responsible for the wire, the MAC is responsible for formatting the data
+        that goes on the wire, and the logical is responisble for things such as
+        retransmitting the data on the wire.</font></p>
+      <h3><font size="3"><a name="1.5.3">1.5.3</a> What is the format of the MAC
+      address?</font></h3>
+      <dd><font size="3">The Ethernet MAC address is a 48 bit number. This
+        number is broken down into two halves, the first 24-bits identify the
+        vendor of the Ethernet board, the second 24-bits is a serial number
+        assigned by the vendor. This guarantees that no two Ethernet cards have
+        the same MAC address (unless the vendor fouls up). Duplicate address
+        would cause problems, so uniquess is very important. This 24-bit number
+        is called the OUI (&quot;Organizationally Unique Identifier&quot;).</font>
+        <p><font size="3">However, the OUI is really only 22-bits long, two of
+        the bits in that field are used for other purposes. One bit indicates if
+        the address is a &quot;broadcast/multicast&quot; address, the other bit
+        indicates if the adapter has been reassigned a &quot;locally
+        administered address&quot; (where a network administrator reassigns the
+        MAC address to fit some local policy).</font>
+        <p><font size="3">For example, you will commonly see the MAC address <code>03
+        00 00 00 00 01</code> on the wire. The first byte contains the binary
+        representation of <code>00000011</code> where both these special bits
+        are set (and the rest are zero). This is a special multicast packet that
+        is sent to all machines that run the &quot;NetBEUI&quot; protocol (which
+        is commonly installed on Windows machines to share files locally without
+        using TCP/IP as the transport).</font>
+        <p><font size="3">The IEEE maintains the list of vendor/OUI codes at <a href="http://standards.ieee.org/regauth/oui/">http://standards.ieee.org/regauth/oui/</a>.</font></p>
+      <h3><font size="3"><a name="1.5.4">1.5.4</a> What is my own Ethernet
+      address?</font></h3>
+      <dd>
+        <dl>
+          <dt><font size="3">Win9x</font>
+          <dd><font size="3">Run the program &quot;winipcfg.exe&quot;. It will
+            tell you.</font>
+          <dt><font size="3">WinNT</font>
+          <dd><font size="3">Run the program &quot;ipconfig /all&quot; from the
+            command-line. It will show the MAC address for your adapters. Sample
+            results are:</font>
+            <pre><font size="3">Windows NT IP Configuration
+
+        Host Name . . . . . . . . . : sample.robertgraham.com
+        DNS Servers . . . . . . . . : 192.0.2.254
+        Node Type . . . . . . . . . : Hybrid
+        NetBIOS Scope ID. . . . . . :
+        IP Routing Enabled. . . . . : No
+        WINS Proxy Enabled. . . . . : No
+        NetBIOS Resolution Uses DNS : No
+
+Ethernet adapter SC12001:
+
+        Description . . . . . . . . : DEC DC21140 PCI Fast Ethernet Adapter
+        Physical Address. . . . . . : 00-40-05-A5-4F-9D
+        DHCP Enabled. . . . . . . . : No
+        IP Address. . . . . . . . . : 192.0.2.160
+        Subnet Mask . . . . . . . . : 255.255.255.0
+        Default Gateway . . . . . . : 192.0.2.1
+        Primary WINS Server . . . . : 192.0.2.253
+</font></pre>
+          <dt><font size="3">Linux</font></dt>
+          <dd><font size="3">Run the program &quot;ifconfig&quot;. Sample
+            results are:</font>
+            <pre><font size="3">eth0      Link encap:Ethernet  HWaddr 08:00:17:0A:36:3E
+          inet addr:192.0.2.161  Bcast:192.0.2.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:1137249 errors:0 dropped:0 overruns:0
+          TX packets:994976 errors:0 dropped:0 overruns:0
+          Interrupt:5 Base address:0x300    
+</font></pre>
+          <dt><font size="3">Solaris</font>
+          <dd><font size="3">Use the &quot;arp&quot; or &quot;netstat -p&quot;
+            command, it will often list the local interface among the ARP
+            entries.</font></dd>
+        </dl>
+      <dt>&nbsp;
+      <blockquote>
+      <h3><font size="3"><a name="1.5.5">1.5.5</a> What are the Ethernet
+      addresses of machines I'm talking to?</font></h3>
+      </blockquote>
+      <dd><font size="3">For WinNT and UNIX, use the command &quot;arp -a&quot;.</font>
+      <dt>&nbsp;
+      <blockquote>
+      <h3><font size="3"><a name="1.5.6">1.5.6</a> Can I change my MAC address?</font></h3>
+      </blockquote>
+      <dd><font size="3">Yes. There are several places where this might be
+        important.</font>
+        <p><font size="3">First, you can <a class="dict" href="http://www.robertgraham.com/pubs/hacking-dict.html#spoof">spoof</a>
+        your address. Remember that the MAC address is just part of the frame
+        data. Therefore, when you send an Ethernet frame on the wire, you can
+        overwrite your own contents in those frames. Of course, you have to be
+        running a program that does this for some reason.</font>
+        <p><font size="3">Second, most adapters allow you to reconfigure the
+        runtime MAC address. For example, some cards allow you to reconfigure
+        the address within the Windows control panel.</font>
+        <p><font size="3">Third, you can re-burn (i.e. reprogram the EEPROM) the
+        address in the card. You need a program/hardware that knows the
+        specifics of the chipset being used by the card. This changes the card
+        forever to have the new address.</font></p>
+      </dd>
+    </dl>
+  <h2><font size="3"><a name="1.6">1.6</a> Can I sniff a connection between two
+  people without having access to their wire?</font></h2>
+  <dd>
+    <p><font size="3">In other words, you are asking about this scenario:</font>
+    <ul>
+      <li><font size="3">Alice and Bob are in New York and Texas and are
+        talking.</font>
+      <li><font size="3">You are located in California, nowhere near them.</font>
+      <li><font size="3">You want to eavesdrop on their communication.</font></li>
+    </ul>
+    <p><font size="3">The answer is of course &quot;no&quot;, it isn't even
+    vaguely possible. You have to have access to the wire that the communication
+    is going across in order to eavesdrop. Same as with telephones, same as
+    everywhere.</font>
+    <p><b><font size="3">Remote access to the wire</font></b>
+    <p><font size="3">However, if you are a really, really good cracker/hacker,
+    there are ways of getting access to those lines. Typical examples are:</font>
+    <ul>
+      <li><font size="3">Break into Alice or Bob's computer and install sniffing
+        software that you remotely control.</font>
+      <li><font size="3">Break into the intervening ISPs, and install sniffing
+        software.</font>
+      <li><font size="3">Find a box at the ISPs that supports sniffing, like an
+        RMON probe or DSS (Distributed Sniffer System).</font>
+      <li><font size="3">Bribe somebody at one of those ISPs; break into the
+        physical plant and install a packet sniffer, etc.</font>
+      <li><font size="3">....</font></li>
+    </ul>
+    <p><b><font size="3">Close to the wire</font></b>
+    <p><font size="3">In some situations, like cable-modems, DSL, Ethernet VLANs,
+    etc., you can redirect traffic between two people to go through your own
+    machine. This is because while you are not directly in the path of
+    communication, you can sometimes move that path to flow past your own
+    computer. It's much like the concept that you can divert a stream slightly,
+    though not very far. See the &quot;<a href="#cable-modem-redirect">Redirect</a>
+    section under Cable-Modems.</font>
+    <p><b><font size="3">Rootkits and Remote Admin Trojans</font></b>
+    <p><font size="3">Another possibility is to break into a person's machine
+    and install a sniffing program. (Exactly how to break into someone's machine
+    is, of course, beyond the scope of this document). On UNIX, sniffing
+    programs are part of most &quot;rootkits&quot;. On Windows, sniffing is part
+    of some RATs (Remote Admin Trojans, e.g. BackOrifice).</font>
+    <p><font size="3">In theory, these programs can be used to sniff traffic in
+    general, but usually they are configured to simply sniff for passwords and
+    e-mail them back to the hacker.</font>
+    <p><font size="3">Section <a href="#2.5">2.5</a> contains information on how
+    to detect when this has happened to you, especially how to detect sniffers
+    installed on a <a href="#host-sniffer-detection">UNIX host</a>.</font></p>
+  </dd>
+</dl>
+<dl>
+  <hr>
+  <h1><font size="3">2. How can I <a name="defense">defend</a> myself against
+  packet sniffers?</font></h1>
+  <h2><font size="3">2.1 How can I stop people from sniffing my data?</font></h2>
+  <dd><font size="3">While you can configure your local network to make sniffing
+    hard, you are pretty much powerless stopping people from out on the Internet
+    from sniffing your traffic. The best defense in this case is to encrypt your
+    data, so that while they can sniff it, they cannot read it. Some techniques
+    are:</font>
+    <dl>
+      <h3><font size="3">SSL</font></h3>
+      <dd>
+        <p><font size="3">&quot;Secure Sockets Layer&quot;, SSL is built into
+        all popular web browsers and web servers. It allows encrypted web
+        surfing, and is almost always used in e-commerce when users enter their
+        credit card information.</font>
+        <p><font size="3">This site for Apache SSL describes this: <a href="http://www.modssl.org/">http://www.modssl.org/</a></font></p>
+      <h3><font size="3">PGP and S/MIME</font></h3>
+      <dd>
+        <p><font size="3">E-mail can be sniffed in many alternative ways. It
+        passes through corporate firewalls, which may monitor the traffic. It
+        often gets logged and saved for extended periods of time. It may get
+        accidentally misdirected, and end up in somebody else's mailbox. The
+        best way to keep such e-mail secret is to encrypt it. The two common
+        ways of doing this are with PGP (Pretty Good Privacy) and S/MIME (Secure
+        MIME). PGP can be purchased as an add-on to many products. S/MIME is
+        built into e-mail programs by Netscape and Microsoft.</font></p>
+      <h3><font size="3">ssh</font></h3>
+      <dd>
+        <p><font size="3">&quot;Secure Shell&quot;, ssh has become the de facto
+        standard for logging into UNIX machines from the Internet. You should
+        immediately replace telnet with this service. Numerous other protocols
+        can be tunneled through ssh connections (i.e. file copy). The product
+        was originally developed by a Finish company <a href="http://www.ssh.fi/">http://www.ssh.fi/</a>
+        but many open-source/freeware implementations also exist.</font></p>
+      <h3><font size="3">VPNs (Virtual Private Networks)</font></h3>
+      <dd>
+        <p><font size="3">VPNs provide encrypted traffic across the Internet.
+        However, if a hacker compromises the end-nodes of a VPN connection, they
+        can still sniff the traffic. A typical scenario is an end-user who surfs
+        the Internet normally and gets compromised with a Remote Access Trojan
+        (RAT) that contains a sniffing plug-in. When the user establishes the
+        VPN connection, the sniffing program is able to see not only the
+        encrypted traffic that can be seen on the Internet, but also the
+        unencrypted traffic before it gets sent through the stack to the VPN.</font></p>
+      </dd>
+    </dl>
+  <h2><font size="3">2.2 How can I stop people from sniffing my passwords?</font></h2>
+  <dd><font size="3">The data-encryption solutions above also provide for secure
+    authentication. There are other solutions that provide for secure
+    authentication as well:</font>
+    <dl>
+      <h3><font size="3">SMB/CIFS</font></h3>
+      <dd>
+        <p><font size="3">In the Windows/SAMBA environment, make sure that you
+        have the older LanManager authentication turned off. This requires SAMBA
+        v2 or later, WinNT SP3 or later, and so on.</font></p>
+      <h3><font size="3">Kerberos v5</font></h3>
+      <dd>
+        <p><font size="3">Both Windows 2000 and UNIX provide support for
+        Kerberos authentication. This is one of the strongest generic mechanisms
+        available. <a href="ftp://aeneas.mit.edu/pub/kerberos/doc/KERBEROS.FAQ">ftp://aeneas.mit.edu/pub/kerberos/doc/KERBEROS.FAQ</a></font></p>
+      <h3><font size="3">smart cards</font></h3>
+      <dd>
+        <p><font size="3">There are numerous smart card implementations around
+        providing one-time passwords. These are often used when connecting
+        remotely, either dial-in or VPN across the Internet.</font></p>
+      <h3><font size="3">Stanford SRP (Secure Remote Password)</font></h3>
+      <dd>
+        <p><font size="3">Enhancements to Telnet and FTP for UNIX and Windows. <a href="http://srp.stanford.edu/srp/">http://srp.stanford.edu/srp/</a></font></p>
+      </dd>
+    </dl>
+  <h2><font size="3">2.3 How can I configure my local network to make sniffing <a name="switch">harder</a>?</font></h2>
+  <dd>
+    <p><font size="3">Replacing your hub with a switch will provide a simple,
+    yet effective defense against casual sniffing.</font>
+    <p><font size="3">While this solution is extremely effective in practice
+    (and should be strongly considered), it shouldn't be relied upon as a
+    complete defense against sniffing. A switch still creates a &quot;broadcast
+    domain&quot;, providing an attacker the ability to spoof ARP packets.</font>
+    <p><font size="3">The easiest such exploit is the &quot;router
+    redirection&quot;. ARP queries contain the correct IP-to-MAC mapping for the
+    sender. In order to reduce ARP traffic, most machines will cache this
+    information that they read from the query broadcasts. Therefore, a malicious
+    attacker can redirect nearby machines to forward traffic through it by
+    sending out regular ARP packets containing the router's IP address mapped to
+    its own MAC address. All the machines on the local wire will believe the
+    hacker is the router, and therefore pass their traffic through him/her.</font>
+    <p><font size="3">A similar attack would be to DoS a target victim and force
+    it off the network, then begin using its IP address. If a hacker does this
+    carefully, s/he can inherit connections already established without dropping
+    them. Windows machines are even so polite that when they come onto the
+    network and see someone else using their address, they will kindly shut down
+    their own TCP/IP stacks and allow this to continue. SMB (the Windows file
+    sharing protocol) is also kind enough to allow predictable identifiers,
+    allowing cr/hackers to predict enough information to keep the connection
+    going.</font>
+    <p><font size="3">Most intrusion detection systems and even network
+    management tools like the Expert Sniffer(tm) will detect these shenanigans.
+    For example, putting the BlackICE IDS on all the Windows end-nodes or hooked
+    to a normal port (to receive broadcasts) will alert the security admin that
+    such things are taking place (but, will generate false positives when DHCP
+    reassigns addresses. Sigh.)</font>
+    <p><font size="3">Most Ethernet adapters allow the MAC address to be
+    manually configured. Thus a hacker can spoof MAC addresses by reassigning
+    the address on the adapter, or by bypassing the built-in stack and
+    hand-crafting frames. The hacker must maintain a a constant stream of
+    outgoing frames in order to convince the auto-learning switch that they are
+    the legitimate owner of the MAC address.</font>
+    <p><font size="3">Many (most??) switches allow MAC addresses to be
+    configured statically in order to prevent this sort of thing. While it may
+    be a difficult management burden to do this for all end-nodes, it may prove
+    useful for the router, restricting the hacker to wiretapping individual
+    end-nodes instead of everyone all at once.</font>
+    <p><font size="3">Some switches can be kicked out of &quot;bridging&quot;
+    mode into &quot;repeating&quot; mode where all frames are broadcast on all
+    ports all the time. This is done by overflowing the address tables with lots
+    of false MAC addresses. This can be done with a simple traffic generation
+    phase, or by sending a continual stream of random garbage through the
+    switch.</font></p>
+  <h2><font size="3">2.4 Can I buy adapters that do not support sniffing?</font></h2>
+  <dd><font size="3">No.</font>
+    <p><font size="3">The real answer is &quot;yes&quot;, there are some older
+    adapters that do not support promiscuos mode. In particular, the original
+    IBM Token Ring adapters (TROPIC chipset) were not able to run in promiscuous
+    mode. There are also a few Ethernet where promiscuous mode is broken, either
+    in the hardware or in the driver. Actually, there are far more adapters who
+    simply lack the functionality in the driver in order to turn on promiscuous
+    mode, meaning all programs that attempt to put them into promiscuous mode
+    will fail even though the hardware supports the mode in theory. If you
+    really must have one, then call technical support for a sniffing product
+    vendor (such as NAI) and ask them which cards they DON'T support. For
+    Windows, you might check with Microsoft support to see which cards do not
+    support NetMon (I remember there are a few, but I can't find the
+    documentation for it).</font>
+    <p><font size="3">Note that in the Intel/Microsoft &quot;PC99&quot;
+    guidelines, promiscuous mode is a &quot;required&quot; feature.</font>
+    <p><font size="3">If this is a concern, it will be cheaper in the long run
+    simply to upgrade to switching hubs, which basically does the same thing. An
+    Ethernet switch moves the &quot;address match&quot; upstream, so that the
+    switch does it rather than the adapter.</font>
+    <p><font size="3">Finally, it should be noted that most new networks are
+    switched in some fashion. Even though hackers cannot sniff an entire
+    Ethernet segment, they still install sniffers on machines in order to see
+    the incoming/outgoing traffic. A non-promiscuous adapter won't help defend
+    against this.</font></p>
+  <h2><font size="3"><a name="2.5">2.5</a> How can I <a name="detect">detect</a>
+  a packet sniffer?</font></h2>
+  <dd><font size="3">In theory, it is impossible to detect sniffing programs
+    because they are passive: they only collect packets, they don't transmit
+    anything. However, in practice it is sometimes possible to detect sniffing
+    programs. It is similar to how in theory it is impossible to detect radio/TV
+    receivers, but European countries do it all the time in order to catch
+    people avoiding the radio/TV tax.</font>
+    <p><font size="3">A stand-alone packet sniffer doesn't transmit any packets,
+    but when installed non-standalone on a normal computer, the sniffing program
+    will often generate traffic. For example, it might send out DNS reverse
+    lookups in order to find names associated with IP addresses.</font>
+    <p><font size="3">Non-standalone packet sniffers are indeed what you want to
+    detect. When crackers/hackers invade machines, they often install sniffing
+    programs. You want to be able to detect this happening.</font>
+    <p><font size="3">General Overview of Detection Methods</font>
+    <dl>
+      <h3><font size="3">ping method</font></h3>
+      <dd>
+        <p><font size="3">Most &quot;packet sniffers&quot; run on normal
+        machines with a normal TCP/IP stack. This means that if you send a
+        request to these machines, they will respond. The trick is to send a
+        request to IP address of the machine, but not to its Ethernet adapter.</font>
+        <p><font size="3">To illustrate:</font>
+        <ol>
+          <li><font size="3">The machine suspected of running the packet sniffer
+            has an IP address 10.0.0.1, and an Ethernet address of <nobr>00-40-05-A4-79-32</nobr>.</font>
+          <li><font size="3">You are on the same Ethernet segment as the suspect
+            (remember, the Ethernet is used only to communicate locally on a
+            segment, not remotely across the Internet).</font>
+          <li><font size="3">You change the MAC address slightly, such as <nobr>00-40-05-A4-79-33</nobr>.</font>
+          <li><font size="3">You transmit an &quot;ICMP Echo Request&quot;
+            (ping) with the IP address and this new MAC address.</font>
+          <li><font size="3">Remember that NOBODY should see this packet,
+            because as the frame goes down the wire, each Ethernet adapter
+            matches the MAC address with their own MAC address. If none matches,
+            then they ignore the frame.</font>
+          <li><font size="3">If you see the response, then the suspect wasn't
+            running this &quot;MAC address filter&quot; on the card, and is
+            hence sniffing on the wire.</font></li>
+        </ol>
+        <p><font size="3">There are ways defending against this. Now that this
+        technique is widely publicized, newer hackers will enabled a virtual MAC
+        address filter in their code. Many machines (notably Windows) have MAC
+        filtering in drivers. (There is a hack for Windows: most drivers just
+        check the first byte, so a MAC address of <nobr>FF-00-00-00-00-00</nobr>
+        looks like <nobr>FF-FF-FF-FF-FF-FF</nobr> (the broadcast address which
+        all adapters accept). However, some adapters implement multicast in such
+        as way that this address will match as a multicast, which is any address
+        whose first byte is an odd number. Thus, this can result in false
+        positives).</font>
+        <p><font size="3">This technique will usually work on switched/bridged
+        Ethernets. When switches see an unknown MAC address for the first time,
+        they will &quot;flood&quot; the frame to all segments.</font></p>
+      <h3><font size="3">ping method, part 2</font></h3>
+      <dd>
+        <p><font size="3">The ping method can be enhanced in a number of ways:</font>
+        <ol>
+          <li><font size="3">Any protocol that generates a response can be used,
+            such as a TCP connection request or a UDP protocol such as port 7
+            (echo).</font>
+          <li><font size="3">Any protocol that might generate an error on the
+            target machine might be used. For example, bad IP header values
+            might be used to generate an ICMP error.</font>
+          <li><font size="3">Sometimes a broadcast address (either a &quot;local
+            broadcast&quot; like 255.255.255.255 or a &quot;directed
+            broadcast&quot; like 10.0.0.255) needs to be used in order to bypass
+            software IP address filtering. This then encounters another problem
+            in that many machines do not respond to broadcast requests
+            (responses to broadcasts causes network problems, such as the 'smurf'
+            hack).</font></li>
+        </ol>
+      <h3><font size="3">ARP method</font></h3>
+      <dd>
+        <p><font size="3">The ARP method is similar to the ping method, but an
+        ARP packet is used instead. An explanation (in Spanish) is given at <a href="http://www.apostols.org/projectz/neped/">http://www.apostols.org/projectz/neped/</a>
+        which includes a program called neped to do this detection.</font>
+        <p><font size="3">The simplest ARP method transmits an ARP to a
+        non-broadcast address. If a machine responds to such an ARP of its IP
+        address, then it must be in promiscuous mode.</font>
+        <p><font size="3">A variation of this technique takes advantage of the
+        fact that machines &quot;cache&quot; ARPs. Each ARP contains the
+        complete information of both the sender as well as the desired target
+        information. In other words, when I send out a single ARP to the
+        broadcast address, I include my own IP-to-Ethernet address mapping.
+        Everyone else on the wire remembers this information for the next few
+        minutes. Therefore, you could do something like sending out a
+        non-broadcast ARP, then a broadcast ping. Anybody who responds to your
+        ping without ARPing you could only have gotten the MAC address from a
+        sniffed ARP frame. (To make double-sure, use a different source MAC
+        address in the ping).</font></p>
+      <h3><font size="3">DNS method</font></h3>
+      <dd>
+        <p><font size="3">Many sniffing programs do automatic reverse-DNS
+        lookups on the IP addresses they see. Therefore, a promiscuous mode can
+        be detected by watching for the DNS traffic that it generates.</font>
+        <p><font size="3">This method can detect dual-homed machines and can
+        work remotely. You need to monitor incoming inverse-DNS lookups on the
+        DNS server in your organization. Simply do a ping sweep throughout the
+        company against machines that are known not to exist. Anybody doing
+        reverse DNS lookups on those addresses are attempting to lookup the IP
+        addresses seen in ARP packets, which only sniffing programs do.</font>
+        <p><font size="3">This same technique works locally. Configure the
+        detector in promiscuous mode itself, then send out IP datagrams to bad
+        addresses and watch for the DNS lookups.</font>
+        <p><font size="3">One interesting issue with this technique is that
+        hacker-based sniffing programs tend to resolve IP addresses as soon as
+        they are found, whereas commercial programs tend to delay resolution
+        until the point where the packet sniffer user views the protocol
+        decodes.</font></p>
+      <h3><font size="3">source-route method</font></h3>
+      <dd>
+        <p><font size="3">Another technique involves configuring the
+        source-route information inside the IP header. This can be used to
+        detect packet sniffers on other, nearby segments.</font>
+        <ol>
+          <li><font size="3">Create a ping packet, but put a loose-source route
+            to force it by another machine on the same segment. This machine
+            should have routing disabled, so that it will not in fact forward it
+            to the target.</font>
+          <li><font size="3">If you get a response, then it is likely the target
+            sniffed the packet off the wire.</font>
+          <li><font size="3">In the response, doublecheck the TTL field to find
+            out if it' came back due to sniffing (rather than being routed
+            correctly)</font></li>
+        </ol>
+        <p><font size="3">Details:</font>
+        <p><font size="3">In loose source-routing, an option is added to the IP
+        header. Routers will ignore the destination IP address and instead
+        forward to the next IP address in the source-route option. This means
+        when you send the packet, you can say &quot;please send packet to Bob,
+        but route it through Anne first&quot;.</font>
+        <p><font size="3">In this scenario, both &quot;Anne&quot; and
+        &quot;Bob&quot; are on the segment. Anne does not route, and therefore
+        will drop the packet when received. Therefore, &quot;Bob&quot; will only
+        respond if he has sniffed the packet from the wire.</font>
+        <p><font size="3">On the off chance that Anne does indeed route (in
+        which case Bob will respond), then the TTL field can be used to verify
+        that Bob responded from routing through Anne, or answering directly.</font></p>
+      <h3><font size="3">The decoy method</font></h3>
+      <dd>
+        <p><font size="3">Whereas the ping and ARP methods only work on the
+        local network, the decoy method works everywhere.</font>
+        <p><font size="3">Since so many protocols allow &quot;plain text&quot;
+        passwords, and hackers run sifters looking for those passwords, the
+        decoy method simply satisfies that need. It consists simply of setting
+        up a client and a serve on either side of the network, which the client
+        runs a script to logon to the server using Telnet, POP, IMAP, or some
+        other plain-text protocol. The server is configured with special
+        accounts that have no real rights, or the server is completely virtual
+        (in which case, the accounts don't really exist).</font>
+        <p><font size="3">Once a hacker sifts the usernames/passwords from the
+        wire, he/she will then attempt to log on using this information.
+        Standard intrusion detection systems or audit trails can be configured
+        to log this occurance, alerting the fact that a sniffing hacker has
+        found the traffic and attempted to use the information.</font>
+        <p><a href="http://www.zurich.ibm.com/~dac/Prog_RAID98/Full_Papers/sniffer_detector.html/index.htm"><font size="3">http://www.zurich.ibm.com/~dac/Prog_RAID98/Full_Papers/sniffer_detector.html/index.htm</font></a></p>
+      <h3><a name="host-sniffer-detection"><font size="3">host method</font></a></h3>
+      <dd>
+        <p><font size="3">When hackers break into your systems, they will often
+        leave behind wiretap programs running in the background in order to
+        sniff passwords and user accounts off the wire. These are often imbedded
+        (as a trojan) in other programs, so the only way to find if something
+        like this is running is to query the interfaces to see if they are
+        running in promiscuous mode.</font>
+        <p><font size="3">The most technique is to run the program &quot;ifconfig
+        -a&quot;. On my computer (Solaris 2.6) the output looks like:</font>
+        <pre><font size="3">	# ifconfig -a
+	lo0: flags=849&lt;UP,LOOPBACK,RUNNING,MULTICAST&gt; mtu 8232
+			inet 127.0.0.1 netmask ff000000
+	hme0: flags=863&lt;UP,BROADCAST,NOTRAILERS,RUNNING,PROMISC,MULTICAST&gt; mtu 1500
+			inet 192.0.2.99 netmask ffffff00 broadcast 192.0.2.255
+			ether 8:0:20:9c:a2:98   
+	</font></pre>
+        <font size="3">Of course, the first thing a hacker will do is replace
+        the 'ifconfig' program to hide this. There are other utilities you can
+        download from the net that will query the hardware directly in order to
+        discover this information, or you could run the 'ifconfig' program
+        directly from a CD-ROM distribution.</font>
+      <h3><font size="3">latency method</font></h3>
+      <dd>
+        <p><font size="3">This is a more evil method. On one hand, it can
+        significantly degrade network performance. On the other hand, it can
+        'blind' packet sniffers by sending too much traffic.</font>
+        <p><font size="3">This method functions by sending huge quantities of
+        network traffic on the wire. This has no effect on non-promiscuous
+        machines, but has a huge effect on sniffing machines, especially those
+        parsing application layer protocols for passwords. Simply ping the
+        machine before the load and during the load and testing the difference
+        in response time can indicate if the machine is under load.</font>
+        <p><font size="3">One problem with this technique is that packets can be
+        delayed simply because of the load on the wire, which may case timeouts
+        and therefore false positives. On the other hand, many sniffing programs
+        are &quot;user mode&quot; whereas pings are responded to in &quot;kernel
+        mode&quot;, and are therefore independent of CPU load on a machine,
+        thereby causing false negatives.</font></p>
+      <h3><font size="3"><a name="TDR">TDR</a> (Time-Domain Reflectometers)</font></h3>
+      <dd>
+        <p><font size="3">A TDR is basically RADAR for the wire. It sends a
+        pulse down the wire, then graphs the reflections that come back. An
+        expert can look at the graph of the response and figure out if any
+        devices are attached to the wire that shouldn't be. They also roughly
+        tell where, in terms of distance along the wire, the tap is located.</font>
+        <p><font size="3">This can detect hardware packet sniffers that might be
+        attached to the wire, but which are completely silent otherwise.</font>
+        <p><font size="3">TDRs used to be used a lot in the old days of coax
+        Ethernet in order to detect vampire taps, but these days with star
+        topologies, they are used very rarely.</font>
+        <p><font size="3">There also exist OTDR equipment, but this is really
+        only for the truely paranoid.</font></p>
+      <h3><font size="3">hub lights</font></h3>
+      <dd>
+        <p><font size="3">You can manually check hub-lights to see if there are
+        any connections you don't expect. It helps to have labeled cables to
+        figure out where (physically) a packet sniffer might be located.</font></p>
+      <h3><font size="3">SNMP monitoring</font></h3>
+      <dd>
+        <p><font size="3">Smart hubs with SNMP management can provide automated
+        monitroning of Ethernet (and other) hubs. Some management consoles will
+        even let you log connections/disconnections to all your ports. If you've
+        configured the system with the information where all the cables
+        terminate, you can sometimes track down where a packet sniffer might be
+        hiding.</font></p>
+      </dd>
+    </dl>
+    <p><font size="3"><b><u>Tools to detect packet sniffers</u></b></font>
+    <dl>
+      <dt><font size="3">AntiSniff</font>
+      <dd><a href="http://www.l0pht.com/antisniff/"><font size="3">http://www.l0pht.com/antisniff/</font></a>
+        <p><font size="3">The most comprehensive sniffer-detection tool.</font></p>
+      <dt><font size="3">CPM (Check Promiscuous Mode)</font>
+      <dd><a href="ftp://coast.cs.purdue.edu/pub/tools/unix/cpm/"><font size="3">ftp://coast.cs.purdue.edu/pub/tools/unix/cpm/</font></a>
+        <p><font size="3">A tool from Carnegie-Mellon that checks to see if
+        promiscuous mode is enabled on a UNIX machine.</font></p>
+      <dt><font size="3">Neped</font>
+      <dd><a href="http://www.apostols.org/projectz/neped/"><font size="3">http://www.apostols.org/projectz/neped/</font></a>
+        <p><font size="3">A tool from The Apostols that detects packet sniffers
+        running on the local segment.</font></p>
+      <dt><font size="3">Sentinel</font>
+      <dd><a href="http://www.packetfactory.net/Projects/sentinel/"><font size="3">http://www.packetfactory.net/Projects/sentinel/</font></a>
+      <dt><font size="3"><a name="cpm">cpm</a> (Check Promiscuous Mode)</font>
+      <dd><a href="ftp://ftp.cerias.purdue.edu/pub/tools/unix/sysutils/cpm/"><font size="3">ftp://ftp.cerias.purdue.edu/pub/tools/unix/sysutils/cpm/</font></a>
+        <p><font size="3">A UNIX tool for checking the promiscuous-mode status
+        of adapters.</font></p>
+      <dt><a name="ifstatus"><font size="3">Ifstatus</font></a>
+      <dd><a href="ftp://andrew.triumf.ca/pub/security/ifstatus2.0.tar.gz"><font size="3">ifstatus</font></a>
+        <p><font size="3">Another UNIX utility that should be run from <tt><a class="dict" href="http://www.robertgraham.com/pubs/hacking-dict.html#crontab">crontab</a></tt>
+        in order to monitor when adapters are put into promiscuous mode.</font></p>
+      </dd>
+    </dl>
+    <p><font size="3">Other Sniffing Detection Resources</font>
+    <p><a href="http://www.securiteam.com/unixfocus/Detecting_sniffers_on_your_network.html"><font size="3">http://www.securiteam.com/unixfocus/Detecting_sniffers_on_your_network.html</font></a></p>
+</dl>
+
+<hr>
+
+<p><font size="3">Reference:</font></p>
+<p><a href="http://www.robertgraham.com/pubs/sniffing-faq.html">http://www.robertgraham.com/pubs/sniffing-faq.html</a></p>
+
+<hr>
+
+</body>
+
+</html>

@@ -1,0 +1,166 @@
+head	1.4;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.4
+date	2004.08.28.01.20.55;	author donahoo;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2002.11.07.16.17.25;	author donahoo;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.09.11.12.19.26;	author donahoo;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2001.08.16.20.52.33;	author donahoo;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@<HTML>
+<HEAD>
+<TITLE>The Practical Guide Series Web Resource</TITLE>
+</HEAD>
+<BODY bgcolor="White" text="Black" vlink="Purple" alink="Red" link="Blue">
+<CENTER><FONT COLOR="#1D2B55" SIZE=+10>The Practical Guide Series Web Resource
+</FONT> <P></CENTER>
+Welcome to the web resource for The Practical Guide Series. <P>
+
+<B>Practical Guides:</B>
+<UL>
+<LI> focus on specific technologies and their core features
+<LI> help you progress quickly to implementation
+<LI> teach key skills through concise, example-rich instruction
+<LI> include hands-on exercises for additional practice
+<LI> provide example code and additional resources through companion Web sites
+</UL>
+
+<B>Books (in order by publication date)</B>
+
+<TABLE>
+<TR>
+<TD>
+<IMG SRC="images/cpractical.gif">
+</TD>
+<TD>
+<B> TCP/IP Sockets in C:  Practical Guide for Programmers (ISBN:
+1-55860-826-5) by Michael J. Donahoo and Kenneth L. Calvert </B><BR>
+<B> Originally published as: </B>The Pocket Guide to TCP/IP Sockets: C Version (ISBN: 1-55860-686-6)<BR>
+<A HREF="http://www.mkp.com/books_catalog/catalog.asp?ISBN=1-55860-826-5">Official Web Site</A> <BR>
+<A HREF="http://cs.baylor.edu/~donahoo/practical/CSockets">Author Web Site</A>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<IMG SRC="images/javasocket.gif">
+</TD>
+<TD>
+<B> TCP/IP Sockets in Java: Practical Guide for Programmers (ISBN:
+1-55860-686-8) by Kenneth L. Calvert and Michael J. Donahoo</B><BR>
+<A HREF="http://www.mkp.com/books_catalog/catalog.asp?ISBN=1-55860-685-8">Official Web Site</A> <BR>
+<A HREF="http://cs.baylor.edu/~donahoo/practical/JavaSockets">Author Web Site</A>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<IMG SRC="images/jdbc.gif">
+</TD>
+<TD>
+<B> JDBC:  Practical Guide for Programmers (ISBN: 1-55860-736-6) by
+Gregory D. Speegle</B><BR>
+<A HREF="http://www.mkp.com/books_catalog/catalog.asp?ISBN=1-55860-736-6">Official Web Site</A> <BR>
+<A HREF="http://cs.baylor.edu/~speegle/pockjdbc">Author Web Site</A>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<IMG SRC="images/struts.gif">
+</TD>
+<TD>
+<B> The Struts Framework:  Practical Guide for Java Programmers (ISBN: 1-55860-862-1) by
+Sue Spielman</B><BR>
+<A HREF="http://www.mkp.com/books_catalog/catalog.asp?ISBN=1-55860-862-1">Official Web Site</A> <BR>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<IMG SRC="images/multicast.gif">
+</TD>
+<TD>
+<B> Multicast Sockets:  Practical Guide for Programmers (ISBN: 1-55860-846-X) by
+David Makofske and Kevin Almeroth</B><BR>
+<A HREF="http://www.mkp.com/books_catalog/catalog.asp?ISBN=1-55860-846-X">Official Web Site</A> <BR>
+</TD>
+</TR>
+
+</TABLE>
+
+<p align="right">
+<A HREF="http://www.mkp.com"><img src="images/MK_blue.gif" border=0></A>
+</BODY>
+</HTML>
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@a18 3
+If you have any suggestions for this site or you are interested in
+authoring your own Practical Guide, please send
+email to <A HREF="mailto:Jeff_Donahoo@@Baylor.edu">Jeff Donahoo</A>.<P>
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d37 1
+d49 1
+d61 23
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d19 2
+a20 1
+If you have any suggestions for this site, please send
+d23 38
+a60 6
+<UL>
+<LI><A HREF="CSockets/">TCP/IP Sockets in C:  Practical Guide for Programmers</A>
+<LI><A HREF="JavaSockets/">TCP/IP Sockets in Java:  Practical Guide for Programmers</A>
+<LI><A HREF="http://cs.baylor.edu/~speegle/pockjdbc/">JDBC:  Practical
+Guide for Java Programmers</A>
+</UL>
+@

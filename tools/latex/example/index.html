@@ -1,0 +1,40 @@
+<html>
+<head>
+   <title>Donahoo LaTeX Example</title>
+</head>
+<body>
+
+<center><b><font size=+3>LaTeX Example</font></b></center>
+
+Here's my example set of LaTeX files to create <A HREF="paper.ps">paper.ps</A>:
+
+<UL>
+<LI> <A HREF="paper.tex"> paper.tex </A> - Here's the "main" program
+<LI> <A HREF="intro.tex"> intro.tex</A> - First included file
+<LI> <A HREF="meat.tex"> meat.tex</A> - Second included file
+<LI> <A HREF="conc.tex"> conc.tex</A> - Last included file
+<LI> <A HREF="maxround.ps"> maxround.ps</A> - Example included graphic
+<LI> <A HREF="bib.bib"> bib.bib</A> - Bibliographic database
+</UL>
+
+<BR>
+To use this, do the following:
+
+<OL>
+<LI> Download the example files into a single directory
+<LI> latex paper (ignore warnings since LaTeX is a one-pass compiler)
+<LI> bibtex paper (this integrates bibliographic DB entries)
+<LI> latex paper
+<LI> latex paper (this run should get rid of warnings)
+<LI> dvips -f paper.dvi > paper.ps (generates postscript copy of paper)
+</body>
+
+You can view the dvi version of the paper with "xdvi paper.dvi" or the
+postscript version with "ghostview paper.ps". <P>
+
+If you makes changes to any of the files, you only need to run LaTeX
+and dvips once to regenerate the postscript.
+
+The best book I have found so far on LaTeX is <U>A Guide to LaTeX</U> by
+Helmut Lopka and Patrick W. Daly
+</html>
